@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+<!-- 	<package name="Total" namespace="/total" extends="struts-default">
+		<action name="Total_*" class="com.ajdbxt.action.User.UserAction"
+			method="{1}">
+			<result name="index">/WEB-INF/view/index.jsp
+			</result>
+			<result name="navbar">/WEB-INF/view/navbar.jsp
+			</result>
+			<result name="SUCCESS">/success.jsp</result>
+			<result name="FALSE">false.jsp</result>
+		</action>
+	</package>
+ -->
+ 
+ </struts>
