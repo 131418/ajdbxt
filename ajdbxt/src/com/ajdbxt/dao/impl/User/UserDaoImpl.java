@@ -107,11 +107,27 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public List<Ajdbxt_police> queryForPage(String hql, int offset, int length) {
+		// TODO Auto-generated method stub
+		Query q = getSession().createQuery(hql);
+		q.setFirstResult(offset);
+		q.setMaxResults(length);
+		return q.list();
+	}
+
+	@Override
+	public int getCount(String hql) {
+		// TODO Auto-generated method stub
+		Query q = getSession().createQuery(hql);
+		return Integer.parseInt(q.list().get(0).toString());
+	}
+
+/*	@Override
 	public List<Ajdbxt_police> findPoliceByPage(findPoliceByPageVO findPoliceByPage) {
 		// TODO Auto-generated method stub
 		String hql = "from Ajdbxt_police";
 		return null;
-	}
+	}*/
 
 	/*
 	 * @Override public void listPolice() { // TODO Auto-generated method stub

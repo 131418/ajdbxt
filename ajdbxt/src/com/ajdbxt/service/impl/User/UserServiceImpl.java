@@ -113,11 +113,32 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public findPoliceByPageVO queryForPage(int pageSize, int currentPage) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Ajdbxt_police";
+		int count = userDao.getCount(hql); // 总记录数
+		int totalPage = findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数
+		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
+		int length = pageSize; // 每页记录数
+		int curpage = findPoliceByPageVO.countCurrentPage(currentPage);
+		List<Ajdbxt_police> list = userDao.queryForPage("from Ajdbxt_police", offset, length); // 该分页的记录
+		// 把分页信息保存到Bean中
+		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
+		findPoliceByPageVO.setPageSize(pageSize);
+		findPoliceByPageVO.setCurrentPage(currentPage);
+		findPoliceByPageVO.setAllRow(count);
+		findPoliceByPageVO.setTotalPage(totalPage);
+		findPoliceByPageVO.setList(list);
+		findPoliceByPageVO.init();
+		return findPoliceByPageVO;
+	}
+
+/*	@Override
 	public List<Ajdbxt_police> findPoliceByPage(findPoliceByPageVO findPoliceByPage) {
 		// TODO Auto-generated method stub
 		List findPolicePyPage = userDao.findPoliceByPage(findPoliceByPage);
 		return findPolicePyPage;
-	}
+	}*/
 
 
 

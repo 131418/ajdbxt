@@ -25,7 +25,9 @@ public interface UserService {
 
 	List<Ajdbxt_police> blurSearch(Ajdbxt_police ajdbxt_police);
 
-	List<Ajdbxt_police> findPoliceByPage(findPoliceByPageVO findPoliceByPage);
+	/*List<Ajdbxt_police> findPoliceByPage(findPoliceByPageVO findPoliceByPage);*/
+	
+	public findPoliceByPageVO queryForPage(int pageSize, int currentPage);
 	
 	
 
