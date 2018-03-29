@@ -130,11 +130,11 @@ public class UserAction extends ActionSupport {
 		}
 	}
 
-	// 分页查询
-	public void findPoliceByPage() {
-		List findPolicePyPage = userService.findPoliceByPage(findPoliceByPage);
+	// 分页查询	
+	public String queryForPage() {
+	        this.findPoliceByPageVO = userService.queryForPage(10, page);
+	        return "newsList";
 	}
-
 	public Ajdbxt_police getAjdbxt_police() {
 		return ajdbxt_police;
 	}
@@ -142,5 +142,31 @@ public class UserAction extends ActionSupport {
 	public void setAjdbxt_police(Ajdbxt_police ajdbxt_police) {
 		this.ajdbxt_police = ajdbxt_police;
 	}
+	
+	
+	
+	/********************分页***********************/
+	private int page;
+    private findPoliceByPageVO findPoliceByPageVO;
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public findPoliceByPageVO getFindPoliceByPageVO() {
+		return findPoliceByPageVO;
+	}
+
+	public void setFindPoliceByPageVO(findPoliceByPageVO findPoliceByPageVO) {
+		this.findPoliceByPageVO = findPoliceByPageVO;
+	}
+	
+
+    
+    
 
 }

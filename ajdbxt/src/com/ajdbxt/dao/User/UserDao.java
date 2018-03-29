@@ -24,5 +24,9 @@ public interface UserDao {
 
 	List<Ajdbxt_police> blurSearch(Ajdbxt_police ajdbxt_police);
 
-	List<Ajdbxt_police> findPoliceByPage(findPoliceByPageVO findPoliceByPage); 
+	/*List<Ajdbxt_police> findPoliceByPage(findPoliceByPageVO findPoliceByPage); */
+	//分页查询
+	public List<Ajdbxt_police> queryForPage(String hql,int offset,int length);
+	//总记录条数
+	public int getCount(String hql);
 }
