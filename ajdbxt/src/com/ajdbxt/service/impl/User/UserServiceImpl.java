@@ -23,19 +23,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String findPolice(String username, String password) {
-		Ajdbxt_police ajdbxt_user = userDao.findPolice(username, password);
-		return null;
-	}
-
-	@Override
 	public Object login(String policeSerialNumber, String policePassword) {
 		
 		//用传过来的用户名密码查询，将得到的结果放到ajdbxt_user
-		Ajdbxt_police ajdbxt_police = userDao.findPolice(policeSerialNumber,policePassword);
+		Ajdbxt_police ajdbxt_police = userDao.findPolice(policeSerialNumber);
 		//比对是否存在该用户，如果不存在则ajdbxt_user为空
 		if(null==ajdbxt_police) {
-			return  "error";
+			return "error";
 		}else {
 			//将穿过来的密码进行加密，与ajdbxt_user里面的密码进行比对
 			if(!md5.GetMD5Code(policePassword).equals(ajdbxt_police.getPolicePassword())) {

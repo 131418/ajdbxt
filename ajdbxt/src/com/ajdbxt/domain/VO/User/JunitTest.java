@@ -12,6 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.ajdbxt.domain.DO.Ajdbxt_police;
 import com.ajdbxt.service.User.UserService;
 import com.google.gson.Gson;
+import com.opensymphony.xwork2.ActionContext;
+
+import util.md5;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContext*.xml" })
@@ -68,8 +71,20 @@ public class JunitTest {
 	@Test
 	public void Test_queryForPage() {
 		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
-		//List<Ajdbxt_police> currpage = userService.queryForPage(10, page);
-		//System.out.println(new Gson().toJson(currpage));
+		/*List<Ajdbxt_police> currpage = userService.queryForPage(10, page);
+		System.out.println(new Gson().toJson(currpage));*/
+	}
+	@Test
+	public void Test_login() {
+		Object loginPolice = userService.login("040827","11111");
+		System.out.println(loginPolice);
+		String result = null;
+		if (loginPolice instanceof String) {
+			result = "error";
+		} else {
+			result = "success";
+		}
+		System.out.println(result);
 	}
 
 }

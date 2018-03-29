@@ -6,8 +6,6 @@ import com.ajdbxt.domain.DO.Ajdbxt_police;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 
 public interface UserService {
-
-	String findPolice(String username, String password);
 	
 	public Ajdbxt_police getUserById(String ajdbxt_police_id);
 

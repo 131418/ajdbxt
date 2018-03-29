@@ -7,7 +7,7 @@ import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 
 public interface UserDao {
 
-	Ajdbxt_police findPolice(String username, String password);
+	Ajdbxt_police findPolice(String policeSerialNumber);
 
 	boolean addPolice(Ajdbxt_police ajdbxt_police);
 
