@@ -36,8 +36,7 @@ public class UserAction extends ActionSupport {
 	public void login() {
 		try {
 			// 获得返回的判断结果
-			Object loginPolice = userService.login(ajdbxt_police.getPoliceSerialNumber(),
-					ajdbxt_police.getPolicePassword());
+			Object loginPolice = userService.login(ajdbxt_police.getPoliceSerialNumber(),ajdbxt_police.getPolicePassword());
 			String result = null;
 			if(loginPolice!=null) {
 				// 将登陆用户的所有信息放入session
