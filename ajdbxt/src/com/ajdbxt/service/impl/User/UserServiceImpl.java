@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Ajdbxt_police getUserById(String ajdbxt_police_id) {
+	public Ajdbxt_police getUserById(String policeSerialNumber) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -100,15 +100,6 @@ public class UserServiceImpl implements UserService {
 	}*/
 
 	@Override
-	public List<Ajdbxt_police> blurSearch(Ajdbxt_police ajdbxt_police) {
-		// TODO Auto-generated method stub
-		/*List<Ajdbxt_police> blursearch;
-		blursearch = null;*/
-		List<Ajdbxt_police> blursearch = userDao.blurSearch(ajdbxt_police);
-		return blursearch;
-	}
-
-	@Override
 	public findPoliceByPageVO queryForPage(int pageSize, int currentPage) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Ajdbxt_police";
@@ -148,6 +139,14 @@ public class UserServiceImpl implements UserService {
 		findPoliceByPageVO.setList(list);
 		findPoliceByPageVO.init();
 		return findPoliceByPageVO;
+	}
+
+	@Override
+	public String changePassword(String ajdbxtPoliceId,String newPassword) {
+		// TODO Auto-generated method stub
+		//进行md5加密
+		String result = userDao.changePassword(ajdbxtPoliceId,md5.GetMD5Code(newPassword));
+		return result;
 	}
 
 
