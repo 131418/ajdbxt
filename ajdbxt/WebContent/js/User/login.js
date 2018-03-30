@@ -2,7 +2,7 @@
  * 
  */
 var xhr;
-
+   
 function login() {
 	getXhr();
 	console.log("11");
