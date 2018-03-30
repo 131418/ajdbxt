@@ -17,7 +17,7 @@ public interface UserService {
 
 	String updatePolice(Ajdbxt_police ajdbxt_police);
 
-	List<Ajdbxt_police> findPoliceByPoliceDepartment(String policeDepartment);
+	//List<Ajdbxt_police> findPoliceByPoliceDepartment(String policeDepartment);
 
 	/*List<Ajdbxt_police> findAllPolice();*/
 
@@ -26,6 +26,9 @@ public interface UserService {
 	/*List<Ajdbxt_police> findPoliceByPage(findPoliceByPageVO findPoliceByPage);*/
 	
 	public findPoliceByPageVO queryForPage(int pageSize, int currentPage);
+
+	public findPoliceByPageVO queryForPageByDepartment(int pageSize, int currentPage, String department);
+
 	
 	
 

@@ -80,14 +80,14 @@ public class UserDaoImpl implements UserDao {
 		return true;
 	}
 
-	@Override
+/*	@Override
 	public List<Ajdbxt_police> findPoliceByPoliceDepartment(String policeDepartment) {
 		// TODO Auto-generated method stub
 		String hql = "from Ajdbxt_police where policeDepartment  = '" + policeDepartment + "'";
 		Query query = getSession().createQuery(hql);
 		List<Ajdbxt_police> policeofdepartment = query.list();
 		return policeofdepartment;
-	}
+	}*/
 
 /*	@SuppressWarnings("unchecked")
 	@Override
@@ -120,6 +120,15 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		Query q = getSession().createQuery(hql);
 		return Integer.parseInt(q.list().get(0).toString());
+	}
+
+	@Override
+	public List<Ajdbxt_police> queryForPageByDepartment(String hql, int offset, int length) {
+		// TODO Auto-generated method stub
+		Query q = getSession().createQuery(hql);
+		q.setFirstResult(offset);
+		q.setMaxResults(length);
+		return q.list();
 	}
 
 /*	@Override

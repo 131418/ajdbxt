@@ -39,19 +39,37 @@ public class UserAction extends ActionSupport {
 			Object loginPolice = userService.login(ajdbxt_police.getPoliceSerialNumber(),
 					ajdbxt_police.getPolicePassword());
 			String result = null;
-			if (loginPolice instanceof String) {
-				result = "error";
-			} else {
+			if(loginPolice!=null) {
 				// 将登陆用户的所有信息放入session
 				ActionContext.getContext().getSession().put("loginPolice", loginPolice);
 				// Ajdbxt_police loginPolice_online = (Ajdbxt_police) loginPolice;
 				result = "success";
+			}else {
+				result = "error";
 			}
 			ServletActionContext.getResponse().getWriter().write(result);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	//登出
+	public String loginout() {
+		ActionContext.getContext().getSession().remove("loginPolice");
+		return "loginoutsucess";
+	}
+	
+	//判断权限
+	public String judgePower() {
+		return null;
+	}
+	//更改密码
+	public String changePassword() {
+		Ajdbxt_police loginPolice = (Ajdbxt_police)ActionContext.getContext().getSession().get("loginPolice");
+		String ajdbxtPoliceId = loginPolice.getAjdbxtPoliceId();
+		String policePassword = loginPolice.getPolicePassword();
+		//if(null!)
+		return "0";
 	}
 
 	// 添加操作
@@ -106,7 +124,7 @@ public class UserAction extends ActionSupport {
 	 * }
 	 */
 
-	// 按部门查询警员信息
+/*	// 按部门查询警员信息
 	public void findPoliceBypoliceDepartment() {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
@@ -119,7 +137,7 @@ public class UserAction extends ActionSupport {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	// 按搜索框内容进行模糊搜索
 	public void blurSearch() {
@@ -136,9 +154,23 @@ public class UserAction extends ActionSupport {
 
 	// 分页查询	
 	public String queryForPage() {
-	        this.findPoliceByPageVO = userService.queryForPage(10, page);
-	        return "newsList";
+	        this.findPoliceByPageVO = userService.queryForPage(10, currentPage);
+	        return "allpolicesList";
 	}
+	
+	//分页查询部门人员
+		public String queryForPageByDepartment() {
+			Ajdbxt_police loginPolice = (Ajdbxt_police)ActionContext.getContext().getSession().get("loginPolice");
+			String department = loginPolice.getPoliceDepartment();
+			this.findPoliceByPageVO = userService.queryForPageByDepartment(10, currentPage,department);
+			return "departmentlist";	
+		}
+		
+		
+		
+		
+		
+//Ajdbxt_police的getter\set方法
 	public Ajdbxt_police getAjdbxt_police() {
 		return ajdbxt_police;
 	}
@@ -150,15 +182,16 @@ public class UserAction extends ActionSupport {
 	
 	
 	/********************分页***********************/
-	private int page;
+	private int currentPage;
     private findPoliceByPageVO findPoliceByPageVO;
 
-	public int getPage() {
-		return page;
+
+	public int getCurrentPage() {
+		return currentPage;
 	}
 
-	public void setPage(int page) {
-		this.page = page;
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
 	}
 
 	public findPoliceByPageVO getFindPoliceByPageVO() {

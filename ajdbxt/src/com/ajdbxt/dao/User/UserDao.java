@@ -18,7 +18,7 @@ public interface UserDao {
 	boolean updatePolice(Ajdbxt_police ajdbxt_police);
 	/*void listPolice();*/
 
-	List<Ajdbxt_police> findPoliceByPoliceDepartment(String policeDepartment);
+	/*List<Ajdbxt_police> findPoliceByPoliceDepartment(String policeDepartment);*/
 
 	/*List<Ajdbxt_police> findAllPolice();*/
 
@@ -29,4 +29,6 @@ public interface UserDao {
 	public List<Ajdbxt_police> queryForPage(String hql,int offset,int length);
 	//总记录条数
 	public int getCount(String hql);
+
+	List<Ajdbxt_police> queryForPageByDepartment(String hql, int offset, int length);
 }

@@ -70,9 +70,8 @@ public class JunitTest {
 	}
 	@Test
 	public void Test_queryForPage() {
-		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
-		/*List<Ajdbxt_police> currpage = userService.queryForPage(10, page);
-		System.out.println(new Gson().toJson(currpage));*/
+		findPoliceByPageVO currentpage = userService.queryForPage(10, 3);
+		System.out.println(new Gson().toJson(currentpage));
 	}
 	@Test
 	public void Test_login() {
@@ -85,6 +84,11 @@ public class JunitTest {
 			result = "success";
 		}
 		System.out.println(result);
+	}
+	@Test
+	public void Test_queryForPageByDepartment() {
+		findPoliceByPageVO currentpage = userService.queryForPageByDepartment(10, 1,"法制大队");
+		System.out.println(new Gson().toJson(currentpage));
 	}
 
 }
