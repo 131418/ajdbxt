@@ -37,6 +37,10 @@
 <script src="<%=basePath%>js/jquery.slimscroll.min.js"></script>
 <script src="<%=basePath%>js/klorofil-common.js"></script>
 <!--------------------------------------------------------------------------------->
+<script type="text/javascript" src="<%=basePath %>js/User/updatePasswd.js"></script>
+<script type="text/javascript" src="<%=basePath %>js/User/judgePower.js"></script>
+<!--------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------->
 <!---页面公用------------------------------------------------------------------------------>
 <!--------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------->
@@ -44,9 +48,9 @@
 </head>
 <body>
 	<div id="wrapper">
-		<nav class="navbar navbar-default navbar-fixed-top">
+		<nav class="navbar navbar-default navbar-fixed-top" style="background-color:#13599d;">
 		<div
-			style="width: auto; float: left; line-height: 78px; margin: 0 0 0 30px; font-size: 30px;">刑事技术管理系统</div>
+			style="width: auto; float: left; line-height: 78px; margin: 0 0 0 30px; font-size: 30px; color:white;"><img alt="" src="<%=basePath%>img/hui.png">案件督办系统</div>
 		<div id="navbar-menu">
 			<ul class="nav navbar-nav navbar-left" style="margin: 0 0 0 20px">
 				<li class="dropdown" style="float: left;"><a
@@ -58,59 +62,27 @@
 						<i class="icon-submenu lnr lnr-chevron-down"></i>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="#">现场管理</a></li>
-						<li><a href="#">案件串并</a></li>
-						<li><a href="#">案件材料</a></li>
-						<li><a href="#">办案管理</a></li>
-						<li><a href="#">刑事破案</a></li>
+						<li><a href="#">录入案件</a></li>
+						<li><a href="#">案件列表</a></li>	
 					</ul></li>
 				<!--  -->
 				<li class="dropdown" style="float: left;"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown"> <span>检验鉴定</span>
-						<i class="icon-submenu lnr lnr-chevron-down"></i>
+					class="dropdown-toggle" data-toggle="dropdown"> <span>办案流程</span>
+						<!-- <i class="icon-submenu lnr lnr-chevron-down"></i> -->
 				</a>
-					<ul class="dropdown-menu">
-						<li><a href="#">委托书管理</a></li>
-						<li><a href="#">检验记录</a></li>
-						<li><a href="#">检验结果</a></li>
-					</ul></li>
-				<!--  -->
-				<li class="dropdown" style="float: left;"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown"> <span>队伍</span>
-						<i class="icon-submenu lnr lnr-chevron-down"></i>
-				</a>
-					<ul class="dropdown-menu">
-						<li class="teacher_control"><a href="#">值班管理</a></li>
-						<li class="teacher_control"><a href="#">人员管理</a></li>
-					</ul></li>
-				<!--  -->
-				<!--  -->
-				<li class="dropdown" style="float: left;"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown"> <span>技术</span>
-						<i class="icon-submenu lnr lnr-chevron-down"></i>
-				</a>
-					<ul class="dropdown-menu">
-						<li class="teacher_control"><a
-							href="<%=basePath%>DNA/DNAManagement_DNAManagementPage">DNA</a></li>
-						<li class="teacher_control"><a
-							href="<%=basePath%>FingerPrint/FingerPrintManagement_FingerPrintManagementPage">指纹</a></li>
-						<li class="teacher_control"><a
-							href="<%=basePath%>Equipment/EquipmentManagement_EquipmentManagementPage">器材装备</a></li>
-						<li class="teacher_control"><a
-							href="<%=basePath%>ContrastFingerPrint/ContrastFingerPrintManagement_ContrastFingerPrintManagementPage">比中指纹</a></li>
-					</ul></li>
-				<!--  -->
+				</li>
+				
 				<li class="dropdown" style="float: left;"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown"> <span>统计</span>
 						<i class="icon-submenu lnr lnr-chevron-down"></i>
 				</a>
 					<ul class="dropdown-menu">
-						<li class="teacher_control"><a href="#">办案统计</a></li>
-						<li class="teacher_control"><a href="#">检验统计</a></li>
+						<li class="teacher_control"><a href="#"></a></li>
+						<li class="teacher_control"><a href="#"></a></li>
 					</ul></li>
 				<!--  -->
 				<li class="dropdown" style="float: left;"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown"> <span>用户</span>
+					class="dropdown-toggle" data-toggle="dropdown"> <span>民警</span>
 				</a></li>
 				<!--  -->
 			</ul>
@@ -140,11 +112,42 @@
 			</ul>
 		</div>
 		</nav>
+		<!-------------------------------------------------修改密码---------------------------------------------------------------  -->
+			<div class="modal fade" id="updatePassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title">修改用户</h4>
+			      </div>
+			      <div class="modal-body">
+			      	 	<div id="passwordLoadingDiv" style="width: 319px; margin: 0 auto; display: none;">
+							<img alt="" src="<%=basePath %>img/loading.gif">
+						</div>
+			      		<div id="passwordContent">
+			      			<label>原始密码：</label>
+				      		<input id="oldPassword" type="password" class="form-control" placeholder="请输入旧密码">
+				      		<label>新密码：</label>
+				      		<input id="newPassword" type="password" class="form-control" placeholder="请输入新密码">
+				      		<label>再次输入：</label>
+				      		<input id="newPasswordAgain" type="password" class="form-control" placeholder="再次输入新密码">
+			      		</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button onclick="showPwContent()" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			        <button id="updatePwBtn" onclick="updatePw()" type="button" class="btn btn-primary">修改</button>
+			      </div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div>
 </body>
 <script type="text/javascript">
 	getUserSessionForAjax();
 </script>
 <style>
+#wrapper nav>div>ul>li>a{
+	color: white;
+}
 td {
 	line-height: 33px !important;
 }
