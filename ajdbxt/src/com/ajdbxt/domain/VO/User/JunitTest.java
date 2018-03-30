@@ -12,6 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.ajdbxt.domain.DO.Ajdbxt_police;
 import com.ajdbxt.service.User.UserService;
 import com.google.gson.Gson;
+import com.opensymphony.xwork2.ActionContext;
+
+import util.md5;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContext*.xml" })
@@ -34,7 +37,7 @@ public class JunitTest {
 	@Test
 	public void Test_addPolice() {
 		// ajdbxtPoliceId,policeSerialNumber,policePassword,policeName,policeDepartment,policeDuty,policePhoneNumber,policeGmtCreat,policeGmtModify
-		Ajdbxt_police ajdbxt_police = new Ajdbxt_police(null, "sss", "ss", "ss辉", "sss", "副局长", "18870581880",
+		Ajdbxt_police ajdbxt_police = new Ajdbxt_police(null, "999999", "999999", "ss辉", "sss", "副局长", "18870581880",
 				null, null,"1");
 		System.out.println(userService.addPolice(ajdbxt_police));
 		//System.out.println("000000000000"+ajdbxt_police+"0000000000000000000");
@@ -48,8 +51,8 @@ public class JunitTest {
 
 	@Test
 	public void Test_updatePolice() {
-		Ajdbxt_police ajdbxt_police = new Ajdbxt_police("6512b6e4-a859-4ca9-bb06-16ad99cdfcbf", "10086", "xijichen",
-				"按原大队", "123", "2", "嘟嘟", "2018-03-27 22:57:17", null, "1");
+		Ajdbxt_police ajdbxt_police = new Ajdbxt_police("0b3bb7c7-d682-4011-823d-31a470b07dce", "040800", "111111",
+				"易志伟", "法制大队", "大队长", "2", "18870581880", null, null);
 		System.out.println(userService.updatePolice(ajdbxt_police));
 	}
 /*@Test
@@ -68,8 +71,20 @@ public class JunitTest {
 	@Test
 	public void Test_queryForPage() {
 		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
-		//List<Ajdbxt_police> currpage = userService.queryForPage(10, page);
-		//System.out.println(new Gson().toJson(currpage));
+		/*List<Ajdbxt_police> currpage = userService.queryForPage(10, page);
+		System.out.println(new Gson().toJson(currpage));*/
+	}
+	@Test
+	public void Test_login() {
+		Object loginPolice = userService.login("040827","11111");
+		System.out.println(loginPolice);
+		String result = null;
+		if (loginPolice instanceof String) {
+			result = "error";
+		} else {
+			result = "success";
+		}
+		System.out.println(result);
 	}
 
 }

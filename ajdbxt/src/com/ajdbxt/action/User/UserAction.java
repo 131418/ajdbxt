@@ -26,6 +26,10 @@ public class UserAction extends ActionSupport {
 	}
 
 	public String indexPage() {
+		Ajdbxt_police loginPolice = (Ajdbxt_police)ActionContext.getContext().getSession().get("loginPolice");
+		if(null==loginPolice) {
+			return "login";
+		}
 		return "index";
 	}
 
@@ -165,8 +169,5 @@ public class UserAction extends ActionSupport {
 		this.findPoliceByPageVO = findPoliceByPageVO;
 	}
 	
-
-    
-    
 
 }

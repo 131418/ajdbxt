@@ -15,11 +15,11 @@ import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 public class UserDaoImpl implements UserDao {
 
 	@Override
-	public Ajdbxt_police findPolice(String username, String password) {
-		String hql = "from police where username = '" + username + "' and password = '" + password + "'";
+	public Ajdbxt_police findPolice(String policeSerialNumber) {
+		String hql = "from Ajdbxt_police where policeSerialNumber = '"+ policeSerialNumber +"'";
 		Query query = getSession().createQuery(hql);
-		police p = (police) query.uniqueResult();
-		return null;
+		Ajdbxt_police p = (Ajdbxt_police) query.uniqueResult();
+		return p;
 	}
 
 	private SessionFactory sessionFactory;
