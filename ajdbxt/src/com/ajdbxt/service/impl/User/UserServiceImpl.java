@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 			ajdbxt_police.setAjdbxtPoliceId(TeamUtil.getUuid());
 			ajdbxt_police.setPoliceGmtCreate(TeamUtil.getStringSecond());
 			ajdbxt_police.setPoliceGmtModify(TeamUtil.getStringSecond());
-		
+			ajdbxt_police.setPolicePassword(md5.GetMD5Code(ajdbxt_police.getPolicePassword()));
 			//返回保存结果
 			boolean result =  userDao.addPolice(ajdbxt_police);
 			if(result) {
@@ -80,6 +80,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String updatePolice(Ajdbxt_police ajdbxt_police) {
 		// TODO Auto-generated method stub
+		ajdbxt_police.setPoliceGmtModify(TeamUtil.getStringSecond());
+		ajdbxt_police.setPolicePassword(md5.GetMD5Code(ajdbxt_police.getPolicePassword()));
 		boolean result = userDao.updatePolice(ajdbxt_police);
 		return result?"success":"error";
 	}

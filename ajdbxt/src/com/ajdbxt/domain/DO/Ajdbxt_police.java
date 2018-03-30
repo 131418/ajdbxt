@@ -32,8 +32,8 @@ public class Ajdbxt_police implements java.io.Serializable {
 	/** full constructor */
 	public Ajdbxt_police(String ajdbxtPoliceId, String policeSerialNumber,
 			String policePassword, String policeName, String policeDepartment,
-			String policeDuty, String policePhoneNumber,
-			String policeGmtCreate, String policeGmtModify, String policePower) {
+			String policeDuty, String policePower, String policePhoneNumber,
+			String policeGmtCreate, String policeGmtModify) {
 		this.ajdbxtPoliceId = ajdbxtPoliceId;
 		this.policeSerialNumber = policeSerialNumber;
 		this.policePassword = policePassword;
