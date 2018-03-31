@@ -15,7 +15,6 @@ function login() {
 	xhr.send(formData);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState  == 4 && xhr.status == 200) {
-			console.log("4");
 			var result = xhr.responseText;
 			/*alert(xhr.responseText);*/
 			console.log(xhr.responseText);
