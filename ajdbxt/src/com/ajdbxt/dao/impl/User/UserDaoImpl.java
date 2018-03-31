@@ -134,7 +134,7 @@ public class UserDaoImpl implements UserDao {
 			e.printStackTrace();
 			return "failed";
 		}
-		return "sucess";
+		return "success";
 	}
 
 /*	@Override

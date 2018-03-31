@@ -57,7 +57,7 @@ public class UserAction extends ActionSupport {
 	// 登出
 	public String loginout() {
 		ActionContext.getContext().getSession().remove("loginPolice");
-		return "loginoutsucess";
+		return "loginoutsuccess";
 	}
 
 	// 判断权限
@@ -68,7 +68,7 @@ public class UserAction extends ActionSupport {
 	/**
 	 * 更改密码
 	 * 
-	 * @return sucess 更改成功
+	 * @return success 更改成功
 	 * @return failed 更改失败
 	 */
 	public void changePassword() {
@@ -84,7 +84,13 @@ public class UserAction extends ActionSupport {
 		}
 	}
 
-	// 添加操作
+	/**
+	 * 添加操作
+	 * 
+	 * @return success 添加成功
+	 * @return failed 用户已存在
+	 * 		error 添加失败
+	 */
 	public void addPolice() {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
@@ -98,7 +104,12 @@ public class UserAction extends ActionSupport {
 
 	}
 
-	// 删除操作
+	/**
+	 * 删除
+	 * 
+	 * @return success 删除成功
+	 * @return error 删除失败
+	 */
 	public void deletePolice() {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
@@ -111,7 +122,12 @@ public class UserAction extends ActionSupport {
 		}
 	}
 
-	// 修改操作
+	/**
+	 * 修改
+	 * 
+	 * @return success 修改成功
+	 * @return error 修改失败
+	 */
 	public void updatePolice() {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
