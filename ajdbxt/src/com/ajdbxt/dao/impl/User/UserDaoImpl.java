@@ -36,7 +36,7 @@ public class UserDaoImpl implements UserDao {
 	public boolean addPolice(Ajdbxt_police ajdbxt_police) {
 		// TODO Auto-generated method stub
 		try {
-			getSession().save(ajdbxt_police);
+			getSession().saveOrUpdate(ajdbxt_police);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,14 +80,14 @@ public class UserDaoImpl implements UserDao {
 		return true;
 	}
 
-	@Override
+/*	@Override
 	public List<Ajdbxt_police> findPoliceByPoliceDepartment(String policeDepartment) {
 		// TODO Auto-generated method stub
 		String hql = "from Ajdbxt_police where policeDepartment  = '" + policeDepartment + "'";
 		Query query = getSession().createQuery(hql);
 		List<Ajdbxt_police> policeofdepartment = query.list();
 		return policeofdepartment;
-	}
+	}*/
 
 /*	@SuppressWarnings("unchecked")
 	@Override
@@ -97,14 +97,6 @@ public class UserDaoImpl implements UserDao {
 		return findallpolice;
 	}
 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Ajdbxt_police> blurSearch(Ajdbxt_police ajdbxt_police) {
-		// TODO Auto-generated method stub
-		String hql = "from Ajdbxt_police where policeSerialNumber = '"+ajdbxt_police+"' or policeName like '%"+ajdbxt_police+"%'";//
-		List<Ajdbxt_police> blursearch = getSession().createQuery(hql).list();
-		return blursearch;
-	}
 
 	@Override
 	public List<Ajdbxt_police> queryForPage(String hql, int offset, int length) {
@@ -120,6 +112,29 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		Query q = getSession().createQuery(hql);
 		return Integer.parseInt(q.list().get(0).toString());
+	}
+
+	@Override
+	public List<Ajdbxt_police> queryForPageByDepartment(String hql, int offset, int length) {
+		// TODO Auto-generated method stub
+		Query q = getSession().createQuery(hql);
+		q.setFirstResult(offset);
+		q.setMaxResults(length);
+		return q.list();
+	}
+
+	@Override
+	public String changePassword(String ajdbxtPoliceId,String newPassword) {
+		// TODO Auto-generated method stub
+		try {
+			String hql = "update Ajdbxt_police set policePassword ='" + newPassword + "' where policeSerialNumber = '" + ajdbxtPoliceId + "'";
+			getSession().createQuery(hql).executeUpdate();
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "failed";
+		}
+		return "success";
 	}
 
 /*	@Override

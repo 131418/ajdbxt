@@ -26,21 +26,19 @@ public class JunitTest {
 		this.userService = userService;
 	}
 
-/*	@Test   这是一个复制当前用户表然后重新生成新的含有id和时间的用户表的方法
-	public void Test_excelImport() {
-		List<Ajdbxt_police> list = userService.findAllPolice();
-		for (Ajdbxt_police P : list) {
-			userService.addPolice(P);
-		}
-	}*/
+	/*
+	 * @Test 这是一个复制当前用户表然后重新生成新的含有id和时间的用户表的方法 public void Test_excelImport() {
+	 * List<Ajdbxt_police> list = userService.findAllPolice(); for (Ajdbxt_police P
+	 * : list) { userService.addPolice(P); } }
+	 */
 
 	@Test
 	public void Test_addPolice() {
 		// ajdbxtPoliceId,policeSerialNumber,policePassword,policeName,policeDepartment,policeDuty,policePhoneNumber,policeGmtCreat,policeGmtModify
 		Ajdbxt_police ajdbxt_police = new Ajdbxt_police(null, "999999", "999999", "ss辉", "sss", "副局长", "18870581880",
-				null, null,"1");
+				null, null, "1");
 		System.out.println(userService.addPolice(ajdbxt_police));
-		//System.out.println("000000000000"+ajdbxt_police+"0000000000000000000");
+		// System.out.println("000000000000"+ajdbxt_police+"0000000000000000000");
 	}
 
 	@Test
@@ -55,28 +53,21 @@ public class JunitTest {
 				"易志伟", "法制大队", "大队长", "2", "18870581880", null, null);
 		System.out.println(userService.updatePolice(ajdbxt_police));
 	}
-/*@Test
-	public void Test_findAllPolice() {
-		List<Ajdbxt_police> findallpolice = userService.findAllPolice();
-		//将插叙那结果转jsOn
-		System.out.println(new Gson().toJson(findallpolice));
-	}*/
-	@Test 
-	public void Test_blurSearch() {
-		Ajdbxt_police ajdbxt_police = new Ajdbxt_police("040914");
-		List<Ajdbxt_police> blursearch = userService.blurSearch(ajdbxt_police);
-		System.out.println(new Gson().toJson(blursearch));
-		System.out.println("000000000000"+ajdbxt_police+"0000000000000000000");
-	}
+
+	/*
+	 * @Test public void Test_findAllPolice() { List<Ajdbxt_police> findallpolice =
+	 * userService.findAllPolice(); //将插叙那结果转jsOn System.out.println(new
+	 * Gson().toJson(findallpolice)); }
+	 */
 	@Test
 	public void Test_queryForPage() {
-		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
-		/*List<Ajdbxt_police> currpage = userService.queryForPage(10, page);
-		System.out.println(new Gson().toJson(currpage));*/
+		findPoliceByPageVO currentpage = userService.queryForPage(10, 3);
+		System.out.println(new Gson().toJson(currentpage));
 	}
+
 	@Test
 	public void Test_login() {
-		Object loginPolice = userService.login("040827","11111");
+		Object loginPolice = userService.login("040827", "11111");
 		System.out.println(loginPolice);
 		String result = null;
 		if (loginPolice instanceof String) {
@@ -84,6 +75,17 @@ public class JunitTest {
 		} else {
 			result = "success";
 		}
+		System.out.println(result);
+	}
+
+	@Test
+	public void Test_queryForPageByDepartment() {
+		findPoliceByPageVO currentpage = userService.queryForPageByDepartment(10, 1, "法制大队");
+		System.out.println(new Gson().toJson(currentpage));
+	}
+	@Test
+	public void Test_changePassword() {
+		String result = userService.changePassword("041571", "111111");
 		System.out.println(result);
 	}
 

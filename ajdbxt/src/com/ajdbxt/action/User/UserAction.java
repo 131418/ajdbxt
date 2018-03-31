@@ -26,8 +26,8 @@ public class UserAction extends ActionSupport {
 	}
 
 	public String indexPage() {
-		Ajdbxt_police loginPolice = (Ajdbxt_police)ActionContext.getContext().getSession().get("loginPolice");
-		if(null==loginPolice) {
+		Ajdbxt_police loginPolice = (Ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+		if (null == loginPolice) {
 			return "login";
 		}
 		return "index";
@@ -39,13 +39,13 @@ public class UserAction extends ActionSupport {
 			Object loginPolice = userService.login(ajdbxt_police.getPoliceSerialNumber(),
 					ajdbxt_police.getPolicePassword());
 			String result = null;
-			if (loginPolice instanceof String) {
-				result = "error";
-			} else {
+			if (loginPolice != null) {
 				// 将登陆用户的所有信息放入session
 				ActionContext.getContext().getSession().put("loginPolice", loginPolice);
 				// Ajdbxt_police loginPolice_online = (Ajdbxt_police) loginPolice;
-				result = "success";
+				result = "success";// 登录成功
+			} else {
+				result = "error";// 用户名或密码错误
 			}
 			ServletActionContext.getResponse().getWriter().write(result);
 		} catch (IOException e) {
@@ -54,7 +54,43 @@ public class UserAction extends ActionSupport {
 		}
 	}
 
-	// 添加操作
+	// 登出
+	public String loginout() {
+		ActionContext.getContext().getSession().remove("loginPolice");
+		return "loginoutsuccess";
+	}
+
+	// 判断权限
+	public String judgePower() {
+		return null;
+	}
+
+	/**
+	 * 更改密码
+	 * 
+	 * @return success 更改成功
+	 * @return failed 更改失败
+	 */
+	public void changePassword() {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=utf-8");
+		Ajdbxt_police loginPolice = (Ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+		String result = userService.changePassword(loginPolice.getAjdbxtPoliceId(),
+				ajdbxt_police.getPolicePassword());
+		try {
+			response.getWriter().write(result);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 添加操作
+	 * 
+	 * @return success 添加成功
+	 * @return failed 用户已存在
+	 * 		error 添加失败
+	 */
 	public void addPolice() {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
@@ -68,7 +104,12 @@ public class UserAction extends ActionSupport {
 
 	}
 
-	// 删除操作
+	/**
+	 * 删除
+	 * 
+	 * @return success 删除成功
+	 * @return error 删除失败
+	 */
 	public void deletePolice() {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
@@ -81,7 +122,12 @@ public class UserAction extends ActionSupport {
 		}
 	}
 
-	// 修改操作
+	/**
+	 * 修改
+	 * 
+	 * @return success 修改成功
+	 * @return error 修改失败
+	 */
 	public void updatePolice() {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
@@ -106,39 +152,33 @@ public class UserAction extends ActionSupport {
 	 * }
 	 */
 
-	// 按部门查询警员信息
-	public void findPoliceBypoliceDepartment() {
-		try {
-			HttpServletResponse response = ServletActionContext.getResponse();
-			response.setContentType("text/html;charset=utf-8");
-			Ajdbxt_police ajdbxt_police = (Ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
-			List<Ajdbxt_police> policeofdepartment = userService
-					.findPoliceByPoliceDepartment(ajdbxt_police.getPoliceDepartment());
-			response.getWriter().write(new Gson().toJson(policeofdepartment));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	/*
+	 * // 按部门查询警员信息 public void findPoliceBypoliceDepartment() { try {
+	 * HttpServletResponse response = ServletActionContext.getResponse();
+	 * response.setContentType("text/html;charset=utf-8"); Ajdbxt_police
+	 * ajdbxt_police = (Ajdbxt_police)
+	 * ActionContext.getContext().getSession().get("loginPolice");
+	 * List<Ajdbxt_police> policeofdepartment = userService
+	 * .findPoliceByPoliceDepartment(ajdbxt_police.getPoliceDepartment());
+	 * response.getWriter().write(new Gson().toJson(policeofdepartment)); } catch
+	 * (IOException e) { // TODO Auto-generated catch block e.printStackTrace(); } }
+	 */
 
-	// 按搜索框内容进行模糊搜索
-	public void blurSearch() {
-		try {
-			HttpServletResponse response = ServletActionContext.getResponse();
-			response.setContentType("text/html;charset=utf-8");
-			List<Ajdbxt_police> blursearch = userService.blurSearch(ajdbxt_police);
-			response.getWriter().write(new Gson().toJson(blursearch));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	// 分页查询	
+	// 分页查询
 	public String queryForPage() {
-	        this.findPoliceByPageVO = userService.queryForPage(10, page);
-	        return "newsList";
+		this.findPoliceByPageVO = userService.queryForPage(10, currentPage);
+		return "allpolicesList";
 	}
+
+	// 分页查询部门人员
+	public String queryForPageByDepartment() {
+		Ajdbxt_police loginPolice = (Ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+		String department = loginPolice.getPoliceDepartment();
+		this.findPoliceByPageVO = userService.queryForPageByDepartment(10, currentPage, department);
+		return "departmentlist";
+	}
+
+	// Ajdbxt_police的getter\set方法
 	public Ajdbxt_police getAjdbxt_police() {
 		return ajdbxt_police;
 	}
@@ -146,19 +186,17 @@ public class UserAction extends ActionSupport {
 	public void setAjdbxt_police(Ajdbxt_police ajdbxt_police) {
 		this.ajdbxt_police = ajdbxt_police;
 	}
-	
-	
-	
-	/********************分页***********************/
-	private int page;
-    private findPoliceByPageVO findPoliceByPageVO;
 
-	public int getPage() {
-		return page;
+	/******************** 分页 ***********************/
+	private int currentPage;
+	private findPoliceByPageVO findPoliceByPageVO;
+
+	public int getCurrentPage() {
+		return currentPage;
 	}
 
-	public void setPage(int page) {
-		this.page = page;
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
 	}
 
 	public findPoliceByPageVO getFindPoliceByPageVO() {
@@ -168,6 +206,5 @@ public class UserAction extends ActionSupport {
 	public void setFindPoliceByPageVO(findPoliceByPageVO findPoliceByPageVO) {
 		this.findPoliceByPageVO = findPoliceByPageVO;
 	}
-	
 
 }

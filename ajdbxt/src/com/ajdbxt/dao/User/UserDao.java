@@ -18,15 +18,18 @@ public interface UserDao {
 	boolean updatePolice(Ajdbxt_police ajdbxt_police);
 	/*void listPolice();*/
 
-	List<Ajdbxt_police> findPoliceByPoliceDepartment(String policeDepartment);
+	/*List<Ajdbxt_police> findPoliceByPoliceDepartment(String policeDepartment);*/
 
 	/*List<Ajdbxt_police> findAllPolice();*/
 
-	List<Ajdbxt_police> blurSearch(Ajdbxt_police ajdbxt_police);
 
 	/*List<Ajdbxt_police> findPoliceByPage(findPoliceByPageVO findPoliceByPage); */
 	//分页查询
 	public List<Ajdbxt_police> queryForPage(String hql,int offset,int length);
 	//总记录条数
 	public int getCount(String hql);
+
+	List<Ajdbxt_police> queryForPageByDepartment(String hql, int offset, int length);
+
+	String changePassword(String ajdbxtPoliceId,String newPassword);
 }

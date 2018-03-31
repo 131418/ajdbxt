@@ -29,11 +29,11 @@ public class UserServiceImpl implements UserService {
 		Ajdbxt_police ajdbxt_police = userDao.findPolice(policeSerialNumber);
 		//比对是否存在该用户，如果不存在则ajdbxt_user为空
 		if(null==ajdbxt_police) {
-			return "error";
+			return null;
 		}else {
 			//将穿过来的密码进行加密，与ajdbxt_user里面的密码进行比对
 			if(!md5.GetMD5Code(policePassword).equals(ajdbxt_police.getPolicePassword())) {
-				return "error";
+				return null;
 			}else {
 				return  ajdbxt_police;
 			}
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Ajdbxt_police getUserById(String ajdbxt_police_id) {
+	public Ajdbxt_police getUserById(String policeSerialNumber) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -86,27 +86,18 @@ public class UserServiceImpl implements UserService {
 		return result?"success":"error";
 	}
 
-	@Override
+/*	@Override
 	public List<Ajdbxt_police> findPoliceByPoliceDepartment(String policeDepartment) {
 		// TODO Auto-generated method stub
 		List<Ajdbxt_police> policeofdepartment  = userDao.findPoliceByPoliceDepartment(policeDepartment);
 		return policeofdepartment;
-	}
+	}*/
 
 /*	@Override
 	public List<Ajdbxt_police> findAllPolice() {
 		List<Ajdbxt_police> findallpolice = userDao.findAllPolice();
 		return findallpolice;
 	}*/
-
-	@Override
-	public List<Ajdbxt_police> blurSearch(Ajdbxt_police ajdbxt_police) {
-		// TODO Auto-generated method stub
-		/*List<Ajdbxt_police> blursearch;
-		blursearch = null;*/
-		List<Ajdbxt_police> blursearch = userDao.blurSearch(ajdbxt_police);
-		return blursearch;
-	}
 
 	@Override
 	public findPoliceByPageVO queryForPage(int pageSize, int currentPage) {
@@ -116,12 +107,12 @@ public class UserServiceImpl implements UserService {
 		int totalPage = findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数
 		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
 		int length = pageSize; // 每页记录数
-		int curpage = findPoliceByPageVO.countCurrentPage(currentPage);
+		int currentpage = findPoliceByPageVO.countCurrentPage(currentPage);
 		List<Ajdbxt_police> list = userDao.queryForPage("from Ajdbxt_police", offset, length); // 该分页的记录
 		// 把分页信息保存到Bean中
 		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
 		findPoliceByPageVO.setPageSize(pageSize);
-		findPoliceByPageVO.setCurrentPage(currentPage);
+		findPoliceByPageVO.setCurrentPage(currentpage);
 		findPoliceByPageVO.setAllRow(count);
 		findPoliceByPageVO.setTotalPage(totalPage);
 		findPoliceByPageVO.setList(list);
@@ -129,12 +120,35 @@ public class UserServiceImpl implements UserService {
 		return findPoliceByPageVO;
 	}
 
-/*	@Override
-	public List<Ajdbxt_police> findPoliceByPage(findPoliceByPageVO findPoliceByPage) {
+	@Override
+	public findPoliceByPageVO queryForPageByDepartment(int pageSize, int currentPage, String department) {
 		// TODO Auto-generated method stub
-		List findPolicePyPage = userDao.findPoliceByPage(findPoliceByPage);
-		return findPolicePyPage;
-	}*/
+		String hql = "select count(*) from Ajdbxt_police where policeDepartment ='"+department+"'";
+		int count = userDao.getCount(hql); // 总记录数
+		int totalPage = findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数
+		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
+		int length = pageSize; // 每页记录数
+		int currentpage = findPoliceByPageVO.countCurrentPage(currentPage);
+		List<Ajdbxt_police> list = userDao.queryForPageByDepartment("from Ajdbxt_police where policeDepartment ='"+department+"'", offset, length); // 该分页的记录
+		// 把分页信息保存到Bean中
+		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
+		findPoliceByPageVO.setPageSize(pageSize);
+		findPoliceByPageVO.setCurrentPage(currentpage);
+		findPoliceByPageVO.setAllRow(count);
+		findPoliceByPageVO.setTotalPage(totalPage);
+		findPoliceByPageVO.setList(list);
+		findPoliceByPageVO.init();
+		return findPoliceByPageVO;
+	}
+
+	@Override
+	public String changePassword(String ajdbxtPoliceId,String newPassword) {
+		// TODO Auto-generated method stub
+		//进行md5加密
+		String result = userDao.changePassword(ajdbxtPoliceId,md5.GetMD5Code(newPassword));
+		return result;
+	}
+
 
 
 
