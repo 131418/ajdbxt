@@ -45,6 +45,10 @@
 <!--------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------->
 <title>Insert title here</title>
+<style type="text/css">
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+    background-color: #1c60ab; }
+</style>
 </head>
 <body>
 	<div id="wrapper">

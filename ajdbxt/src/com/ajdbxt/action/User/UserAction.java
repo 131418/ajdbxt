@@ -43,9 +43,14 @@ public class UserAction extends ActionSupport {
 				ActionContext.getContext().getSession().put("loginPolice", loginPolice);
 				// Ajdbxt_police loginPolice_online = (Ajdbxt_police) loginPolice;
 				result = "success";
+				System.out.println("success");
 			}else {
 				result = "error";
 			}
+			/*
+			 * 张斌说，一定要写这一行代码，不论有没有中文
+			 */
+			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 			ServletActionContext.getResponse().getWriter().write(result);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -112,6 +117,15 @@ public class UserAction extends ActionSupport {
 
 	}
 
+	
+	public String index() {
+		return "index";
+	}
+
+	public String navbar() {
+		return "navbar";
+	}
+	
 	/*
 	 * // 列出警员表 public void findAllPolice() { try { HttpServletResponse response =
 	 * ServletActionContext.getResponse();

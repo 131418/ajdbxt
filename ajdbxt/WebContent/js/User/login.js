@@ -2,21 +2,22 @@
  * 
  */
 var xhr;
-   
+
 function login() {
 	getXhr();
 	console.log("11");
-	var username = document.getElementById("username").value;
+	var userNumber = document.getElementById("userNumber").value;
 	var password = document.getElementById("password").value;
-	xhr.open("POST", "/ajdbxt/user/User_login", "true");
+	xhr.open("POST", "/ajdbxt/user/User_login");
 	var formData = new FormData();
-	formData.append("ajdbxt_police.policeName", username);
+	formData.append("ajdbxt_police.policeSerialNumber", userNumber);
 	formData.append("ajdbxt_police.policePassword", password);
 	xhr.send(formData);
 	xhr.onreadystatechange = function() {
-		if (xhr.onreadystate == 4 && xhr.status == 200) {
+		if (xhr.readyState  == 4 && xhr.status == 200) {
 			console.log("4");
 			var result = xhr.responseText;
+			alert(xhr.responseText);
 			console.log(xhr.responseText);
 			if (result == "success") {
 				window.location = "/ajdbxt/user/User_indexPage";
@@ -25,6 +26,7 @@ function login() {
 			}
 		}
 	}
+	
 }
 
 function getXhr() {

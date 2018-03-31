@@ -39,7 +39,7 @@
 </head>
 <body background="<%=basePath%>img/Use_login.png"
 	style="background-position: center center; background-repeat: no-repeat;">
-	<input type="text" class="form-control" id="username"
+	<input type="text" class="form-control" id="userNumber"
 		style="width: 298px; height: 46px; margin-left: 743px; margin-top: 235px;">
 	<input type="password" class="form-control" id="password"
 		style="width: 298px; height: 46px; margin-left: 743px; margin-top: 18px;">
