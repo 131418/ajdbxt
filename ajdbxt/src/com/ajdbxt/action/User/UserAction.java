@@ -36,17 +36,22 @@ public class UserAction extends ActionSupport {
 	public void login() {
 		try {
 			// 获得返回的判断结果
-			Object loginPolice = userService.login(ajdbxt_police.getPoliceSerialNumber(),
-					ajdbxt_police.getPolicePassword());
+			Object loginPolice = userService.login(ajdbxt_police.getPoliceSerialNumber(),ajdbxt_police.getPolicePassword());
 			String result = null;
 			if (loginPolice != null) {
 				// 将登陆用户的所有信息放入session
 				ActionContext.getContext().getSession().put("loginPolice", loginPolice);
 				// Ajdbxt_police loginPolice_online = (Ajdbxt_police) loginPolice;
+
 				result = "success";// 登录成功
 			} else {
 				result = "error";// 用户名或密码错误
+
 			}
+			/*
+			 * 张斌说，一定要写这一行代码，不论有没有中文
+			 */
+			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 			ServletActionContext.getResponse().getWriter().write(result);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -141,6 +146,15 @@ public class UserAction extends ActionSupport {
 
 	}
 
+	
+	public String index() {
+		return "index";
+	}
+
+	public String navbar() {
+		return "navbar";
+	}
+	
 	/*
 	 * // 列出警员表 public void findAllPolice() { try { HttpServletResponse response =
 	 * ServletActionContext.getResponse();
