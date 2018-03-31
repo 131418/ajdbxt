@@ -47,7 +47,7 @@
 <title>Insert title here</title>
 <style type="text/css">
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-    background-color: #1c60ab; }
+    background-color: #0d4487; }
 </style>
 </head>
 <body>
@@ -58,7 +58,7 @@
 		<div id="navbar-menu">
 			<ul class="nav navbar-nav navbar-left" style="margin: 0 0 0 20px">
 				<li class="dropdown" style="float: left;"><a
-					href="<%=basePath%>loginLogout/LoginLogoutManagement_index"> <span>首页</span>
+					href="<%=basePath%>user/User_index"> <span>首页</span>
 				</a></li>
 				<!--  -->
 				<li class="leader_control dropdown" style="float: left;"><a
@@ -108,7 +108,7 @@
 						<li><a href="#"> <i class="lnr lnr-lock"></i> <span>修改密码</span>
 						</a></li>
 						<li><a
-							href="<%=basePath%>loginLogout/LoginLogoutManagement_logout">
+							href="<%=basePath%>user/User_loginout">
 								<i class="lnr lnr-exit"></i> <span>退出登录</span>
 						</a></li>
 					</ul></li>
