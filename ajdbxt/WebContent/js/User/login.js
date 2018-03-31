@@ -21,7 +21,7 @@ function login() {
 			if (result == "success") {
 				window.location = "/ajdbxt/user/User_indexPage";
 			} else {
-				toastr.error("用户名或密码输入错误！");
+				toastr.error("用户名或密码错误！");
 			}
 		}
 	}
