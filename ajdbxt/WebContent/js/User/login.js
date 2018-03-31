@@ -10,13 +10,14 @@ function login() {
 	var password = document.getElementById("password").value;
 	xhr.open("POST", "/ajdbxt/user/User_login", "true");
 	var formData = new FormData();
-	formData.append("username", username);
-	formData.append("password", password);
+	formData.append("ajdbxt_police.policeName", username);
+	formData.append("ajdbxt_police.policePassword", password);
 	xhr.send(formData);
 	xhr.onreadystatechange = function() {
 		if (xhr.onreadystate == 4 && xhr.status == 200) {
-			console.log(xhr.onreadystate);
+			console.log("4");
 			var result = xhr.responseText;
+			console.log(xhr.responseText);
 			if (result == "success") {
 				window.location = "/ajdbxt/user/User_indexPage";
 			} else {
