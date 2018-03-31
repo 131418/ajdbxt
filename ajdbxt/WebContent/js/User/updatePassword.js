@@ -21,8 +21,11 @@ function updatePassword() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				var result = xhr.responseText;
 				if (result == "success") {
-					toastr.success("修改成功！");
-					window.location = "/ajdbxt/user/User_login";
+					toastr.success("修改成功,请重新登录！");
+					setTimeout(function(){
+						window.location = "/ajdbxt/user/User_loginout";
+					},1000)
+					
 				} else {
 					toastr.error("修改失败！");
 				}
