@@ -11,7 +11,8 @@
 			<result name="navbar">/WEB-INF/view/navbar.jsp
 			</result>
 			<result name="SUCCESS">/success.jsp</result>
-			<result name="FALSE">false.jsp</result>
+			<result name="FALSE">/false.jsp</result>
+			<result name="login">/login.jsp</result>
 		</action>
 	</package>
 </struts>
