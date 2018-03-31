@@ -7,7 +7,7 @@ import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 
 public interface UserService {
 	
-	public Ajdbxt_police getUserById(String ajdbxt_police_id);
+	public Ajdbxt_police getUserById(String policeSerialNumber);
 
 	Object login(String policeSerialNumber, String policePassword);
 
@@ -21,13 +21,13 @@ public interface UserService {
 
 	/*List<Ajdbxt_police> findAllPolice();*/
 
-	List<Ajdbxt_police> blurSearch(Ajdbxt_police ajdbxt_police);
-
 	/*List<Ajdbxt_police> findPoliceByPage(findPoliceByPageVO findPoliceByPage);*/
 	
 	public findPoliceByPageVO queryForPage(int pageSize, int currentPage);
 
 	public findPoliceByPageVO queryForPageByDepartment(int pageSize, int currentPage, String department);
+
+	public String changePassword(String ajdbxtPoliceId, String newPassword);
 
 	
 	

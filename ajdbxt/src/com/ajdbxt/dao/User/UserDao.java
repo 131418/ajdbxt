@@ -22,7 +22,6 @@ public interface UserDao {
 
 	/*List<Ajdbxt_police> findAllPolice();*/
 
-	List<Ajdbxt_police> blurSearch(Ajdbxt_police ajdbxt_police);
 
 	/*List<Ajdbxt_police> findPoliceByPage(findPoliceByPageVO findPoliceByPage); */
 	//分页查询
@@ -31,4 +30,6 @@ public interface UserDao {
 	public int getCount(String hql);
 
 	List<Ajdbxt_police> queryForPageByDepartment(String hql, int offset, int length);
+
+	String changePassword(String ajdbxtPoliceId,String newPassword);
 }
