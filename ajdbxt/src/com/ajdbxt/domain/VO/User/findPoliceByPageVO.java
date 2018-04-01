@@ -2,8 +2,6 @@ package com.ajdbxt.domain.VO.User;
 
 import java.util.List;
 
-import com.ajdbxt.domain.DO.Ajdbxt_police;
-
 public class findPoliceByPageVO {
 	
 	private List list;//要返回的某一页的记录列表
