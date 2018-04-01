@@ -9,8 +9,6 @@ import org.hibernate.SessionFactory;
 
 import com.ajdbxt.dao.User.UserDao;
 import com.ajdbxt.domain.DO.Ajdbxt_police;
-import com.ajdbxt.domain.DO.police;
-import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 
 public class UserDaoImpl implements UserDao {
 
