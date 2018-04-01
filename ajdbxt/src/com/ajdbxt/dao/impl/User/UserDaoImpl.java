@@ -125,7 +125,7 @@ public class UserDaoImpl implements UserDao {
 	public String changePassword(String ajdbxtPoliceId,String newPassword) {
 		// TODO Auto-generated method stub
 		try {
-			String hql = "update Ajdbxt_police set policePassword ='" + newPassword + "' where policeSerialNumber = '" + ajdbxtPoliceId + "'";
+			String hql = "update Ajdbxt_police set policePassword ='" + newPassword + "' where ajdbxtPoliceId = '" + ajdbxtPoliceId + "'";
 			getSession().createQuery(hql).executeUpdate();
 		} catch (HibernateException e) {
 			// TODO Auto-generated catch block
