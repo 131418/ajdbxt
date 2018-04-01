@@ -28,7 +28,7 @@ public class UserAction extends ActionSupport {
 	public String indexPage() {
 		Ajdbxt_police loginPolice = (Ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
 		if (null == loginPolice) {
-			return "login";
+			return "login";//回到登录界面
 		}
 		return "index";
 	}
@@ -62,13 +62,9 @@ public class UserAction extends ActionSupport {
 	// 登出
 	public String loginout() {
 		ActionContext.getContext().getSession().remove("loginPolice");
-		return "loginoutsuccess";
+		return "login";//回到登录界面
 	}
 
-	// 判断权限
-	public String judgePower() {
-		return null;
-	}
 
 	/**
 	 * 更改密码
@@ -180,16 +176,20 @@ public class UserAction extends ActionSupport {
 
 	// 分页查询
 	public String queryForPage() {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=utf-8");
 		this.findPoliceByPageVO = userService.queryForPage(10, currentPage);
-		return "allpolicesList";
+		return "findPoliceByPageVO";
 	}
 
 	// 分页查询部门人员
 	public String queryForPageByDepartment() {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=utf-8");
 		Ajdbxt_police loginPolice = (Ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
 		String department = loginPolice.getPoliceDepartment();
 		this.findPoliceByPageVO = userService.queryForPageByDepartment(10, currentPage, department);
-		return "departmentlist";
+		return "findPoliceByPageVO";
 	}
 
 	// Ajdbxt_police的getter\set方法
