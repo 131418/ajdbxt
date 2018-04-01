@@ -175,21 +175,31 @@ public class UserAction extends ActionSupport {
 	 */
 
 	// 分页查询
-	public String queryForPage() {
-		HttpServletResponse response = ServletActionContext.getResponse();
-		response.setContentType("text/html;charset=utf-8");
-		this.findPoliceByPageVO = userService.queryForPage(10, currentPage);
-		return "findPoliceByPageVO";
+	public void queryForPage() {
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			this.findPoliceByPageVO = userService.queryForPage(10, currentPage);
+			response.getWriter().write(new Gson().toJson(this.findPoliceByPageVO));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// 分页查询部门人员
-	public String queryForPageByDepartment() {
-		HttpServletResponse response = ServletActionContext.getResponse();
-		response.setContentType("text/html;charset=utf-8");
-		Ajdbxt_police loginPolice = (Ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
-		String department = loginPolice.getPoliceDepartment();
-		this.findPoliceByPageVO = userService.queryForPageByDepartment(10, currentPage, department);
-		return "findPoliceByPageVO";
+	public void queryForPageByDepartment() {
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			Ajdbxt_police loginPolice = (Ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+			String department = loginPolice.getPoliceDepartment();
+			this.findPoliceByPageVO = userService.queryForPageByDepartment(10, currentPage, department);
+			response.getWriter().write(new Gson().toJson(this.findPoliceByPageVO));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// Ajdbxt_police的getter\set方法
