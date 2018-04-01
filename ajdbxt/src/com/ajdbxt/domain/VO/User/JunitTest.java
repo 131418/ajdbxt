@@ -1,7 +1,5 @@
 package com.ajdbxt.domain.VO.User;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -12,9 +10,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.ajdbxt.domain.DO.Ajdbxt_police;
 import com.ajdbxt.service.User.UserService;
 import com.google.gson.Gson;
-import com.opensymphony.xwork2.ActionContext;
-
-import util.md5;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContext*.xml" })
@@ -43,7 +38,7 @@ public class JunitTest {
 
 	@Test
 	public void Test_deletePolice() {
-		Ajdbxt_police ajdbxt_police = new Ajdbxt_police("7066a0c6-3615-469c-92ec-2cac763e23ad");
+		Ajdbxt_police ajdbxt_police = new Ajdbxt_police("b1874c0f-557b-4f7f-a57e-973b74adc9b9");
 		System.out.println(userService.deletePolice(ajdbxt_police));
 	}
 
