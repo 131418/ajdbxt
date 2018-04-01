@@ -3,7 +3,7 @@
  */
 var xhr;
 
-function login() {
+function login() {    
 	getXhr();
 	var userNumber = document.getElementById("userNumber").value;
 	var password = document.getElementById("password").value;
