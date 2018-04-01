@@ -6,8 +6,8 @@
 	<package name="Total" namespace="/total" extends="struts-default">
 		<action name="Total_*" class="com.ajdbxt.action.Total.TotalAction"
 			method="{1}">
-			<result name="findPoliceByPageVO" type="json">
-				<param name="root">findPoliceByPageVO</param>
+			<result name="findInfoByPageVO" type="json">
+				<param name="root">findInfoByPageVO</param>
 			</result>
 		</action>
 	</package>
