@@ -18,7 +18,7 @@ function login() {
 			/*alert(xhr.responseText);*/
 			console.log(xhr.responseText);
 			if (result == "success") {
-				toastr.success("登录成功！");
+				/*toastr.success("登录成功！");*/
 				window.location = "/ajdbxt/user/User_indexPage";
 			} else {
 				toastr.error("用户名或密码错误！");

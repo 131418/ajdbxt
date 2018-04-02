@@ -100,7 +100,7 @@
 				<!--  -->
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown"> <i class="fa fa-user-circle"></i> <span
-						id="USER_NAME">龙建平</span> <i
+						id="USER_NAME">李丁胜</span> <i
 						class="icon-submenu lnr lnr-chevron-down"></i>
 				</a>
 					<ul class="dropdown-menu">
