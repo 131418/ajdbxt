@@ -90,8 +90,8 @@
 						<li class="teacher_control"><a href="#"></a></li>
 					</ul></li>
 				<!--  -->
-				<li class="dropdown" style="float: left;"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown"> <span>民警</span>
+				<li class="dropdown" style="float: left;"><a href="<%=basePath %>view/user/ajdbxt_police.jsp"
+					class="dropdown-toggle" data-toggle="dropdown"> <span>人员</span>
 				</a></li>
 				<!--  -->
 			</ul>
