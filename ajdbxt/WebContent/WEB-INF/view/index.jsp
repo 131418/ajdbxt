@@ -23,7 +23,7 @@
 	<div style="margin: 80px 0 0 0; float: left; width: 100%;">
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
-			<div class="panel-heading">
+			<div class="panel-heading">    
 				<h3 class="panel-title">首页</h3>
 			</div>
 			<div class="panel-body">
