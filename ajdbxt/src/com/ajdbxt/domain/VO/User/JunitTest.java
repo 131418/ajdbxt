@@ -80,7 +80,7 @@ public class JunitTest {
 	}
 	@Test
 	public void Test_changePassword() {
-		String result = userService.changePassword("1173da54-bd49-4e07-a037-fb0a6065ad1e", "222222");
+		String result = userService.changePassword("1173da54-bd49-4e07-a037-fb0a6065ad1e", "111111");
 		System.out.println(result);
 	}
 
