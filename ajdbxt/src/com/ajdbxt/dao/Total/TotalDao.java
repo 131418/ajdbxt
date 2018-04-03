@@ -2,14 +2,14 @@ package com.ajdbxt.dao.Total;
 
 import java.util.List;
 
-import com.ajdbxt.domain.DO.Ajdbxt_info;
+import com.ajdbxt.domain.DO.ajdbxt_info;
 
 public interface TotalDao {
 
-	List<Ajdbxt_info> listAllInfo(String hql, int offset, int length);
+	List<ajdbxt_info> listAllInfo(String hql, int offset, int length);
 
 	int getCount(String hql);
 
-	List<Ajdbxt_info> listInfoBySearch(String hql, int offset, int length);
+	List<ajdbxt_info> listInfoBySearch(String hql, int offset, int length);
 
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
-import com.ajdbxt.domain.DO.Ajdbxt_police;
+import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 import com.ajdbxt.service.User.UserService;
 import com.google.gson.Gson;
@@ -17,7 +17,7 @@ public class UserAction extends ActionSupport {
 
 	private UserService userService;
 
-	private Ajdbxt_police ajdbxt_police;// 前端传来 的信息封装到类里
+	private ajdbxt_police ajdbxt_police;// 前端传来 的信息封装到类里
 
 	private findPoliceByPageVO findPoliceByPage;
 
@@ -26,17 +26,23 @@ public class UserAction extends ActionSupport {
 	}
 
 	public String indexPage() {
-		Ajdbxt_police loginPolice = (Ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+		ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
 		if (null == loginPolice) {
 			return "login";//回到登录界面
 		}
 		return "index";
 	}
+	public String Nav() {
+		return "Nav";
+	}
+	public String userPage() {
+		return "userpage";
+	}
 
 	public void login() {
 		try {
 			// 获得返回的判断结果
-			Object loginPolice = userService.login(ajdbxt_police.getPoliceSerialNumber(),ajdbxt_police.getPolicePassword());
+			Object loginPolice = userService.login(ajdbxt_police.getPolice_serial_number(),ajdbxt_police.getPolice_password());
 			String result = null;
 			if (loginPolice != null) {
 				// 将登陆用户的所有信息放入session
@@ -64,7 +70,18 @@ public class UserAction extends ActionSupport {
 		ActionContext.getContext().getSession().remove("loginPolice");
 		return "login";//回到登录界面
 	}
-
+	//获取权限
+	public void getPower() {
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+			response.getWriter().write(new Gson().toJson(loginPolice));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * 更改密码
@@ -75,9 +92,9 @@ public class UserAction extends ActionSupport {
 	public void changePassword() {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=utf-8");
-		Ajdbxt_police loginPolice = (Ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
-		String result = userService.changePassword(loginPolice.getAjdbxtPoliceId(),
-				ajdbxt_police.getPolicePassword());
+		ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+		String result = userService.changePassword(loginPolice.getAjdbxt_police_id(),
+				ajdbxt_police.getPolice_password());
 		try {
 			response.getWriter().write(result);
 		} catch (IOException e) {
@@ -192,8 +209,8 @@ public class UserAction extends ActionSupport {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
 			response.setContentType("text/html;charset=utf-8");
-			Ajdbxt_police loginPolice = (Ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
-			String department = loginPolice.getPoliceDepartment();
+			ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+			String department = loginPolice.getPolice_department();
 			this.findPoliceByPageVO = userService.queryForPageByDepartment(10, currentPage, department);
 			response.getWriter().write(new Gson().toJson(this.findPoliceByPageVO));
 		} catch (IOException e) {
@@ -203,11 +220,11 @@ public class UserAction extends ActionSupport {
 	}
 
 	// Ajdbxt_police的getter\set方法
-	public Ajdbxt_police getAjdbxt_police() {
+	public ajdbxt_police getAjdbxt_police() {
 		return ajdbxt_police;
 	}
 
-	public void setAjdbxt_police(Ajdbxt_police ajdbxt_police) {
+	public void setAjdbxt_police(ajdbxt_police ajdbxt_police) {
 		this.ajdbxt_police = ajdbxt_police;
 	}
 
