@@ -37,14 +37,14 @@
 <!--------------------------------------------------------------------------------->
 <title>案件督办系统</title>      
 </head>
-<body background="<%=basePath%>img/Use_login.png"
+<body id="w" background="<%=basePath%>img/Use_login.png"
 	style="background-position: center center; background-repeat: no-repeat;">
 	<input type="text" class="form-control" id="userNumber"
-		style="width: 298px; height: 46px; margin-left: 743px; margin-top: 235px;">
+		style="width: 298px; height: 46px; margin-left: 658px; margin-top: 55px;">
 	<input type="password" class="form-control" id="password"
-		style="width: 298px; height: 46px; margin-left: 743px; margin-top: 18px;">
+		style="width: 298px; height: 46px; margin-left: 658px; margin-top: 18px;">
 	<button id="button_login"
-		style="border: 0px; background-color: #0B1D29; margin-left: 739px; margin-top: 31px;"
+		style="border: 0px; background-color: #0B1D29; margin-left: 658px; margin-top: 31px;"
 		onclick="login()">
 		<img src="<%=basePath%>img/login_button.png">
 	</button>

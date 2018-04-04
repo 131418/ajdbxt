@@ -56,7 +56,7 @@ public class JunitTest {
 	 */
 	@Test
 	public void Test_queryForPage() {
-		findPoliceByPageVO currentpage = userService.queryForPage(10, 3);
+		findPoliceByPageVO currentpage = userService.queryForPage(10, 1);
 		System.out.println(new Gson().toJson(currentpage));
 	}
 
