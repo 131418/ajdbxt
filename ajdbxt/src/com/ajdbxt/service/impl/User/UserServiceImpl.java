@@ -9,7 +9,7 @@ package com.ajdbxt.service.impl.User;
 import java.util.List;
 
 import com.ajdbxt.dao.User.UserDao;
-import com.ajdbxt.domain.DO.Ajdbxt_police;
+import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 import com.ajdbxt.service.User.UserService;
 
@@ -29,16 +29,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Object login(String policeSerialNumber, String policePassword) {
+	public Object login(String police_serial_number, String police_password) {
 
 		// 用传过来的用户名密码查询，将得到的结果放到ajdbxt_user
-		Ajdbxt_police ajdbxt_police = userDao.findPolice(policeSerialNumber);
+		ajdbxt_police ajdbxt_police = userDao.findPolice(police_serial_number);
 		// 比对是否存在该用户，如果不存在则ajdbxt_user为空
 		if (null == ajdbxt_police) {
 			return null;
 		} else {
 			// 将穿过来的密码进行加密，与ajdbxt_user里面的密码进行比对
-			if (!md5.GetMD5Code(policePassword).equals(ajdbxt_police.getPolicePassword())) {
+			if (!md5.GetMD5Code(police_password).equals(ajdbxt_police.getPolice_password())) {
 				return null;
 			} else {
 				return ajdbxt_police;
@@ -47,22 +47,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Ajdbxt_police getUserById(String policeSerialNumber) {
+	public ajdbxt_police getUserById(String police_serial_number) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String addPolice(Ajdbxt_police ajdbxt_police) {
+	public String addPolice(ajdbxt_police ajdbxt_police) {
 
-		Ajdbxt_police ajdbxt_police_number = userDao
-				.findPoliceByPoliceSerialNumber(ajdbxt_police.getPoliceSerialNumber());
+		ajdbxt_police ajdbxt_police_number = userDao
+				.findPoliceByPoliceSerialNumber(ajdbxt_police.getPolice_serial_number());
 		// 判断被添加用户是否已存在，不存在则执行
 		if (null == ajdbxt_police_number) {
-			ajdbxt_police.setAjdbxtPoliceId(TeamUtil.getUuid());
-			ajdbxt_police.setPoliceGmtCreate(TeamUtil.getStringSecond());
-			ajdbxt_police.setPoliceGmtModify(TeamUtil.getStringSecond());
-			ajdbxt_police.setPolicePassword(md5.GetMD5Code(ajdbxt_police.getPolicePassword()));
+			ajdbxt_police.setAjdbxt_police_id(TeamUtil.getUuid());
+			ajdbxt_police.setPolice_gmt_create(TeamUtil.getStringSecond());
+			ajdbxt_police.setPolice_gmt_modify(TeamUtil.getStringSecond());
+			ajdbxt_police.setPolice_password(md5.GetMD5Code(ajdbxt_police.getPolice_password()));;
 			// 返回保存结果
 			boolean result = userDao.addPolice(ajdbxt_police);
 			if (result) {
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String deletePolice(Ajdbxt_police ajdbxt_police) {
+	public String deletePolice(ajdbxt_police ajdbxt_police) {
 		// TODO Auto-generated method stub
 		boolean result = userDao.deletePolice(ajdbxt_police);
 		// 三目运算符
@@ -83,10 +83,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String updatePolice(Ajdbxt_police ajdbxt_police) {
+	public String updatePolice(ajdbxt_police ajdbxt_police) {
 		// TODO Auto-generated method stub
-		ajdbxt_police.setPoliceGmtModify(TeamUtil.getStringSecond());
-		ajdbxt_police.setPolicePassword(md5.GetMD5Code(ajdbxt_police.getPolicePassword()));
+		ajdbxt_police.setPolice_gmt_modify(TeamUtil.getStringSecond());
+		ajdbxt_police.setPolice_password(md5.GetMD5Code(ajdbxt_police.getPolice_password()));
 		boolean result = userDao.updatePolice(ajdbxt_police);
 		return result ? "success" : "error";
 	}
@@ -106,13 +106,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public findPoliceByPageVO queryForPage(int pageSize, int currentPage) {
 		// TODO Auto-generated method stub
-		String hql = "select count(*) from Ajdbxt_police";
+		String hql = "select count(*) from ajdbxt_police";
 		int count = userDao.getCount(hql); // 总记录数
 		int totalPage = findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数
 		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
 		int length = pageSize; // 每页记录数
 		int currentpage = findPoliceByPageVO.countCurrentPage(currentPage);
-		List<Ajdbxt_police> list = userDao.queryForPage("from Ajdbxt_police", offset, length); // 该分页的记录
+		List<ajdbxt_police> list = userDao.queryForPage("from ajdbxt_police", offset, length); // 该分页的记录
 		// 把分页信息保存到Bean中
 		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
 		findPoliceByPageVO.setPageSize(pageSize);
@@ -127,14 +127,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public findPoliceByPageVO queryForPageByDepartment(int pageSize, int currentPage, String department) {
 		// TODO Auto-generated method stub
-		String hql = "select count(*) from Ajdbxt_police where policeDepartment ='" + department + "'";
+		String hql = "select count(*) from ajdbxt_police where police_department ='" + department + "'";
 		int count = userDao.getCount(hql); // 总记录数
 		int totalPage = findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数
 		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
 		int length = pageSize; // 每页记录数
 		int currentpage = findPoliceByPageVO.countCurrentPage(currentPage);
-		List<Ajdbxt_police> list = userDao.queryForPageByDepartment(
-				"from Ajdbxt_police where policeDepartment ='" + department + "'", offset, length); // 该分页的记录
+		List<ajdbxt_police> list = userDao.queryForPageByDepartment(
+				"from ajdbxt_police where police_department ='" + department + "'", offset, length); // 该分页的记录
 		// 把分页信息保存到Bean中
 		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
 		findPoliceByPageVO.setPageSize(pageSize);

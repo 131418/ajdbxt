@@ -3,7 +3,18 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	
+	<bean id="totalAction" class="com.ajdbxt.action.Total.TotalAction"
+		scope="prototype">
+		<property name="totalService" ref="totalService"></property>
+	</bean>
+
+	<bean id="totalService" class="com.ajdbxt.service.impl.Total.TotalServiceImpl">
+		<property name="totalDao" ref="totalDao"></property>
+	</bean>
+
+	<bean id="totalDao" class="com.ajdbxt.dao.impl.Total.TotalDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 
 
 </beans>
