@@ -54,7 +54,7 @@
 			<div>
 				<img src="<%=basePath%>img/logo.jpg" height="40px">
 			</div>
-			<h2 style="text-align: center;">刑事技术管理系统</h2>
+			<h2 style="text-align: center;">案件督办系统</h2>
 		</div>
 		<div class="panel-body" style="margin: 0 0 20px 0;">
 			<div class="form-group">
@@ -68,4 +68,5 @@
 		</div>
 	</div> --%>
 </body>
+
 </html>

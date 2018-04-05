@@ -20,98 +20,70 @@
 	<!---------------------------------------------------------------------------------------------------->
 	<!---------------------------------------------------------------------------------------------------->
 	<div style="margin: 80px 0 0 0; float: left; width: 100%;">
-		<!--  -->
-		<!---------------------------------------------------------------------------------------------------->
-		<!---------------------------------------------------------------------------------------------------->
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
-			<div class="panel-heading">
-				<h3 class="panel-title">DNA信息管理</h3>
+			<div class="panel-heading">    
+				<h3 class="panel-title">首页</h3>
 			</div>
-			<!--  -->
 			<div class="panel-body">
-				<div style="height: 34px;">
-					<div style="width: 150px;  float: left; margin:0 20px 0 0">
-						<button class="btn btn-default" onclick="CreateDNA()">
-							<i class="fa fa-plus-square"></i> 新增DNA记录
-						</button>
+				<div class="operation" style="margin-bottom: 6px;">
+					<select id="type_chose"
+					style="width:220px; margin-left:15px; float: left;"
+					class="form-control" onchange="material(this)">
+					<!-- <option selected="selected" value="">请选择</option> -->
+					<option class="a" value="joinCase_table_info" selected="selected" >正在参与的案件</option>
+					<option class="a" value="checkCase_table_info">待核对案件</option>
+					<option class="a"  value="wsubmitCase_table_info">等待提交问题清单的案件</option>
+					<option class="a"  value="scoreCase_table_info">等待评分的案件</option> 
+					
+				</select> 
+				</div>
+				<div class="col-md-12">
+					<!-- TABLE HOVER -->
+					<div class="panel">
+						<div class="panel-heading">
+							<h3 class="panel-title">案件列表</h3>
+							
+						</div>
+						<div class="panel-body">
+							<table
+								class="table table-hover table-condensed breakcase_table_info">
+								<thead>
+									<tr>
+										<th>案件名称</th>
+										<th>案件类别</th>
+										<th>办案单位</th>
+										<th>抓获时间</th>
+										<th>主办民警</th>
+										<th>协办民警</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="8" style="font-size: 12px;" class="page_info"><a
+											onclick="firstPage()"><i class="fa fa-angle-double-left">首页</i>
+										</a>&nbsp&nbsp<a onclick="prePage()"><i
+												class="fa fa-angle-left"></i>上一页 </a>&nbsp&nbsp<a
+											onclick="nextPage()">下一页<i class="fa fa-angle-right"></i>
+										</a>&nbsp&nbsp <a onclick="lastPage()">尾页<i
+												class="fa fa-angle-double-right"></i>
+										</a> <br />
+											<p class='info'></p></td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
 					</div>
-					<!-- 检索 -->
-					<div class="input-group" style="width: 300px; float: right;">
-						<input id="input_DNASearchText" class="form-control"
-							oninput="List_DNA_By_PageAndSearch(1)" type="text"> <span
-							class="input-group-addon"> <i class="fa fa-search"></i>
-						</span>
-					</div>
-				</div>
-				<table id="table_DNA" class="table table-hover table-bordered"
-					style="text-align: center; margin: 20px 0;">
-					<tbody>
-						<tr>
-							<td>DNA编号</td>
-							<td>姓名</td>
-							<td>性别</td>
-							<td>出生日期</td>
-							<td>身份证号</td>
-							<td>住址</td>
-							<td>违法事实</td>
-							<td>操作</td>
-							<td><label class="fancy-checkbox"> <input
-									id="checkbox_all_select" type="checkbox" onclick="all_select()">
-									<span></span>
-							</label></td>
-						</tr>
-					</tbody>
-				</table>
-
-
-				<div id="i_pulse" style="text-align: center;">
-					<i class="fa fa-spinner fa-pulse fa-3x"></i>
+					<!-- END TABLE HOVER -->
 				</div>
 
-
-				<div style="height: 34px; margin: 0 0 20px 0;">
-
-					<button class="btn btn-danger" onclick="DeleteDNA()"
-						style="float: right; margin: 0 10px;">
-						<i class="fa fa-trash-o"></i> 删除所选
-					</button>
-
-				</div>
-				<div style="margin: 0 auto; width: 400px; text-align: center;">
-					<button id="button_HomePage" class="btn btn-default"
-						onclick="flip(1)">首页</button>
-					<button id="button_PrePage" class="btn btn-default"
-						onclick="flip(2)">上一页</button>
-					<button id="button_NextPage" class="btn btn-default"
-						onclick="flip(3)">下一页</button>
-					<button id="button_EndPage" class="btn btn-default"
-						onclick="flip(4)">尾页</button>
-				</div>
-				<div
-					style="margin: 20px auto 20px; width: 200px; text-align: center;">
-					第 <span id="span_pageIndex">1</span> 页 <br> 共 <span
-						id="span_totalPages">1</span> 页 <br> 共 <span
-						id="span_totalRecords">0</span> 条记录
-				</div>
 			</div>
-			<!--  -->
-
 		</div>
-		<!---------------------------------------------------------------------------------------------------->
-		<!---------------------------------------------------------------------------------------------------->
 	</div>
-
-	</div>
-	<!---------------------------------------------------------------------------------------------------->
-	<!---------------------------------------------------------------------------------------------------->
-	<!---------------------------------------------------------------------------------------------------->
+	
+	<script type="text/javascript" src="<%=basePath%>js/Index/indexCaseInfo.js"></script>
 </body>
-
-<script type="text/javascript" src="<%=basePath%>js/icheck.js"></script>
-<script type="text/javascript" src="<%=basePath%>js/Input_Select.js"></script>
-<script type="text/javascript" src="<%=basePath%>js/laydate/laydate.js"></script>
-<script src="/laydate/laydate.js"></script>
-<script type="text/javascript">
-</script>
 </html>
