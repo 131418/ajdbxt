@@ -21,9 +21,52 @@ public class UserAction extends ActionSupport {
 
 	private findPoliceByPageVO findPoliceByPage;
 
+	private int currentPage;
+	
+	private findPoliceByPageVO findPoliceByPageVO;
+	
+	private String ids[];
+	
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+
+
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+
+	public findPoliceByPageVO getFindPoliceByPageVO() {
+		return findPoliceByPageVO;
+	}
+
+	public void setFindPoliceByPageVO(findPoliceByPageVO findPoliceByPageVO) {
+		this.findPoliceByPageVO = findPoliceByPageVO;
+	}
+
+	// Ajdbxt_police的getter\set方法
+	public ajdbxt_police getAjdbxt_police() {
+		return ajdbxt_police;
+	}
+
+	public void setAjdbxt_police(ajdbxt_police ajdbxt_police) {
+		this.ajdbxt_police = ajdbxt_police;
+	}
+
+	public String[] getIds() {
+		return ids;
+	}
+
+
+	public void setIds(String[] ids) {
+		this.ids = ids;
+	}
+
+	
 
 	public String indexPage() {
 		ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
@@ -123,24 +166,6 @@ public class UserAction extends ActionSupport {
 	}
 
 	/**
-	 * 删除
-	 * 
-	 * @return success 删除成功
-	 * @return error 删除失败
-	 */
-	public void deletePolice() {
-		try {
-			HttpServletResponse response = ServletActionContext.getResponse();
-			response.setContentType("text/html;charset=utf-8");
-			String result = userService.deletePolice(ajdbxt_police);
-			response.getWriter().write(result);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * 修改
 	 * 
 	 * @return success 修改成功
@@ -158,38 +183,6 @@ public class UserAction extends ActionSupport {
 		}
 
 	}
-
-	
-	public String index() {
-		return "index";
-	}
-
-	public String navbar() {
-		return "navbar";
-	}
-	
-	/*
-	 * // 列出警员表 public void findAllPolice() { try { HttpServletResponse response =
-	 * ServletActionContext.getResponse();
-	 * response.setContentType("text/html;charset=utf-8"); List<Ajdbxt_police>
-	 * findallpolice = userService.findAllPolice(); //将list对象进行json转换
-	 * response.getWriter().write(new Gson().toJson(findallpolice)); } catch
-	 * (IOException e) { // TODO Auto-generated catch block e.printStackTrace(); }
-	 * 
-	 * }
-	 */
-
-	/*
-	 * // 按部门查询警员信息 public void findPoliceBypoliceDepartment() { try {
-	 * HttpServletResponse response = ServletActionContext.getResponse();
-	 * response.setContentType("text/html;charset=utf-8"); Ajdbxt_police
-	 * ajdbxt_police = (Ajdbxt_police)
-	 * ActionContext.getContext().getSession().get("loginPolice");
-	 * List<Ajdbxt_police> policeofdepartment = userService
-	 * .findPoliceByPoliceDepartment(ajdbxt_police.getPoliceDepartment());
-	 * response.getWriter().write(new Gson().toJson(policeofdepartment)); } catch
-	 * (IOException e) { // TODO Auto-generated catch block e.printStackTrace(); } }
-	 */
 
 	// 分页查询
 	public void queryForPage() {
@@ -218,34 +211,30 @@ public class UserAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
-
-	// Ajdbxt_police的getter\set方法
-	public ajdbxt_police getAjdbxt_police() {
-		return ajdbxt_police;
+	
+	//获取部门表
+	public void getDepartmentByPage() {
+		
+	}
+	
+	/**
+	 * 批量删除
+	 * 
+	 * @return success 删除成功
+	 * @return failed 删除失败
+	 */
+	public void batchDelete() {
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			String result = userService.batchDelete(ids);
+			response.getWriter().write(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public void setAjdbxt_police(ajdbxt_police ajdbxt_police) {
-		this.ajdbxt_police = ajdbxt_police;
-	}
 
-	/******************** 分页 ***********************/
-	private int currentPage;
-	private findPoliceByPageVO findPoliceByPageVO;
-
-	public int getCurrentPage() {
-		return currentPage;
-	}
-
-	public void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
-	}
-
-	public findPoliceByPageVO getFindPoliceByPageVO() {
-		return findPoliceByPageVO;
-	}
-
-	public void setFindPoliceByPageVO(findPoliceByPageVO findPoliceByPageVO) {
-		this.findPoliceByPageVO = findPoliceByPageVO;
-	}
 
 }
