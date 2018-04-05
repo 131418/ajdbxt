@@ -143,15 +143,6 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
-	@Override
-	public String addDepartment(ajdbxt_department ajdbxt_department) {
-		// TODO Auto-generated method stub
-		ajdbxt_department.setAjdbxt_department_id(TeamUtil.getUuid());
-		ajdbxt_department.setDepartment_gmt_create(TeamUtil.getStringSecond());
-		ajdbxt_department.setDepartment_gmt_modify(TeamUtil.getStringSecond());
-		userDao.addaddDepartment(ajdbxt_department);
-		return "success";
-	}
 
 	@Override
 	public findDepartmentByPageVO findDepartmentByPage(int pageSize, int currentPage) {
@@ -172,6 +163,16 @@ public class UserServiceImpl implements UserService {
 		findDepartmentByPageVO.setList(list);
 		findDepartmentByPageVO.init();
 		return findDepartmentByPageVO;
+	}
+
+	@Override
+	public String addDepartment(ajdbxt_department ajdbxt_department) {
+		// TODO Auto-generated method stub
+		ajdbxt_department.setAjdbxt_department_id(TeamUtil.getUuid());
+		ajdbxt_department.setDepartment_gmt_create(TeamUtil.getStringSecond());
+		ajdbxt_department.setDepartment_gmt_modify(TeamUtil.getStringSecond());
+		String result = userDao.addDepartment(ajdbxt_department);
+		return result;
 	}
 
 }
