@@ -26,7 +26,7 @@ public interface UserDao {
 
 	String batchDelete(String[] ids);
 
-	String addaddDepartment(ajdbxt_department ajdbxt_department);
+	String addDepartment(ajdbxt_department ajdbxt_department);
 
 	List<ajdbxt_department> findDepartmentByPage(String hql, int offset, int length);
 }

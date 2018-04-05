@@ -121,17 +121,28 @@ public class UserDaoImpl implements UserDao {
 		return "success";
 	}
 
-	@Override
-	public String addaddDepartment(ajdbxt_department ajdbxt_department) {
-		// TODO Auto-generated method stub
-		getSession().saveOrUpdate(ajdbxt_department);
-		return null;
-	}
 
 	@Override
 	public List<ajdbxt_department> findDepartmentByPage(String hql, int offset, int length) {
 		// TODO Auto-generated method stub
-		return null;
+		Query q = getSession().createQuery(hql);
+		q.setFirstResult(offset);
+		q.setMaxResults(length);
+		return q.list();
+	}
+
+	@Override
+	public String addDepartment(ajdbxt_department ajdbxt_department) {
+		// TODO Auto-generated method stub
+		try {
+			getSession().saveOrUpdate(ajdbxt_department);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "falied";
+		}
+		return "success";
 	}
 
 }

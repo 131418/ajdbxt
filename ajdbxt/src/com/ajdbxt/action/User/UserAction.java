@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
+
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.VO.User.findDepartmentByPageVO;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
@@ -19,6 +21,8 @@ public class UserAction extends ActionSupport {
 	private UserService userService;
 
 	private ajdbxt_police ajdbxt_police;// 前端传来 的信息封装到类里
+	
+	public ajdbxt_department ajdbxt_department;
 
 	private int currentPage;
 	
@@ -57,6 +61,16 @@ public class UserAction extends ActionSupport {
 	public void setAjdbxt_police(ajdbxt_police ajdbxt_police) {
 		this.ajdbxt_police = ajdbxt_police;
 	}
+
+	public ajdbxt_department getAjdbxt_department() {
+		return ajdbxt_department;
+	}
+
+
+	public void setAjdbxt_department(ajdbxt_department ajdbxt_department) {
+		this.ajdbxt_department = ajdbxt_department;
+	}
+
 
 	public String[] getIds() {
 		return ids;
@@ -218,14 +232,7 @@ public class UserAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
-	
-	//获取部门表
-	public void findDepartmentByPage() {
-		HttpServletResponse response = ServletActionContext.getResponse();
-		response.setContentType("text/html;charset=utf-8");
-		this.findDepartmentByPageVO = userService.findDepartmentByPage(10,currentPage);
-	}
-	
+
 	/**
 	 * 批量删除
 	 * 
@@ -237,6 +244,31 @@ public class UserAction extends ActionSupport {
 			HttpServletResponse response = ServletActionContext.getResponse();
 			response.setContentType("text/html;charset=utf-8");
 			String result = userService.batchDelete(ids);
+			response.getWriter().write(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	//获取部门表
+	public void findDepartmentByPage() {
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			this.findDepartmentByPageVO = userService.findDepartmentByPage(10,currentPage);
+			response.getWriter().write(new Gson().toJson(this.findDepartmentByPageVO));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	//增加部门
+	public void addDepartment() {
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			String result = userService.addDepartment(ajdbxt_department);
 			response.getWriter().write(result);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
