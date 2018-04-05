@@ -1,7 +1,8 @@
 /**
  * 
- */var xhr;
-/* 
+ */
+var xhr;
+
  window.onload=judegRole;
  function judegRole(){
 	 getXMLHttp();
@@ -11,7 +12,10 @@
 	 xhr.onreadystatechange=function(){
 		 if(xhr.readyState==4 && xhr.status==200){
 			 var result=xhr.responseText;
-			 if(){
+			 if(result=="1"){
+				 var str='';
+				 str='<option value="joinCae">正在参与的案件</option>';
+				 $("#type_chose").html(str);
 				 
 			 }
 		 }
@@ -19,7 +23,6 @@
  }
 	 
  
- */
  
  
  
