@@ -44,20 +44,6 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean deletePolice(ajdbxt_police ajdbxtPolice) {
-		// TODO Auto-generated method stub
-
-		try {
-			getSession().delete(ajdbxtPolice);
-		} catch (HibernateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-
-	@Override
 	public ajdbxt_police findPoliceByPoliceSerialNumber(String police_serial_number) {
 		// TODO Auto-generated method stub
 		String hql = "from ajdbxt_police where police_serial_number = '" + police_serial_number + "'";

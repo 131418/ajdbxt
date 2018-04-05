@@ -11,19 +11,9 @@ public interface UserDao {
 
 	boolean addPolice(ajdbxt_police ajdbxt_police);
 
-	boolean deletePolice(ajdbxt_police ajdbxt_police);
-
 	ajdbxt_police findPoliceByPoliceSerialNumber(String police_serial_number);
 
 	boolean updatePolice(ajdbxt_police ajdbxt_police);
-	/*void listPolice();*/
-
-	/*List<Ajdbxt_police> findPoliceByPoliceDepartment(String policeDepartment);*/
-
-	/*List<Ajdbxt_police> findAllPolice();*/
-
-
-	/*List<Ajdbxt_police> findPoliceByPage(findPoliceByPageVO findPoliceByPage); */
 	//分页查询
 	public List<ajdbxt_police> queryForPage(String hql,int offset,int length);
 	//总记录条数

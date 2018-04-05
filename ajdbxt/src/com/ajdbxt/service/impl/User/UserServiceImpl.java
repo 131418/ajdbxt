@@ -75,14 +75,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String deletePolice(ajdbxt_police ajdbxt_police) {
-		// TODO Auto-generated method stub
-		boolean result = userDao.deletePolice(ajdbxt_police);
-		// 三目运算符
-		return result ? "success" : "error";
-	}
-
-	@Override
 	public String updatePolice(ajdbxt_police ajdbxt_police) {
 		// TODO Auto-generated method stub
 		ajdbxt_police.setPolice_gmt_modify(TeamUtil.getStringSecond());
@@ -90,18 +82,6 @@ public class UserServiceImpl implements UserService {
 		boolean result = userDao.updatePolice(ajdbxt_police);
 		return result ? "success" : "error";
 	}
-
-	/*
-	 * @Override public List<Ajdbxt_police> findPoliceByPoliceDepartment(String
-	 * policeDepartment) { // TODO Auto-generated method stub List<Ajdbxt_police>
-	 * policeofdepartment = userDao.findPoliceByPoliceDepartment(policeDepartment);
-	 * return policeofdepartment; }
-	 */
-
-	/*
-	 * @Override public List<Ajdbxt_police> findAllPolice() { List<Ajdbxt_police>
-	 * findallpolice = userDao.findAllPolice(); return findallpolice; }
-	 */
 
 	@Override
 	public findPoliceByPageVO queryForPage(int pageSize, int currentPage) {

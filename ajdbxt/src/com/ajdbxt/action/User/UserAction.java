@@ -166,24 +166,6 @@ public class UserAction extends ActionSupport {
 	}
 
 	/**
-	 * 删除
-	 * 
-	 * @return success 删除成功
-	 * @return error 删除失败
-	 */
-	public void deletePolice() {
-		try {
-			HttpServletResponse response = ServletActionContext.getResponse();
-			response.setContentType("text/html;charset=utf-8");
-			String result = userService.deletePolice(ajdbxt_police);
-			response.getWriter().write(result);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * 修改
 	 * 
 	 * @return success 修改成功
@@ -235,7 +217,12 @@ public class UserAction extends ActionSupport {
 		
 	}
 	
-	//批量删除
+	/**
+	 * 批量删除
+	 * 
+	 * @return success 删除成功
+	 * @return failed 删除失败
+	 */
 	public void batchDelete() {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
