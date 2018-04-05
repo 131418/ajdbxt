@@ -37,14 +37,14 @@
 <!--------------------------------------------------------------------------------->
 <title>案件督办系统</title>      
 </head>
-<body id="w" background="<%=basePath%>img/Use_login.png"
+<body background="<%=basePath%>img/Use_login.png"
 	style="background-position: center center; background-repeat: no-repeat;">
 	<input type="text" class="form-control" id="userNumber"
-		style="width: 298px; height: 46px; margin-left: 658px; margin-top: 55px;">
+		style="width: 298px; height: 46px; margin-left: 743px; margin-top: 235px;">
 	<input type="password" class="form-control" id="password"
-		style="width: 298px; height: 46px; margin-left: 658px; margin-top: 18px;">
+		style="width: 298px; height: 46px; margin-left: 743px; margin-top: 18px;">
 	<button id="button_login"
-		style="border: 0px; background-color: #0B1D29; margin-left: 658px; margin-top: 31px;"
+		style="border: 0px; background-color: #0B1D29; margin-left: 739px; margin-top: 31px;"
 		onclick="login()">
 		<img src="<%=basePath%>img/login_button.png">
 	</button>
@@ -54,7 +54,7 @@
 			<div>
 				<img src="<%=basePath%>img/logo.jpg" height="40px">
 			</div>
-			<h2 style="text-align: center;">刑事技术管理系统</h2>
+			<h2 style="text-align: center;">案件督办系统</h2>
 		</div>
 		<div class="panel-body" style="margin: 0 0 20px 0;">
 			<div class="form-group">
@@ -68,4 +68,5 @@
 		</div>
 	</div> --%>
 </body>
+
 </html>
