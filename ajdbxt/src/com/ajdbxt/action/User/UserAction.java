@@ -157,8 +157,7 @@ public class UserAction extends ActionSupport {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=utf-8");
 		ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
-		String result = userService.changePassword(loginPolice.getAjdbxt_police_id(),
-				ajdbxt_police.getPolice_password());
+		String result = userService.changePassword(loginPolice.getAjdbxt_police_id(),ajdbxt_police.getPolice_password());
 		try {
 			response.getWriter().write(result);
 		} catch (IOException e) {
