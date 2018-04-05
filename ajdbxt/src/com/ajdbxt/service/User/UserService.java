@@ -2,6 +2,7 @@ package com.ajdbxt.service.User;
 
 import java.util.List;
 
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 
@@ -22,8 +23,8 @@ public interface UserService {
 	public String changePassword(String ajdbxt_police_id, String newPassword);
 
 	public String batchDelete(String[] ids);
-
 	
+	String addDepartment(ajdbxt_department ajdbxt_department);
 	
 
 }

@@ -2,6 +2,7 @@ package com.ajdbxt.dao.User;
 
 import java.util.List;
 
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 
@@ -24,4 +25,6 @@ public interface UserDao {
 	String changePassword(String ajdbxt_police_id,String newPassword);
 
 	String batchDelete(String[] ids);
+
+	String addaddDepartment(ajdbxt_department ajdbxt_department);
 }

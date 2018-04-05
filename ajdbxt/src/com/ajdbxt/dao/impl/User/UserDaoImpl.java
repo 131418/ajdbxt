@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.ajdbxt.dao.User.UserDao;
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 
 public class UserDaoImpl implements UserDao {
@@ -118,6 +119,13 @@ public class UserDaoImpl implements UserDao {
 			return "failed";
 		}
 		return "success";
+	}
+
+	@Override
+	public String addaddDepartment(ajdbxt_department ajdbxt_department) {
+		// TODO Auto-generated method stub
+		getSession().saveOrUpdate(ajdbxt_department);
+		return null;
 	}
 
 }
