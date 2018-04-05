@@ -27,7 +27,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="operation" style="margin-bottom: 6px;">
-					<%-- <select id="type_chose"
+					<select id="type_chose"
 					style="width:220px; margin-left:15px; float: left;"
 					class="form-control" onchange="material(this)">
 					<!-- <option selected="selected" value="">请选择</option> -->
@@ -36,17 +36,7 @@
 					<option class="a"  value="wsubmitCase_table_info">等待提交问题清单的案件</option>
 					<option class="a"  value="scoreCase_table_info">等待评分的案件</option> 
 					
-				</select>  --%>
-				
-				<select id="type_chosen">
-					<!-- <option selected="selected" value="">请选择</option> -->
-					<option  >1正在参与的案件</option>
-					<option >2待核对案件</option>
-					<option   >3等待提交问题清单的案件</option>
-					<option  >4等待评分的案件</option> 
-					
 				</select> 
-				
 				</div>
 				<div class="col-md-12">
 					<!-- TABLE HOVER -->

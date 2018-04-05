@@ -15,7 +15,7 @@ function updatePassword() {
 		getXmlHttp();
 		xhr.open("POST", "/ajdbxt/user/User_changePassword", true);
 		var formData = new FormData();
-		formData.append("ajdbxt_police.policePassword", newPassword);
+		formData.append("ajdbxt_police.police_password", newPassword);
 		xhr.send(formData);
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && xhr.status == 200) {

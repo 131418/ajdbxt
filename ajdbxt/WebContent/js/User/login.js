@@ -9,8 +9,8 @@ function login() {
 	var password = document.getElementById("password").value;
 	xhr.open("POST", "/ajdbxt/user/User_login");
 	var formData = new FormData();
-	formData.append("ajdbxt_police.policeSerialNumber", userNumber);
-	formData.append("ajdbxt_police.policePassword", password);
+	formData.append("ajdbxt_police.police_serial_number", userNumber);
+	formData.append("ajdbxt_police.police_password", password);
 	xhr.send(formData);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState  == 4 && xhr.status == 200) {
@@ -19,7 +19,7 @@ function login() {
 			console.log(xhr.responseText);
 			if (result == "success") {
 				toastr.success("登录成功！");
-				window.location = "/ajdbxt/user/User_indexPage";
+				window.location = "/ajdbxt/user/User_index";
 			} else {
 				toastr.error("用户名或密码错误！");
 			}
