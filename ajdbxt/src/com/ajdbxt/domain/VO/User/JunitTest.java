@@ -85,5 +85,9 @@ public class JunitTest {
 		String result = userService.batchDelete(ids);
 		System.out.println(result);
 	}
+	/*@Test
+	public void Test_addDept() {
+		userService.addDepartment(ajdbxt_department);
+	}*/
 
 }

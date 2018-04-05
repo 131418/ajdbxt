@@ -9,6 +9,7 @@ package com.ajdbxt.service.impl.User;
 import java.util.List;
 
 import com.ajdbxt.dao.User.UserDao;
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 import com.ajdbxt.service.User.UserService;
@@ -139,6 +140,16 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		String result = userDao.batchDelete(ids);
 		return result;
+	}
+
+	@Override
+	public String addDepartment(ajdbxt_department ajdbxt_department) {
+		// TODO Auto-generated method stub
+		ajdbxt_department.setAjdbxt_department_id(TeamUtil.getUuid());
+		ajdbxt_department.setDepartment_gmt_create(TeamUtil.getStringSecond());
+		ajdbxt_department.setDepartment_gmt_modify(TeamUtil.getStringSecond());
+		userDao.addaddDepartment(ajdbxt_department);
+		return null;
 	}
 
 }

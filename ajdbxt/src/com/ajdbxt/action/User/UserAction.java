@@ -81,6 +81,12 @@ public class UserAction extends ActionSupport {
 	public String userPage() {
 		return "userpage";
 	}
+	public String index() {
+		return "index";
+	}
+	public String navbar() {
+		return "navbar";
+	}
 
 	public void login() {
 		try {
