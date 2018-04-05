@@ -81,17 +81,15 @@
 						<!-- <i class="icon-submenu lnr lnr-chevron-down"></i> -->
 				</a></li>
 
-				<li class="dropdown" style="float: left;"><a href="<%=basePath %>total/Total_totalPage"
-					class="dropdown-toggle" data-toggle="dropdown"> <span>统计</span>
-						<i class="icon-submenu lnr lnr-chevron-down"></i>
+				<li class="dropdown" style="float: left;"><a href="<%=basePath%>total/Total_totalPage" > <span>统计</span>
+						<!-- <i class="icon-submenu lnr lnr-chevron-down"></i> -->
 				</a>
 					<ul class="dropdown-menu">
 						<li class="teacher_control"><a href="#"></a></li>
 						<li class="teacher_control"><a href="#"></a></li>
 					</ul></li>
 				<!--  -->
-				<li class="dropdown" style="float: left;"><a href="<%=basePath %>user/User_userPage"
-					class="dropdown-toggle" data-toggle="dropdown"> <span>人员</span>
+				<li class="dropdown" style="float: left;"><a href="<%=basePath%>user/User_userPage"> <span>人员</span>
 				</a></li>
 				<!--  -->
 			</ul>

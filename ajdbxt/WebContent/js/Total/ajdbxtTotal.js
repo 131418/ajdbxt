@@ -48,7 +48,7 @@ function List_Total_By_Page(pageIndex) {
 					new_td.innerHTML = total_vo.list[num].info_main_police;
 					/*
 					 * 3. 案件评分
-					 */
+					 */ 
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
 					new_td.innerHTML = total_vo.list[num].info_main_police;

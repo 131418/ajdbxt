@@ -41,7 +41,7 @@ function List_Police_By_Page(pageIndex) {
 					new_tr.appendChild(new_td);
 					new_td.style.display = "none";
 					new_td.className = "tr_police_id";
-					new_td.innerHTML = police_vo.list[num].ajdbxtPoliceId;
+					new_td.innerHTML = police_vo.list[num].ajdbxt_police_id;
 					/*
 					 * 1. 序号
 					 */
@@ -53,31 +53,38 @@ function List_Police_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].policeSerialNumber;
+					new_td.innerHTML = police_vo.list[num].police_serial_number;
 					/*
 					 * 3. 姓名
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].policeName;
+					new_td.innerHTML = police_vo.list[num].police_name;
 					/*
 					 * 4. 单位
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].policeDepartment;
+					new_td.innerHTML = police_vo.list[num].police_department;
 					/*
 					 * 5. 职务
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].policeDuty;
+					new_td.innerHTML = police_vo.list[num].police_duty;
+					
+					/*
+					 * 5. 角色
+					 */
+					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.innerHTML = police_vo.list[num].police_power;
 					/*
 					 * 6. 电话号码
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].policePhoneNumber;
+					new_td.innerHTML = police_vo.list[num].police_phone_number;
 
 					/*
 					 * 7. 操作
@@ -85,7 +92,7 @@ function List_Police_By_Page(pageIndex) {
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
 					new_td.innerHTML = '<i  id="'
-							+ police_vo.list[num].ajdbxtPoliceId
+							+ police_vo.list[num].ajdbxt_police_id
 							+ '" onClick=updatePolice(this) class="fa fa-pencil-square-o" aria-hidden="true"></i>';
 					new_td.style.cursor = "pointer";
 
@@ -138,14 +145,14 @@ function createPolice() {
 				title : '新增人员',
 				content : '<table class="table table-hover" style="text-align:center;"><tbody>'
 						+ '<tr><td>警号:</td><td><input type="text" id="input_policeNumber" class="form-control" /></td></tr>'
-						+ '<tr><td>密码:</td><td><input type="text" id="input_policePassword" class="form-control" /></td></tr>'
-						+ '<tr><td>姓名:</td><td><input type="text" id="input_policeName" class="form-control" /></td></tr>'
-						+ '<tr><td>单位:</td><td><select id="input_policeDepartment" class="form-control" >'
+						+ '<tr><td>密码:</td><td><input type="text" id="input_police_password" class="form-control" /></td></tr>'
+						+ '<tr><td>姓名:</td><td><input type="text" id="input_police_name" class="form-control" /></td></tr>'
+						+ '<tr><td>单位:</td><td><select id="input_police_department" class="form-control" >'
 						+ '<option>1</option>'
 						+ '<option>2</option>'
 						+ '<option>3</option>'
 						+ '</select></td></tr>'
-						+ '<tr><td>职务:</td><td><input type="text" id="input_policeDuty" class="form-control" /></td></tr>'
+						+ '<tr><td>职务:</td><td><input type="text" id="input_police_duty" class="form-control" /></td></tr>'
 						+ '<tr><td>角色:</td><td><input type="text" id="input_policePower" class="form-control" /></td></tr>'
 						+ '<tr><td>手机号码:</td><td><input type="text" id="input_policePhone" class="form-control" /></td></tr>'
 						+ '</tbody></table>',
@@ -159,37 +166,37 @@ function createPolice() {
 							return false;
 						}
 						// 密码
-						var input_policePassword = document
-								.getElementById("input_policePassword").value;
-						if (input_policePassword == "") {
+						var input_police_password = document
+								.getElementById("input_police_password").value;
+						if (input_police_password == "") {
 							toastr.error("密码不能为空！");
 							return false;
 						}
 						// 姓名
-						var input_policeName = document
-								.getElementById("input_policeName").value;
-						if (input_policeName == "") {
+						var input_police_name = document
+								.getElementById("input_police_name").value;
+						if (input_police_name == "") {
 							toastr.error("姓名不能为空！");
 							return false;
 						}
 						// 单位
-						var input_policeDepartment = document
-								.getElementById("input_policeDepartment").value;
-						if (input_policeDepartment == "") {
+						var input_police_department = document
+								.getElementById("input_police_department").value;
+						if (input_police_department == "") {
 							toastr.error("单位不能为空！");
 							return false;
 						}
 						// 职务
-						var input_policeDuty = document
-								.getElementById("input_policeDuty").value;
-						if (input_policeDuty == "") {
+						var input_police_duty = document
+								.getElementById("input_police_duty").value;
+						if (input_police_duty == "") {
 							toastr.error("职务不能为空！");
 							return false;
 						}
 						// 角色
-						var input_policeDuty = document
+						var input_police_duty = document
 								.getElementById("input_policePower").value;
-						if (input_policeDuty == "") {
+						if (input_police_duty == "") {
 							toastr.error("角色不能为空！");
 							return false;
 						}
@@ -228,25 +235,25 @@ function createPolice() {
 						}
 
 						// 警号
-						formData.append("ajdbxt_police.policeSerialNumber",
+						formData.append("ajdbxt_police.police_serial_number",
 								input_policeNumber);
 						// 密码
-						formData.append("ajdbxt_police.policePassword",
-								input_policePassword);
+						formData.append("ajdbxt_police.police_password",
+								input_police_password);
 						// 姓名
-						formData.append("ajdbxt_police.policeName",
-								input_policeName);
+						formData.append("ajdbxt_police.police_name",
+								input_police_name);
 						// 单位
-						formData.append("ajdbxt_police.policeDepartment",
-								input_policeDepartment);
+						formData.append("ajdbxt_police.police_department",
+								input_police_department);
 						// 职位
-						formData.append("ajdbxt_police.policeDuty",
-								input_policeDuty);
+						formData.append("ajdbxt_police.police_duty",
+								input_police_duty);
 						// 角色
 						formData.append("ajdbxt_police.policePower",
-								input_policeDuty);
+								input_police_duty);
 						// 手机号码
-						formData.append("ajdbxt_police.policePhoneNumber",
+						formData.append("ajdbxt_police.police_phone_number",
 								input_policePhone);
 
 						xhr.open("POST", "/ajdbxt/user/User_addPolice");
@@ -324,11 +331,11 @@ function updatePolice(button) {
 				content : '<table class="table table-hover"><tbody>'
 						+ '<tr style="display:none;"><td>Id:</td><td><input type="text" id="tr_police_id" class="form-control" /></td></tr>'
 						+ '<tr><td>警号:</td><td><input type="text" id="input_policeNumber" class="form-control" /></td></tr>'
-						+ '<tr><td>密码:</td><td><input type="text" id="input_policePassword" class="form-control" /></td></tr>'
-						+ '<tr><td>姓名:</td><td><input type="text" id="input_policeName" class="form-control" /></td></tr>'
-						+ '<tr><td>单位:</td><td><select id="input_policeDepartment" class="form-control" >'
+						+ '<tr><td>密码:</td><td><input type="text" id="input_police_password" class="form-control" /></td></tr>'
+						+ '<tr><td>姓名:</td><td><input type="text" id="input_police_name" class="form-control" /></td></tr>'
+						+ '<tr><td>单位:</td><td><select id="input_police_department" class="form-control" >'
 						+ '</select></td></tr>'
-						+ '<tr><td>职务:</td><td><input type="text" id="input_policeDuty" class="form-control" /></td></tr>'
+						+ '<tr><td>职务:</td><td><input type="text" id="input_police_duty" class="form-control" /></td></tr>'
 						+ '<tr><td>角色:</td><td><input type="text" id="input_policePower" class="form-control" /></td></tr>'
 						+ '<tr><td>手机号码:</td><td><input type="text" id="input_policePhone" class="form-control" /></td></tr>'
 						+ '</tbody></table>',
@@ -344,37 +351,37 @@ function updatePolice(button) {
 							return false;
 						}
 						// 密码
-						var input_policePassword = document
-								.getElementById("input_policePassword").value;
-						if (input_policePassword == "") {
+						var input_police_password = document
+								.getElementById("input_police_password").value;
+						if (input_police_password == "") {
 							toastr.error("密码不能为空！");
 							return false;
 						}
 						// 姓名
-						var input_policeName = document
-								.getElementById("input_policeName").value;
-						if (input_policeName == "") {
+						var input_police_name = document
+								.getElementById("input_police_name").value;
+						if (input_police_name == "") {
 							toastr.error("姓名不能为空！");
 							return false;
 						}
 						// 单位
-						var input_policeDepartment = document
-								.getElementById("input_policeDepartment").value;
-						if (input_policeDepartment == "") {
+						var input_police_department = document
+								.getElementById("input_police_department").value;
+						if (input_police_department == "") {
 							toastr.error("单位不能为空！");
 							return false;
 						}
 						// 职务
-						var input_policeDuty = document
-								.getElementById("input_policeDuty").value;
-						if (input_policeDuty == "") {
+						var input_police_duty = document
+								.getElementById("input_police_duty").value;
+						if (input_police_duty == "") {
 							toastr.error("职务不能为空！");
 							return false;
 						}
 						// 角色
-						var input_policeDuty = document
+						var input_police_duty = document
 								.getElementById("input_policePower").value;
-						if (input_policeDuty == "") {
+						if (input_police_duty == "") {
 							toastr.error("角色不能为空！");
 							return false;
 						}
@@ -407,25 +414,25 @@ function updatePolice(button) {
 						}
 
 						// 警号
-						formData.append("ajdbxt_police.policeSerialNumber",
+						formData.append("ajdbxt_police.police_serial_number",
 								input_policeNumber);
 						// 密码
-						formData.append("ajdbxt_police.policePassword",
-								input_policePassword);
+						formData.append("ajdbxt_police.police_password",
+								input_police_password);
 						// 姓名
-						formData.append("ajdbxt_police.policeName",
-								input_policeName);
+						formData.append("ajdbxt_police.police_name",
+								input_police_name);
 						// 单位
-						formData.append("ajdbxt_police.policeDepartment",
-								input_policeDepartment);
+						formData.append("ajdbxt_police.police_department",
+								input_police_department);
 						// 职位
-						formData.append("ajdbxt_police.policeDuty",
-								input_policeDuty);
+						formData.append("ajdbxt_police.police_duty",
+								input_police_duty);
 						// 角色
 						formData.append("ajdbxt_police.policePower",
-								input_policeDuty);
+								input_police_duty);
 						// 手机号码
-						formData.append("ajdbxt_police.policePhoneNumber",
+						formData.append("ajdbxt_police.police_phone_number",
 								input_policePhone);
 
 						xhr.open("POST", "/ajdbxt/user/User_updatePolice");
@@ -451,25 +458,25 @@ function updatePolice(button) {
 									.getElementById("input_policeNumber").value;
 							input_policeNumber = police_vo.list[num].police_serial_number;
 							// 密码
-							var input_policePassword = document
-									.getElementById("input_policePassword").value;
-							input_policePassword = police_vo.list[num].police_password;
+							var input_police_password = document
+									.getElementById("input_police_password").value;
+							input_police_password = police_vo.list[num].police_password;
 							// 姓名
-							var input_policeName = document
-									.getElementById("input_policeName").value;
-							input_policeName = police_vo.list[num].police_name;
+							var input_police_name = document
+									.getElementById("input_police_name").value;
+							input_police_name = police_vo.list[num].police_name;
 							// 单位
-							var input_policeDepartment = document
-									.getElementById("input_policeDepartment").value;
-							input_policeDepartment = police_vo.list[num].police_department;
+							var input_police_department = document
+									.getElementById("input_police_department").value;
+							input_police_department = police_vo.list[num].police_department;
 							// 职务
-							var input_policeDuty = document
-									.getElementById("input_policeDuty").value;
-							input_policeDuty = police_vo.list[num].police_duty;
+							var input_police_duty = document
+									.getElementById("input_police_duty").value;
+							input_police_duty = police_vo.list[num].police_duty;
 							// 角色
-							var input_policeDuty = document
+							var input_police_duty = document
 									.getElementById("input_policePower").value;
-							input_policeDuty = police_vo.list[num].police_power;
+							input_police_duty = police_vo.list[num].police_power;
 							// 手机号码
 							var input_policePhone = document
 									.getElementById("input_policePhone").value;
