@@ -90,7 +90,7 @@
 						<li class="teacher_control"><a href="#"></a></li>
 					</ul></li>
 				<!--  -->
-				<li class="dropdown" style="float: left;"><a href="<%=basePath %>view/user/ajdbxt_police.jsp"
+				<li class="dropdown" style="float: left;"><a href="<%=basePath %>user/User_userPage"
 					class="dropdown-toggle" data-toggle="dropdown"> <span>人员</span>
 				</a></li>
 				<!--  -->
