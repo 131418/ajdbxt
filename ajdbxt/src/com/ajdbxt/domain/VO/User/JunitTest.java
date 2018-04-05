@@ -91,5 +91,10 @@ public class JunitTest {
 		ajdbxt_department ajdbxt_department = new ajdbxt_department(null, "白源派出所", null, null);
 		System.out.println(userService.addDepartment(ajdbxt_department));
 	}
+	@Test
+	public void Test_showdept() {
+		findDepartmentByPageVO findDepartmentByPageVO = userService.findDepartmentByPage(10, 1);
+		System.out.println(new Gson().toJson(findDepartmentByPageVO));
+	}
 
 }

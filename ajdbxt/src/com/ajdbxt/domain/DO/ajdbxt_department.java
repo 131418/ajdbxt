@@ -19,6 +19,9 @@ public class ajdbxt_department {
 		this.department_gmt_modify = department_gmt_modify;
 	}
 
+	public ajdbxt_department() {
+	}
+
 	public String getAjdbxt_department_id() {
 		return ajdbxt_department_id;
 	}
