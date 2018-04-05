@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018??4??3?? ????6:55:13 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.ajdbxt.domain.DO.ajdbxt_process" table="ajdbxt_process">
+        <id name="ajdbxt_process_id" type="java.lang.String">
+            <column name="ajdbxt_process_id" />
+            <generator class="assigned" />
+        </id>
+        <property name="process_case_id" type="java.lang.String">
+            <column name="process_case_id" />
+        </property>
+        <property name="process_lengthen_subpoena" type="java.lang.String">
+            <column name="process_lengthen_subpoena" />
+        </property>
+        <property name="process_nonage" type="java.lang.String">
+            <column name="process_nonage" />
+        </property>
+        <property name="process_authenticate" type="java.lang.String">
+            <column name="process_authenticate" />
+        </property>
+        <property name="process_case_goods" type="java.lang.String">
+            <column name="process_case_goods" />
+        </property>
+        <property name="process_detention" type="java.lang.String">
+            <column name="process_detention" />
+        </property>
+        <property name="process_penalty" type="java.lang.String">
+            <column name="process_penalty" />
+        </property>
+        <property name="process_treatment_category" type="java.lang.String">
+            <column name="process_treatment_category" />
+        </property>
+        <property name="process_apply_right" type="java.lang.String">
+            <column name="process_apply_right" />
+        </property>
+        <property name="process_accpet_right" type="java.lang.String">
+            <column name="process_accpet_right" />
+        </property>
+        <property name="process_question" type="java.lang.String">
+            <column name="process_question" />
+        </property>
+        <property name="process_score" type="java.lang.String">
+            <column name="process_score" />
+        </property>
+        <property name="process_captain_check" type="java.lang.String">
+            <column name="process_captain_check" />
+        </property>
+        <property name="process_file_hand" type="java.lang.String">
+            <column name="process_file_hand" />
+        </property>
+        <property name="process_case_end" type="java.lang.String">
+            <column name="process_case_end" />
+        </property>
+        <property name="process_gmt_create" type="java.lang.String">
+            <column name="process_gmt_create" />
+        </property>
+        <property name="process_gmt_modify" type="java.lang.String">
+            <column name="process_gmt_modify" />
+        </property>
+        <property name="process_question_list" type="java.lang.String">
+            <column name="process_question_list" />
+        </property>
+        <property name="process_subpoena" type="java.lang.String">
+            <column name="process_subpoena" />
+        </property>
+        <property name="process_criminal_detention" type="java.lang.String">
+            <column name="process_criminal_detention" />
+        </property>
+        <property name="process_arrest" type="java.lang.String">
+            <column name="process_arrest" />
+        </property>
+        <property name="process_get_keep_wait_interrogate" type="java.lang.String">
+            <column name="process_get_keep_wait_interrogate" />
+        </property>
+        <property name="process_live_at_home_unde_surveillance" type="java.lang.String">
+            <column name="process_live_at_home_unde_surveillance" />
+        </property>
+        <property name="process_result_of_prosecution" type="java.lang.String">
+            <column name="process_result_of_prosecution" />
+        </property>
+        <property name="process_search_result_one" type="java.lang.String">
+            <column name="process_search_result_one" />
+        </property>
+        <property name="process_search_result_two" type="java.lang.String">
+            <column name="process_search_result_two" />
+        </property>
+    </class>
+</hibernate-mapping>
