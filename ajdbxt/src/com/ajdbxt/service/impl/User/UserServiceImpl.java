@@ -9,7 +9,9 @@ package com.ajdbxt.service.impl.User;
 import java.util.List;
 
 import com.ajdbxt.dao.User.UserDao;
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
+import com.ajdbxt.domain.VO.User.findDepartmentByPageVO;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 import com.ajdbxt.service.User.UserService;
 
@@ -75,14 +77,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String deletePolice(ajdbxt_police ajdbxt_police) {
-		// TODO Auto-generated method stub
-		boolean result = userDao.deletePolice(ajdbxt_police);
-		// 三目运算符
-		return result ? "success" : "error";
-	}
-
-	@Override
 	public String updatePolice(ajdbxt_police ajdbxt_police) {
 		// TODO Auto-generated method stub
 		ajdbxt_police.setPolice_gmt_modify(TeamUtil.getStringSecond());
@@ -90,18 +84,6 @@ public class UserServiceImpl implements UserService {
 		boolean result = userDao.updatePolice(ajdbxt_police);
 		return result ? "success" : "error";
 	}
-
-	/*
-	 * @Override public List<Ajdbxt_police> findPoliceByPoliceDepartment(String
-	 * policeDepartment) { // TODO Auto-generated method stub List<Ajdbxt_police>
-	 * policeofdepartment = userDao.findPoliceByPoliceDepartment(policeDepartment);
-	 * return policeofdepartment; }
-	 */
-
-	/*
-	 * @Override public List<Ajdbxt_police> findAllPolice() { List<Ajdbxt_police>
-	 * findallpolice = userDao.findAllPolice(); return findallpolice; }
-	 */
 
 	@Override
 	public findPoliceByPageVO queryForPage(int pageSize, int currentPage) {
@@ -152,6 +134,44 @@ public class UserServiceImpl implements UserService {
 		// 进行md5加密
 		String result = userDao.changePassword(ajdbxtPoliceId, md5.GetMD5Code(newPassword));
 		return result;
+	}
+
+	@Override
+	public String batchDelete(String[] ids) {
+		// TODO Auto-generated method stub
+		String result = userDao.batchDelete(ids);
+		return result;
+	}
+
+	@Override
+	public String addDepartment(ajdbxt_department ajdbxt_department) {
+		// TODO Auto-generated method stub
+		ajdbxt_department.setAjdbxt_department_id(TeamUtil.getUuid());
+		ajdbxt_department.setDepartment_gmt_create(TeamUtil.getStringSecond());
+		ajdbxt_department.setDepartment_gmt_modify(TeamUtil.getStringSecond());
+		userDao.addaddDepartment(ajdbxt_department);
+		return "success";
+	}
+
+	@Override
+	public findDepartmentByPageVO findDepartmentByPage(int pageSize, int currentPage) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from ajdbxt_department";
+		int count = userDao.getCount(hql); // 总记录数
+		int totalPage = findDepartmentByPageVO.countTotalPage(pageSize, count); // 总页数
+		int offset = findDepartmentByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
+		int length = pageSize; // 每页记录数
+		int currentpage = findDepartmentByPageVO.countCurrentPage(currentPage);
+		List<ajdbxt_department> list = userDao.findDepartmentByPage("from ajdbxt_department", offset, length); // 该分页的记录
+		// 把分页信息保存到Bean中
+		findDepartmentByPageVO findDepartmentByPageVO = new findDepartmentByPageVO();
+		findDepartmentByPageVO.setPageSize(pageSize);
+		findDepartmentByPageVO.setCurrentPage(currentpage);
+		findDepartmentByPageVO.setAllRow(count);
+		findDepartmentByPageVO.setTotalPage(totalPage);
+		findDepartmentByPageVO.setList(list);
+		findDepartmentByPageVO.init();
+		return findDepartmentByPageVO;
 	}
 
 }

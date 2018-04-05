@@ -1,9 +1,5 @@
 package com.ajdbxt.domain.DO;
 
-/**
- * AjdbxtPolice entity. @author MyEclipse Persistence Tools
- */
-
 public class ajdbxt_police {
 
 	// Fields

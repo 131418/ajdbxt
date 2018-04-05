@@ -11,10 +11,10 @@
 <head>
 
 
-<title>人员管理</title>
+<title>统计</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
-.table_police tbody tr {
+.table_total tbody tr {
 	text-align: center;
 }
 
@@ -31,13 +31,13 @@
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
-				<!-- <h3 class="panel-title">人员管理</h3> -->
+				<!-- <h3 class="panel-title">统计</h3> -->
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
 					<div class="panel">
 						<div class="panel-heading">
-							<h3 class="panel-title">人员管理</h3>
+							<h3 class="panel-title">统计</h3>
 						</div>
 						<!--  -->
 						<div class="panel-body">
@@ -48,32 +48,24 @@
 									</button>
 
 								</div>
-								<!-- 删除按钮 -->
-								<div style="height: 34px; width: 150px; float: right;">
-									<button class="btn btn-danger" onclick="deletePolice()"
-										style="float: right; margin: 0 10px;">
-										<i class="fa fa-trash-o"></i> 删除
-									</button>
-
+								<!-- 检索 -->
+								<div class="input-group" style="width: 300px; float: right;">
+									<input id="input_DNASearchText" class="form-control"
+										oninput="List_DNA_By_PageAndSearch(1)" type="text"> <span
+										class="input-group-addon"> <i class="fa fa-search"></i>
+									</span>
 								</div>
 							</div>
 
-							<table id="table_police" class="table table-hover table-bordered"
+							<table id="table_total" class="table table-hover table-bordered"
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
-										<th>序号</th>
-										<th>警号</th>
-										<th>姓名</th>
-										<th>单位</th>
-										<th>职务</th>
-										<th>角色</th>
-										<th>手机号码</th>
-										<th>操作</th>
-										<th><label class="fancy-checkbox"> <input
-												id="checkbox_all_select" type="checkbox"
-												onclick="all_select()"> <span></span>
-										</label></th>
+										<th>办案单位</th>
+										<th>主办民警</th>
+										<th>案件评分</th>
+										<th>案件类型</th>
+										<th>抓获时间</th>
 									</tr>
 								</tbody>
 							</table>
@@ -116,9 +108,9 @@
 	<script type="text/javascript" src="<%=basePath%>js/laydate/laydate.js"></script>
 	<script src="/laydate/laydate.js"></script>
 	<script type="text/javascript"
-		src="<%=basePath%>js/User/ajdbxtPolice.js"></script>
+		src="<%=basePath%>js/User/ajdbxtTotal.js"></script>
 	<script type="text/javascript">
-	List_Police_By_Page(1);
+		List_Total_By_Page(1);
 	</script>
 
 </body>

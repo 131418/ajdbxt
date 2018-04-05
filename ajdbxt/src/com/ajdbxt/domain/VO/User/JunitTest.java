@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ajdbxt.action.User.UserAction;
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.service.User.UserService;
 import com.google.gson.Gson;
@@ -39,12 +40,6 @@ public class JunitTest {
 	}
 
 	@Test
-	public void Test_deletePolice() {
-		ajdbxt_police ajdbxt_police = new ajdbxt_police("0140a7d7-7c59-4191-9c1f-fb11dd14bd81");
-		System.out.println(userService.deletePolice(ajdbxt_police));
-	}
-
-	@Test
 	public void Test_updatePolice() {
 		ajdbxt_police ajdbxt_police = new ajdbxt_police("c87bc848-4345-42e0-b64c-d388d7555802", "040800", "111111",
 				"易志伟", "法制大队", "xiao队长", "2", "18870581880", null, null);
@@ -58,7 +53,7 @@ public class JunitTest {
 	 */
 	@Test
 	public void Test_queryForPage() {
-		findPoliceByPageVO currentpage = userService.queryForPage(10, 3);
+		findPoliceByPageVO currentpage = userService.queryForPage(10, 1);
 		System.out.println(new Gson().toJson(currentpage));
 	}
 
@@ -84,6 +79,17 @@ public class JunitTest {
 	public void Test_changePassword() {
 		String result = userService.changePassword("1173da54-bd49-4e07-a037-fb0a6065ad1e", "222222");
 		System.out.println(result);
+	}
+	@Test
+	public void Test_batchDelete() {
+		String[] ids = {"1","5",""}; 
+		String result = userService.batchDelete(ids);
+		System.out.println(result);
+	}
+	@Test
+	public void Test_addDept() {
+		ajdbxt_department ajdbxt_department = new ajdbxt_department(null, "白源派出所", null, null);
+		System.out.println(userService.addDepartment(ajdbxt_department));
 	}
 
 }
