@@ -32,4 +32,6 @@ public interface UserDao {
 	List<ajdbxt_police> queryForPageByDepartment(String hql, int offset, int length);
 
 	String changePassword(String ajdbxt_police_id,String newPassword);
+
+	String batchDelete(String[] ids);
 }

@@ -85,5 +85,11 @@ public class JunitTest {
 		String result = userService.changePassword("1173da54-bd49-4e07-a037-fb0a6065ad1e", "222222");
 		System.out.println(result);
 	}
+	@Test
+	public void Test_batchDelete() {
+		String[] ids = {"1","5",""}; 
+		String result = userService.batchDelete(ids);
+		System.out.println(result);
+	}
 
 }

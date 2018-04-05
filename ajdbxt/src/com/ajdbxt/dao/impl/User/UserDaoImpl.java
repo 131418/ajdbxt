@@ -78,24 +78,6 @@ public class UserDaoImpl implements UserDao {
 		return true;
 	}
 
-/*	@Override
-	public List<Ajdbxt_police> findPoliceByPoliceDepartment(String policeDepartment) {
-		// TODO Auto-generated method stub
-		String hql = "from Ajdbxt_police where policeDepartment  = '" + policeDepartment + "'";
-		Query query = getSession().createQuery(hql);
-		List<Ajdbxt_police> policeofdepartment = query.list();
-		return policeofdepartment;
-	}*/
-
-/*	@SuppressWarnings("unchecked")
-	@Override
-	public List<Ajdbxt_police> findAllPolice() {
-		String hql = "from  Ajdbxt_police";
-		List<Ajdbxt_police> findallpolice = getSession().createQuery(hql).list();
-		return findallpolice;
-	}
-*/
-
 	@Override
 	public List<ajdbxt_police> queryForPage(String hql, int offset, int length) {
 		// TODO Auto-generated method stub
@@ -135,19 +117,21 @@ public class UserDaoImpl implements UserDao {
 		return "success";
 	}
 
-/*	@Override
-	public List<Ajdbxt_police> findPoliceByPage(findPoliceByPageVO findPoliceByPage) {
+	@Override
+	public String batchDelete(String[] ids) {
 		// TODO Auto-generated method stub
-		String hql = "from Ajdbxt_police";
-		return null;
-	}*/
+		try {
+			for(int i=0;i<ids.length;i++) {
+				//getSession().delete(ids[i]);自带方法只能引用对象
+				String hql = "delete ajdbxt_police where ajdbxt_police_id = '"+ids[i]+"'";
+				getSession().createQuery(hql).executeUpdate();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "failed";
+		}
+		return "success";
+	}
 
-	/*
-	 * @Override public void listPolice() { // TODO Auto-generated method stub
-	 * Criteria criteria = getSession().createCriteria(Ajdbxt_police.class);
-	 * List<Ajdbxt_police> list = criteria.list(); for(Ajdbxt_police
-	 * ajdbxt_police:list) {
-	 * 
-	 * } }
-	 */
 }

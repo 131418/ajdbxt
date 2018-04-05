@@ -154,4 +154,11 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
+	@Override
+	public String batchDelete(String[] ids) {
+		// TODO Auto-generated method stub
+		String result = userDao.batchDelete(ids);
+		return result;
+	}
+
 }

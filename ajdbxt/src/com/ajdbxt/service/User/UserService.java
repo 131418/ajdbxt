@@ -29,6 +29,8 @@ public interface UserService {
 
 	public String changePassword(String ajdbxt_police_id, String newPassword);
 
+	public String batchDelete(String[] ids);
+
 	
 	
 
