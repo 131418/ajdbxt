@@ -128,4 +128,10 @@ public class UserDaoImpl implements UserDao {
 		return null;
 	}
 
+	@Override
+	public List<ajdbxt_department> findDepartmentByPage(String hql, int offset, int length) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

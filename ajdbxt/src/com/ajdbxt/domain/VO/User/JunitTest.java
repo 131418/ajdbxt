@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ajdbxt.action.User.UserAction;
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.service.User.UserService;
 import com.google.gson.Gson;
@@ -85,9 +86,10 @@ public class JunitTest {
 		String result = userService.batchDelete(ids);
 		System.out.println(result);
 	}
-	/*@Test
+	@Test
 	public void Test_addDept() {
-		userService.addDepartment(ajdbxt_department);
-	}*/
+		ajdbxt_department ajdbxt_department = new ajdbxt_department(null, "白源派出所", null, null);
+		System.out.println(userService.addDepartment(ajdbxt_department));
+	}
 
 }

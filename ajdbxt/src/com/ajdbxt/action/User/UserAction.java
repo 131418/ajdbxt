@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 import com.ajdbxt.domain.DO.ajdbxt_police;
+import com.ajdbxt.domain.VO.User.findDepartmentByPageVO;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 import com.ajdbxt.service.User.UserService;
 import com.google.gson.Gson;
@@ -19,11 +20,11 @@ public class UserAction extends ActionSupport {
 
 	private ajdbxt_police ajdbxt_police;// 前端传来 的信息封装到类里
 
-	private findPoliceByPageVO findPoliceByPage;
-
 	private int currentPage;
 	
 	private findPoliceByPageVO findPoliceByPageVO;
+	
+	private findDepartmentByPageVO findDepartmentByPageVO;
 	
 	private String ids[];
 	
@@ -219,8 +220,10 @@ public class UserAction extends ActionSupport {
 	}
 	
 	//获取部门表
-	public void getDepartmentByPage() {
-		
+	public void findDepartmentByPage() {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=utf-8");
+		this.findDepartmentByPageVO = userService.findDepartmentByPage(10,currentPage);
 	}
 	
 	/**

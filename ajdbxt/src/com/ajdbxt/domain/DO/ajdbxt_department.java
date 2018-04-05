@@ -9,9 +9,14 @@ public class ajdbxt_department {
 	private String department_gmt_create;
 	
 	private String department_gmt_modify;
-	
-	public ajdbxt_department(String ajdbxt_department_id) {
+
+	public ajdbxt_department(String ajdbxt_department_id, String department_name, String department_gmt_create,
+			String department_gmt_modify) {
+		super();
 		this.ajdbxt_department_id = ajdbxt_department_id;
+		this.department_name = department_name;
+		this.department_gmt_create = department_gmt_create;
+		this.department_gmt_modify = department_gmt_modify;
 	}
 
 	public String getAjdbxt_department_id() {
