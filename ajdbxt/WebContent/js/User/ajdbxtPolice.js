@@ -13,7 +13,7 @@ function List_Police_By_Page(pageIndex) {
 
 				var new_tr = null;
 				var new_td = null;
-				var table_Police = document.getElementById("table_Police");
+				var table_police = document.getElementById("table_police");
 
 				/*
 				 * 移出除标题以外的所有行
@@ -23,7 +23,7 @@ function List_Police_By_Page(pageIndex) {
 				var long = old_tr.length;
 				for (var i = 0; i < long; i++) {
 					old_tr[0].parentNode.removeChild(old_tr[0]);
-					// table_Police.firstElementChild.removeChild(old_tr[0]);
+					// table_police.firstElementChild.removeChild(old_tr[0]);
 				}
 
 				/*
