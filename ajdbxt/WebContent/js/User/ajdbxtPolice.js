@@ -300,13 +300,13 @@ function createPolice() {
 										for (var len = 0; len < Department_data.list.length; len++) {
 											option += '<option ';
 											option += ' value="'
-													+ Department_data.list[len].ajdbxt_department_id
+													+ Department_data.list[len].department_name
 													+ '">'
 													+ Department_data.list[len].department_name
 													+ '</option>';
 										}
 										$('#input_police_department')
-												.html(option);
+												.html('<option selected="selected" value="">请选择</option>'+option);
 									}, 'json');
 					
 					
@@ -490,6 +490,25 @@ function updatePolice(button) {
 					}
 				},
 				onContentReady : function() {
+					
+					$.post(
+							'/ajdbxt/user/User_findDepartmentByPage',
+							function(Department_data) {
+								// 所有案件循环
+								var option = '';
+								for (var len = 0; len < Department_data.list.length; len++) {
+									option += '<option ';
+									option += ' value="'
+											+ Department_data.list[len].department_name
+											+ '">'
+											+ Department_data.list[len].department_name
+											+ '</option>';
+								}
+								$('#input_police_department')
+										.html('<option selected="selected" value="">请选择</option>'+option);
+							}, 'json');
+					
+ 
 					var button_id = button.id;
 					console.log("button_id:" + button_id);
 					for (var num = 0; num < police_vo.list.length; num++) {
