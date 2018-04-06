@@ -96,5 +96,10 @@ public class JunitTest {
 		findDepartmentByPageVO findDepartmentByPageVO = userService.findDepartmentByPage(10, 1);
 		System.out.println(new Gson().toJson(findDepartmentByPageVO));
 	}
+	@Test
+	public void Test_Search() {
+		findPoliceByPageVO searchResult = userService.fuzzySearch(10,1,"张");
+		System.out.println(new Gson().toJson(searchResult));
+	}
 
 }
