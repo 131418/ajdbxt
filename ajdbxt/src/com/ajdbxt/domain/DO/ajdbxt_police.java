@@ -1,131 +1,102 @@
 package com.ajdbxt.domain.DO;
 
-/**
- * AjdbxtPolice entity. @author MyEclipse Persistence Tools
- */
-
-public class ajdbxt_police implements java.io.Serializable {
+public class ajdbxt_police {
 
 	// Fields
 
-	private String ajdbxtPoliceId;
-	private String policeSerialNumber;
-	private String policePassword;
-	private String policeName;
-	private String policeDepartment;
-	private String policeDuty;
-	private String policePhoneNumber;
-	private String policeGmtCreate;
-	private String policeGmtModify;
-	private String policePower;
-
-	// Constructors
-
-	/** default constructor */
+	private String ajdbxt_police_id;
+	private String police_serial_number;
+	private String police_password;
+	private String police_name;
+	private String police_department;
+	private String police_duty;
+	private String police_phone_number;
+	private String police_gmt_create;
+	private String police_gmt_modify;
+	private String police_power;
 	public ajdbxt_police() {
+		
+	}
+	public ajdbxt_police(String ajdbxt_police_id) {
+		super();
+		this.ajdbxt_police_id = ajdbxt_police_id;
+	}
+	public ajdbxt_police(String ajdbxt_police_id, String police_serial_number, String police_password,
+			String police_name, String police_department, String police_duty, String police_phone_number,
+			String police_gmt_create, String police_gmt_modify, String police_power) {
+		super();
+		this.ajdbxt_police_id = ajdbxt_police_id;
+		this.police_serial_number = police_serial_number;
+		this.police_password = police_password;
+		this.police_name = police_name;
+		this.police_department = police_department;
+		this.police_duty = police_duty;
+		this.police_phone_number = police_phone_number;
+		this.police_gmt_create = police_gmt_create;
+		this.police_gmt_modify = police_gmt_modify;
+		this.police_power = police_power;
+	}
+	public String getAjdbxt_police_id() {
+		return ajdbxt_police_id;
+	}
+	public void setAjdbxt_police_id(String ajdbxt_police_id) {
+		this.ajdbxt_police_id = ajdbxt_police_id;
+	}
+	public String getPolice_serial_number() {
+		return police_serial_number;
+	}
+	public void setPolice_serial_number(String police_serial_number) {
+		this.police_serial_number = police_serial_number;
+	}
+	public String getPolice_password() {
+		return police_password;
+	}
+	public void setPolice_password(String police_password) {
+		this.police_password = police_password;
+	}
+	public String getPolice_name() {
+		return police_name;
+	}
+	public void setPolice_name(String police_name) {
+		this.police_name = police_name;
+	}
+	public String getPolice_department() {
+		return police_department;
+	}
+	public void setPolice_department(String police_department) {
+		this.police_department = police_department;
+	}
+	public String getPolice_duty() {
+		return police_duty;
+	}
+	public void setPolice_duty(String police_duty) {
+		this.police_duty = police_duty;
+	}
+	public String getPolice_phone_number() {
+		return police_phone_number;
+	}
+	public void setPolice_phone_number(String police_phone_number) {
+		this.police_phone_number = police_phone_number;
+	}
+	public String getPolice_gmt_create() {
+		return police_gmt_create;
+	}
+	public void setPolice_gmt_create(String police_gmt_create) {
+		this.police_gmt_create = police_gmt_create;
+	}
+	public String getPolice_gmt_modify() {
+		return police_gmt_modify;
+	}
+	public void setPolice_gmt_modify(String police_gmt_modify) {
+		this.police_gmt_modify = police_gmt_modify;
+	}
+	public String getPolice_power() {
+		return police_power;
+	}
+	public void setPolice_power(String police_power) {
+		this.police_power = police_power;
 	}
 
-	/** minimal constructor */
-	public ajdbxt_police(String ajdbxtPoliceId) {
-		this.ajdbxtPoliceId = ajdbxtPoliceId;
-	}
-	/** full constructor */
-	public ajdbxt_police(String ajdbxtPoliceId, String policeSerialNumber,
-			String policePassword, String policeName, String policeDepartment,
-			String policeDuty, String policePower, String policePhoneNumber,
-			String policeGmtCreate, String policeGmtModify) {
-		this.ajdbxtPoliceId = ajdbxtPoliceId;
-		this.policeSerialNumber = policeSerialNumber;
-		this.policePassword = policePassword;
-		this.policeName = policeName;
-		this.policeDepartment = policeDepartment;
-		this.policeDuty = policeDuty;
-		this.policePhoneNumber = policePhoneNumber;
-		this.policeGmtCreate = policeGmtCreate;
-		this.policeGmtModify = policeGmtModify;
-		this.policePower = policePower;
-	}
-
-	// Property accessors
-
-	public String getAjdbxtPoliceId() {
-		return this.ajdbxtPoliceId;
-	}
-
-	public void setAjdbxtPoliceId(String ajdbxtPoliceId) {
-		this.ajdbxtPoliceId = ajdbxtPoliceId;
-	}
-
-	public String getPoliceSerialNumber() {
-		return this.policeSerialNumber;
-	}
-
-	public void setPoliceSerialNumber(String policeSerialNumber) {
-		this.policeSerialNumber = policeSerialNumber;
-	}
-
-	public String getPolicePassword() {
-		return this.policePassword;
-	}
-
-	public void setPolicePassword(String policePassword) {
-		this.policePassword = policePassword;
-	}
-
-	public String getPoliceName() {
-		return this.policeName;
-	}
-
-	public void setPoliceName(String policeName) {
-		this.policeName = policeName;
-	}
-
-	public String getPoliceDepartment() {
-		return this.policeDepartment;
-	}
-
-	public void setPoliceDepartment(String policeDepartment) {
-		this.policeDepartment = policeDepartment;
-	}
-
-	public String getPoliceDuty() {
-		return this.policeDuty;
-	}
-
-	public void setPoliceDuty(String policeDuty) {
-		this.policeDuty = policeDuty;
-	}
-
-	public String getPolicePhoneNumber() {
-		return this.policePhoneNumber;
-	}
-
-	public void setPolicePhoneNumber(String policePhoneNumber) {
-		this.policePhoneNumber = policePhoneNumber;
-	}
-
-	public String getPoliceGmtCreate() {
-		return this.policeGmtCreate;
-	}
-
-	public void setPoliceGmtCreate(String policeGmtCreate) {
-		this.policeGmtCreate = policeGmtCreate;
-	}
-
-	public String getPoliceGmtModify() {
-		return this.policeGmtModify;
-	}
-
-	public void setPoliceGmtModify(String policeGmtModify) {
-		this.policeGmtModify = policeGmtModify;
-	}
-
-	public String getPolicePower() {
-		return policePower;
-	}
-
-	public void setPolicePower(String policePower) {
-		this.policePower = policePower;
-	}
+	
 
 }

@@ -1,10 +1,6 @@
 package com.ajdbxt.domain.DO;
 
 public class ajdbxt_info {
-	
-	public ajdbxt_info() {
-	}
-
 	private String ajdbxt_info_id;   //案件信息id
 	private String info_name;      //案件名称
 	private String info_category;    //案件类别
@@ -124,6 +120,5 @@ public class ajdbxt_info {
 		this.info_gmt_ceate = info_gmt_ceate;
 		this.info_gmt_modify = info_gmt_modify;
 	}
-	
 
 }

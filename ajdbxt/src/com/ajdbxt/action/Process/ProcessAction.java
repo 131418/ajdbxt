@@ -54,7 +54,7 @@ public class ProcessAction  extends ActionSupport{
 	public void getInfo() {
 		Object o =ActionContext.getContext().getSession().get("loginPolice");//得到该警察
 		ajdbxt_police police=(ajdbxt_police)o;
-		String police_id=police.getAjdbxtPoliceId();
+		String police_id=police.getAjdbxt_police_id();
 		String json="";
 		if(ajdbxtProcess.getProcess_case_end()==null||ajdbxtProcess.getProcess_case_end()=="ture") {
 			json=processInfoService.getInfoList(ProcessInfoService.CAPTAIN_CHECK, police_id);
