@@ -82,7 +82,7 @@ public class JunitTest {
 	}
 	@Test
 	public void Test_batchDelete() {
-		String[] ids = {"1","5",""}; 
+		String[] ids = {""}; 
 		String result = userService.batchDelete(ids);
 		System.out.println(result);
 	}
@@ -95,6 +95,11 @@ public class JunitTest {
 	public void Test_showdept() {
 		findDepartmentByPageVO findDepartmentByPageVO = userService.findDepartmentByPage(10, 1);
 		System.out.println(new Gson().toJson(findDepartmentByPageVO));
+	}
+	@Test
+	public void Test_Search() {
+		findPoliceByPageVO searchResult = userService.fuzzySearch(10,1,"张");
+		System.out.println(new Gson().toJson(searchResult));
 	}
 
 }

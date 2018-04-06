@@ -43,7 +43,7 @@
 						<div class="panel-body">
 							<div style="height: 34px; width: 100%;">
 								<div style="width: 150px; float: left; margin: 0 20px 0 0">
-									<input name="" style="float: left;" type="text" class="form-control mydate" placeholder="起始日期">
+
 								</div>
 							</div>
 
@@ -52,8 +52,7 @@
 								<tbody>
 									<tr>
 										<th>办案单位</th>
-										<th>行政案件</th>
-										<th>刑事案件</th>
+
 									</tr>
 								</tbody>
 							</table>
@@ -80,27 +79,7 @@
 		src="<%=basePath%>js/Total/ajdbxtTotal.js"></script>
 	<script type="text/javascript">
 	List_Total_By_Page(1);
-	</script>
-<script type="text/javascript">
-		$.datetimepicker.setLocale('ch');
-		$('.mydate').datetimepicker({
-			yearStart : 1990, // 设置最小年份
-			yearEnd : 2050, // 设置最大年份
-			yearOffset : 0, // 年偏差
-			timepicker : false, // 关闭时间选项
-			format : 'Y-m-d', // 格式化日期年-月-日
-			minDate : '1990/01/01', // 设置最小日期
-			maxDate : '2030/01/01', // 设置最大日期
-		});
-		$('.mydate_minute').datetimepicker({
-			yearStart : 1990, // 设置最小年份
-			yearEnd : 2050, // 设置最大年份
-			yearOffset : 0, // 年偏差
-			timepicker : true, // 关闭时间选项
-			format : 'Y-m-d H:i', // 格式化日期年-月-日
-			minDate : '1990/01/01', // 设置最小日期
-			maxDate : '2030/01/01', // 设置最大日期
-		});
+
 	</script>
 </body>
 </html>
