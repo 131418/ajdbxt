@@ -82,7 +82,7 @@ public class JunitTest {
 	}
 	@Test
 	public void Test_batchDelete() {
-		String[] ids = {"1","5",""}; 
+		String[] ids = {""}; 
 		String result = userService.batchDelete(ids);
 		System.out.println(result);
 	}
