@@ -2,7 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
-
-
+	<bean id="infoDao" class="com.ajdbxt.dao.info.impl.InfoDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="infoService" class="com.ajdbxt.service.impl.Info.InfoServiceImpl">
+		<property name="infoDao" ref="infoDao"></property>
+	</bean>
+	<bean id="infoAction" class="com.ajdbxt.action.Info.InfoAction">
+		<property name="infoService" ref="infoService"></property>
+	</bean>
 </beans>
