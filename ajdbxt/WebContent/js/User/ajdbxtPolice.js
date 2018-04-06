@@ -288,7 +288,31 @@ function createPolice() {
 					取消 : function() {
 
 					}
+				},
+				onContentReady : function() {
+
+					$
+							.post(
+									'/ajdbxt/user/User_findDepartmentByPage',
+									function(Department_data) {
+										// 所有案件循环
+										var option = '';
+										for (var len = 0; len < Department_data.list.length; len++) {
+											option += '<option ';
+											option += ' value="'
+													+ Department_data.list[len].ajdbxt_department_id
+													+ '">'
+													+ Department_data.list[len].department_name
+													+ '</option>';
+										}
+										$('#input_police_department')
+												.html(option);
+									}, 'json');
+					
+					
+					
 				}
+				
 			});
 
 }
