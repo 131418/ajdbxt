@@ -67,7 +67,7 @@
 										<th>姓名</th>
 										<th>单位</th>
 										<th>职务</th>
-										<th>角色</th>
+										<th>权限</th>
 										<th>手机号码</th>
 										<th>操作</th>
 										<th><label class="fancy-checkbox"> <input
