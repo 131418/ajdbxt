@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; uft-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%
 	String path = request.getContextPath();
@@ -9,14 +9,64 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--------------------------------------------------------------------------------->
+<script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css">
+<!--------------------------------------------------------------------------------->
+<link rel="stylesheet" href="<%=basePath%>css/bootstrap-select.min.css">
+<script type="text/javascript" src="<%=basePath%>js/bootstrap-select.js"></script>
+<!--------------------------------------------------------------------------------->
+<link rel="stylesheet"
+	href="<%=basePath%>css/navbar/chartist-custom.css">
+<link rel="stylesheet" href="<%=basePath%>css/navbar/main.css">
+<link rel="stylesheet"
+	href="<%=basePath%>css/navbar/font-awesome.min.css">
+<link rel="stylesheet" href="<%=basePath%>css/navbar/style.css">
+<link rel="stylesheet" href="<%=basePath%>css/table.css">
+<!--------------------------------------------------------------------------------->
+<link rel="stylesheet" href="<%=basePath%>css/toastr.css" />
+<script type="text/javascript" src="<%=basePath%>js/toastr.js"></script>
+<!--------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------->
+<script type="text/javascript" src="<%=basePath%>js/User/login.js"></script>
+<!--------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------->
+<!--------------------------------------------------------------------------------->
+<title>案件督办系统</title>      
 </head>
-<body>
-<form action="user/User_login">
-<input type="text" name="username" />
-<input type="password"  name="password" />
-<input type="submit" value="登录" />
-</form>
+<body background="<%=basePath%>img/Use_login.png"
+	style="background-position: center center; background-repeat: no-repeat;">
+	<input type="text" class="form-control" id="userNumber"
+		style="width: 298px; height: 46px; margin-left: 743px; margin-top: 235px;">
+	<input type="password" class="form-control" id="password"
+		style="width: 298px; height: 46px; margin-left: 743px; margin-top: 18px;">
+	<button id="button_login"
+		style="border: 0px; background-color: #0B1D29; margin-left: 739px; margin-top: 31px;"
+		onclick="login()">
+		<img src="<%=basePath%>img/login_button.png">
+	</button>
+
+	<%-- <div class="panel" style="width: 550px; margin: 100px auto;">
+		<div class="panel-heading">
+			<div>
+				<img src="<%=basePath%>img/logo.jpg" height="40px">
+			</div>
+			<h2 style="text-align: center;">案件督办系统</h2>
+		</div>
+		<div class="panel-body" style="margin: 0 0 20px 0;">
+			<div class="form-group">
+				<input type="email" class="form-control" id="login_username" placeholder="用户名">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" id="login_password" placeholder="密码">
+			</div>
+			<br>
+			<button id="button_login" class="btn btn-primary  btn-block" onclick="login()">登录</button>
+		</div>
+	</div> --%>
 </body>
+
 </html>

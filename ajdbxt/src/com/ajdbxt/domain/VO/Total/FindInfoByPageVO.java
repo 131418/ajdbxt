@@ -1,10 +1,8 @@
-package com.ajdbxt.domain.VO.User;
+package com.ajdbxt.domain.VO.Total;
 
 import java.util.List;
 
-import com.ajdbxt.domain.DO.ajdbxt_police;
-
-public class findPoliceByPageVO {
+public class FindInfoByPageVO {
 	
 	private List list;//要返回的某一页的记录列表
 	
@@ -136,7 +134,7 @@ public class findPoliceByPageVO {
 
 	@Override
 	public String toString() {
-		return "findPoliceByPageVO [list=" + list + ", allRow=" + allRow + ", totalPage=" + totalPage + ", currentPage="
+		return "FindInfoByPageVO [list=" + list + ", allRow=" + allRow + ", totalPage=" + totalPage + ", currentPage="
 				+ currentPage + ", pageSize=" + pageSize + "]";
 	}
 
