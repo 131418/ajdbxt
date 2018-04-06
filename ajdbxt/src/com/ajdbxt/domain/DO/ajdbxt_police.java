@@ -4,7 +4,7 @@ package com.ajdbxt.domain.DO;
  * AjdbxtPolice entity. @author MyEclipse Persistence Tools
  */
 
-public class Ajdbxt_police implements java.io.Serializable {
+public class ajdbxt_police implements java.io.Serializable {
 
 	// Fields
 
@@ -22,15 +22,15 @@ public class Ajdbxt_police implements java.io.Serializable {
 	// Constructors
 
 	/** default constructor */
-	public Ajdbxt_police() {
+	public ajdbxt_police() {
 	}
 
 	/** minimal constructor */
-	public Ajdbxt_police(String ajdbxtPoliceId) {
+	public ajdbxt_police(String ajdbxtPoliceId) {
 		this.ajdbxtPoliceId = ajdbxtPoliceId;
 	}
 	/** full constructor */
-	public Ajdbxt_police(String ajdbxtPoliceId, String policeSerialNumber,
+	public ajdbxt_police(String ajdbxtPoliceId, String policeSerialNumber,
 			String policePassword, String policeName, String policeDepartment,
 			String policeDuty, String policePower, String policePhoneNumber,
 			String policeGmtCreate, String policeGmtModify) {

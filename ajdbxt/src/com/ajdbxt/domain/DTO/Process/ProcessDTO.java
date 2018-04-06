@@ -1,6 +1,6 @@
 package com.ajdbxt.domain.DTO.Process;
 
-import com.ajdbxt.domain.DO.Ajdbxt_police;
+import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.DO.ajdbxt_info;
 import java.util.List;
 import com.ajdbxt.domain.DO.ajdbxt_process;
@@ -17,12 +17,12 @@ public class ProcessDTO {
 	/**
 	 * 办理该案件的警官
 	 */
-	private List<Ajdbxt_police> police;
+	private List<ajdbxt_police> police;
 	
-	public List<Ajdbxt_police> getPolice() {
+	public List<ajdbxt_police> getPolice() {
 		return police;
 	}
-	public void setPolice(List<Ajdbxt_police> police) {
+	public void setPolice(List<ajdbxt_police> police) {
 		this.police = police;
 	}
 	public ajdbxt_process getProcess() {

@@ -2,20 +2,20 @@ package com.ajdbxt.service.User;
 
 import java.util.List;
 
-import com.ajdbxt.domain.DO.Ajdbxt_police;
+import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 
 public interface UserService {
 	
-	public Ajdbxt_police getUserById(String policeSerialNumber);
+	public ajdbxt_police getUserById(String policeSerialNumber);
 
 	Object login(String policeSerialNumber, String policePassword);
 
-	String addPolice(Ajdbxt_police ajdbxt_police);
+	String addPolice(ajdbxt_police ajdbxt_police);
 
-	String deletePolice(Ajdbxt_police ajdbxt_police);
+	String deletePolice(ajdbxt_police ajdbxt_police);
 
-	String updatePolice(Ajdbxt_police ajdbxt_police);
+	String updatePolice(ajdbxt_police ajdbxt_police);
 
 	//List<Ajdbxt_police> findPoliceByPoliceDepartment(String policeDepartment);
 

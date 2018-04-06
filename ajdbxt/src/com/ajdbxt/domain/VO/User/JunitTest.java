@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ajdbxt.domain.DO.Ajdbxt_police;
+import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.service.User.UserService;
 import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionContext;
@@ -35,7 +35,7 @@ public class JunitTest {
 	@Test
 	public void Test_addPolice() {
 		// ajdbxtPoliceId,policeSerialNumber,policePassword,policeName,policeDepartment,policeDuty,policePhoneNumber,policeGmtCreat,policeGmtModify
-		Ajdbxt_police ajdbxt_police = new Ajdbxt_police(null, "999999", "999999", "ss辉", "sss", "副局长", "18870581880",
+		ajdbxt_police ajdbxt_police = new ajdbxt_police(null, "999999", "999999", "ss辉", "sss", "副局长", "18870581880",
 				null, null, "1");
 		System.out.println(userService.addPolice(ajdbxt_police));
 		// System.out.println("000000000000"+ajdbxt_police+"0000000000000000000");
@@ -43,13 +43,13 @@ public class JunitTest {
 
 	@Test
 	public void Test_deletePolice() {
-		Ajdbxt_police ajdbxt_police = new Ajdbxt_police("7066a0c6-3615-469c-92ec-2cac763e23ad");
+		ajdbxt_police ajdbxt_police = new ajdbxt_police("7066a0c6-3615-469c-92ec-2cac763e23ad");
 		System.out.println(userService.deletePolice(ajdbxt_police));
 	}
 
 	@Test
 	public void Test_updatePolice() {
-		Ajdbxt_police ajdbxt_police = new Ajdbxt_police("0b3bb7c7-d682-4011-823d-31a470b07dce", "040800", "111111",
+		ajdbxt_police ajdbxt_police = new ajdbxt_police("0b3bb7c7-d682-4011-823d-31a470b07dce", "040800", "111111",
 				"易志伟", "法制大队", "大队长", "2", "18870581880", null, null);
 		System.out.println(userService.updatePolice(ajdbxt_police));
 	}

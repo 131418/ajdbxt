@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
-import com.ajdbxt.domain.DO.Ajdbxt_police;
+import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 import com.ajdbxt.service.User.UserService;
 import com.google.gson.Gson;
@@ -17,7 +17,7 @@ public class UserAction extends ActionSupport {
 
 	private UserService userService;
 
-	private Ajdbxt_police ajdbxt_police;// 前端传来 的信息封装到类里
+	private ajdbxt_police ajdbxt_police;// 前端传来 的信息封装到类里
 
 	private findPoliceByPageVO findPoliceByPage;
 
@@ -26,7 +26,7 @@ public class UserAction extends ActionSupport {
 	}
 
 	public String indexPage() {
-		Ajdbxt_police loginPolice = (Ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+		ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
 		if (null == loginPolice) {
 			return "login";
 		}
@@ -74,7 +74,7 @@ public class UserAction extends ActionSupport {
 	public void changePassword() {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=utf-8");
-		Ajdbxt_police loginPolice = (Ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+		ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
 		String result = userService.changePassword(loginPolice.getAjdbxtPoliceId(),
 				ajdbxt_police.getPolicePassword());
 		try {
@@ -172,18 +172,18 @@ public class UserAction extends ActionSupport {
 
 	// 分页查询部门人员
 	public String queryForPageByDepartment() {
-		Ajdbxt_police loginPolice = (Ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+		ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
 		String department = loginPolice.getPoliceDepartment();
 		this.findPoliceByPageVO = userService.queryForPageByDepartment(10, currentPage, department);
 		return "departmentlist";
 	}
 
 	// Ajdbxt_police的getter\set方法
-	public Ajdbxt_police getAjdbxt_police() {
+	public ajdbxt_police getAjdbxt_police() {
 		return ajdbxt_police;
 	}
 
-	public void setAjdbxt_police(Ajdbxt_police ajdbxt_police) {
+	public void setAjdbxt_police(ajdbxt_police ajdbxt_police) {
 		this.ajdbxt_police = ajdbxt_police;
 	}
 

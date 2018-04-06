@@ -8,7 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
-import com.ajdbxt.domain.DO.Ajdbxt_police;
+import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.service.Process.ProcessInfoService;
 import com.ajdbxt.service.Process.ProcessService;
 import com.opensymphony.xwork2.ActionContext;
@@ -53,7 +53,7 @@ public class ProcessAction  extends ActionSupport{
 	 */
 	public void getInfo() {
 		Object o =ActionContext.getContext().getSession().get("loginPolice");//得到该警察
-		Ajdbxt_police police=(Ajdbxt_police)o;
+		ajdbxt_police police=(ajdbxt_police)o;
 		String police_id=police.getAjdbxtPoliceId();
 		String json="";
 		if(ajdbxtProcess.getProcess_case_end()==null||ajdbxtProcess.getProcess_case_end()=="ture") {

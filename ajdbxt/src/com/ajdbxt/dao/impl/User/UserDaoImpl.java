@@ -8,17 +8,17 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.ajdbxt.dao.User.UserDao;
-import com.ajdbxt.domain.DO.Ajdbxt_police;
+import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.DO.police;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
 
 public class UserDaoImpl implements UserDao {
 
 	@Override
-	public Ajdbxt_police findPolice(String policeSerialNumber) {
+	public ajdbxt_police findPolice(String policeSerialNumber) {
 		String hql = "from Ajdbxt_police where policeSerialNumber = '"+ policeSerialNumber +"'";
 		Query query = getSession().createQuery(hql);
-		Ajdbxt_police p = (Ajdbxt_police) query.uniqueResult();
+		ajdbxt_police p = (ajdbxt_police) query.uniqueResult();
 		return p;
 	}
 
@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean addPolice(Ajdbxt_police ajdbxt_police) {
+	public boolean addPolice(ajdbxt_police ajdbxt_police) {
 		// TODO Auto-generated method stub
 		try {
 			getSession().saveOrUpdate(ajdbxt_police);
@@ -46,7 +46,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean deletePolice(Ajdbxt_police ajdbxtPolice) {
+	public boolean deletePolice(ajdbxt_police ajdbxtPolice) {
 		// TODO Auto-generated method stub
 
 		try {
@@ -60,15 +60,15 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public Ajdbxt_police findPoliceByPoliceSerialNumber(String policeSerialNumber) {
+	public ajdbxt_police findPoliceByPoliceSerialNumber(String policeSerialNumber) {
 		// TODO Auto-generated method stub
 		String hql = "from Ajdbxt_police where policeSerialNumber = '" + policeSerialNumber + "'";
-		return (Ajdbxt_police) getSession().createQuery(hql).uniqueResult();
+		return (ajdbxt_police) getSession().createQuery(hql).uniqueResult();
 
 	}
 
 	@Override
-	public boolean updatePolice(Ajdbxt_police ajdbxt_police) {
+	public boolean updatePolice(ajdbxt_police ajdbxt_police) {
 		// TODO Auto-generated method stub
 		try {
 			getSession().update(ajdbxt_police);
@@ -99,7 +99,7 @@ public class UserDaoImpl implements UserDao {
 */
 
 	@Override
-	public List<Ajdbxt_police> queryForPage(String hql, int offset, int length) {
+	public List<ajdbxt_police> queryForPage(String hql, int offset, int length) {
 		// TODO Auto-generated method stub
 		Query q = getSession().createQuery(hql);
 		q.setFirstResult(offset);
@@ -115,7 +115,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<Ajdbxt_police> queryForPageByDepartment(String hql, int offset, int length) {
+	public List<ajdbxt_police> queryForPageByDepartment(String hql, int offset, int length) {
 		// TODO Auto-generated method stub
 		Query q = getSession().createQuery(hql);
 		q.setFirstResult(offset);
