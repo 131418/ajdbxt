@@ -72,12 +72,12 @@
 						<i class="icon-submenu lnr lnr-chevron-down"></i>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="#">录入案件</a></li>
+						<li><a href="<%=basePath%>info/Info_ceseinfoInputpage">录入案件</a></li>
 						<li><a href="#">案件列表</a></li>
 					</ul></li>
 				<!--  -->
-				<li class="dropdown" style="float: left;"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown"> <span>办案流程</span>
+				<li class="dropdown" style="float: left;"><a href="<%=basePath%>process/Process_page_process"
+					> <span>办案流程</span>
 						<!-- <i class="icon-submenu lnr lnr-chevron-down"></i> -->
 				</a></li>
 

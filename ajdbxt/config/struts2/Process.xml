@@ -3,10 +3,12 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-	<package name="test" extends="struts-default" namespace="/process">
-		<action name="*ProcessAction" class="processAction" method="{1}">
-			<result name="success">/processTest.jsp</result>
-			<result name="false">/somethingBad.jsp</result>
+	<package name="Process" namespace="/process" extends="struts-default">
+		<action name="Process_*" class="com.ajdbxt.action.Process.ProcessAction"
+			method="{1}">
+			
+			<result name="processpage">/WEB-INF/view/process/ProcessCase.jsp</result>
+
 		</action>
 	</package>
 </struts>
