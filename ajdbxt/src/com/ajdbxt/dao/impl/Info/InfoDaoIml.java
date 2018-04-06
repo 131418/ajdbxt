@@ -1,5 +1,7 @@
 package com.ajdbxt.dao.impl.Info;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.util.List;
 
 import org.hibernate.Query;
@@ -79,6 +81,28 @@ public class InfoDaoIml implements InfoDao {
 		Session session=this.getSession();
 		Query query= session.createQuery("from ajdbxt_info");
 		return query.list();
+	}
+
+	@Override
+	public boolean isCaptainWorked(String captainId) {
+		boolean work=false;
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from ajdbxt_info where INFO_MAIN_POLICE=?");
+		query.setString(0, captainId);
+		if(query.list().isEmpty()) {
+			work=true;
+		}
+		return work;
+	}
+
+	@Override
+	public int countProcessByPoliceId(String ajdbxt_police_id) {
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from ajdbxt_info where info_main_police=? or info_assistant_police_one=? or info_assistant_police_two=?");
+		for(int index=0;index<3;index++) {
+			query.setString(index, ajdbxt_police_id);
+		}
+		return query.list().size();
 	}
 
 }
