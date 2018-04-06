@@ -28,6 +28,8 @@ public interface UserService {
 	String addDepartment(ajdbxt_department ajdbxt_department);
 
 	public findDepartmentByPageVO findDepartmentByPage(int pageSize, int currentPage);
+
+	public findPoliceByPageVO fuzzySearch(int pageSize, int currentPage,String police_name);
 	
 
 }
