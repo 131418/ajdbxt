@@ -209,7 +209,7 @@ public class UserAction extends ActionSupport {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
 			response.setContentType("text/html;charset=utf-8");
-			this.findPoliceByPageVO = userService.queryForPage(10, currentPage);
+			this.findPoliceByPageVO = userService.queryForPage(10, findPoliceByPageVO.getCurrentPage());
 			response.getWriter().write(new Gson().toJson(this.findPoliceByPageVO));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

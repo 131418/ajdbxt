@@ -43,8 +43,8 @@
 						<div class="panel-body">
 							<div style="height: 34px; width: 100%;">
 								<div style="width: 150px; float: left; margin: 0 20px 0 0">
-									<button class="btn btn-default" onclick="createPolice()">
-										<i class="fa fa-plus-square"></i> 新增人员
+									<button class="btn btn-default" onclick="">
+										<i class="fa fa-plus-square"></i> 按单位统计
 									</button>
 
 								</div>
@@ -63,8 +63,8 @@
 									<tr>
 										<th>办案单位</th>
 										<th>主办民警</th>
-										<th>案件评分</th>
-										<th>案件类型</th>
+<!-- 										<th>案件评分</th>
+ -->										<th>案件类型</th>
 										<th>抓获时间</th>
 									</tr>
 								</tbody>
@@ -108,9 +108,9 @@
 	<script type="text/javascript" src="<%=basePath%>js/laydate/laydate.js"></script>
 	<script src="/laydate/laydate.js"></script>
 	<script type="text/javascript"
-		src="<%=basePath%>js/User/ajdbxtTotal.js"></script>
+		src="<%=basePath%>js/Total/ajdbxtTotal.js"></script>
 	<script type="text/javascript">
-		List_Total_By_Page(1);
+	List_Total_By_Page(1);
 	</script>
 
 </body>
