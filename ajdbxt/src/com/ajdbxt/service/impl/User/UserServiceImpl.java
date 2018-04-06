@@ -181,7 +181,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public findPoliceByPageVO fuzzySearch(int pageSize, int currentPage,String police_name) {
 		// TODO Auto-generated method stub
-		String hql = "select count(*) from ajdbxt_police";
+		String hql = "select count(*) from ajdbxt_police where police_name like '%"+police_name+"%'";
 		int count = userDao.getCount(hql); // 总记录数
 		int totalPage = findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数
 		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
