@@ -5,7 +5,8 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.http.HttpRequest;
+import org.apache.struts2.ServletActionContext;
+import org.hibernate.service.spi.ServiceRegistryImplementor;
 
 import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
@@ -16,8 +17,6 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class InfoAction extends ActionSupport {
 	
-	private HttpServletRequest http_request;
-	private HttpServletResponse http_response;
 	private ajdbxt_info info;
 	private InfoService infoService;
 	private Page_list_caseInfoVo page_list_caseInfoVo;
@@ -30,9 +29,16 @@ public class InfoAction extends ActionSupport {
 	public String page_CaseInput() {
 		return "page_CaseInput";
 	}
-	
+	/**
+	 * 得到全部案件信息链表
+	 * @return
+	 */
 	public String listAll() {
-		infoService.getAllCase();
+		try {
+			ServletActionContext.getResponse().getWriter().print(infoService.getAllCase());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
 		return null;
 	}
 	
@@ -50,36 +56,13 @@ public class InfoAction extends ActionSupport {
 		return "page_CaseInfo";
 	}
 	public void addCase() {
-		GsonBuilder gsonBuilder =new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();//格式化json数据
-		Gson gson=gsonBuilder.create();
-		infoService.saveCase(info);
-		try {
-			
-			http_response.setContentType("text/html;charset=utf-8");
-			
-			//此处要返回一个值班民警的gson对象
-			
-			http_response.getWriter().write(gson.toJson("success"));
-		} catch (IOException e) {
-			e.printStackTrace();
-			try {
-				http_response.getWriter().write(gson.toJson("error"));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
 		
 	}
-	
 	public void updateCase() throws IOException {
 		GsonBuilder gsonBuilder =new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();//格式化json数据
 		Gson gson=gsonBuilder.create();
 		infoService.updateCase(info);
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson("success"));
 	}
 	
 	
@@ -87,10 +70,7 @@ public class InfoAction extends ActionSupport {
 		GsonBuilder gsonBuilder =new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();//格式化json数据
 		Gson gson=gsonBuilder.create();
-		infoService.deleteCase(info.getAjdbxt_info_id());
-		http_response.setContentType("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson("success"));
-		
+		infoService.deleteCase(info.getAjdbxt_info_id());		
 	}
 	public void list() {
 		
@@ -100,27 +80,9 @@ public class InfoAction extends ActionSupport {
 		gsonBuilder.setPrettyPrinting();//格式化json数据
 		Gson gson=gsonBuilder.create();
 		page_list_caseInfoVo=infoService.showCaseList(page_list_caseInfoVo);
-		http_response.setContentType("text/html;charset:utf-8");
-		http_response.getWriter().write(gson.toJson(page_list_caseInfoVo));
 		
 		
 	}
-	public HttpServletRequest getHttp_request() {
-		return http_request;
-	}
-
-	public void setHttp_request(HttpServletRequest http_request) {
-		this.http_request = http_request;
-	}
-	
-	public HttpServletResponse getHttp_response() {
-		return http_response;
-	}
-
-	public void setHttp_response(HttpServletResponse http_response) {
-		this.http_response = http_response;
-	}
-
 	public ajdbxt_info geInfo() {
 		return info;
 	}
