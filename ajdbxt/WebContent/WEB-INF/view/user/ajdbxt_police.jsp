@@ -48,14 +48,14 @@
 									</button>
 
 								</div>
-								<!-- 删除按钮 -->
-								<div style="height: 34px; width: 150px; float: right;">
-									<button class="btn btn-danger" onclick="deletePolice()"
-										style="float: right; margin: 0 10px;">
-										<i class="fa fa-trash-o"></i> 删除
-									</button>
-
+								<!-- 检索 -->
+								<div class="input-group" style="width: 300px; float: right;">
+									<input id="input_DNASearchText" class="form-control"
+										oninput="List_DNA_By_PageAndSearch(1)" type="text"> <span
+										class="input-group-addon"> <i class="fa fa-search"></i>
+									</span>
 								</div>
+
 							</div>
 
 							<table id="table_police" class="table table-hover table-bordered"
@@ -82,9 +82,25 @@
 							<div id="i_pulse" style="text-align: center;">
 								<i class="fa fa-spinner fa-pulse fa-3x"></i>
 							</div>
+							<!-- 删除按钮 -->
+							<!-- <div style="height: 34px; width: 150px; float: right;">
+									<button class="btn btn-danger" onclick="deletePolice()"
+										style="float: right; margin: 0 10px;">
+										<i class="fa fa-trash-o"></i> 删除所选
+									</button>
+
+								</div>-->
+							<div style="height: 34px;">
+
+								<button class="btn btn-danger" onclick="deletePolice()"
+									style="float: right; margin: 0 10px;">
+									<i class="fa fa-trash-o"></i> 删除所选
+								</button>
+
+							</div>
 							<!--翻页  -->
 							<div id="page_flip"
-								style="margin: 20px auto 30px; width: 300px; text-align: center;">
+								style="margin: 0 auto; width: 400px; text-align: center;">
 								<span> <a onclick="flip(1)"><i
 										class="fa fa-angle-double-left">首页</i> </a> &nbsp&nbsp <a
 									onclick="flip(2)"><i class="fa fa-angle-left"></i>上一页 </a>
@@ -118,7 +134,7 @@
 	<script type="text/javascript"
 		src="<%=basePath%>js/User/ajdbxtPolice.js"></script>
 	<script type="text/javascript">
-	List_Police_By_Page(1);
+		List_Police_By_Page(1);
 	</script>
 
 </body>
