@@ -43,17 +43,7 @@
 						<div class="panel-body">
 							<div style="height: 34px; width: 100%;">
 								<div style="width: 150px; float: left; margin: 0 20px 0 0">
-									<button class="btn btn-default" onclick="createPolice()">
-										<i class="fa fa-plus-square"></i> 新增人员
-									</button>
-
-								</div>
-								<!-- 检索 -->
-								<div class="input-group" style="width: 300px; float: right;">
-									<input id="input_DNASearchText" class="form-control"
-										oninput="List_DNA_By_PageAndSearch(1)" type="text"> <span
-										class="input-group-addon"> <i class="fa fa-search"></i>
-									</span>
+									<input name="" style="float: left;" type="text" class="form-control mydate" placeholder="起始日期">
 								</div>
 							</div>
 
@@ -62,10 +52,8 @@
 								<tbody>
 									<tr>
 										<th>办案单位</th>
-										<th>主办民警</th>
-										<th>案件评分</th>
-										<th>案件类型</th>
-										<th>抓获时间</th>
+										<th>行政案件</th>
+										<th>刑事案件</th>
 									</tr>
 								</tbody>
 							</table>
@@ -73,25 +61,6 @@
 							<!-- 加载图标 -->
 							<div id="i_pulse" style="text-align: center;">
 								<i class="fa fa-spinner fa-pulse fa-3x"></i>
-							</div>
-							<!--翻页  -->
-							<div id="page_flip"
-								style="margin: 20px auto 30px; width: 300px; text-align: center;">
-								<span> <a onclick="flip(1)"><i
-										class="fa fa-angle-double-left">首页</i> </a> &nbsp&nbsp <a
-									onclick="flip(2)"><i class="fa fa-angle-left"></i>上一页 </a>
-									&nbsp&nbsp <a onclick="flip(3)">下一页<i
-										class="fa fa-angle-right"></i>
-								</a> &nbsp&nbsp <a onclick="flip(4)">尾页<i
-										class="fa fa-angle-double-right"></i>
-								</a> <br />
-									<p class='info' style="margin-top: 5px;">
-										第<span id="span_pageIndex">1</span>页&nbsp&nbsp共 <span
-											id="span_totalPages">1</span>页&nbsp&nbsp共 <span
-											id="span_totalRecords">0</span>条记录
-
-									</p></span>
-
 							</div>
 
 						</div>
@@ -108,10 +77,30 @@
 	<script type="text/javascript" src="<%=basePath%>js/laydate/laydate.js"></script>
 	<script src="/laydate/laydate.js"></script>
 	<script type="text/javascript"
-		src="<%=basePath%>js/User/ajdbxtTotal.js"></script>
+		src="<%=basePath%>js/Total/ajdbxtTotal.js"></script>
 	<script type="text/javascript">
-		List_Total_By_Page(1);
+	List_Total_By_Page(1);
 	</script>
-
+<script type="text/javascript">
+		$.datetimepicker.setLocale('ch');
+		$('.mydate').datetimepicker({
+			yearStart : 1990, // 设置最小年份
+			yearEnd : 2050, // 设置最大年份
+			yearOffset : 0, // 年偏差
+			timepicker : false, // 关闭时间选项
+			format : 'Y-m-d', // 格式化日期年-月-日
+			minDate : '1990/01/01', // 设置最小日期
+			maxDate : '2030/01/01', // 设置最大日期
+		});
+		$('.mydate_minute').datetimepicker({
+			yearStart : 1990, // 设置最小年份
+			yearEnd : 2050, // 设置最大年份
+			yearOffset : 0, // 年偏差
+			timepicker : true, // 关闭时间选项
+			format : 'Y-m-d H:i', // 格式化日期年-月-日
+			minDate : '1990/01/01', // 设置最小日期
+			maxDate : '2030/01/01', // 设置最大日期
+		});
+	</script>
 </body>
 </html>
