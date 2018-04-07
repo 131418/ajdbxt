@@ -11,11 +11,20 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import util.JsonUtils;
 import com.ajdbxt.domain.DO.ajdbxt_process;
+import com.ajdbxt.domain.VO.Process.showProcessVO;
 
 public class ProcessAction  extends ActionSupport{
 	private ProcessService processService;
 	private ajdbxt_process ajdbxtProcess;
 	private ProcessInfoService processInfoService;
+	private showProcessVO processVO;
+	public showProcessVO getProcessVO() {
+		return processVO;
+	}
+
+	public void setProcessVO(showProcessVO processVO) {
+		this.processVO = processVO;
+	}
 
 	public ProcessService getProcessService() {
 		return processService;
@@ -121,8 +130,12 @@ public class ProcessAction  extends ActionSupport{
 	}
 
 	public String findSome() {
-		
-		return null;
-		
+		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+		try {
+			ServletActionContext.getResponse().getWriter().print(processService.getSomeProcessByShowProcessVO(processVO));
+		} catch (IOException e) {
+			new RuntimeException(e);
+		}
+		return "";
 	}
 }

@@ -21,7 +21,6 @@ public class InfoServiceImpl implements InfoService {
 	public void setInfoPoliceDao(InfoPoliceDao infoPoliceDao) {
 		this.infoPoliceDao = infoPoliceDao;
 	}
-
 	private InfoPoliceDao infoPoliceDao;
 	private List<Tel> tel ;
 	private String[] params;
@@ -257,9 +256,16 @@ public class InfoServiceImpl implements InfoService {
 	}
 
 	@Override
-	public String getAllCase() {
-		List list=infoDao.findAllCaseIfo();
-		return JsonUtils.toJson(list);
+	public String getAllCase(Page_list_caseInfoVo infoVO) {
+		List<ajdbxt_info> list=infoDao.findSomeCase(infoVO.getCurrPage()*10, infoVO.getPageSize());
+		infoVO.setCaselist(list);
+		infoVO.setCountRecords(infoDao.countAllCase());
+		int pages=infoVO.getCountRecords()/infoVO.getPageSize();
+		if(infoVO.getCountRecords()/infoVO.getPageSize()>0) {
+			pages++;
+		}
+		infoVO.setTotalPages(pages);
+		return JsonUtils.toJson(infoVO);
 	}
 	private ajdbxt_police rankWork(String apartment) {
 		
@@ -281,4 +287,12 @@ public class InfoServiceImpl implements InfoService {
 		}
 	}
 
+	@Override
+	public String getLegalsAndLeaders() {
+		LegalSystemAndLeadersVO lalVO=new LegalSystemAndLeadersVO();
+		lalVO.setLegals(infoPoliceDao.findLegals());
+		lalVO.setLeaders(infoPoliceDao.findLeaders());
+		return JsonUtils.toJson(lalVO);
+	}
+	
 }

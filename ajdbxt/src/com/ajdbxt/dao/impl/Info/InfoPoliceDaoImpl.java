@@ -33,4 +33,20 @@ public class InfoPoliceDaoImpl implements InfoPoliceDao {
 		cri.add(Restrictions.eq("ajdbxt_police_id", police_id));
 		return (ajdbxt_police) cri.uniqueResult();
 	}
+
+	@Override
+	public List<ajdbxt_police> findLegals() {
+		Session session=sessionFactory.getCurrentSession();
+		Criteria cri=session.createCriteria(ajdbxt_police.class);
+		cri.add(Restrictions.eq("police_department", "法制大队"));
+		return cri.list();
+	}
+
+	@Override
+	public List<ajdbxt_police> findLeaders() {
+		Session session=sessionFactory.getCurrentSession();
+		Criteria cri=session.createCriteria(ajdbxt_police.class);
+		cri.add(Restrictions.eq("police_duty", "负责人"));
+		return cri.list();
+	}
 }

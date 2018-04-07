@@ -1,9 +1,13 @@
 package com.ajdbxt.dao.impl.Info;
 
 import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+
 import com.ajdbxt.dao.Info.InfoDao;
 import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
@@ -73,13 +77,6 @@ public class InfoDaoImpl implements InfoDao {
 	}
 
 	@Override
-	public List<ajdbxt_info> findAllCaseIfo() {
-		Session session=this.getSession();
-		Query query= session.createQuery("from ajdbxt_info");
-		return query.list();
-	}
-
-	@Override
 	public boolean isCaptainWorked(String captainId) {
 		boolean work=false;
 		Session session=sessionFactory.getCurrentSession();
@@ -99,6 +96,23 @@ public class InfoDaoImpl implements InfoDao {
 			query.setString(index, ajdbxt_police_id);
 		}
 		return query.list().size();
+	}
+
+	@Override
+	public List<ajdbxt_info> findSomeCase(int start, int length) {
+		Session session=sessionFactory.getCurrentSession();
+		Criteria cri=session.createCriteria(ajdbxt_info.class);
+		cri.addOrder(Order.desc("info_gmt_modify"));
+		cri.setFirstResult(start);
+		cri.setFetchSize(length);
+		return cri.list();
+	}
+
+	@Override
+	public int countAllCase() {
+		Session session=sessionFactory.getCurrentSession();
+		Criteria cri=session.createCriteria(ajdbxt_info.class);
+		return cri.list().size();
 	}
 
 }
