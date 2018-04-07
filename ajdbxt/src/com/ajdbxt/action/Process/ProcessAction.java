@@ -127,5 +127,20 @@ public class ProcessAction  extends ActionSupport{
 		return null;
 		
 	}
+	
+	/**
+	 * 跳转到办案流程列表页
+	 * @return
+	 */
+	public String page_list_CaseProcess() {
+		return "page_list_CaseProcess";
+	}
+	
+	/**
+	 * 跳转到办案流程详情页
+	 */
+	public String page_CaseProcessInfo() {
+		return "page_CaseProcessInfo";
+	}
 
 }

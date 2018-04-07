@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018-4-7 9:36:54 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="com.ajdbxt.domain.DO.ajdbxt_info" table="AJDBXT_INFO">
         <id name="ajdbxt_info_id" type="java.lang.String">
@@ -34,8 +35,8 @@
         <property name="info_department_captain" type="java.lang.String">
             <column name="INFO_DEPARTMENT_CAPTAIN" />
         </property>
-        <property name="info_legal_team_membe" type="java.lang.String">
-            <column name="INFO_LEGAL_TEAM_MEMBE" />
+        <property name="info_legal_team_member" type="java.lang.String">
+            <column name="INFO_LEGAL_TEAM_MEMBER" />
         </property>
         <property name="info_bureau_leader" type="java.lang.String">
             <column name="INFO_BUREAU_LEADER" />
