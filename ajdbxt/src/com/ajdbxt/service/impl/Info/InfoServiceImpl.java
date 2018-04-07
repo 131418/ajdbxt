@@ -13,11 +13,14 @@ import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.service.Info.InfoService;
 
 import util.JsonUtils;
+import util.Tel;
 
 public class InfoServiceImpl implements InfoService {
 	private InfoDao infoDao;
 	private ProcessDao processDao;
 	private InfoPoliceDao infoPoliceDao;
+	private List<Tel> tel ;
+	private String[] params;
 	public InfoPoliceDao getInfoPoliceDao() {
 		return infoPoliceDao;
 	}
@@ -54,8 +57,7 @@ public class InfoServiceImpl implements InfoService {
 		caseInfo.setInfo_gmt_modify(caseInfo.getInfo_gmt_ceate());//保存时将修改时间设为创建时间
 		oneceRank(caseInfo);
 		//哲理要写排班逻辑
-		processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());
-		//这里要发短信
+		processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());		
 		infoDao.saveCase(caseInfo);
 		return JsonUtils.toJson(caseInfo);
 	}
@@ -75,7 +77,6 @@ public class InfoServiceImpl implements InfoService {
 		if(new Random().nextBoolean()&&infoDao.isCaptainWorked(police_id)) {
 			caseInfo.setInfo_main_police(police_id);
 		}
-		
 		//的到副所队长和普通警员的执勤次数
 		int countCap=0;
 		int countNom=0;
@@ -264,6 +265,16 @@ public class InfoServiceImpl implements InfoService {
 	@Override
 	public void save(ajdbxt_info caseInfo) {
 		infoDao.saveCase(caseInfo);
+		ajdbxt_police police;
+		police=infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police());
+		tel=new ArrayList<Tel>();
+		tel.add(new Tel(police.getPolice_phone_number(),"86"));
+		
+		police=infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_one());
+		tel.add(new Tel(police.getPolice_phone_number(),"86"));
+		if(caseInfo.getInfo_assistant_police_two()!=null||!caseInfo.getInfo_assistant_police_two().isEmpty()) {
+			
+		}
 	}
 
 }

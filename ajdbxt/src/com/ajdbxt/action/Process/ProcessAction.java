@@ -2,10 +2,6 @@ package com.ajdbxt.action.Process;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 import com.ajdbxt.domain.DO.ajdbxt_police;
@@ -13,9 +9,7 @@ import com.ajdbxt.service.Process.ProcessInfoService;
 import com.ajdbxt.service.Process.ProcessService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-
 import util.JsonUtils;
-
 import com.ajdbxt.domain.DO.ajdbxt_process;
 
 public class ProcessAction  extends ActionSupport{
@@ -127,9 +121,8 @@ public class ProcessAction  extends ActionSupport{
 	}
 
 	public String findSome() {
+		
 		return null;
 		
 	}
-	
-
 }

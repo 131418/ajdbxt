@@ -3,6 +3,7 @@ import java.util.List;
 
 import com.ajdbxt.dao.Process.ProcessDao;
 import com.ajdbxt.domain.DO.ajdbxt_process;
+import com.ajdbxt.domain.VO.Process.showProcessVO;
 import com.ajdbxt.service.Process.ProcessService;
 
 import util.JsonUtils;
@@ -37,8 +38,11 @@ public class ProcessServiceImpl implements ProcessService {
 	}
 
 	@Override
-	public String getAllProcess() {
-		return JsonUtils.toJson(processDao.findAllProcess());
+	public String getSomeProcessByShowProcessVO(showProcessVO processVO) {
+		int length=processVO.getPageSize();
+		processVO.setList_process(processDao.findSomeProcess(0, length));
+		
+		return null;
 	}
 
 }
