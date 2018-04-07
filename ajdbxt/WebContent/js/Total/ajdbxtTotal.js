@@ -51,19 +51,6 @@ function List_Total_By_Page(pageIndex) {
 					  
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.list[num].info_main_police;*/
-					/*
-					 * 4. 案件类型
-					 */
-					new_td = document.createElement("td");
-					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.list[num].info_category;
-					/*
-					 * 5. 抓获时间
-					 */
-					new_td = document.createElement("td");
-					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.list[num].info_catch_time;
 
 				}
 				/*
@@ -85,50 +72,9 @@ function List_Total_By_Page(pageIndex) {
 			}
 		}
 	}
-	if (pageIndex == null || pageIndex.preventDefault) {
-		pageIndex = 1;
-	}
-	console.log("pageIndex:" + pageIndex);
+	
 	formData.append("total_vo.currentPage", pageIndex);
 	xhr.open("POST", "/ajdbxt/total/Total_listAllInfo");
 	xhr.send(formData);
 
-}
-
-/*
- * 判断页数
- */
-function flip(flipPage) {
-	switch (flipPage) {
-	/* 首页 */
-	case 1: {
-		List_Total_By_Page(1)
-		break;
-	}
-		/* 上一页 */
-	case 2: {
-		if (total_vo.currentPage - 1 == 0) {
-			toastr.warning("已经是第一页了");
-		} else {
-			List_Total_By_Page(total_vo.pageIndex - 1);
-		}
-		break;
-	}
-		/* 下一页 */
-	case 3: {
-		if (total_vo.currentPage == total_vo.totalPage) {
-			toastr.warning("已经是最后一页了");
-		} else {
-			List_Total_By_Page(total_vo.currentPage + 1);
-		}
-		break;
-	}
-		/* 尾页 */
-	case 4: {
-		List_Total_By_Page(total_vo.totalPage);
-
-		break;
-	}
-
-	}
 }

@@ -36,6 +36,11 @@
 <script src="<%=basePath%>js/jquery.bootstrap.wizard.js"></script>
 <script src="<%=basePath%>js/jquery.slimscroll.min.js"></script>
 <script src="<%=basePath%>js/klorofil-common.js"></script>
+
+<!--------------------------------------------------------------------------------->
+<link rel="stylesheet" href="<%=basePath%>css/jquery.datetimepicker.css" />
+<script type="text/javascript"
+	src="<%=basePath%>js/jquery.datetimepicker.full.js"></script>
 <!--------------------------------------------------------------------------------->
 <script type="text/javascript"
 	src="<%=basePath%>js/User/updatePassword.js"></script>
