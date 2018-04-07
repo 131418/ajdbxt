@@ -17,7 +17,7 @@ public interface UserService {
 
 	String updatePolice(ajdbxt_police ajdbxt_police);
 	
-	public findPoliceByPageVO queryForPage(int pageSize, int currentPage);
+	public findPoliceByPageVO queryForPage(int pageSize, int currentPage,String police_name);
 
 	public findPoliceByPageVO queryForPageByDepartment(int pageSize, int currentPage, String department);
 
@@ -29,7 +29,7 @@ public interface UserService {
 
 	public findDepartmentByPageVO findDepartmentByPage(int pageSize, int currentPage);
 
-	public findPoliceByPageVO fuzzySearch(int pageSize, int currentPage,String police_name);
+	//public findPoliceByPageVO fuzzySearch(int pageSize, int currentPage,String police_name);
 	
 
 }

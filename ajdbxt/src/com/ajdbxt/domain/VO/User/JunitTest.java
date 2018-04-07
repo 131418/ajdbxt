@@ -53,8 +53,11 @@ public class JunitTest {
 	 */
 	@Test
 	public void Test_queryForPage() {
-		findPoliceByPageVO currentpage = userService.queryForPage(10, 1);
-		System.out.println(new Gson().toJson(currentpage));
+		findPoliceByPageVO findPoliceByPageVO = userService.queryForPage(10, 1,"");
+		String  redWord = new Gson().toJson(findPoliceByPageVO);
+		//把搜索关键字转换成红色
+		System.out.println(redWord);
+		//System.out.println(redWord.replaceAll("张", "<span style='color:red;'>张</span>"));
 	}
 
 	@Test
@@ -95,11 +98,6 @@ public class JunitTest {
 	public void Test_showdept() {
 		findDepartmentByPageVO findDepartmentByPageVO = userService.findDepartmentByPage(10, 1);
 		System.out.println(new Gson().toJson(findDepartmentByPageVO));
-	}
-	@Test
-	public void Test_Search() {
-		findPoliceByPageVO searchResult = userService.fuzzySearch(10,1,"张");
-		System.out.println(new Gson().toJson(searchResult));
 	}
 
 }
