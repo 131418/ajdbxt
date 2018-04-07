@@ -39,4 +39,17 @@ public class ProcessInfoDaoImpl implements ProcessInfoDao {
 		
 	}
 
+
+	@Override
+	public List<ajdbxt_info> getInfoList(String police_id) {
+		Session session=sessionFactory.getCurrentSession();
+		String hql=" from ajdbxt_info "
+				+ "where info_main_police=? or info_assistant_police_one=?  or info_assistant_police_two=?";
+		Query query=session.createQuery(hql);
+		for(int index=0;index<3;index++) {
+			query.setString(index, police_id);
+		}
+		return query.list();
+	}
+
 }

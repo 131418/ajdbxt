@@ -56,10 +56,12 @@ public class ProcessAction  extends ActionSupport{
 		ajdbxt_police police=(ajdbxt_police)o;
 		String police_id=police.getAjdbxt_police_id();
 		String json="";
-		if(ajdbxtProcess.getProcess_case_end()==null||ajdbxtProcess.getProcess_case_end()=="ture") {
+		if(ajdbxtProcess.getProcess_case_end()!=null&&!ajdbxtProcess.getProcess_case_end().equals("true")) {
+			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id);
+		}else if(ajdbxtProcess.getProcess_captain_check()!=null&&!ajdbxtProcess.getProcess_captain_check().equals("true")){
 			json=processInfoService.getInfoList(ProcessInfoService.CAPTAIN_CHECK, police_id);
 		}else {
-			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id);
+			json=processInfoService.getInfoList(100, police_id);
 		}
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=utf-8");
@@ -123,9 +125,11 @@ public class ProcessAction  extends ActionSupport{
 		}
 		return null;
 	}
+
 	public String findSome() {
 		return null;
 		
 	}
+	
 
 }

@@ -51,7 +51,7 @@ public class MsgSend {
 //			e.printStackTrace();
 //		}
 	}
-
+	
 	/**
 	 **** 所需传参数
 	 * 
@@ -78,7 +78,7 @@ public class MsgSend {
 	 * @return 服务端返回的数据
 	 * @throws Exception
 	 */
-	public  String doSend(String ext, String extend, String[] params, String sign, List<Tel> tel, Integer tpl_id)
+	public static String doSend(String ext, String extend, String[] params, String sign, List<Tel> tel, Integer tpl_id)
 			throws Exception {
 		// 生成随机数
 		int random = (int) Math.floor(Math.random() * 100);
@@ -98,7 +98,7 @@ public class MsgSend {
 		// 对象中的mobile转为字符串
 		String strMobile = listToString(tel);
 		// 获取当前时间戳，并设置于10秒后发送
-		long time = new Date().getTime() / 1000 + 10;
+		long time = new Date().getTime() / 1000;
 		// SHA256算法生成sig
 		String sig = getSHA256StrJava(
 				"appkey=" + APPKEY + "&random=" + random + "&time=" + time + "&mobile=" + strMobile);
@@ -139,7 +139,7 @@ public class MsgSend {
 	 *            对象（手机号，国家码）
 	 * @return 以逗号隔开的结果字符串
 	 */
-	private  String listToString(List<Tel> tel) {
+	private  static String listToString(List<Tel> tel) {
 		StringBuilder SB = new StringBuilder();
 		for (Tel t : tel) {
 			SB.append("," + t.getMobile());

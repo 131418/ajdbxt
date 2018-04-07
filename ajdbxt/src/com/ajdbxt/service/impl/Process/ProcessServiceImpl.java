@@ -5,6 +5,8 @@ import com.ajdbxt.dao.Process.ProcessDao;
 import com.ajdbxt.domain.DO.ajdbxt_process;
 import com.ajdbxt.service.Process.ProcessService;
 
+import util.JsonUtils;
+
 public class ProcessServiceImpl implements ProcessService {
 	private ProcessDao processDao;
 	
@@ -32,6 +34,11 @@ public class ProcessServiceImpl implements ProcessService {
 	public boolean update(ajdbxt_process process, int send_massage_type) {
 		
 		return false;
+	}
+
+	@Override
+	public String getAllProcess() {
+		return JsonUtils.toJson(processDao.findAllProcess());
 	}
 
 }
