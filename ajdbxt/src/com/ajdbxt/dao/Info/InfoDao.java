@@ -24,4 +24,8 @@ public interface InfoDao {
 	public ajdbxt_info findCaseByCaseName(String info_name);
 	
 	public List<ajdbxt_info> findAllCaseIfo();
+	
+	public boolean isCaptainWorked(String captainId);
+
+	public int countProcessByPoliceId(String ajdbxt_police_id);
 }

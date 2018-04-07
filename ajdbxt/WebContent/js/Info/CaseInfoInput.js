@@ -1,47 +1,45 @@
 var query_data = {
-	"page_list_BreakecaseInformation.pageIndex" : "1",
-	"page_list_BreakecaseInformation.snece_inquestId" : "",
-	"page_list_BreakecaseInformation.case_name" : "",
-	"page_list_BreakecaseInformation.case_totalCategory" : "",
-	"page_list_BreakecaseInformation.case_sonCategory" : "",
-	"page_list_BreakecaseInformation.breakecase_suspectName" : "",
-	"page_list_BreakecaseInformation.breakecase_captureUnit" : "",
-	"page_list_BreakecaseInformation.start_time" : "",
-	"page_list_BreakecaseInformation.stop_time" : "",
+		"infoService.getAllCase().info_name" : "" ,
+		"infoService.getAllCase().info_category" : "" ,
+		"infoService.getAllCase().info_department" : "" ,
+		"infoService.getAllCase().info_catch_time" : "" ,
+		"infoService.getAllCase().info_main_police" : "" ,
+		"infoService.getAllCase().info_assistant_police_one" : "" ,
+		"infoService.getAllCase().info_assistant_police_two" : "" ,
 };
 
 // 当前页面分页信息
-var page_infomantion = {
-	pageIndex : 1,
-	totalRecords : 1,
-	pageSize : 20,
-	totalPages : 1,
-	HavePrePage : false,
-	HaveNextPage : false,
-}
+//var page_infomantion = {
+//	pageIndex : 1,
+//	totalRecords : 1,
+//	pageSize : 20,
+//	totalPages : 1,
+//	HavePrePage : false,
+//	HaveNextPage : false,
+//}
 /*--------------------------------------------------------*/
 // 判断身份证号是否正确，以及从身份证号中取出出生日期
-function BreakCaseListGetBirth() {
-	var breakcase_suspecter_identity = document
-			.getElementById("breakcase_suspecter_identity");
-	var breakcase_suspecter_identityValue = breakcase_suspecter_identity.value
-			.trim();
-	var breakcase_suspecter_birthday = document
-			.getElementById("breakcase_suspecter_birthday");
-	var strRegExp = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-	if (strRegExp.test(breakcase_suspecter_identityValue) == true) {
-		breakcase_suspecter_birthday.value = breakcase_suspecter_identityValue
-				.substr(6, 4)
-				+ "-"
-				+ breakcase_suspecter_identityValue.substr(10, 2)
-				+ "-"
-				+ breakcase_suspecter_identityValue.substr(12, 2);
-	} else {
-		toastr.error("身份证号输入不合法！");
-		return false;
-	}
-
-}
+//function BreakCaseListGetBirth() {
+//	var breakcase_suspecter_identity = document
+//			.getElementById("breakcase_suspecter_identity");
+//	var breakcase_suspecter_identityValue = breakcase_suspecter_identity.value
+//			.trim();
+//	var breakcase_suspecter_birthday = document
+//			.getElementById("breakcase_suspecter_birthday");
+//	var strRegExp = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+//	if (strRegExp.test(breakcase_suspecter_identityValue) == true) {
+//		breakcase_suspecter_birthday.value = breakcase_suspecter_identityValue
+//				.substr(6, 4)
+//				+ "-"
+//				+ breakcase_suspecter_identityValue.substr(10, 2)
+//				+ "-"
+//				+ breakcase_suspecter_identityValue.substr(12, 2);
+//	} else {
+//		toastr.error("身份证号输入不合法！");
+//		return false;
+//	}
+//
+//}
 $(function() {
 
 	/*--------------------------------------------------------*/
@@ -50,19 +48,19 @@ $(function() {
 			'show.bs.modal',
 			function() {
 				var this_modal = $(this);
-				$.post('/xsjsglxt/case/Case_AllCase', function(Case_data) {
-					// 所有案件循环
-					var option = '';
-					for (var len = 0; len < Case_data.length; len++) {
-						option += '<option value="'
-								+ Case_data[len].xsjsglxt_case_id + '">'
-								+ Case_data[len].case_name + '</option>';
-					}
-					this_modal.find('.selectpicker').html(option).selectpicker(
-							'refresh');
-					// 除去加载提示
-					this_modal.find('.load_remind').remove();
-				}, 'json');
+//				$.post('/xsjsglxt/case/Case_AllCase', function(Case_data) {
+//					// 所有案件循环
+//					var option = '';
+//					for (var len = 0; len < Case_data.length; len++) {
+//						option += '<option value="'
+//								+ Case_data[len].xsjsglxt_case_id + '">'
+//								+ Case_data[len].case_name + '</option>';
+//					}
+//					this_modal.find('.selectpicker').html(option).selectpicker(
+//							'refresh');
+//					// 除去加载提示
+//					this_modal.find('.load_remind').remove();
+//				}, 'json');
 
 			})
 	$('.to_quert')
@@ -76,16 +74,16 @@ $(function() {
 							// 以obj.name和obj.value形式遍历
 							query_data[value.name] = value.value;
 						});
-						$('.query_prompting_info')
-								.text(
-										'接警时间从'
-												+ $(
-														'input[name="page_list_BreakecaseInformation.start_time"]')
-														.val()
-												+ '到'
-												+ $(
-														'input[name="page_list_BreakecaseInformation.stop_time"]')
-														.val());
+//						$('.query_prompting_info')
+//								.text(
+//										'接警时间从'
+//												+ $(
+//														'input[name="page_list_BreakecaseInformation.start_time"]')
+//														.val()
+//												+ '到'
+//												+ $(
+//														'input[name="page_list_BreakecaseInformation.stop_time"]')
+//														.val());
 						get_ListBreakecaseInformationByPageAndSearch(query_data);
 					});
 	$('.empty_quert').click(function() {
@@ -111,13 +109,10 @@ $(function() {
 					function() {
 						$
 								.post(
-										'/xsjsglxt/case/BreakCase_saveBreakecase',
+										'/ajdbxt/info/Info_save',
 										$('#breakCase_input form').serialize(),
 										function(xhr) {
-											if ($("#breakcase_case").val() == "") {
-												toastr.error('请选择所属案件!');
-												return false;
-											} else if (xhr == 'success') {
+											if (xhr == 'success') {
 												toastr.success('添加成功!');
 												get_ListBreakecaseInformationByPageAndSearch(query_data);
 												$('#breakCase_input').find(
@@ -145,45 +140,42 @@ function get_ListBreakecaseInformationByPageAndSearch(data) {
 
 	$
 			.post(
-					'/xsjsglxt/case/BreakCase_ListBreakCaseInformationByPageAndSearch',
+					'/ajdbxt/info/Info_listAll',
 					data,
 					function(xhr) {
-						var data_list = xhr.BreakecaseInformationDTOList;
+						var data_list = xhr;
 						var str = '';
 						for (var len = 0; len < data_list.length; len++) {
 							str += '<tr>';
 							str += '<td>' + (len + 1) + '</td>';// 序号
-							// 所属案件
-							str += '<td><a href="/xsjsglxt/case/Case_page_CaseDetails?id='
-									+ data_list[len].case1.xsjsglxt_case_id
-									+ '">'
-									+ data_list[len].case1.case_name
-									+ '</a></td>';
 							str += '<td>'
-									+ data_list[len].breakCase.breakcase_type
-									+ '</td>';// 案件类型
+									+ data_list[len].info_name
+									+ '</td>';// 案件名称
 							str += '<td>'
-									+ data_list[len].breakCase.breakcase_according
-									+ '</td>';// 破案依据
+									+ data_list[len].info_category
+									+ '</td>';// 案件类别
 							str += '<td>'
-									+ data_list[len].breakCase.breakcase_arrested
-									+ '</td>';// 是否抓获
+									+ data_list[len].info_department
+									+ '</td>';// 办案单位
 							str += '<td>'
-									+ data_list[len].breakCase.breakcase_arrested_department
-									+ '</td>';// 抓获单位
+									+ data_list[len].info_catch_time
+									+ '</td>';// 抓获时间
 							str += '<td>'
-									+ data_list[len].breakCase.breakcase_waitbreakcase
-									+ '</td>';// 带破案件
+									+ data_list[len].info_main_police
+									+ '</td>';// 主办民警
 							str += '<td>'
-									+ data_list[len].breakCase.breakcase_suspecter_name
-									+ '</td>';// 嫌疑人姓名
+									+ data_list[len].info_assistant_police_one
+									+ '</td>';// 协办民警1
+							str += '<td>'
+								+ data_list[len].info_assistant_police_two
+								+ '</td>';// 协办民警2
 							/*
 							 * str += '<td>' +
 							 * data_list[len].breakCase.breakcase_contrast_locale_fingerprint_number + '</td>';//现场指纹编号
 							 */
 							str += '<td>'
 									+ '<input type="hidden" value="'
-									+ data_list[len].breakCase.xsjsglxt_breakcase_id
+									+ data_list[len].ajdbxt_info_id
 									+ '" />'
 									+ '<button type="button" style="margin-left:6px;" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#breakCase_modification"><i class="fa fa-pencil-square-o" aria-hidden="true" ></i> 修改</button>'
 									+ '<button type="button" style="margin-left:6px;" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除</button>'
@@ -200,25 +192,25 @@ function get_ListBreakecaseInformationByPageAndSearch(data) {
 						// -----------------------------------------------------
 
 						// 分页信息存入page_infomantion中
-						page_infomantion.pageIndex = xhr.pageIndex; // 当前页数
-						page_infomantion.totalRecords = xhr.totalRecords; // 总页数
-						page_infomantion.pageSize = xhr.pageSize; // 每页记录数
-						page_infomantion.totalPages = xhr.totalPages; // 总记录数
-						page_infomantion.HavePrePage = xhr.HavePrePage; // 是否有上一页
-						page_infomantion.HaveNextPage = xhr.HaveNextPage; // 是否有下一页
-
-						// 分页下的记录信息
-						var opt = '<option value=""></option>';
-						for (var index = 1; index <= xhr.totalPages; index++) {
-							opt += '<option>' + index + '</option>';
-						}
-						$('.info').html(
-								'共 ' + xhr.totalRecords + '条信息 当前'
-										+ xhr.pageIndex + '/' + xhr.totalPages
-										+ '页 ' + xhr.pageSize
-										+ '条信息/页&nbsp&nbsp转到第'
-										+ '<select onchange="toPage(this)">'
-										+ opt + '</select> 页');
+//						page_infomantion.pageIndex = xhr.pageIndex; // 当前页数
+//						page_infomantion.totalRecords = xhr.totalRecords; // 总页数
+//						page_infomantion.pageSize = xhr.pageSize; // 每页记录数
+//						page_infomantion.totalPages = xhr.totalPages; // 总记录数
+//						page_infomantion.HavePrePage = xhr.HavePrePage; // 是否有上一页
+//						page_infomantion.HaveNextPage = xhr.HaveNextPage; // 是否有下一页
+//
+//						// 分页下的记录信息
+//						var opt = '<option value=""></option>';
+//						for (var index = 1; index <= xhr.totalPages; index++) {
+//							opt += '<option>' + index + '</option>';
+//						}
+//						$('.info').html(
+//								'共 ' + xhr.totalRecords + '条信息 当前'
+//										+ xhr.pageIndex + '/' + xhr.totalPages
+//										+ '页 ' + xhr.pageSize
+//										+ '条信息/页&nbsp&nbsp转到第'
+//										+ '<select onchange="toPage(this)">'
+//										+ opt + '</select> 页');
 						// 影藏模态框
 						$('#newQuery').modal('hide')
 					}, 'json')

@@ -3,7 +3,10 @@ import java.util.List;
 
 import com.ajdbxt.dao.Process.ProcessDao;
 import com.ajdbxt.domain.DO.ajdbxt_process;
+import com.ajdbxt.domain.VO.Process.showProcessVO;
 import com.ajdbxt.service.Process.ProcessService;
+
+import util.JsonUtils;
 
 public class ProcessServiceImpl implements ProcessService {
 	private ProcessDao processDao;
@@ -32,6 +35,14 @@ public class ProcessServiceImpl implements ProcessService {
 	public boolean update(ajdbxt_process process, int send_massage_type) {
 		
 		return false;
+	}
+
+	@Override
+	public String getSomeProcessByShowProcessVO(showProcessVO processVO) {
+		int length=processVO.getPageSize();
+		processVO.setList_process(processDao.findSomeProcess(0, length));
+		
+		return null;
 	}
 
 }

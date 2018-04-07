@@ -68,15 +68,17 @@
 				</a></li>
 				<!--  -->
 				<li class="dropdown" style="float: left;"><a
-					href="<%=basePath%>info/Info_page_CaseInput"> <span>案件</span>
+					href="<%=basePath%>info/Info_page_CaseInfo"> <span>案件</span>
 						
 				</a>
 					</li>
 				<!--  -->
-				<li class="dropdown" style="float: left;"><a href="<%=basePath%>process/Process_page_process"
-					> <span>办案流程</span>
-						<!-- <i class="icon-submenu lnr lnr-chevron-down"></i> -->
-				</a></li>
+<%-- 				<li class="dropdown" style="float: left;"><a href="<%=basePath%>process/Process_page_process" --%>
+<%-- 					> <span>办案流程</span> --%>
+
+<!-- 						<i class="icon-submenu lnr lnr-chevron-down"></i> -->
+<!-- 				</a></li> --%> -->
+				<li class="dropdown" style="float: left;"><a href="<%=basePath%>process/page_list_CaseProcessProcessAction"> <span>办案流程</span>
 
 				<li class="dropdown" style="float: left;"><a href="<%=basePath%>total/Total_totalPage" > <span>统计</span>
 						<!-- <i class="icon-submenu lnr lnr-chevron-down"></i> -->

@@ -4,7 +4,7 @@ import com.ajdbxt.domain.DO.ajdbxt_process;
 import java.util.List;
 
 public interface ProcessDao {
-	public List<ajdbxt_process> findAllProcess();
+	public List<ajdbxt_process> findSomeProcess(int start,int length);
 	public List<ajdbxt_process> findProcessByColumn(String Column,String key);
 	public List<ajdbxt_process> findProcessByKey(String key);
 	public void updateProcess(ajdbxt_process process);

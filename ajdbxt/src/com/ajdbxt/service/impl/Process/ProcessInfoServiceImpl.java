@@ -21,8 +21,10 @@ public class ProcessInfoServiceImpl implements ProcessInfoService {
 		List<ajdbxt_info> list;
 		if(check_end==CAPTAIN_CHECK) {
 			list=processInfoDao.getInfoListCaptainCheck(police_id);
-		}else {
+		}else if(check_end==CASE_END){
 			list=processInfoDao.getInfoListCaseEnd(police_id);
+		}else {
+			list=processInfoDao.getInfoList(police_id);
 		}
 		return JsonUtils.toJson(list);
 	}

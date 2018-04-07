@@ -19,11 +19,9 @@ public class ProcessInfoDaoImpl implements ProcessInfoDao {
 	public List<ajdbxt_info> getInfoListCaseEnd(String police_id) {
 		Session session=sessionFactory.getCurrentSession();
 		String hql=" from ajdbxt_info "
-				+ "where info_main_police=? or info_assistant_police_one=?  or info_assistant_police_two=? or "
-				+ "info_department_legal_member=? or info_department_captain=? or info_legal_team_member=?"
-				+ "or info_bureau_leader=? and ajdbxt_info_id in (select process_case_id from ajdbxt_process where process_case_end='否')";
+				+ "where info_main_police=? or info_assistant_police_one=?  or info_assistant_police_two=? and ajdbxt_info_id in (select process_case_id from ajdbxt_process where process_case_end='否')";
 		Query query=session.createQuery(hql);
-		for(int index=0;index<7;index++) {
+		for(int index=0;index<3;index++) {
 			query.setString(index, police_id);
 		}
 		return query.list();
@@ -32,15 +30,26 @@ public class ProcessInfoDaoImpl implements ProcessInfoDao {
 	public List<ajdbxt_info> getInfoListCaptainCheck(String police_id) {
 		Session session=sessionFactory.getCurrentSession();
 		String hql=" from ajdbxt_info "
-				+ "where info_main_police=? or info_assistant_police_one=?  or info_assistant_police_two=? or "
-				+ "info_department_legal_member=? or info_department_captain=? or info_legal_team_member=?"
-				+ "or info_bureau_leader=? and ajdbxt_info_id in (select process_case_id from ajdbxt_process where process_captain_check='否')";
+				+ "where info_main_police=? or info_assistant_police_one=?  or info_assistant_police_two=? and ajdbxt_info_id in (select process_case_id from ajdbxt_process where process_captain_check='否')";
 		Query query=session.createQuery(hql);
-		for(int index=0;index<7;index++) {
+		for(int index=0;index<3;index++) {
 			query.setString(index, police_id);
 		}
 		return query.list();
 		
+	}
+
+
+	@Override
+	public List<ajdbxt_info> getInfoList(String police_id) {
+		Session session=sessionFactory.getCurrentSession();
+		String hql=" from ajdbxt_info "
+				+ "where info_main_police=? or info_assistant_police_one=?  or info_assistant_police_two=?";
+		Query query=session.createQuery(hql);
+		for(int index=0;index<3;index++) {
+			query.setString(index, police_id);
+		}
+		return query.list();
 	}
 
 }

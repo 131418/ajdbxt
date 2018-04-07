@@ -8,7 +8,7 @@ public interface InfoService {
 	/*
 	 * 添加案件信息
 	 */
-    public void saveCase(ajdbxt_info  caseInfo);
+    public String saveCase(ajdbxt_info  caseInfo);
 	/*
 	 * 修改案件信息
 	 */
@@ -29,4 +29,6 @@ public interface InfoService {
 	 * @return
 	 */
 	public String getAllCase();
+	public String twoceRank(ajdbxt_info caseInfo);
+	public void save(ajdbxt_info caseInfo);
 }

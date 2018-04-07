@@ -11,7 +11,7 @@
 <head>
 <base href="<%=basePath%>">
 
-<title>案件信息</title>
+<title>办案流程</title>
 
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
@@ -63,16 +63,16 @@ tfoot tr td a:hover {
 <!-- 						data-target="#newQuery"> -->
 <!-- 						<i class="fa fa-plus-square"></i> 刑事破案查询 -->
 <!-- 					</button> -->
-					<button data-toggle="modal" data-target="#breakCase_input"
-						style="margin-left: 15px;" type="button" class="btn btn-default">
-						<i class="fa fa-plus-square"></i> 新添案件
-					</button>
+<!-- 					<button data-toggle="modal" data-target="#breakCase_input" -->
+<!-- 						style="margin-left: 15px;" type="button" class="btn btn-default"> -->
+<!-- 						<i class="fa fa-plus-square"></i> 新添案件 -->
+<!-- 					</button> -->
 				</div>
 				<div class="col-md-12">
 					<!-- TABLE HOVER -->
 					<div class="panel">
 						<div class="panel-heading">
-							<h3 class="panel-title">破案列表</h3>
+							<h3 class="panel-title">办案流程列表</h3>
 							<!-- <p class="text-primary query_prompting_info">nothing to
 								query.</p> -->
 						</div>
@@ -85,10 +85,10 @@ tfoot tr td a:hover {
 										<th>案件名称</th>
 										<th>案件类别</th>
 										<th>办案单位</th>
-										<th>抓获时间</th>
 										<th>主办民警</th>
 										<th>协办民警1</th>
 										<th>协办民警2</th>
+										<th>结案</th>
 										<!-- <th>现场指纹编号</th> -->
 										<th>操作</th>
 									</tr>

@@ -19,12 +19,7 @@ public class ProcessDaoImpl implements ProcessDao {
 		this.sessionFactory = sessionFactory;
 	}
 
-	@Override
-	public List<ajdbxt_process> findAllProcess() {
-		Session session=sessionFactory.getCurrentSession();
-		Query query=session.createQuery("from Process p");
-		return query.list();
-	}
+	
 
 	@Override
 	public List<ajdbxt_process> findProcessByColumn(String cloumn,String key) {
@@ -91,6 +86,14 @@ public class ProcessDaoImpl implements ProcessDao {
 	@Override
 	public List<ajdbxt_process> findProcessByCaseId(String case_id) {
 		return findProcessByColumn("process_case_id", case_id);
+	}
+
+
+
+	@Override
+	public List<ajdbxt_process> findSomeProcess(int start, int length) {
+		Session session=sessionFactory.getCurrentSession();
+		return null;
 	}
 	
 }
