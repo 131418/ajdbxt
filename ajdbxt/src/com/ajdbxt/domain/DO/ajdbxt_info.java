@@ -11,7 +11,7 @@ public class ajdbxt_info {
 	private String info_assistant_police_two; //协办民警2
 	private String info_department_legal_member; //所（队）法制员
 	private String info_department_captain;  //所（队）长
-	private String info_legal_team_membe;  //法制大队值班民警
+	private String info_legal_team_member;  //法制大队值班民警
 	private String info_bureau_leader;  //值班局领导
 	private String info_gmt_ceate;  //创建时间
 	private String info_gmt_modify; //修改时间
@@ -75,12 +75,6 @@ public class ajdbxt_info {
 	public void setInfo_department_captain(String info_department_captain) {
 		this.info_department_captain = info_department_captain;
 	}
-	public String getInfo_legal_team_membe() {
-		return info_legal_team_membe;
-	}
-	public void setInfo_legal_team_membe(String info_legal_team_membe) {
-		this.info_legal_team_membe = info_legal_team_membe;
-	}
 	public String getInfo_bureau_leader() {
 		return info_bureau_leader;
 	}
@@ -99,26 +93,22 @@ public class ajdbxt_info {
 	public void setInfo_gmt_modify(String info_gmt_modify) {
 		this.info_gmt_modify = info_gmt_modify;
 	}
-	
-	public ajdbxt_info(String ajdbxt_info_id, String info_name, String info_category, String info_department,
-			String info_catch_time, String info_main_police, String info_assistant_police_one,
-			String info_assistant_police_two, String info_department_legal_member, String info_department_captain,
-			String info_legal_team_membe, String info_bureau_leader, String info_gmt_ceate, String info_gmt_modify) {
-		super();
-		this.ajdbxt_info_id = ajdbxt_info_id;
-		this.info_name = info_name;
-		this.info_category = info_category;
-		this.info_department = info_department;
-		this.info_catch_time = info_catch_time;
-		this.info_main_police = info_main_police;
-		this.info_assistant_police_one = info_assistant_police_one;
-		this.info_assistant_police_two = info_assistant_police_two;
-		this.info_department_legal_member = info_department_legal_member;
-		this.info_department_captain = info_department_captain;
-		this.info_legal_team_membe = info_legal_team_membe;
-		this.info_bureau_leader = info_bureau_leader;
-		this.info_gmt_ceate = info_gmt_ceate;
-		this.info_gmt_modify = info_gmt_modify;
+	public String getInfo_legal_team_member() {
+		return info_legal_team_member;
 	}
+	public void setInfo_legal_team_member(String info_legal_team_member) {
+		this.info_legal_team_member = info_legal_team_member;
+	}
+	@Override
+	public String toString() {
+		return "ajdbxt_info [ajdbxt_info_id=" + ajdbxt_info_id + ", info_name=" + info_name + ", info_category="
+				+ info_category + ", info_department=" + info_department + ", info_catch_time=" + info_catch_time
+				+ ", info_main_police=" + info_main_police + ", info_assistant_police_one=" + info_assistant_police_one
+				+ ", info_assistant_police_two=" + info_assistant_police_two + ", info_department_legal_member="
+				+ info_department_legal_member + ", info_department_captain=" + info_department_captain
+				+ ", info_legal_team_member=" + info_legal_team_member + ", info_bureau_leader=" + info_bureau_leader
+				+ ", info_gmt_ceate=" + info_gmt_ceate + ", info_gmt_modify=" + info_gmt_modify + "]";
+	}
+	
 
 }
