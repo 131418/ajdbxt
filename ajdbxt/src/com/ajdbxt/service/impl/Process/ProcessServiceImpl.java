@@ -83,6 +83,9 @@ public class ProcessServiceImpl implements ProcessService {
 		processVO.setCount(processDao.findAllProcess());
 		int pages=processVO.getCount()/length;
 		List<ajdbxt_process> processList=processDao.findSomeProcess(processVO.getCurrPage()*10, length);
+		if(processVO.getCount()/length>0) {
+			pages++;
+		}
 		processVO.setTotalPage(pages);
 		for(ajdbxt_process process :processList) {
 			processDTO=new ProcessDTO();
