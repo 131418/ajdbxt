@@ -3,15 +3,11 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-	<!-- <package name="User" namespace="/user" extends="struts-default">
-		<action name="User_*" class="com.ajdbxt.action.User.UserAction"
+	 <package name="Info" namespace="/info" extends="struts-default">
+		<action name="Info_*" class="com.ajdbxt.action.Info.InfoAction"
 			method="{1}">
-			<result name="index">/WEB-INF/view/index.jsp
+			<result name="page_CaseInput">/WEB-INF/view/info/CaseInfoInput.jsp
 			</result>
-			<result name="navbar">/WEB-INF/view/navbar.jsp
-			</result>
-			<result name="SUCCESS">/success.jsp</result>
-			<result name="FALSE">false.jsp</result>
 		</action>
-	</package> -->
+	</package> 
 </struts>

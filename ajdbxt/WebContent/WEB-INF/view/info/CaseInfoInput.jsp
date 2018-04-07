@@ -1,236 +1,380 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script type="text/javascript" src="<%=basePath%>js/Process/getProcess.js"></script>
-<script type="text/javascript" src></script>
-	
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="<%=basePath%>css/User/UserIndex.css">
-<script type="text/javascript" src="<%=basePath %>js/User/getData.js"></script>
-<title>办案流程</title>
+<base href="<%=basePath%>">
+
+<title>案件录入</title>
+
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+<link rel="stylesheet" type="text/css" href="<%=basePath%>Case.css" />
+<style type="text/css">
+#newQuery table tbody tr td input {
+	margin-top: 6px;
+	width: 100% !important;
+}
+
+#newQuery table tbody tr td select {
+	margin-top: 6px;
+	width: 100% !important;
+}
+
+.breakcase_table_info tbody tr {
+	text-align: center;
+}
+
+tfoot tr td a:hover {
+	cursor: pointer;
+}
+</style>
 </head>
+
 <body>
-	<!----------------------------------------------- 隐藏信息开始 --------------------------------------------------->
-	<input id="hideQueryString" type="text" class="hideDiv">
-	<input id="hideCurrPage" type="text" class="hideDiv">
+	<s:action name="User_navbar" namespace="/user" executeResult="true" />
+
 	
-	
-	<!----------------------------------------------- 隐藏信息结束 ------------------------------------------------->
-	<!-----------------------------------------引入导航条 ------------------------------------------------------>
-		<s:action name="User_navbar" namespace="/user" executeResult="true" />
-	
-	<!----------------------------------------主体内容 -------------------------------------------------------- -->
-			
-		<div style="margin: 80px 0 0 0; float: left; width: 100%;">
-			<!---------------------------------------------------------------------------------------------------->
-			<!---------------------------------------------------------------------------------------------------->
-			<div class="panel" style="width: 95%; margin: 20px auto;">
-				<div id="" style="height: 80px; padding: 20px;">
-					<div class="managerClass" style="float:right; margin-left: 10px;">
-    				  <button onclick="cleanInput" data-toggle="modal" data-target="#addUser" class="btn btn-success"><span style="width" class="glyphicon glyphicon-plus"></span>新增用户</button>
-    				</div>  
-					<div class="input-group" style="float:right; width: 300px;">
-					      <input id="queryString" type="text" class="form-control" placeholder="请输入搜索内容">
-					      <span class="input-group-btn">
-					        <button onclick="queryUser()" class="btn btn-default" type="button">搜索</button>
-					      </span>
-    				</div>
-				</div>
-				<div id="loadingDiv" style="width: 319px; margin: 0 auto;">
-					<img alt="" src="<%=basePath %>img/loading.gif">
-				</div>
-				<div id="tableDiv" class="hideDiv"  >
-					<table class="table table-bordered" style="text-align: center;">
-						<tbody id="userTable">
-							<tr style="background-color: #696969; color: white;">
-								<td>账号</td>
-								<td>姓名</td>
-								<td>代码</td>
-								<td>单位</td>
-								<td>操作</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				
-				<div id="bottomPage" style="padding: 20px;">
-					<span>当前页数:<span id="currPage">1</span></span>
-					<span>共:<span id="totalPage">2</span>页</span>
-					<span  onclick="skipToIndexPage()" id="indexPage" class="pageOperation">首页</span>
-					<span onclick="skipToPrimaryPage()" id="previousPage" class="pageOperation">上一页</span>
-					<span onclick="skipToNextPage()" id="nextPage" class="pageOperation">下一页</span>
-					<span onclick="skipToLastPage()" id="lastPage" class="pageOperation">末页</span>
-					<span>
-						<input  id="skipPage" type="text" style="text-align: center; width: 60px; height: 30px;" class="queryInput">
-						<button onclick="skipToArbitrarilyPage()" class="btn btn-default" style="height:30px; margin-bottom: 10px;">跳转</button>
-					</span>
-				</div>
+	<!---------------------------------------------------------------------------------------------------->
+	<!---------------------------------------------------------------------------------------------------->
+	<!---------------------------------------------------------------------------------------------------->
+	<div style="float: left; width: 100%;">
+		<div class="panel" style="width: 95%; margin: 20px auto;">
+			<!--  -->
+			<div class="panel-heading">
+				<h3 class="panel-title">案件录入</h3>
 			</div>
-			<!---------------------------------------------------------------------------------------------------->
-			<!---------------------------------------------------------------------------------------------------->
+			<div class="panel-body">
+				<div class="operation" style="margin-bottom: 6px;">
+<!-- 					<button style="margin-left: 15px;" type="button" -->
+<!-- 						class="btn btn-default" data-toggle="modal" -->
+<!-- 						data-target="#newQuery"> -->
+<!-- 						<i class="fa fa-plus-square"></i> 刑事破案查询 -->
+<!-- 					</button> -->
+					<button data-toggle="modal" data-target="#breakCase_input"
+						style="margin-left: 15px;" type="button" class="btn btn-default">
+						<i class="fa fa-plus-square"></i> 案件录入
+					</button>
+				</div>
+				<div class="col-md-12">
+					<!-- TABLE HOVER -->
+					<div class="panel">
+						<div class="panel-heading">
+							<h3 class="panel-title">案件列表</h3>
+							<!-- <p class="text-primary query_prompting_info">nothing to
+								query.</p> -->
+						</div>
+						<div class="panel-body">
+							<table
+								class="table table-hover table-condensed breakcase_table_info">
+								<thead>
+									<tr>
+										<th>序号</th>
+										<th>案件名称</th>
+										<th>案件类别</th>
+										<th>办案单位</th>
+										<th>抓获时间</th>
+										<th>主办民警</th>
+										<th>协办民警1</th>
+										<th>协办民警2</th>
+										<!-- <th>现场指纹编号</th> -->
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="8" style="font-size: 12px;" class="page_info"><a
+											onclick="firstPage()"><i class="fa fa-angle-double-left">首页</i>
+										</a>&nbsp&nbsp<a onclick="prePage()"><i
+												class="fa fa-angle-left"></i>上一页 </a>&nbsp&nbsp<a
+											onclick="nextPage()">下一页<i class="fa fa-angle-right"></i>
+										</a>&nbsp&nbsp <a onclick="lastPage()">尾页<i
+												class="fa fa-angle-double-right"></i>
+										</a> <br />
+											<p class='info'></p></td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+					<!-- END TABLE HOVER -->
+				</div>
+
+			</div>
 		</div>
-		<!-----------------------------------------------------------------新增模态框---------------------------------------------------  -->
-			<div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title">增加用户</h4>
-			      </div>
-			      <div class="modal-body">
-			      	<div id="addLoadingDiv" class="hideDiv" style="width: 319px; margin: 0 auto;">
-						<img alt="" src="<%=basePath %>img/loading.gif">
-					</div>
-			      	 <div id="addContent">	
-			      		<form id="addUserForm" name="addUserForm">
-				      		<label>账号：</label>
-				      		<input id="user_username" name="user_username" type="text" class="form-control" placeholder="请输入账号">
-				      		<label>密码：</label>
-				      		<input id="user_password" name="user_password" type="password" class="form-control" placeholder="请输入密码">
-				      		<label>姓名：</label>
-				      		<input id="user_name" name="user_name" type="text" class="form-control" placeholder="请输入用户姓名">
-				      		<label>代码：</label>
-				      		<input id="user_number" name="user_number" type="text" class="form-control" placeholder="请输入用户代码">
-				      		<label>单位：</label>
-				      		<input id="user_units" name="user_units" type="text" class="form-control" placeholder="请输入用户单位">
-				      		<label>案件技术权限：</label>
-				      		<select name="user_case_technology_power" class="form-control">
-				      			<option value="jurisdiction_none">无权限</option>
-				      			<option value="jurisdiction_use">使用权限</option>
-				      			<option value="jurisdiction_admin">管理权限</option>	
-				      		</select>
-				      		<label>案件侦查权限：</label>
-				      		<select name="user_case_query_power" class="form-control">
-				      			<option value="jurisdiction_none">无权限</option>
-				      			<option value="jurisdiction_use">使用权限</option>
-				      			<option value="jurisdiction_admin">管理权限</option>	
-				      		</select>
-				      		<label>检验鉴定权限：</label>
-				      		<select name="user_check_power" class="form-control">
-				      			<option value="jurisdiction_none">无权限</option>
-				      			<option value="jurisdiction_use">使用权限</option>
-				      			<option value="jurisdiction_admin">管理权限</option>	
-				      		</select>
-				      		<label>队伍管理权限：</label>
-				      		<select name="user_army_manager_power" class="form-control">
-				      			<option value="jurisdiction_none">无权限</option>
-				      			<option value="jurisdiction_use">使用权限</option>
-				      			<option value="jurisdiction_admin">管理权限</option>	
-				      		</select>
-				      		<label>技术管理权限：</label>
-				      		<select name="user_technology_manager_power" class="form-control">
-				      			<option value="jurisdiction_none">无权限</option>
-				      			<option value="jurisdiction_use">使用权限</option>
-				      			<option value="jurisdiction_admin">管理权限</option>	
-				      		</select>
-				      		<label>统计权限：</label>
-				      		<select name="user_statistics_power" class="form-control">
-				      			<option value="jurisdiction_none">无权限</option>
-				      			<option value="jurisdiction_use">使用权限</option>
-				      			<option value="jurisdiction_admin">管理权限</option>	
-				      		</select>
-				      		<label>用户管理权限：</label>
-				      		<select name="user_user_manager_power" class="form-control">
-				      			<option value="jurisdiction_none">无权限</option>
-				      			<option value="jurisdiction_use">使用权限</option>
-				      			<option value="jurisdiction_admin">管理权限</option>	
-				      		</select>
-			      		</form>
-			      	</div>
-			      </div>
-			      <div class="modal-footer">
-			        <button onclick="reLoadUser()" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-			        <button onclick="addUser()" type="button" class="btn btn-primary">上传</button>
-			      </div>
-			    </div><!-- /.modal-content -->
-			  </div><!-- /.modal-dialog -->
+	</div>
+	<!---------------------------------------------------------------------------------------------------->
+	<!---------------------------------------------------------------------------------------------------->
+	<!---------------------------------------------------------------------------------------------------->
+<!-- 	<!-- 新建查询-模态框（Modal） --> 
+<!-- 	<div class="modal fade" id="newQuery" tabindex="-1" role="dialog" -->
+<!-- 		aria-labelledby="myModalLabel" aria-hidden="true"> -->
+<!-- 		<div class="modal-dialog modal-lg"> -->
+<!-- 			<div class="modal-content"> -->
+<!-- 				<div class="modal-header"> -->
+<!-- 					<button type="button" class="close" data-dismiss="modal" -->
+<!-- 						aria-hidden="true">&times;</button> -->
+<!-- 					<h4 class="modal-title" id="myModalLabel">刑事破案修改查询</h4> -->
+<!-- 				</div> -->
+<!-- 				<div class="modal-body"> -->
+<!-- 					<form id="query_infomantion_inmodal" action=""> -->
+<!-- 						<table style="width: 50%; margin: auto;" class="Query_table"> -->
+<!-- 							<tbody> -->
+<!-- 								<tr> -->
+<!-- 									<td>勘验编号</td> -->
+<!-- 									<td><input -->
+<!-- 										name="page_list_BreakecaseInformation.snece_inquestId" -->
+<!-- 										class="form-control" type="text"></td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td>案件名</td> -->
+<!-- 									<td><input -->
+<!-- 										name="page_list_BreakecaseInformation.snece_inquestId" -->
+<!-- 										class="form-control" type="text"></td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td>案件类别</td> -->
+<%-- 									<td><select --%>
+<%-- 										name="page_list_BreakecaseInformation.case_totalCategory" --%>
+<%-- 										onchange="setSectionCase(this.selectedIndex)" --%>
+<%-- 										class="main_case form-control"><option --%>
+<!-- 												selected="selected" value="">请选择案件总类别</option> -->
+<!-- 											<option value="盗窃案">盗窃案</option> -->
+<!-- 											<option value="抢劫案">抢劫案</option> -->
+<!-- 											<option value="抢夺案">抢夺案</option> -->
+<!-- 											<option value="强奸案">强奸案</option> -->
+<!-- 											<option value="绑架案">绑架案</option> -->
+<!-- 											<option value="杀人案">杀人案</option> -->
+<!-- 											<option value="故意伤害案">故意伤害案</option> -->
+<!-- 											<option value="爆炸案">爆炸案</option> -->
+<!-- 											<option value="放火案">放火案</option> -->
+<!-- 											<option value="非法拘禁案">非法拘禁案</option> -->
+<!-- 											<option value="非正常死亡">非正常死亡</option> -->
+<!-- 											<option value="故意损坏公私财物">故意损坏公私财物</option> -->
+<%-- 											<option value="其它">其它</option></select> <select --%>
+<%-- 										name="page_list_BreakecaseInformation.case_sonCategory" --%>
+<%-- 										class="other_case form-control"> --%>
+<!-- 											<option selected value="">请选择案件子类别</option> -->
+<%-- 									</select></td> --%>
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td>嫌疑人姓名</td> -->
+<!-- 									<td><input -->
+<!-- 										name="page_list_BreakecaseInformation.breakecase_suspectName" -->
+<!-- 										class="form-control" type="text"></td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td>抓获单位</td> -->
+<!-- 									<td><input -->
+<!-- 										name="page_list_BreakecaseInformation.breakecase_captureUnit" -->
+<!-- 										class="form-control" type="text"></td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td>接警时间</td> -->
+<!-- 									<td><input -->
+<!-- 										name="page_list_BreakecaseInformation.start_time" -->
+<!-- 										style="float: left;" type="text" class="form-control mydate" -->
+<!-- 										placeholder="起始日期"><input -->
+<!-- 										name="page_list_BreakecaseInformation.stop_time" -->
+<!-- 										style="float: right;" type="text" class="form-control" -->
+<!-- 										placeholder="结束日期"></td> -->
+<!-- 								</tr> -->
+<!-- 							</tbody> -->
+<!-- 						</table> -->
+<!-- 					</form> -->
+<!-- 				</div> -->
+<!-- 				<div class="modal-footer"> -->
+<!-- 					<button type="button" class="btn btn-primary to_quert">确认查询</button> -->
+<!-- 					<button type="button" class="btn btn-danger empty_quert">清空查询</button> -->
+<!-- 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 			<!-- /.modal-content --> 
+<!-- 		</div> -->
+<!-- 		<!-- /.modal --> 
+<!-- 	</div> -->
+	<!---------------------------------------------------------------------------------------------------->
+	<!------------------------------------------------------------------------------------------------->
+	<!---------------------------------------------------------------------------------------------------->
+	<!-- 破案信息-模态框（Modal）确认修改 -->
+	<div class="modal fade" id="breakCase_modification" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="modal-title"></h4>
+				</div>
+				<div class="modal-body">
+					<form action="">
+						<div style="width: 80%; margin: auto;" class="panel-body"></div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary breakCase_operation">确认修改</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
 			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+	</div>
+	<!---------------------------------------------------------------------------------------------------->
+	<!------------------------------------------------------------------------------------------------->
+	<!---------------------------------------------------------------------------------------------------->
+	<!-- 破案信息-模态框（Modal）添加 -->
+	<div class="modal fade" id="breakCase_input" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="modal-title"></h4>
+				</div>
+				<div class="modal-body">
+					<form action="">
+						<div style="width: 80%; margin: auto;" class="panel-body">
+							<table class="table table-hover table-condensed" align="center">
+								<tbody>
+<!-- 									<tr> -->
+<!-- 										<td>所属案件<i class="fa fa-spinner fa-pulse load_remind"></td> -->
+<%-- 										<td colspan="3"><select style="witdh: 100%;" --%>
+<%-- 											class="form-control selectpicker" data-live-search="true" --%>
+<%-- 											name="breakCase.breakcase_case" id="breakcase_case" --%>
+<%-- 											title="请选择"></select></td> --%>
+<!-- 									</tr> -->
+									<tr>
+										<td>案件名称</td>
+										<td><input style="witdh: 70%;" class="form-control"
+											name="breakCase.breakcase_type" type="text"></td>
+										<%-- <td><select style="witdh: 100%;" class="form-control"
+											data-live-search="true" name="breakCase.breakcase_type" id="breakcase_type"><option>新添案件</option>
+												<option>已有案件</option></select></td> --%>
+									</tr>
+									<tr>
+										<td>案件类别</td>
+										<td><select style="witdh: 100%;" class="form-control"
+											name="breakCase.breakcase_case_level">
+												<option>行政案件</option>
+												<option>刑事案件</option>
+										</select></td>
 
-		<!-----------------------------------------------------------------修改模态框----------------------------------------------------  -->
-			<div class="modal fade" id="updateUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title">修改用户</h4>
-			      </div>
-			      <div class="modal-body">
-			      	<div id="updateLoadingDiv" class="hideDiv" style="width: 319px; margin: 0 auto;">
-						<img alt="" src="<%=basePath %>img/loading.gif">
-					</div>
-			      	 <div id="updateContent">	
-			      		<form id="updateUserForm">
-				      		<label>账号：</label>
-				      		<input id="user_username_update" name="user_username" type="text" class="form-control" placeholder="请输入账号">
-				      		<label>密码：</label>
-				      		<input id="user_password_update" name="user_password" type="password" class="form-control" placeholder="请输入密码">
-				      		<label>姓名：</label>
-				      		<input id="user_name_update" name="user_name" type="text" class="form-control" placeholder="请输入用户姓名">
-				      		<label>代码：</label>
-				      		<input id="user_number_update" name="user_number" type="text" class="form-control" placeholder="请输入用户代码">
-				      		<label>单位：</label>
-				      		<input id="user_units_update" name="user_units" type="text" class="form-control" placeholder="请输入用户单位">
-				      		<label>案件技术权限：</label>
-				      		<select id="user_case_technology_power_update" name="user_case_technology_power" class="form-control">
-				      			<option value="jurisdiction_none">无权限</option>
-				      			<option value="jurisdiction_use">使用权限</option>
-				      			<option value="jurisdiction_admin">管理权限</option>	
-				      		</select>
-				      		<label>案件侦查权限：</label>
-				      		<select id="user_case_query_power_update" name="user_case_query_power" class="form-control">
-				      			<option value="jurisdiction_none">无权限</option>
-				      			<option value="jurisdiction_use">使用权限</option>
-				      			<option value="jurisdiction_admin">管理权限</option>	
-				      		</select>
-				      		<label>检验鉴定权限：</label>
-				      		<select id="user_check_power_update" name="user_check_power" class="form-control">
-				      			<option value="jurisdiction_none">无权限</option>
-				      			<option value="jurisdiction_use">使用权限</option>
-				      			<option value="jurisdiction_admin">管理权限</option>	
-				      		</select>
-				      		<label>队伍管理权限：</label>
-				      		<select id="user_army_manager_power_update" name="user_army_manager_power" class="form-control">
-				      			<option value="jurisdiction_none">无权限</option>
-				      			<option value="jurisdiction_use">使用权限</option>
-				      			<option value="jurisdiction_admin">管理权限</option>	
-				      		</select>
-				      		<label>技术管理权限：</label>
-				      		<select id="user_technology_manager_power_update" name="user_technology_manager_power" class="form-control">
-				      			<option value="jurisdiction_none">无权限</option>
-				      			<option value="jurisdiction_use">使用权限</option>
-				      			<option value="jurisdiction_admin">管理权限</option>	
-				      		</select>
-				      		<label>统计权限：</label>
-				      		<select id="user_statistics_power_update" name="user_statistics_power" class="form-control">
-				      			<option value="jurisdiction_none">无权限</option>
-				      			<option value="jurisdiction_use">使用权限</option>
-				      			<option value="jurisdiction_admin">管理权限</option>	
-				      		</select>
-				      		<label>用户管理权限：</label>
-				      		<select id="user_user_manager_power_update" name="user_user_manager_power" class="form-control">
-				      			<option value="jurisdiction_none">无权限</option>
-				      			<option value="jurisdiction_use">使用权限</option>
-				      			<option value="jurisdiction_admin">管理权限</option>	
-				      		</select>
-			      		</form>
-			      	</div>
-			      </div>
-			      <div class="modal-footer">
-			        <button onclick="reLoadUser()" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-			        <button id="updateBtn" onclick="updateUser(this)" type="button" class="btn btn-primary">修改</button>
-			      </div>
-			    </div><!-- /.modal-content -->
-			  </div><!-- /.modal-dialog -->
+										<td>办案单位</td>
+										<td><select style="witdh: 100%;" class="form-control"
+											name="breakCase.breakcase_suspecter_sex"><option>1</option>
+												<option>2</option></select></td>
+
+									</tr>
+									<tr>
+										<td>抓获时间</td>
+										<td><input style="witdh: 70%;"
+											class="form-control mydate"
+											name="breakCase.breakcase_suspecter_birthday"
+											id="breakcase_suspecter_birthday" type="text"></td>
+											<td>主办民警</td>
+										<td><input style="witdh: 70%;" class="form-control"
+											name="breakCase.breakcase_suspecter_domicile" type="text"></td>
+									</tr>
+									
+
+									<tr>
+										<td>协办民警1</td>
+										<td><input style="witdh: 70%;" class="form-control"
+											name="breakCase.breakcase_arrested_department" type="text"></td>
+										<td>协办民警2</td>
+										<td><input style="witdh: 70%;" class="form-control"
+											name="breakCase.breakcase_present_address" type="text"></td>
+									</tr>
+									<tr>
+										<td>所（队）法制员</td>
+										<td><input style="witdh: 70%;" class="form-control"
+											name="breakCase.breakcase_waitbreakcase" type="text"></td>
+										<td>所（队）长</td>
+										<td><input style="witdh: 70%;" class="form-control"
+											name="breakCase.breakcase_phone" type="text"></td>
+									</tr>
+									<!-- <tr>
+										<td>简要案情</td>
+										<td colspan="3"><textarea style="witdh: 70%;"
+												placeholder="请填写" class="form-control"
+												name="briefDetails.briefdetails_details"></textarea></td>
+									</tr> -->
+									<!-- 合并比中指纹  -->
+									
+									<tr>
+										<td>法制大队值班民警</td>
+										<td><select style="witdh: 100%;" class="form-control"
+											data-live-search="true"
+											name="breakCase.breakcase_contrast_way"><option>1</option>
+												<option>2</option>
+												<option>3</option></select></td>
+												
+												<td>值班局领导</td>
+										<td><select style="witdh: 100%;" class="form-control"
+											data-live-search="true"
+											name="breakCase.breakcase_contrast_way"><option>1</option>
+												<option>2</option>
+												<option>3</option></select></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary input_sure">添加</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
 			</div>
-
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+	</div>
+	<!---------------------------------------------------------------------------------------------------->
+	<!---------------------------------------------------------------------------------------------------->
+	<!---------------------------------------------------------------------------------------------------->
+	<!---------------------------------------------------------------------------------------------------->
+	<!-- SneceInput.js仅作为在查询模态框中（案件类别，选择处所，作案手段）的自动匹配子项使用 -->
+	<script type="text/javascript" src="<%=basePath%>js/Case/SneceInput.js"></script>
+	<script type="text/javascript"
+		src="<%=basePath%>js/Info/CaseInfoInput.js"></script>
+	<script type="text/javascript">
+		$.datetimepicker.setLocale('ch');
+		$('.mydate').datetimepicker({
+			yearStart : 1990, // 设置最小年份
+			yearEnd : 2050, // 设置最大年份
+			yearOffset : 0, // 年偏差
+			timepicker : false, // 关闭时间选项
+			format : 'Y-m-d', // 格式化日期年-月-日
+			minDate : '1990/01/01', // 设置最小日期
+			maxDate : '2030/01/01', // 设置最大日期
+		});
+		$('.mydate_minute').datetimepicker({
+			yearStart : 1990, // 设置最小年份
+			yearEnd : 2050, // 设置最大年份
+			yearOffset : 0, // 年偏差
+			timepicker : true, // 关闭时间选项
+			format : 'Y-m-d H:i', // 格式化日期年-月-日
+			minDate : '1990/01/01', // 设置最小日期
+			maxDate : '2030/01/01', // 设置最大日期
+		});
+	</script>
 </body>
 </html>

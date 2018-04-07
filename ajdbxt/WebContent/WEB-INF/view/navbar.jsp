@@ -67,14 +67,11 @@
 					href="<%=basePath%>user/User_index"> <span>首页</span>
 				</a></li>
 				<!--  -->
-				<li class="leader_control dropdown" style="float: left;"><a
-					href="#" class="dropdown-toggle" data-toggle="dropdown"> <span>案件</span>
-						<i class="icon-submenu lnr lnr-chevron-down"></i>
+				<li class="dropdown" style="float: left;"><a
+					href="<%=basePath%>info/Info_page_CaseInput"> <span>案件</span>
+						
 				</a>
-					<ul class="dropdown-menu">
-						<li><a href="<%=basePath%>info/Info_ceseinfoInputpage">录入案件</a></li>
-						<li><a href="#">案件列表</a></li>
-					</ul></li>
+					</li>
 				<!--  -->
 				<li class="dropdown" style="float: left;"><a href="<%=basePath%>process/Process_page_process"
 					> <span>办案流程</span>
