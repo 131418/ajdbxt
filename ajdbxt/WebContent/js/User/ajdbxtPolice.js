@@ -23,6 +23,7 @@
 // 列表显示
 var police_vo = null;
 function List_Police_By_Page(pageIndex) {
+	var input_PoliceSearchText = document.getElementById("input_PoliceSearchText").value;
 	var formData = new FormData();
 	var xhr = false;
 	xhr = new XMLHttpRequest();
@@ -175,148 +176,8 @@ function List_Police_By_Page(pageIndex) {
 	}
 	console.log("pageIndex:" + pageIndex);
 	formData.append("findPoliceByPageVO.currentPage", pageIndex);
+	formData.append("findPoliceByPageVO.police_name", input_PoliceSearchText);
 	xhr.open("POST", "/ajdbxt/user/User_queryForPage");
-	xhr.send(formData);
-
-}
-// --------------------------------------
-// ------查询------------
-function List_Police_By_PageAndSearch(pageIndex) {
-	var input_PoliceSearchText = document
-			.getElementById("input_PoliceSearchText").value;
-	var formData = new FormData();
-	var xhr = false;
-	xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState == 4) {
-			if (xhr.status == 200) {
-				police_vo = JSON.parse(xhr.responseText);
-				/*
-				 * 
-				 */
-
-				var new_tr = null;
-				var new_td = null;
-				var table_police = document.getElementById("table_police");
-
-				/*
-				 * 移出除标题以外的所有行
-				 */
-
-				var old_tr = document.getElementsByClassName("new_tr");
-				var long = old_tr.length;
-				for (var i = 0; i < long; i++) {
-					old_tr[0].parentNode.removeChild(old_tr[0]);
-					// table_police.firstElementChild.removeChild(old_tr[0]);
-				}
-
-				/*
-				 * 将数据库的数据取出来放到表格里
-				 */
-				for (var num = 0; num < police_vo.list.length; num++) {
-					new_tr = document.createElement("tr");
-					new_tr.className = "new_tr";
-					new_tr.appendChild(document.createTextNode(''));
-					table_police.firstElementChild.appendChild(new_tr);
-					/*
-					 * 警察id
-					 */
-					new_td = document.createElement("td");
-					new_tr.appendChild(new_td);
-					new_td.style.display = "none";
-					new_td.className = "input_ajdbxt_police_id";
-					new_td.innerHTML = police_vo.list[num].ajdbxt_police_id;
-					/*
-					 * 1. 序号
-					 */
-					new_td = document.createElement("td");
-					new_tr.appendChild(new_td);
-					new_td.innerHTML = num + 1;
-					/*
-					 * 2. 警号
-					 */
-					new_td = document.createElement("td");
-					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].police_serial_number;
-					/*
-					 * 3. 姓名
-					 */
-					new_td = document.createElement("td");
-					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].police_name;
-					/*
-					 * 4. 单位
-					 */
-					new_td = document.createElement("td");
-					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].police_department;
-					/*
-					 * 5. 职务
-					 */
-					new_td = document.createElement("td");
-					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].police_duty;
-
-					/*
-					 * 5. 权限
-					 */
-					new_td = document.createElement("td");
-					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].police_power;
-					/*
-					 * 6. 电话号码
-					 */
-					new_td = document.createElement("td");
-					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].police_phone_number;
-
-					/*
-					 * 7. 操作
-					 */
-					new_td = document.createElement("td");
-					new_tr.appendChild(new_td);
-					new_td.innerHTML = '<i  id="'
-							+ police_vo.list[num].ajdbxt_police_id
-							+ '" class="fa fa-pencil-square-o role_one"  onClick=updatePolice(this) aria-hidden="true"></i>';
-					new_td.style.cursor = "pointer";
-
-					/*
-					 * 8. 复选框
-					 */
-					new_td = document.createElement("td");
-					new_td.appendChild(document.createTextNode(''));
-					new_tr.appendChild(new_td);
-					new_td.innerHTML = '<label class="fancy-checkbox" >'
-							+ '<input  type="checkbox" class="checkbox_select">'
-							+ '<span></span></label></div>';
-
-				}
-				/*
-				 * 
-				 */
-				var i_pulse = document.getElementById("i_pulse");
-				i_pulse.style.display = "none";
-
-				/*
-				 * * 设置页数 /
-				 */
-				document.getElementById("span_pageIndex").innerHTML = police_vo.currentPage;// 当前页
-				document.getElementById("span_totalPages").innerHTML = police_vo.totalPage;// 总页数
-				document.getElementById("span_totalRecords").innerHTML = police_vo.allRow;// 总记录数
-				document.getElementById("checkbox_all_select").checked = false;
-
-			} else {
-				toastr.error(xhr.status);
-			}
-		}
-	}
-	if (pageIndex == null || pageIndex.preventDefault) {
-		pageIndex = 1;
-	}
-	console.log("pageIndex:" + pageIndex);
-	formData.append("ajdbxt_police.police_name", input_PoliceSearchText);
-	formData.append("findPoliceByPageVO.currentPage", pageIndex);
-	xhr.open("POST", "/ajdbxt/user/User_fuzzySearch");
 	xhr.send(formData);
 
 }
