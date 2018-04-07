@@ -12,4 +12,5 @@ public interface ProcessDao {
 	public void deleteProcess(ajdbxt_process process);
 	public void saveProcessByCaseId(String case_id);
 	public List<ajdbxt_process> findProcessByCaseId(String case_id);
+	public int findAllProcess();
 }

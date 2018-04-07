@@ -8,6 +8,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import com.ajdbxt.domain.DO.ajdbxt_process;
+
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.ajdbxt.dao.Process.ProcessDao;
@@ -91,9 +93,21 @@ public class ProcessDaoImpl implements ProcessDao {
 
 
 	@Override
-	public List<ajdbxt_process> findSomeProcess(int start, int length) {
+	public List<ajdbxt_process> findSomeProcess(int start, int length) {//找到结果且分页
 		Session session=sessionFactory.getCurrentSession();
-		return null;
+		Criteria cri=session.createCriteria(ajdbxt_process.class);
+		cri.setFirstResult(start);
+		cri.setFirstResult(length);
+		cri.addOrder(Order.desc("process_gmt_modify"));
+		return cri.list();
+	}
+
+
+
+	@Override
+	public int findAllProcess() {
+		Session session=sessionFactory.getCurrentSession();
+		return session.createQuery("from ajdbxt_process").list().size();
 	}
 	
 }
