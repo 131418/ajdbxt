@@ -26,32 +26,100 @@ public class MsgSend {
 	private final static String URL_BASE = "https://yun.tim.qq.com/v5/tlssmssvr/sendmultisms2?sdkappid=1400078037&random=";
 	// App Key 要高度保密
 	private final static String APPKEY = "60d642699deae3beaeda20ae44f96f80";
-	//撤案通知
+	/**
+	 * 撤案通知<br>  {1}警官，请在3日内通知嫌疑人、被害人或其近亲属，{2}案件撤案
+	 */
 	public static final int  WITHDRAW_CASE=104138;
-	//检察院撤案
+	/**
+	 * 检察院撤回案件<br> 检察院撤回{1}案件，请在7日内对案件作出处理决定
+	 */
 	public static final int  PROCURATORATE_WITHDRAW_CASE=104136;
-	//起诉结果逮捕——所队长
+	/**
+	 * 起诉结果逮捕2所队长<br>	检察院对{1}案件嫌疑人作出逮捕决定
+	 */
 	public static final int SUE_RESULT_CATCH_CAPTAIN=104134;
-	//起诉结果逮捕——民警
+	/**
+	 * 起诉结果逮捕<br>	{1}民警，检察院对{2}案件嫌疑人作出逮捕决定，请24小时内执行逮捕，并在逮捕后24小时内通知家属
+	 */
 	public static final int SUE_RESULT_CATCH_POLICE=104133;
-	//监视居住
-	public static final int WATCH_LIVE=104132;
+	/**
+	 * 监视居住<br>{1}案件嫌疑人被强制监视居住6个月
+	 */
+	public static final int MONITORING_LIVE=104132;
+	/**
+	 * 取保候审2所队长<br>	{1}案件嫌疑人被取保候审
+	 */
+	public static final int GET_KEEP_WAIT_EXAMINE_CAPTAIN=104131;
+	/**
+	 * 取保候审1民警<br>	{1}警官，对{2}案取保候审人进行侦查
+	 */
+	public static final int GET_KEEP_WAIT_EXAMINE=104129;
+	/**
+	 * 取消指派民警<br>	{1}警官，您被取消办理的{2}案件
+	 */
+	public static final int CANCEL_DISPATCH=104125;
+	/**
+	 * 延长传唤手续<br>	{1}民警，{2}案件您未在规定时间传唤嫌疑人，请尽快办理延长传唤手续
+	 */
+	public static final int LENGTHEN_SUBPOENA=104124;
+	/**
+	 * 处罚5社区戒毒<br>	{1}警官，{2}案件嫌疑人社区戒毒请24小时内通知家属、戒毒人员户籍所在社区或现住地社区，并周期视察戒毒情况
+	 */
+	public static final int COMMUNITY_ABANDON_DRUG=104123;
+	/**
+	 * 处罚1罚款<br>	{1}警官，请通知{2}案件嫌疑人15日内到银行缴纳罚款
+	 */
+	public static final int PUNISH_FINE=104118;
+	/**
+	 * 案卷上交<br>	{1}警官，{2}案件结案请在7天内案卷上交法制大队
+	 */
+	public static final int CASE_PAGE_HAND_IN=104116;
+	/**
+	 * 传唤嫌疑人4局领导<br>	新增一起{1}案件，{2}单位负责办理
+	 */
+	public static final int SUBPOENA_A_SUSPECT_DIRECTOR=104114;
+	/**
+	 * 传唤嫌疑人3法制员<br>	{1}民警，有一起新增{2}案件，请及时对案件审核并评分
+	 */
+	public static final int SUBPOENA_A_SUSPECT_LEGAL_PERSONNEL=104112;
+	/**
+	 * 传唤嫌疑人2所队长<br>	{1}所队长，{2}几位民警被指派办理{3}案件，如有相关民警另有事情，请及时修改案件指派民警并审核
+	 */
+	public static final int SUBPOENA_A_SUSPECT_CAPTAIN=104111;
+	/**
+	 * 传唤嫌疑人1民警<br>	{1}民警你被指派办理{2}案件，请您在{3}小时内传唤嫌疑人
+	 */
+	public static final int SUBPOENA_A_SUSPECT=104110;
+	/**
+	 * 处罚4强制戒毒<br>	{1}警官，{2}案件嫌疑人强制戒毒，请24小时内通知嫌疑人家属
+	 */
+	public static final int MANDATORY_ABANDON_DRUG=104122;
+	/**
+	 * 处罚3罚款并拘留<br>	{1}j警官，{2}案件嫌疑人拘留并处罚款，请24小时内通知嫌疑人家属，并通知相关人员15日内到银行缴纳罚款
+	 */
+	public static final int PENALTY_AND_DETENTION=104121;
+	/**
+	 * 处罚2拘留<br>	{1}警官，{2}案件嫌疑人拘留，请24小时内通知嫌疑人家属
+	 */
+	public static final int PUNISH_DETENTION=104119;
+	//签名
+	public static final String POlICE_OFFICE="萍乡市安源区公安分局";
 	/**
 	 * 测试方法
 	 */
 	@Test
 	public void sendTest() {
-//		try {
-//			List<Tel> tel = new ArrayList<Tel>();
-//			tel.add(new Tel("15270634643", "86"));
-//			String[] params = { "8" };
-//			String result_msg = doSend("", "", params, "萍乡市安源区公安分局", tel, 98357);
-//			System.out.println(result_msg);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		try {
+			List<Tel> tel = new ArrayList<Tel>();
+			tel.add(new Tel("15270634643", "86"));
+			String[] params = { "8" };
+			String result_msg = doSend("", "", params, "萍乡市安源区公安分局", tel, 98357);
+			System.out.println(result_msg);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
+	
 	/**
 	 **** 所需传参数
 	 * 
@@ -78,7 +146,7 @@ public class MsgSend {
 	 * @return 服务端返回的数据
 	 * @throws Exception
 	 */
-	public  String doSend(String ext, String extend, String[] params, String sign, List<Tel> tel, Integer tpl_id)
+	public static String doSend(String ext, String extend, String[] params, String sign, List<Tel> tel, Integer tpl_id)
 			throws Exception {
 		// 生成随机数
 		int random = (int) Math.floor(Math.random() * 100);
@@ -98,7 +166,7 @@ public class MsgSend {
 		// 对象中的mobile转为字符串
 		String strMobile = listToString(tel);
 		// 获取当前时间戳，并设置于10秒后发送
-		long time = new Date().getTime() / 1000 + 10;
+		long time = new Date().getTime() / 1000;
 		// SHA256算法生成sig
 		String sig = getSHA256StrJava(
 				"appkey=" + APPKEY + "&random=" + random + "&time=" + time + "&mobile=" + strMobile);
@@ -139,7 +207,7 @@ public class MsgSend {
 	 *            对象（手机号，国家码）
 	 * @return 以逗号隔开的结果字符串
 	 */
-	private  String listToString(List<Tel> tel) {
+	private  static String listToString(List<Tel> tel) {
 		StringBuilder SB = new StringBuilder();
 		for (Tel t : tel) {
 			SB.append("," + t.getMobile());

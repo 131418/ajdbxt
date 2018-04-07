@@ -2,10 +2,6 @@ package com.ajdbxt.action.Process;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 import com.ajdbxt.domain.DO.ajdbxt_police;
@@ -13,9 +9,7 @@ import com.ajdbxt.service.Process.ProcessInfoService;
 import com.ajdbxt.service.Process.ProcessService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-
 import util.JsonUtils;
-
 import com.ajdbxt.domain.DO.ajdbxt_process;
 
 public class ProcessAction  extends ActionSupport{
@@ -56,10 +50,12 @@ public class ProcessAction  extends ActionSupport{
 		ajdbxt_police police=(ajdbxt_police)o;
 		String police_id=police.getAjdbxt_police_id();
 		String json="";
-		if(ajdbxtProcess.getProcess_case_end()==null||ajdbxtProcess.getProcess_case_end()=="ture") {
+		if(ajdbxtProcess.getProcess_case_end()!=null&&!ajdbxtProcess.getProcess_case_end().equals("true")) {
+			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id);
+		}else if(ajdbxtProcess.getProcess_captain_check()!=null&&!ajdbxtProcess.getProcess_captain_check().equals("true")){
 			json=processInfoService.getInfoList(ProcessInfoService.CAPTAIN_CHECK, police_id);
 		}else {
-			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id);
+			json=processInfoService.getInfoList(100, police_id);
 		}
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=utf-8");
@@ -123,24 +119,10 @@ public class ProcessAction  extends ActionSupport{
 		}
 		return null;
 	}
+
 	public String findSome() {
+		
 		return null;
 		
 	}
-	
-	/**
-	 * 跳转到办案流程列表页
-	 * @return
-	 */
-	public String page_list_CaseProcess() {
-		return "page_list_CaseProcess";
-	}
-	
-	/**
-	 * 跳转到办案流程详情页
-	 */
-	public String page_CaseProcessInfo() {
-		return "page_CaseProcessInfo";
-	}
-
 }
