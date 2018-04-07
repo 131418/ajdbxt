@@ -1,18 +1,14 @@
 package com.ajdbxt.dao.impl.Info;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
 import java.util.List;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
 import com.ajdbxt.dao.Info.InfoDao;
 import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 
-public class InfoDaoIml implements InfoDao {
+public class InfoDaoImpl implements InfoDao {
 	private SessionFactory sessionFactory;
 	
 	public void setSessionFactory(SessionFactory sessionFactory) {

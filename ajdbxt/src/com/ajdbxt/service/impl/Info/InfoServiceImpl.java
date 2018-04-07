@@ -18,6 +18,10 @@ import util.Tel;
 public class InfoServiceImpl implements InfoService {
 	private InfoDao infoDao;
 	private ProcessDao processDao;
+	public void setInfoPoliceDao(InfoPoliceDao infoPoliceDao) {
+		this.infoPoliceDao = infoPoliceDao;
+	}
+
 	private InfoPoliceDao infoPoliceDao;
 	private List<Tel> tel ;
 	private String[] params;
