@@ -94,10 +94,13 @@ public class UserServiceImpl implements UserService {
 		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
 		int length = pageSize; // 每页记录数
 		int currentpage = findPoliceByPageVO.countCurrentPage(currentPage);
-		String  hql="from ajdbxt_police order by police_gmt_modify desc";
+		String hql;
+		//String  hql="from ajdbxt_police order by police_gmt_modify desc";
 		if(police_name!=null||!"".equals(police_name)) {
 			hql="from ajdbxt_police where police_name like '%"+police_name+"%' order by police_gmt_modify desc";
+			List<ajdbxt_police> list = userDao.queryForPage(hql, offset, length);
 		}
+		hql="from ajdbxt_police order by police_gmt_modify desc";
 		List<ajdbxt_police> list = userDao.queryForPage(hql, offset, length); // 该分页的记录
 		// 把分页信息保存到Bean中
 		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();

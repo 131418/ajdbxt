@@ -215,7 +215,6 @@ public class UserAction extends ActionSupport {
 				redWord=redWord.replaceAll(this.findPoliceByPageVO.getPolice_name(), "<span style=\"color:red\">"+this.findPoliceByPageVO.getPolice_name()+"</span>");
 			}
 			//把搜索关键字转换成红色
-			System.out.println(redWord);
 			response.getWriter().write(redWord);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
