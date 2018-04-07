@@ -81,6 +81,15 @@ public class InfoAction extends ActionSupport {
 		}
 		return null;
 	}
+	//得到法制员和局领导的方法
+	public void lal() {
+		try {
+			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+			ServletActionContext.getResponse().getWriter().print(infoService.getLegalsAndLeaders());
+		} catch (IOException e) {
+			new RuntimeException(e);
+		}
+	}
 	/**
 	 * 录入案件信息
 	 * @return

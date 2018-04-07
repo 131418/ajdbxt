@@ -287,4 +287,12 @@ public class InfoServiceImpl implements InfoService {
 		}
 	}
 
+	@Override
+	public String getLegalsAndLeaders() {
+		LegalSystemAndLeadersVO lalVO=new LegalSystemAndLeadersVO();
+		lalVO.setLegals(infoPoliceDao.findLegals());
+		lalVO.setLeaders(infoPoliceDao.findLeaders());
+		return JsonUtils.toJson(lalVO);
+	}
+	
 }
