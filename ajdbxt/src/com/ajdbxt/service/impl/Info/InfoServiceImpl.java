@@ -258,7 +258,7 @@ public class InfoServiceImpl implements InfoService {
 
 	@Override
 	public String getAllCase(Page_list_caseInfoVo infoVO) {
-		List<ajdbxt_info> list=infoDao.findSomeCase((infoVO.getCurrPage()-1)*10, infoVO.getPageSize());
+		List<ajdbxt_info> list=infoDao.findSomeCase((infoVO.getCurrPage()-1)*infoVO.getPageSize(), infoVO.getPageSize());
 		infoVO.setCaselist(list);
 		infoVO.setCountRecords(infoDao.countAllCase());
 		int pages=infoVO.getCountRecords()/infoVO.getPageSize();
@@ -267,10 +267,6 @@ public class InfoServiceImpl implements InfoService {
 		}
 		infoVO.setTotalPages(pages);
 		return JsonUtils.toJson(infoVO);
-	}
-	private ajdbxt_police rankWork(String apartment) {
-		
-		return null;
 	}
 
 	@Override

@@ -97,7 +97,7 @@ public class ProcessDaoImpl implements ProcessDao {
 		Session session=sessionFactory.getCurrentSession();
 		Criteria cri=session.createCriteria(ajdbxt_process.class);
 		cri.setFirstResult(start);
-		cri.setFirstResult(length);
+		cri.setMaxResults(length);
 		cri.addOrder(Order.desc("process_gmt_modify"));
 		return cri.list();
 	}
