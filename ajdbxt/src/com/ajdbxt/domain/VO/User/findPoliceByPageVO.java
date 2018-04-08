@@ -21,6 +21,8 @@ public class findPoliceByPageVO {
 	private boolean hasPreviousPage;//是否有前一页
 	
 	private boolean hasNextPage;//是否游下一页
+	
+	private String police_name;
 
 	public List getList() {
 		return list;
@@ -68,6 +70,14 @@ public class findPoliceByPageVO {
 	 * 
 	 */
 	
+	public String getPolice_name() {
+		return police_name;
+	}
+
+	public void setPolice_name(String police_name) {
+		this.police_name = police_name;
+	}
+
 	public void init() {
 		this.isFirstPage = isFirstPage();
 		this.isLastPage = isLastPage();

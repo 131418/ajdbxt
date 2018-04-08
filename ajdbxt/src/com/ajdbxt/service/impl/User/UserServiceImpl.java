@@ -86,15 +86,31 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public findPoliceByPageVO queryForPage(int pageSize, int currentPage) {
+	public findPoliceByPageVO queryForPage(int pageSize, int currentPage,String police_name) {
 		// TODO Auto-generated method stub
-		String hql = "select count(*) from ajdbxt_police";
-		int count = userDao.getCount(hql); // 总记录数
+		/*String hql_count= "select count(*) from ajdbxt_police";
+		int count = userDao.getCount(hql_count); // 总记录数
+		int totalPage = findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数
+		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
+		int length = pageSize; // 每页记录数
+		int currentpage = findPoliceByPageVO.countCurrentPage(currentPage);*/
+		String hql_count;
+		String hql;
+		//String  hql="from ajdbxt_police order by police_gmt_modify desc";
+		if(police_name!=null&&!"".equals(police_name)) {
+			hql_count = "select count(*) from ajdbxt_police where police_name like '%"+police_name+"%'";
+			hql="from ajdbxt_police where police_name like '%"+police_name+"%' order by police_gmt_modify desc";
+		}
+		else {
+			hql_count = "select count(*) from ajdbxt_police";
+			hql="from ajdbxt_police order by police_gmt_modify desc";
+		}
+		int count = userDao.getCount(hql_count); // 总记录数
 		int totalPage = findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数
 		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
 		int length = pageSize; // 每页记录数
 		int currentpage = findPoliceByPageVO.countCurrentPage(currentPage);
-		List<ajdbxt_police> list = userDao.queryForPage("from ajdbxt_police order by police_gmt_modify desc", offset, length); // 该分页的记录
+		List<ajdbxt_police> list = userDao.queryForPage(hql, offset, length); // 该分页的记录
 		// 把分页信息保存到Bean中
 		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
 		findPoliceByPageVO.setPageSize(pageSize);
@@ -178,7 +194,7 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
-	@Override
+/*	@Override
 	public findPoliceByPageVO fuzzySearch(int pageSize, int currentPage,String police_name) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from ajdbxt_police where police_name like '%"+police_name+"%'";
@@ -197,6 +213,6 @@ public class UserServiceImpl implements UserService {
 		findPoliceByPageVO.setList(list);
 		findPoliceByPageVO.init();
 		return findPoliceByPageVO;
-	}
+	}*/
 
 }
