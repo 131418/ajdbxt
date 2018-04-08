@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import util.JsonUtils;
 import com.ajdbxt.domain.DO.ajdbxt_process;
+import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.domain.VO.Process.showProcessVO;
 import util.*;
 
@@ -19,6 +20,7 @@ public class ProcessAction  extends ActionSupport{
 	private ajdbxt_process ajdbxtProcess;
 	private ProcessInfoService processInfoService;
 	private showProcessVO processVO;
+	private Page_list_caseInfoVo infoVO;
 	public showProcessVO getProcessVO() {
 		return processVO;
 	}
@@ -64,15 +66,15 @@ public class ProcessAction  extends ActionSupport{
 		String police_id=police.getAjdbxt_police_id();
 		String json="";
 		if(ajdbxtProcess.getProcess_case_end()!=null&&!ajdbxtProcess.getProcess_case_end().equals("true")) {
-			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id);
+			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id,infoVO );
 		}else if(ajdbxtProcess.getProcess_captain_check()!=null&&!ajdbxtProcess.getProcess_captain_check().equals("true")){
-			json=processInfoService.getInfoList(ProcessInfoService.CAPTAIN_CHECK, police_id);
+			json=processInfoService.getInfoList(ProcessInfoService.CAPTAIN_CHECK, police_id,infoVO);
 		}else if(ajdbxtProcess.getProcess_score()!=null&&!ajdbxtProcess.getProcess_score().equals("true")){
-			json=processInfoService.getInfoList(ProcessInfoService.PROCESS_SCORE, police_id);
+			json=processInfoService.getInfoList(ProcessInfoService.PROCESS_SCORE, police_id,infoVO);
 		}else if(ajdbxtProcess.getProcess_question()!=null&&!ajdbxtProcess.getProcess_question().equals("true")) {
-			json=processInfoService.getInfoList(ProcessInfoService.PROCESS_QUESTION, police_id);
+			json=processInfoService.getInfoList(ProcessInfoService.PROCESS_QUESTION, police_id,infoVO);
 		}else {
-			json=processInfoService.getInfoList(100, police_id);
+			json=processInfoService.getInfoList(100, police_id,infoVO);
 		}
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=utf-8");
