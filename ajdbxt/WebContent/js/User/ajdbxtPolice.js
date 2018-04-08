@@ -7,7 +7,7 @@
  if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
  var loginRole = JSON.parse(xmlHttpRequest.responseText);
  alert(loginRole.police_power);
- if (loginRole.police_power == "1（浏览）" || loginRole.police_power == "1") {
+ if (loginRole.police_power == "1") {
  var role_one = document.getElementsByClassName("role_one");
  for (var i = 0; i < role_one.length; i++) {
  role_one[i].onclick = function() {
@@ -152,7 +152,6 @@ function List_Police_By_Page(pageIndex) {
 					if (xmlHttpRequest.readyState == 4
 							&& xmlHttpRequest.status == 200) {
 						var loginRole = JSON.parse(xmlHttpRequest.responseText);
-						/*alert(loginRole.police_power);*/
 						if (loginRole.police_power == "1") {
 							var role_one = document
 									.getElementsByClassName("role_one");

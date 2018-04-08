@@ -2,11 +2,13 @@ package com.ajdbxt.domain.VO.Total;
 
 import java.util.List;
 
+import com.ajdbxt.domain.DTO.Total.StatisticEachPoliceCaseNumDTO;
+
 public class FindInfoByPageVO {
 	
 	private List list;//要返回的某一页的记录列表
 	
-	private int allRow;//总记录数
+	private int totalRecords;//总记录数
 	
 	private int totalPage;//总页数
 	
@@ -14,13 +16,17 @@ public class FindInfoByPageVO {
 	
 	private int pageSize;//每页记录数
 	
+	private String start_time = "0000-00-00";//开始时间
+
+	private String stop_time = "9999-99-99";//结束时间
+	
 	private boolean isFirstPage;//是否为第一页
 	
 	private boolean isLastPage;//是否为最后一页
 	
 	private boolean hasPreviousPage;//是否有前一页
 	
-	private boolean hasNextPage;//是否游下一页
+	private boolean hasNextPage;//是否有下一页
 
 	public List getList() {
 		return list;
@@ -30,13 +36,6 @@ public class FindInfoByPageVO {
 		this.list = list;
 	}
 
-	public int getAllRow() {
-		return allRow;
-	}
-
-	public void setAllRow(int allRow) {
-		this.allRow = allRow;
-	}
 
 	public int getTotalPage() {
 		return totalPage;
@@ -62,7 +61,30 @@ public class FindInfoByPageVO {
 		this.pageSize = pageSize;
 	}
 	
+	public int getTotalRecords() {
+		return totalRecords;
+	}
+
+	public void setTotalRecords(int totalRecords) {
+		this.totalRecords = totalRecords;
+	}
 	
+	public String getStart_time() {
+		return start_time;
+	}
+
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
+
+	public String getStop_time() {
+		return stop_time;
+	}
+
+	public void setStop_time(String stop_time) {
+		this.stop_time = stop_time;
+	}
+
 	/*
 	 * 初始化分页信息
 	 * 
@@ -107,9 +129,11 @@ public class FindInfoByPageVO {
 	@param allRow总记录数
 	@return 总页数
 	*/
+
 	public static int countTotalPage(final int pageSize, final int allRow) {
 		//int totalPage = allRow % pageSize == 0 ? allRow / pageSize : allRow / pageSize + 1;
 		int totalPage = (allRow-1)/pageSize + 1;
+
 		return totalPage;
 	}
 	
@@ -133,11 +157,9 @@ public class FindInfoByPageVO {
 		return curPage;
 	}
 
-	@Override
-	public String toString() {
-		return "FindInfoByPageVO [list=" + list + ", allRow=" + allRow + ", totalPage=" + totalPage + ", currentPage="
-				+ currentPage + ", pageSize=" + pageSize + "]";
-	}
+
+	
+	
 
 	
 	
