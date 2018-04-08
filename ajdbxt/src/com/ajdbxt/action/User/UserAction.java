@@ -211,7 +211,7 @@ public class UserAction extends ActionSupport {
 			response.setContentType("text/html;charset=utf-8");
 			findPoliceByPageVO queryForPage = userService.queryForPage(10, this.findPoliceByPageVO.getCurrentPage(),this.findPoliceByPageVO.getPolice_name());
 			String  redWord = new Gson().toJson(queryForPage);
-			if(this.findPoliceByPageVO.getPolice_name()!=null) {
+			if(this.findPoliceByPageVO.getPolice_name()!=null&&!"".equals(this.findPoliceByPageVO.getPolice_name())) {
 				redWord=redWord.replaceAll(this.findPoliceByPageVO.getPolice_name(), "<span style=\"color:red\">"+this.findPoliceByPageVO.getPolice_name()+"</span>");
 			}
 			//把搜索关键字转换成红色
