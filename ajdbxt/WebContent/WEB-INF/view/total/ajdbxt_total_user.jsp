@@ -37,19 +37,19 @@
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
-				<!-- <h3 class="panel-title">统计</h3> -->
+				<h3 class="panel-title">XXX人员</h3> 
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
 					<div class="panel">
-						<div class="panel-heading">
+						<%-- <div class="panel-heading">
 							<span class="span_catagory"><h3 class="panel-title">统计</h3></span> <span class="span_catagory">-</span>XXX单位 <span
 								id="span_unit" class="span_catagory"></span>
-						</div>
+						</div> --%>
 						<!--  -->
 						<div class="panel-body">
 							<div style="height: 34px; width: 100%;">
-								<div style="height: 34px; margin: 0 0 20px 0;">
+								<div>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">按日期筛选：</span>
 									<input id="select_start_time" class="form-control mydate"
@@ -66,6 +66,13 @@
 
 
 								</div>
+								<!-- 检索 -->
+								<div class="input-group" style="width: 300px; float: right;">
+									<input id="input_DNASearchText" class="form-control"
+										oninput="List_DNA_By_PageAndSearch(1)" type="text"> <span
+										class="input-group-addon"> <i class="fa fa-search"></i>
+									</span>
+								</div>
 
 							</div>
 
@@ -73,9 +80,12 @@
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
-										<th>人员</th>
-										<th>行政案件</th>
-										<th>刑事案件</th>
+									<th><select id="total_user" class="form-control">
+										</select></th>									
+										<th>案件名</th>
+										<th>评分</th>
+										<th>主办民警</th>
+										<th>协办民警</th>
 
 									</tr>
 								</tbody>

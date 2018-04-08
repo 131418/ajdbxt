@@ -21,12 +21,12 @@
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
-							<h3 class="panel-title">统计</h3>
-						</div>
+				<h3 class="panel-title">统计</h3>
+			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
 					<div class="panel">
-						
+
 						<!--  -->
 						<div class="panel-body">
 							<div style="height: 34px; margin: 0 0 20px 0; width: 100%;">
@@ -58,8 +58,8 @@
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
-										<th><select id="" class="form-control" > </select>
-										</th>
+										<th><select id="case_department" class="form-control">
+										</select></th>
 										<th>人员</th>
 										<th>行政案件</th>
 										<th>刑事案件</th>
