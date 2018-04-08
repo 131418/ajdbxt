@@ -1,6 +1,6 @@
 var xhr;
 var total_vo = null;
-function List_Total() {
+function List_Total_By_Page(pageIndex) {
 	getXMLHttp();
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
@@ -10,7 +10,8 @@ function List_Total() {
 			var new_td = null;
 			var ner_a = null;
 			var table_total = document.getElementById("table_total");
-			
+			var select_start_time=document.getElementById("select_start_time").value;
+			var select_stop_time=document.getElementById("select_stop_time").value;
 			/*
 			 * 移出除标题以外的所有行
 			 */
@@ -32,23 +33,29 @@ function List_Total() {
 				 * 1. 办案单位
 				 */
 				new_td = document.createElement("td");
+				new_tr.appendChild(new_td);
+				new_td.innerHTML = total_vo.list[num].department;
+				/*
+				 * 2. 人员
+				 */
+				new_td = document.createElement("td");
 				new_a = document.createElement("a");
 				new_td.appendChild(new_a);
 				new_tr.appendChild(new_td);
-				new_a.innerHTML = total_vo.list[num].info_department;
+				new_a.innerHTML = total_vo.list[num].police;
 				new_a.style.cursor = "pointer";
 				/*
-				 * 2. 行政案件
+				 * 3. 行政案件
 				 */
 				new_td = document.createElement("td");
 				new_tr.appendChild(new_td);
-				new_td.innerHTML = total_vo.list[num].info_main_police;
+				new_td.innerHTML = total_vo.list[num].adminnistrCaseNum;
 				/*
-				 * 3. 刑事案件
+				 * 1. 刑事案件
 				 */
 				new_td = document.createElement("td");
 				new_tr.appendChild(new_td);
-				new_td.innerHTML = total_vo.list[num].info_assistant_police_one;
+				new_td.innerHTML = total_vo.list[num].criminalCaseNum;
 				
 				/* 加载图标 */
 				var i_pulse = document.getElementById("i_pulse");
@@ -59,9 +66,51 @@ function List_Total() {
 		}
 	}
 	}
-	xhr.open("POST", "/ajdbxt/total/Total_listAllInfo");
-	xhr.send();
+	var formData=new FormData();
+	formData.append("total_vo.currentPage", pageIndex);
+	formData.append("statisticDto.start_time",select_start_time);
+	formData.append("statisticDto.stop_time",select_stop_time);
+	xhr.open("POST", "/ajdbxt/total/Total_listDepartmentByCategory","true");
+	xhr.send(formData);
 }
+/*
+ * 判断页数
+ */
+function flip(flipPage) {
+	switch (flipPage) {
+	/* 首页 */
+	case 1: {
+		List_Police_By_Page(1)
+		break;
+	}
+		/* 上一页 */
+	case 2: {
+		if (police_vo.currentPage - 1 == 0) {
+			toastr.warning("已经是第一页了");
+		} else {
+			List_Police_By_Page(police_vo.currentPage - 1);
+		}
+		break;
+	}
+		/* 下一页 */
+	case 3: {
+		if (police_vo.currentPage == police_vo.totalPage) {
+			toastr.warning("已经是最后一页了");
+		} else {
+			List_Police_By_Page(police_vo.currentPage + 1);
+		}
+		break;
+	}
+		/* 尾页 */
+	case 4: {
+		List_Police_By_Page(police_vo.totalPage);
+
+		break;
+	}
+
+	}
+}
+
 
 function getXMLHttp() {
 	if (window.XMLHttpRequest) {
