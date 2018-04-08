@@ -5,7 +5,6 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -13,18 +12,9 @@
 
 <title>统计</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style type="text/css">
-.table_total tbody tr {
-	text-align: center;
-}
-
-#page_flip span a:hover {
-	cursor: pointer;
-}
-</style>
 </head>
-
 <body>
+
 	<s:action name="User_navbar" namespace="/user" executeResult="true" />
 
 	<div style="margin: 80px 0 0 0;float: left; width: 100%;">
