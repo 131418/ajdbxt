@@ -82,7 +82,7 @@ public class ProcessServiceImpl implements ProcessService {
 		ProcessDTO processDTO;
 		processVO.setCount(processDao.findAllProcess());
 		int pages=processVO.getCount()/length;
-		List<ajdbxt_process> processList=processDao.findSomeProcess(processVO.getCurrPage()*10, length);
+		List<ajdbxt_process> processList=processDao.findSomeProcess((processVO.getCurrPage()-1)*10, length);
 		if(processVO.getCount()/length>0) {
 			pages++;
 		}
