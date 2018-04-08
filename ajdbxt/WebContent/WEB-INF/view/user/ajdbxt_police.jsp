@@ -50,7 +50,7 @@
 								<!-- 检索 -->
 								<div class="input-group" style="width: 300px; float: right;">
 									<input id="input_PoliceSearchText" class="form-control"
-										oninput="List_Police_By_PageAndSearch(1)" type="text"
+										oninput="List_Police_By_Page(1);" type="text"
 										placeholder="搜索人员" /> <span class="input-group-addon"
 										style="border-radius: unset;"> <i class="fa fa-search"></i>
 									</span>
