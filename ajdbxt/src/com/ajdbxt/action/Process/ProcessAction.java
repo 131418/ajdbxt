@@ -12,6 +12,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import util.JsonUtils;
 import com.ajdbxt.domain.DO.ajdbxt_process;
 import com.ajdbxt.domain.VO.Process.showProcessVO;
+import util.*;
 
 public class ProcessAction  extends ActionSupport{
 	private ProcessService processService;
@@ -89,32 +90,29 @@ public class ProcessAction  extends ActionSupport{
 	 */
 	public void update() {
 		ajdbxt_process process=(ajdbxt_process)ActionContext.getContext().getSession().get("lookedProcess");
+		int send_massage_type=0;
 		Class clazz=ajdbxtProcess.getClass();
 		Field [] f= clazz.getDeclaredFields();
 		for(Field field: f){
 			field.setAccessible(true);
 			try {
 				Object o =field.get(ajdbxtProcess);
-				System.out.println(o);
-				if(o!=null) {
-					field.set(process, o);
-					
+//				if(o!=null) {
+//					field.set(process, o);
 //					switch (field.getName()) {
-//					case "process_case_goods":
-//						
-//						break;
-//
-//					case "process_penalty":
-//					case ""
-//						break;
+//						case "process_case_goods":
+//							send_massage_type=MsgSend.CANCEL_DISPATCH;
+//							break;
+//	
+//						case "process_penalty":
+//						case ""
+//							break;
 //					}
-					
-				}
+//				}
 			}catch(Exception e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		System.out.println(process.toString());
 		processService.update(process);
 	}
 	

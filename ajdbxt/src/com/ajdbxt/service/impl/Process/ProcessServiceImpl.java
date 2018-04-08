@@ -65,9 +65,9 @@ public class ProcessServiceImpl implements ProcessService {
 		return process;
 	}
 	@Override
-	public boolean update(ajdbxt_process process) {
+	public void update(ajdbxt_process process) {
 		processDao.updateProcess(process);
-		return true;
+		return ;
 	}
 	@Override
 	public boolean update(ajdbxt_process process, int send_massage_type) {

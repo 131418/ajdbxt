@@ -262,7 +262,7 @@ public class InfoServiceImpl implements InfoService {
 		infoVO.setCaselist(list);
 		infoVO.setCountRecords(infoDao.countAllCase());
 		int pages=infoVO.getCountRecords()/infoVO.getPageSize();
-		if(infoVO.getCountRecords()/infoVO.getPageSize()>0) {
+		if(infoVO.getCountRecords()%infoVO.getPageSize()>0) {
 			pages++;
 		}
 		infoVO.setTotalPages(pages);
