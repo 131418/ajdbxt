@@ -63,6 +63,10 @@ public class ProcessAction  extends ActionSupport{
 			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id);
 		}else if(ajdbxtProcess.getProcess_captain_check()!=null&&!ajdbxtProcess.getProcess_captain_check().equals("true")){
 			json=processInfoService.getInfoList(ProcessInfoService.CAPTAIN_CHECK, police_id);
+		}else if(ajdbxtProcess.getProcess_score()!=null&&!ajdbxtProcess.getProcess_score().equals("true")){
+			json=processInfoService.getInfoList(ProcessInfoService.PROCESS_SCORE, police_id);
+		}else if(ajdbxtProcess.getProcess_question()!=null&&!ajdbxtProcess.getProcess_question().equals("true")) {
+			json=processInfoService.getInfoList(ProcessInfoService.PROCESS_QUESTION, police_id);
 		}else {
 			json=processInfoService.getInfoList(100, police_id);
 		}

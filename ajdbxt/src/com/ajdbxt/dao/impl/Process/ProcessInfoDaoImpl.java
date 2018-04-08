@@ -64,4 +64,30 @@ public class ProcessInfoDaoImpl implements ProcessInfoDao {
 		return (ajdbxt_info) cri.uniqueResult();
 	}
 
+
+	@Override
+	public List<ajdbxt_info> getInfoListProcessScore(String police_id) {
+		Session session=sessionFactory.getCurrentSession();
+		String hql=" from ajdbxt_info "
+				+ "where info_main_police=? or info_assistant_police_one=?  or info_assistant_police_two=? and ajdbxt_info_id in (select process_case_id from ajdbxt_process where process_score='否')";
+		Query query=session.createQuery(hql);
+		for(int index=0;index<3;index++) {
+			query.setString(index, police_id);
+		}
+		return query.list();
+	}
+
+
+	@Override
+	public List<ajdbxt_info> getInfoListProcessQuestion(String police_id) {
+		Session session=sessionFactory.getCurrentSession();
+		String hql=" from ajdbxt_info "
+				+ "where info_main_police=? or info_assistant_police_one=?  or info_assistant_police_two=? and ajdbxt_info_id in (select process_case_id from ajdbxt_process where process_question='否')";
+		Query query=session.createQuery(hql);
+		for(int index=0;index<3;index++) {
+			query.setString(index, police_id);
+		}
+		return query.list();
+	}
+
 }

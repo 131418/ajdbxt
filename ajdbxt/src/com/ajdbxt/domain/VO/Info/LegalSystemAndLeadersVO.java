@@ -1,4 +1,4 @@
-package com.ajdbxt.service.impl.Info;
+package com.ajdbxt.domain.VO.Info;
 
 import java.util.List;
 
