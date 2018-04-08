@@ -49,6 +49,9 @@ public class ProcessAction  extends ActionSupport{
 	public void setProcessInfoService(ProcessInfoService processInfoService) {
 		this.processInfoService = processInfoService;
 	}
+	public String page_process(){
+		return "processpage";
+	}
 	/**
 	 * 的到与该警官相关的案件信息
 	 * @param ajdbxtProcess.case_end="false" 查未结案的
