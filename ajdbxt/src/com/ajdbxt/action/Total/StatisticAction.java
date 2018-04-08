@@ -13,6 +13,7 @@ public class StatisticAction {
 	private StatisticService statisticService;
 	private HttpServletResponse http_response;
 	private StatisticEachDepartmentCaseNumDTO statisticDto;
+	private String deaprtment;//办案部门
 	
 	/*
 	 * 显示单位案件数量页面
@@ -28,7 +29,7 @@ public class StatisticAction {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化json数据
 		Gson gson = gsonBuilder.create();
-		statisticDto=(StatisticEachDepartmentCaseNumDTO) statisticService.getStatisticList();
+		statisticDto=(StatisticEachDepartmentCaseNumDTO) statisticService.getStatisticList(statisticDto);
 		http_response.setContentType("text/html;charset=utf-8");
 		http_response.getWriter().write(gson.toJson(statisticDto));
 		

@@ -73,15 +73,15 @@ public class StatisticsDaoImpl implements StatisticsDao {
 	
 
 	@Override
-	public List<StatisticEachDepartmentCaseNumDTO> CaseNumByDepartmentAndCategory() {
+	public List<StatisticEachDepartmentCaseNumDTO> CaseNumByDepartmentAndCategory(StatisticEachDepartmentCaseNumDTO statisticEachDepartmentCaseNumDTO) {
 		Session session=getSession();
 		List<StatisticEachDepartmentCaseNumDTO> list=new ArrayList<StatisticEachDepartmentCaseNumDTO>();
 		StatisticEachDepartmentCaseNumDTO statistic=new StatisticEachDepartmentCaseNumDTO();
 		List<ajdbxt_department> departmentList=getAllDepartment();
 		for(int i=0;i<departmentList.size();i++) {
-			statistic.setDepartment(departmentList.get(i).toString());
-			statistic.setAdminnistrCaseNum(getTotalCaseByDepartmentAndCategory((departmentList.get(i).toString()),"行政案件",statistic));
-			statistic.setCriminalCaseNum(getTotalCaseByDepartmentAndCategory((departmentList.get(i).toString()),"刑事案件",statistic));
+			statisticEachDepartmentCaseNumDTO.setDepartment(departmentList.get(i).toString());
+			statisticEachDepartmentCaseNumDTO.setAdminnistrCaseNum(getTotalCaseByDepartmentAndCategory((departmentList.get(i).toString()),"行政案件",statistic));
+			statisticEachDepartmentCaseNumDTO.setCriminalCaseNum(getTotalCaseByDepartmentAndCategory((departmentList.get(i).toString()),"刑事案件",statistic));
 			list.add(statistic);
 		}
 		session.clear();

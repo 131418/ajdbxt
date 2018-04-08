@@ -21,9 +21,9 @@ public class StatisticServiceImpl implements StatisticService {
 
 	
 	@Override
-	public List<StatisticEachDepartmentCaseNumDTO> getStatisticList() {
+	public List<StatisticEachDepartmentCaseNumDTO> getStatisticList(StatisticEachDepartmentCaseNumDTO statisticEachDepartmentCaseNumDTO) {
 		
-		return statisticsDao.CaseNumByDepartmentAndCategory();
+		return statisticsDao.CaseNumByDepartmentAndCategory(statisticEachDepartmentCaseNumDTO);
 	}
 
 

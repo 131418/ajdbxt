@@ -10,7 +10,7 @@ import com.ajdbxt.domain.VO.Total.FindPoliceCaseNumByPageVo;
 public interface StatisticsDao {
 	List<ajdbxt_department> getAllDepartment();
 	
-	List<StatisticEachDepartmentCaseNumDTO> CaseNumByDepartmentAndCategory();//办案单位分案件类别类别列表
+	List<StatisticEachDepartmentCaseNumDTO> CaseNumByDepartmentAndCategory(StatisticEachDepartmentCaseNumDTO statisticEachDepartmentCaseNumDTO);//办案单位分案件类别类别列表
 	
 	int getTotalCaseByDepartmentAndCategory(String department,String category,StatisticEachDepartmentCaseNumDTO statistic);
 	
