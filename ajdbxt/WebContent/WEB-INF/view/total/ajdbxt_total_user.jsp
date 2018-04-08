@@ -5,6 +5,7 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -12,24 +13,42 @@
 
 <title>统计</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-</head>
-<body>
+<style type="text/css">
+.table_total tbody tr {
+	text-align: center;
+}
 
+#page_flip span a:hover {
+	cursor: pointer;
+}
+
+.span_catagory{
+	float: left;
+	margin:0 5px 0 0;
+	
+}
+</style>
+</head>
+
+<body>
 	<s:action name="User_navbar" namespace="/user" executeResult="true" />
 
-	<div style="margin: 80px 0 0 0; float: left; width: 100%;">
+	<div style="margin: 80px 0 0 0;float: left; width: 100%;">
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
-				<h3 class="panel-title">统计</h3>
+				<h3 class="panel-title">XXX人员</h3> 
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
 					<div class="panel">
-
+						<%-- <div class="panel-heading">
+							<span class="span_catagory"><h3 class="panel-title">统计</h3></span> <span class="span_catagory">-</span>XXX单位 <span
+								id="span_unit" class="span_catagory"></span>
+						</div> --%>
 						<!--  -->
 						<div class="panel-body">
-							<div style="height: 34px; margin: 0 0 20px 0; width: 100%;">
+							<div style="height: 34px; width: 100%;">
 								<div>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">按日期筛选：</span>
@@ -44,6 +63,8 @@
 										style="width: 150px; float: left; margin: 0 0 0 20px; text-align: center;"
 										type="text">
 									<%--  --%>
+
+
 								</div>
 								<!-- 检索 -->
 								<div class="input-group" style="width: 300px; float: right;">
@@ -52,17 +73,19 @@
 										class="input-group-addon"> <i class="fa fa-search"></i>
 									</span>
 								</div>
+
 							</div>
 
 							<table id="table_total" class="table table-hover table-bordered"
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
-										<th><select id="case_department" class="form-control">
-										</select></th>
-										<th>人员</th>
-										<th>行政案件</th>
-										<th>刑事案件</th>
+									<th><select id="total_user" class="form-control">
+										</select></th>									
+										<th>案件名</th>
+										<th>评分</th>
+										<th>主办民警</th>
+										<th>协办民警</th>
 
 									</tr>
 								</tbody>
@@ -89,7 +112,6 @@
 											id="span_totalRecords">0</span>条记录
 									</p></span>
 							</div>
-
 						</div>
 					</div>
 					<!-- END TABLE HOVER -->
@@ -104,7 +126,7 @@
 	<script type="text/javascript" src="<%=basePath%>js/laydate/laydate.js"></script>
 	<script src="/laydate/laydate.js"></script>
 	<script type="text/javascript"
-		src="<%=basePath%>js/Total/ajdbxtTotal.js"></script>
+		src="<%=basePath%>js/Total/ajdbxtTotalUnit.js"></script>
 	<script type="text/javascript">
 		List_Total_By_Page(1);
 	</script>
