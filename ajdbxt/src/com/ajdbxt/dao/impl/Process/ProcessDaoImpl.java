@@ -21,8 +21,6 @@ public class ProcessDaoImpl implements ProcessDao {
 		this.sessionFactory = sessionFactory;
 	}
 
-	
-
 	@Override
 	public List<ajdbxt_process> findProcessByColumn(String cloumn,String key) {
 		Session session=sessionFactory.getCurrentSession();
@@ -90,8 +88,6 @@ public class ProcessDaoImpl implements ProcessDao {
 		return findProcessByColumn("process_case_id", case_id);
 	}
 
-
-
 	@Override
 	public List<ajdbxt_process> findSomeProcess(int start, int length) {//找到结果且分页
 		Session session=sessionFactory.getCurrentSession();
@@ -101,8 +97,6 @@ public class ProcessDaoImpl implements ProcessDao {
 		cri.addOrder(Order.desc("process_gmt_modify"));
 		return cri.list();
 	}
-
-
 
 	@Override
 	public int findAllProcess() {

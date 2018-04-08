@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
+
+import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.service.Process.ProcessInfoService;
 import com.ajdbxt.service.Process.ProcessService;
@@ -11,6 +13,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import util.JsonUtils;
 import com.ajdbxt.domain.DO.ajdbxt_process;
+import com.ajdbxt.domain.DTO.Process.ProcessDTO;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.domain.VO.Process.showProcessVO;
 import util.*;
@@ -126,10 +129,15 @@ public class ProcessAction  extends ActionSupport{
 		String case_id=ajdbxtProcess.getProcess_case_id();
 		ajdbxt_process process=processService.getSingleProcessByCaseId(case_id);
 		ActionContext.getContext().getSession().put("lookedProcess", process);
-		String processJson=JsonUtils.toJson(process);
+		ajdbxt_info info=processInfoService.getSingleInfo(process.getProcess_case_id());
+		ActionContext.getContext().getSession().put("lookedInfo", info);
+		ProcessDTO processDTO=new ProcessDTO();
+		processDTO.setInfo(info);
+		processDTO.setProcess(process);
+		String processInfoJson=JsonUtils.toJson(processDTO);
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		try {
-			ServletActionContext.getResponse().getWriter().print(processJson);
+			ServletActionContext.getResponse().getWriter().print(processInfoJson);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}

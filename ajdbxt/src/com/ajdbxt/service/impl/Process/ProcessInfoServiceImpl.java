@@ -53,4 +53,10 @@ public class ProcessInfoServiceImpl implements ProcessInfoService {
 		return JsonUtils.toJson(infoVO);
 	}
 
+
+	@Override
+	public ajdbxt_info getSingleInfo(String process_id) {
+		return processInfoDao.findInfoById(process_id);
+	}
+
 }
