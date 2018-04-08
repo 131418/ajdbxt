@@ -2,10 +2,14 @@ package com.ajdbxt.dao.impl.Process;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+
 import com.ajdbxt.dao.Process.ProcessInfoDao;
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_info;
 
 public class ProcessInfoDaoImpl implements ProcessInfoDao {
@@ -52,4 +56,13 @@ public class ProcessInfoDaoImpl implements ProcessInfoDao {
 		return query.list();
 	}
 
+	@Override
+	public ajdbxt_info findInfoById(String info_id) {
+		Session session=sessionFactory.getCurrentSession();
+		Criteria cri=session.createCriteria(ajdbxt_info.class);
+		cri.add(Restrictions.eq("ajdbxt_department_id", info_id));
+		return (ajdbxt_info) cri.uniqueResult();
+	}
+
 }
+

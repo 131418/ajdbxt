@@ -1,22 +1,16 @@
 var query_data = {
-		"infoService.getAllCase().info_name" : "" ,
-		"infoService.getAllCase().info_category" : "" ,
-		"infoService.getAllCase().info_department" : "" ,
-		"infoService.getAllCase().info_catch_time" : "" ,
-		"infoService.getAllCase().info_main_police" : "" ,
-		"infoService.getAllCase().info_assistant_police_one" : "" ,
-		"infoService.getAllCase().info_assistant_police_two" : "" ,
+		"infoVO.currPage" : "0",
 };
 
-// 当前页面分页信息
-//var page_infomantion = {
-//	pageIndex : 1,
-//	totalRecords : 1,
-//	pageSize : 20,
-//	totalPages : 1,
-//	HavePrePage : false,
-//	HaveNextPage : false,
-//}
+ //当前页面分页信息
+var page_infomantion = {
+	currPage : 1,
+	countRecords : 1,
+	pageSize : 10,
+	totalPages : 1,
+	havePrePage : false,
+	haveNexPage : false,
+}
 /*--------------------------------------------------------*/
 // 判断身份证号是否正确，以及从身份证号中取出出生日期
 //function BreakCaseListGetBirth() {
@@ -48,19 +42,19 @@ $(function() {
 			'show.bs.modal',
 			function() {
 				var this_modal = $(this);
-//				$.post('/xsjsglxt/case/Case_AllCase', function(Case_data) {
-//					// 所有案件循环
-//					var option = '';
-//					for (var len = 0; len < Case_data.length; len++) {
-//						option += '<option value="'
-//								+ Case_data[len].xsjsglxt_case_id + '">'
-//								+ Case_data[len].case_name + '</option>';
-//					}
-//					this_modal.find('.selectpicker').html(option).selectpicker(
-//							'refresh');
-//					// 除去加载提示
-//					this_modal.find('.load_remind').remove();
-//				}, 'json');
+				$.post('/ajdbxt/info/Info_lal', function(Case_data) {
+					// 所有案件循环
+					var option = '';
+					for (var len = 0; len < Case_data.length; len++) {
+						option += '<option value="'
+								+ Case_data[len].legals	.ajdbxt_police_id + '">'
+								+ Case_data[len].legals	.police_name + '</option>';
+					}
+					this_modal.find('.selectpicker').html(option).selectpicker(
+							'refresh');
+					// 除去加载提示
+					this_modal.find('.load_remind').remove();
+				}, 'json');
 
 			})
 	$('.to_quert')
@@ -115,15 +109,15 @@ $(function() {
 											if (xhr == 'success') {
 												toastr.success('添加成功!');
 												get_ListBreakecaseInformationByPageAndSearch(query_data);
-												$('#breakCase_input').find(
-														'input,textarea').val(
-														'');
-												$('#breakCase_input').find(
-														'select').find(
-														'option:first-child')
-														.attr("selected",
-																"selected");
-												;
+//												$('#breakCase_input').find(
+//														'input,textarea').val(
+//														'');
+//												$('#breakCase_input').find(
+//														'select').find(
+//														'option:first-child')
+//														.attr("selected",
+//																"selected");
+//												;
 											}else{
 												toastr.error('添加失败!');
 												return false;
@@ -143,7 +137,7 @@ function get_ListBreakecaseInformationByPageAndSearch(data) {
 					'/ajdbxt/info/Info_listAll',
 					data,
 					function(xhr) {
-						var data_list = xhr;
+						var data_list = xhr.Caselist;
 						var str = '';
 						for (var len = 0; len < data_list.length; len++) {
 							str += '<tr>';
@@ -192,25 +186,25 @@ function get_ListBreakecaseInformationByPageAndSearch(data) {
 						// -----------------------------------------------------
 
 						// 分页信息存入page_infomantion中
-//						page_infomantion.pageIndex = xhr.pageIndex; // 当前页数
-//						page_infomantion.totalRecords = xhr.totalRecords; // 总页数
-//						page_infomantion.pageSize = xhr.pageSize; // 每页记录数
-//						page_infomantion.totalPages = xhr.totalPages; // 总记录数
-//						page_infomantion.HavePrePage = xhr.HavePrePage; // 是否有上一页
-//						page_infomantion.HaveNextPage = xhr.HaveNextPage; // 是否有下一页
-//
-//						// 分页下的记录信息
-//						var opt = '<option value=""></option>';
-//						for (var index = 1; index <= xhr.totalPages; index++) {
-//							opt += '<option>' + index + '</option>';
-//						}
-//						$('.info').html(
-//								'共 ' + xhr.totalRecords + '条信息 当前'
-//										+ xhr.pageIndex + '/' + xhr.totalPages
-//										+ '页 ' + xhr.pageSize
-//										+ '条信息/页&nbsp&nbsp转到第'
-//										+ '<select onchange="toPage(this)">'
-//										+ opt + '</select> 页');
+						page_infomantion.currPage = xhr.currPage; // 当前页数
+						page_infomantion.countRecords = xhr.countRecords; // 总页数
+						page_infomantion.pageSize = xhr.pageSize; // 每页记录数
+						page_infomantion.totalPages = xhr.totalPages; // 总记录数
+						page_infomantion.havePrePage = xhr.havePrePage; // 是否有上一页
+						page_infomantion.haveNexPage = xhr.haveNexPage; // 是否有下一页
+
+						// 分页下的记录信息
+						var opt = '<option value=""></option>';
+						for (var index = 1; index <= xhr.totalPages; index++) {
+							opt += '<option>' + index + '</option>';
+						}
+						$('.info').html(
+								'共 ' + xhr.countRecords + '条信息 当前'
+										+ xhr.currPage + '/' + xhr.totalPages
+										+ '页 ' + xhr.pageSize
+										+ '条信息/页&nbsp&nbsp转到第'
+										+ '<select onchange="toPage(this)">'
+										+ opt + '</select> 页');
 						// 影藏模态框
 						$('#newQuery').modal('hide')
 					}, 'json')
@@ -565,42 +559,42 @@ var breakecase_modification = function() {
 
 // 首页
 function firstPage() {
-	if (page_infomantion.pageIndex == 1) {
+	if (page_infomantion.currPage == 1) {
 		toastr.error('已经是第一页！');
 		return;
 	}
-	query_data['page_list_BreakecaseInformation.pageIndex'] = 1;
+	query_data['infoVO.currPage'] = 1;
 	get_ListBreakecaseInformationByPageAndSearch(query_data);
 }
 // 上一页
 function prePage() {
-	if (page_infomantion.pageIndex <= 1) {
+	if (page_infomantion.currPage <= 1) {
 		toastr.error('已经是第一页！');
 		return;
 	}
-	query_data['page_list_BreakecaseInformation.pageIndex'] = page_infomantion.pageIndex - 1;
+	query_data['infoVO.currPage'] = page_infomantion.currPage - 1;
 	get_ListBreakecaseInformationByPageAndSearch(query_data);
 }
 // 下一页
 function nextPage() {
-	if (page_infomantion.pageIndex >= page_infomantion.totalPages) {
+	if (page_infomantion.currPage >= page_infomantion.totalPages) {
 		toastr.error('已经是最后一页！');
 		return;
 	}
-	query_data['page_list_BreakecaseInformation.pageIndex'] = page_infomantion.pageIndex + 1;
+	query_data['infoVO.currPage'] = page_infomantion.currPage + 1;
 	get_ListBreakecaseInformationByPageAndSearch(query_data);
 }
 // 尾页
 function lastPage() {
-	if (page_infomantion.pageIndex == page_infomantion.totalPages) {
+	if (page_infomantion.currPage == page_infomantion.totalPages) {
 		toastr.error('已经是最后一页！');
 		return;
 	}
-	query_data['page_list_BreakecaseInformation.pageIndex'] = page_infomantion.totalPages;
+	query_data['infoVO.currPage'] = page_infomantion.totalPages;
 	get_ListBreakecaseInformationByPageAndSearch(query_data);
 }
 // 跳转到n页
 function toPage(object) {
-	query_data['page_list_BreakecaseInformation.pageIndex'] = $(object).val();
+	query_data['infoVO.currPage'] = $(object).val();
 	get_ListBreakecaseInformationByPageAndSearch(query_data);
 }

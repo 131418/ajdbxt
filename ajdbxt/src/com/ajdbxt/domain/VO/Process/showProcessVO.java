@@ -4,38 +4,25 @@ import java.util.List;
 import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.DO.ajdbxt_process;
+import com.ajdbxt.domain.DTO.Process.ProcessDTO;
 
 public class showProcessVO {
+	//d当前页
 	private int currPage;
+	//总页
 	private int totalPage;
+	//总条
 	private int count;
+	//每页条书
 	private int pageSize;
-	private String queryString;
-	private List<ajdbxt_process> list_process;
-	private List<ajdbxt_info> list;
-	private List<ajdbxt_police> list_police;
+	//案件所有
+	private List<ProcessDTO> list;
 	
-	public List<ajdbxt_police> getList_police() {
-		return list_police;
-	}
-
-	public void setList_police(List<ajdbxt_police> list_police) {
-		this.list_police = list_police;
-	}
-
-	public List<ajdbxt_process> getList_process() {
-		return list_process;
-	}
-
-	public void setList_process(List<ajdbxt_process> list_process) {
-		this.list_process = list_process;
-	}
-
-	public List<ajdbxt_info> getList() {
+	public List<ProcessDTO> getList() {
 		return list;
 	}
 
-	public void setList(List<ajdbxt_info> list) {
+	public void setList(List<ProcessDTO> list) {
 		this.list = list;
 	}
 
@@ -71,22 +58,7 @@ public class showProcessVO {
 		this.pageSize = pageSize;
 	}
 
-	public String getQueryString() {
-		return queryString;
-	}
-
-	public void setQueryString(String queryString) {
-		this.queryString = queryString;
-	}
-
-	@Override
-	public String toString() {
-		return "showProcessVO [currPage=" + currPage + ", totalPage=" + totalPage + ", count=" + count + ", pageSize="
-				+ pageSize + ", queryString=" + queryString + ", list_process=" + list_process + ", list=" + list
-				+ ", list_police=" + list_police + "]";
-	}
 
 	
-
-
 }
+

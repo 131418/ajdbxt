@@ -12,11 +12,20 @@
 	<bean id="processDao" class="com.ajdbxt.dao.impl.Process.ProcessDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	<bean id="processService" class="com.ajdbxt.service.impl.Process.ProcessServiceImpl">
-		<property name="processDao" ref="processDao"></property>
+	<bean id="processPoliceDao" class="com.ajdbxt.dao.impl.Process.ProcessPoliceDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="processDepartmentDao" class="com.ajdbxt.dao.impl.Process.ProcessDepartmentDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="processInfoDao" class="com.ajdbxt.dao.impl.Process.ProcessInfoDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="processService" class="com.ajdbxt.service.impl.Process.ProcessServiceImpl">
+		<property name="processDao" ref="processDao"></property>
+		<property name="processInfoDao" ref="processInfoDao"></property>
+		<property name="processPoliceDao" ref="processPoliceDao"></property>
+		<property name="processDepartmentDao" ref="processDepartmentDao"></property>
 	</bean>
 	<bean id="processInfoService" class="com.ajdbxt.service.impl.Process.ProcessInfoServiceImpl">
 		<property name="processInfoDao" ref="processInfoDao"></property>

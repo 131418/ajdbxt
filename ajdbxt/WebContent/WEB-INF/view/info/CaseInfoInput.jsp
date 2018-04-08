@@ -72,7 +72,7 @@ tfoot tr td a:hover {
 					<!-- TABLE HOVER -->
 					<div class="panel">
 						<div class="panel-heading">
-							<h3 class="panel-title">破案列表</h3>
+							<h3 class="panel-title">案件列表</h3>
 							<!-- <p class="text-primary query_prompting_info">nothing to
 								query.</p> -->
 						</div>
@@ -263,13 +263,13 @@ tfoot tr td a:hover {
 									<tr>
 										<td>案件名称</td>
 										<td><input style="witdh: 70%;" class="form-control"
-											name="info_name" type="text"></td>
+											name="info.info_name" type="text"></td>
 										<%-- <td><select style="witdh: 100%;" class="form-control"
 											data-live-search="true" name="breakCase.breakcase_type" id="breakcase_type"><option>新添案件</option>
 												<option>已有案件</option></select></td> --%>
 										<td>案件类别</td>
 										<td><select style="witdh: 100%;" class="form-control"
-											name="info_category">
+											name="info.info_category">
 												<option>刑事案件</option>
 												<option>行政案件</option>
 										</select></td>
@@ -277,53 +277,56 @@ tfoot tr td a:hover {
 									
 									<tr>
 										<td>办案单位</td>
-											<td colspan="3"><select style="witdh: 100%;"
-											class="form-control selectpicker" data-live-search="true"
-											name="info_department" id="info_department"
-											title="请选择"></select></td>
-
-
+											<td><input style="witdh: 70%;"
+											class="form-control mydate"
+											name="info.info_department" type="text"></td>
 									</tr>
 									
 									<tr>
 									<td>抓获时间</td>
 										<td><input style="witdh: 70%;"
 											class="form-control mydate"
-											name="info_catch_time" type="text"></td>
+											name="info.info_catch_time" type="text"></td>
 										<td>主办民警</td>
 										<td><input style="witdh: 70%;" class="form-control"
-											name="info_main_police" type="text"></td>
+											name="info.info_main_police" type="text"></td>
 										
 									</tr>
 									
 									<tr>
 										<td>协办民警1</td>
 										<td><input style="witdh: 70%;" class="form-control"
-											name="info_assistant_police_one" type="text"></td>
+											name="info.info_assistant_police_one" type="text"></td>
 										<td>协办民警2</td>
 										<td><input style="witdh: 70%;" class="form-control"
-											name="info_assistant_police_two" type="text"></td>
+											name="info.info_assistant_police_two" type="text"></td>
 									</tr>
 									<tr>
 										<td>所（队）法制员</td>
 										<td><input style="witdh: 70%;" class="form-control"
-											name="info_department_legal_member" type="text"></td>
+											name="info.info_department_legal_member" type="text"></td>
 										<td>所（队）长</td>
 										<td><input style="witdh: 70%;" class="form-control"
-											name="info_department_captain" type="text"></td>
+											name="info.info_department_captain" type="text"></td>
 									</tr>
 									
 									<tr>
 										<td>法制大队值班民警</td>
 										<td><input style="witdh: 70%;" class="form-control"
-											name="info_legal_team_member"
+											name="info.info_legal_team_member"
 											type="text"></td>
 										<td>值班局领导</td>
 										<td><input style="witdh: 70%;" class="form-control"
-											name="info_bureau_leader"
+											name="info.info_bureau_leader"
 											type="text"></td>
 									</tr>
-									
+									<tr>
+										<td>法制大队值班民警<i class="fa fa-spinner fa-pulse load_remind"></td>
+										<td colspan="3"><select style="witdh: 100%;"
+											class="form-control selectpicker" data-live-search="true"
+											name="info.info_bureau_leader" id="breakcase_case"
+											title="请选择"></select></td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -343,29 +346,29 @@ tfoot tr td a:hover {
 	<!---------------------------------------------------------------------------------------------------->
 	<!---------------------------------------------------------------------------------------------------->
 	<!-- SneceInput.js仅作为在查询模态框中（案件类别，选择处所，作案手段）的自动匹配子项使用 -->
-	<script type="text/javascript" src="<%=basePath%>js/Case/SneceInput.js"></script>
+<%-- 	<script type="text/javascript" src="<%=basePath%>js/Case/SneceInput.js"></script> --%>
 	<script type="text/javascript"
 		src="<%=basePath%>js/Info/CaseInfoInput.js"></script>
-	<script type="text/javascript">
-		$.datetimepicker.setLocale('ch');
-		$('.mydate').datetimepicker({
-			yearStart : 1990, // 设置最小年份
-			yearEnd : 2050, // 设置最大年份
-			yearOffset : 0, // 年偏差
-			timepicker : false, // 关闭时间选项
-			format : 'Y-m-d', // 格式化日期年-月-日
-			minDate : '1990/01/01', // 设置最小日期
-			maxDate : '2030/01/01', // 设置最大日期
-		});
-		$('.mydate_minute').datetimepicker({
-			yearStart : 1990, // 设置最小年份
-			yearEnd : 2050, // 设置最大年份
-			yearOffset : 0, // 年偏差
-			timepicker : true, // 关闭时间选项
-			format : 'Y-m-d H:i', // 格式化日期年-月-日
-			minDate : '1990/01/01', // 设置最小日期
-			maxDate : '2030/01/01', // 设置最大日期
-		});
-	</script>
+ 	<script type="text/javascript"> 
+ 		$.datetimepicker.setLocale('ch'); 
+ 		$('.mydate').datetimepicker({ 
+ 			yearStart : 1990, // 设置最小年份
+ 			yearEnd : 2050, // 设置最大年份 
+ 			yearOffset : 0, // 年偏差 
+ 			timepicker : false, // 关闭时间选项 
+ 			format : 'Y-m-d', // 格式化日期年-月-日 
+ 			minDate : '1990/01/01', // 设置最小日期 
+ 			maxDate : '2030/01/01', // 设置最大日期 
+ 		}); 
+ 		$('.mydate_minute').datetimepicker({ 
+ 			yearStart : 1990, // 设置最小年份 
+ 			yearEnd : 2050, // 设置最大年份
+ 			yearOffset : 0, // 年偏差 
+		timepicker : true, // 关闭时间选项 
+ 			format : 'Y-m-d H:i', // 格式化日期年-月-日 
+ 			minDate : '1990/01/01', // 设置最小日期 
+ 			maxDate : '2030/01/01', // 设置最大日期
+		}); 
+ 	</script> 
 </body>
 </html>

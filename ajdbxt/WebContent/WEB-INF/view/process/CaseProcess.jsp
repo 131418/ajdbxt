@@ -68,6 +68,20 @@ tfoot tr td a:hover {
 <!-- 						<i class="fa fa-plus-square"></i> 新添案件 -->
 <!-- 					</button> -->
 				</div>
+				<!------------------------------------------------------>
+						<div class="operation" style="margin-bottom: 6px;">
+					<select id="type_chose"
+					style="width:220px; margin-left:15px; float: left;"
+					class="form-control" onchange="material(this)">
+					<!-- <option selected="selected" value="">请选择</option> -->
+					<option class="a" value="joinCase_table_info" selected="selected" >正在参与的案件</option>
+					<option class="a" value="checkCase_table_info">待核对案件</option>
+					<option class="a"  value="wsubmitCase_table_info">等待提交问题清单的案件</option>
+					<option class="a"  value="scoreCase_table_info">等待评分的案件</option> 
+					
+				</select> 
+				</div>
+					<!-- ----------------------------------------- -->
 				<div class="col-md-12">
 					<!-- TABLE HOVER -->
 					<div class="panel">
@@ -76,6 +90,7 @@ tfoot tr td a:hover {
 							<!-- <p class="text-primary query_prompting_info">nothing to
 								query.</p> -->
 						</div>
+							
 						<div class="panel-body">
 							<table
 								class="table table-hover table-condensed breakcase_table_info">
@@ -345,7 +360,7 @@ tfoot tr td a:hover {
 	<!-- SneceInput.js仅作为在查询模态框中（案件类别，选择处所，作案手段）的自动匹配子项使用 -->
 	<script type="text/javascript" src="<%=basePath%>js/Case/SneceInput.js"></script>
 	<script type="text/javascript"
-		src="<%=basePath%>js/Info/CaseInfoInput.js"></script>
+		src="<%=basePath%>js/Process/getProcess.js"></script>
 	<script type="text/javascript">
 		$.datetimepicker.setLocale('ch');
 		$('.mydate').datetimepicker({

@@ -10,7 +10,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class InfoAction extends ActionSupport {
 	private ajdbxt_info info;
 	private InfoService infoService;
-	private Page_list_caseInfoVo page_list_caseInfoVo;
+	private Page_list_caseInfoVo infoVO;
 	
 	public String page_CaseInfo() {
 		return "page_CaseInfo";
@@ -31,12 +31,20 @@ public class InfoAction extends ActionSupport {
 		this.infoService = infoService;
 	}
 
-	public Page_list_caseInfoVo getPage_list_caseInfoVo() {
-		return page_list_caseInfoVo;
+	public Page_list_caseInfoVo getInfoVO() {
+		return infoVO;
 	}
 
-	public void setPage_list_caseInfoVo(Page_list_caseInfoVo page_list_caseInfoVo) {
-		this.page_list_caseInfoVo = page_list_caseInfoVo;
+	public void setInfoVO(Page_list_caseInfoVo infoVO) {
+		this.infoVO = infoVO;
+	}
+
+	public ajdbxt_info getInfo() {
+		return info;
+	}
+
+	public InfoService getInfoService() {
+		return infoService;
 	}
 
 	public void save() {
@@ -61,17 +69,28 @@ public class InfoAction extends ActionSupport {
 		}
 	}
 	/**
-	 * 得到全部案件信息链表
+	 * infoVO 是信息列表页面的VO类页面
 	 * @return
 	 */
 	public String listAll() {
 		try {
 			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
-			ServletActionContext.getResponse().getWriter().print(infoService.getAllCase());
+
+			ServletActionContext.getResponse().getWriter().print(infoService.getAllCase(infoVO));
+
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}
 		return null;
+	}
+	//得到法制员和局领导的方法
+	public void lal() {
+		try {
+			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+			ServletActionContext.getResponse().getWriter().print(infoService.getLegalsAndLeaders());
+		} catch (IOException e) {
+			new RuntimeException(e);
+		}
 	}
 	/**
 	 * 录入案件信息
