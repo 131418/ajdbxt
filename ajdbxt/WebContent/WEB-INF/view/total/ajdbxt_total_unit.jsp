@@ -5,6 +5,7 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -12,9 +13,24 @@
 
 <title>统计</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-</head>
-<body>
+<style type="text/css">
+.table_total tbody tr {
+	text-align: center;
+}
 
+#page_flip span a:hover {
+	cursor: pointer;
+}
+
+.span_catagory{
+	float: left;
+	margin:0 5px 0 0;
+	
+}
+</style>
+</head>
+
+<body>
 	<s:action name="User_navbar" namespace="/user" executeResult="true" />
 
 	<div style="margin: 80px 0 0 0;float: left; width: 100%;">
@@ -27,7 +43,8 @@
 				<div class="col-md-12">
 					<div class="panel">
 						<div class="panel-heading">
-							<h3 class="panel-title">统计</h3>
+							<span class="span_catagory"><h3 class="panel-title">统计</h3></span> <span class="span_catagory">-</span>XXX单位 <span
+								id="span_unit" class="span_catagory"></span>
 						</div>
 						<!--  -->
 						<div class="panel-body">
@@ -35,19 +52,19 @@
 								<div style="height: 34px; margin: 0 0 20px 0;">
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">按日期筛选：</span>
-										<input id="select_start_time" class="form-control mydate"
+									<input id="select_start_time" class="form-control mydate"
 										style="width: 150px; float: left; text-align: center;"
 										type="text">
 									<%--  --%>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">至</span>
 									<!--  -->
-										<input id="select_stop_time" class="form-control mydate"
+									<input id="select_stop_time" class="form-control mydate"
 										style="width: 150px; float: left; margin: 0 0 0 20px; text-align: center;"
 										type="text">
 									<%--  --%>
-									
-									
+
+
 								</div>
 
 							</div>
@@ -56,7 +73,7 @@
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
-										<th>办案单位</th>
+										<th>人员</th>
 										<th>行政案件</th>
 										<th>刑事案件</th>
 
@@ -68,7 +85,23 @@
 							<div id="i_pulse" style="text-align: center;">
 								<i class="fa fa-spinner fa-pulse fa-3x"></i>
 							</div>
-
+							<!--翻页  -->
+							<div id="page_flip"
+								style="margin: 0 auto; width: 400px; text-align: center;">
+								<span> <a onclick="flip(1)"><i
+										class="fa fa-angle-double-left">首页</i> </a> &nbsp&nbsp <a
+									onclick="flip(2)"><i class="fa fa-angle-left"></i>上一页 </a>
+									&nbsp&nbsp <a onclick="flip(3)">下一页<i
+										class="fa fa-angle-right"></i>
+								</a> &nbsp&nbsp <a onclick="flip(4)">尾页<i
+										class="fa fa-angle-double-right"></i>
+								</a> <br />
+									<p class='info' style="margin-top: 5px;">
+										第<span id="span_pageIndex">1</span>页&nbsp&nbsp共 <span
+											id="span_totalPages">1</span>页&nbsp&nbsp共 <span
+											id="span_totalRecords">0</span>条记录
+									</p></span>
+							</div>
 						</div>
 					</div>
 					<!-- END TABLE HOVER -->
@@ -83,9 +116,9 @@
 	<script type="text/javascript" src="<%=basePath%>js/laydate/laydate.js"></script>
 	<script src="/laydate/laydate.js"></script>
 	<script type="text/javascript"
-		src="<%=basePath%>js/Total/ajdbxtTotal.js"></script>
+		src="<%=basePath%>js/Total/ajdbxtTotalUnit.js"></script>
 	<script type="text/javascript">
-		List_Total();
+		List_Total_By_Page(1);
 	</script>
 	<script type="text/javascript">
 		$.datetimepicker.setLocale('ch');
