@@ -118,10 +118,10 @@ public class findPoliceByPageVO {
 	@return 总页数
 	*/
 	public static int countTotalPage(final int pageSize, final int allRow) {
-		int totalPage = allRow % pageSize == 0 ? allRow / pageSize : allRow / pageSize + 1;
+		//int	totalPage = allRow % pageSize == 0 ? allRow / pageSize : allRow / pageSize + 1;
+		int totalPage = (allRow-1)/pageSize + 1;
 		return totalPage;
 	}
-	
 	
 	 /*计算当前页开始记录
 	 @param pageSize每页记录数

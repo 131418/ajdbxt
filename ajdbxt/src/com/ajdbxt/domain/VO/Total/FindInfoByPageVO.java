@@ -129,8 +129,11 @@ public class FindInfoByPageVO {
 	@param allRow总记录数
 	@return 总页数
 	*/
-	public static int countTotalPage(final int pageSize, final int totalRecords) {
-		int totalPage = totalRecords % pageSize == 0 ? totalRecords / pageSize : totalRecords / pageSize + 1;
+
+	public static int countTotalPage(final int pageSize, final int allRow) {
+		//int totalPage = allRow % pageSize == 0 ? allRow / pageSize : allRow / pageSize + 1;
+		int totalPage = (allRow-1)/pageSize + 1;
+
 		return totalPage;
 	}
 	
