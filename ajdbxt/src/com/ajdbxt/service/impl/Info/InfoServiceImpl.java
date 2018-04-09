@@ -270,10 +270,6 @@ public class InfoServiceImpl implements InfoService {
 		infoVO.setTotalPages(pages);
 		return JsonUtils.toJson(infoVO);
 	}
-	private ajdbxt_police rankWork(String apartment) {
-		
-		return null;
-	}
 
 	@Override
 	public void save(ajdbxt_info caseInfo) {

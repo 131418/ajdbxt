@@ -600,4 +600,5 @@ function lastPage() {
 function toPage(object) {
 	query_data['infoVO.currPage'] = $(object).val();
 	get_ListBreakecaseInformationByPageAndSearch(query_data);
+
 }

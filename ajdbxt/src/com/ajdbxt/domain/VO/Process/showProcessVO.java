@@ -14,7 +14,7 @@ public class showProcessVO {
 	//总条
 	private int count;
 	//每页条书
-	private int pageSize;
+	private int pageSize=20;
 	//案件所有
 	private List<ProcessDTO> list;
 	

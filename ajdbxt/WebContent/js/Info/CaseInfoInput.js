@@ -85,6 +85,30 @@ $(function() {
 				}, 'json');
 
 			})
+			$('#breakCase_input').on(
+			'show.bs.modal',
+			
+			function() {
+				var this_modal = $(this);
+				
+				$.post('/ajdbxt/info/Info_save', function(Case_data) {
+					// 所有案件循环
+					var option = '';
+					var data_list = Case_data.legals;
+					option=data_list.caseInfo.info_main_police;
+//		 			for (var len = 0; len < data_list.length; len++) {
+//						option += '<option value="'
+//								+ data_list[len].ajdbxt_police_id + '">'
+//								+ data_list[len].police_name + '</option>';
+//					}
+				
+					this_modal.find('input[name="info.info_main_police"]').html(option).selectpicker(
+							'refresh');
+					// 除去加载提示
+					this_modal.find('.load_remind').remove();
+				}, 'json');
+
+			})
 	$('.to_quert')
 			.click(
 					function() {
@@ -157,56 +181,6 @@ $(function() {
 })
 
 /*--------------------------------------------------------*/
-function legal(){
-	$('#breakCase_input').on(
-			'show.bs.modal',
-			
-			function() {
-				var this_modal = $(this);
-				
-				$.post('/ajdbxt/info/Info_lal', function(Case_data) {
-					// 所有案件循环
-					var option = '';
-					var data_list = Case_data.legals;
-		 			for (var len = 0; len < data_list.length; len++) {
-						option += '<option value="'
-								+ data_list[len].ajdbxt_police_id + '">'
-								+ data_list[len].police_name + '</option>';
-					}
-				
-					this_modal.find('.selectpicker').html(option).selectpicker(
-							'refresh');
-					// 除去加载提示
-					this_modal.find('.load_remind').remove();
-				}, 'json');
-
-			})
-}
-function leader(){
-	$('#breakCase_input').on(
-			'show.bs.modal',
-			
-			function() {
-				var this_modal = $(this);
-				
-				$.post('/ajdbxt/info/Info_lal', function(Case_data) {
-					// 所有案件循环
-					var option = '';
-					var data_list = Case_data.leaders;
-		 			for (var len = 0; len < data_list.length; len++) {
-						option += '<option value="'
-								+ data_list[len].ajdbxt_police_id + '">'
-								+ data_list[len].police_name + '</option>';
-					}
-				
-					this_modal.find('.selectpicker').html(option).selectpicker(
-							'refresh');
-					// 除去加载提示
-					this_modal.find('.load_remind').remove();
-				}, 'json');})
-
-			//})
-}
 // 列表查询
 function get_ListBreakecaseInformationByPageAndSearch(data) {
 

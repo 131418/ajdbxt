@@ -40,6 +40,8 @@
 <script type="text/javascript"
 	src="<%=basePath%>js/User/updatePassword.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/User/judgePower.js"></script>
+<link rel="stylesheet" href="<%=basePath%>css/jquery.datetimepicker.css" />
+<script type="text/javascript" src="<%=basePath%>js/jquery.datetimepicker.full.js"></script>
 <!--------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------->
 <!---页面公用------------------------------------------------------------------------------>

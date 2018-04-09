@@ -288,8 +288,10 @@ tfoot tr td a:hover {
 											class="form-control mydate"
 											name="info.info_catch_time" type="text"></td>
 										<td>主办民警</td>
-										<td><input style="witdh: 70%;" class="form-control"
-											name="info.info_main_police" type="text"></td>
+										<td colspan="3"><input style="witdh: 100%;"
+											class="form-control selectpicker" data-live-search="true"
+											name="info.info_main_police" 
+											></td>
 										
 									</tr>
 									
@@ -347,6 +349,7 @@ tfoot tr td a:hover {
 	<script type="text/javascript"
 		src="<%=basePath%>js/Info/CaseInfoInput.js"></script>
  	<script type="text/javascript"> 
+ 	
  		$.datetimepicker.setLocale('ch'); 
  		$('.mydate').datetimepicker({ 
  			yearStart : 1990, // 设置最小年份

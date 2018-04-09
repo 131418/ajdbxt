@@ -102,10 +102,12 @@ public class InfoDaoImpl implements InfoDao {
 	public List<ajdbxt_info> findSomeCase(int start, int length) {
 		Session session=sessionFactory.getCurrentSession();
 		Criteria cri=session.createCriteria(ajdbxt_info.class);
-		cri.addOrder(Order.desc("info_gmt_modify"));
 		cri.setFirstResult(start);
 //		cri.setFetchSize(length);
 		cri.setMaxResults(length);
+
+		cri.addOrder(Order.desc("info_gmt_modify"));
+
 		return cri.list();
 	}
 
