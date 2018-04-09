@@ -151,7 +151,7 @@ public class ProcessAction  extends ActionSupport{
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}
-		return "";
+		return null;
 	}
 	
 	/**
