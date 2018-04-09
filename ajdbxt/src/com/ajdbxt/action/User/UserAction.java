@@ -209,8 +209,13 @@ public class UserAction extends ActionSupport {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
 			response.setContentType("text/html;charset=utf-8");
-			this.findPoliceByPageVO = userService.queryForPage(10, currentPage);
-			response.getWriter().write(new Gson().toJson(this.findPoliceByPageVO));
+			findPoliceByPageVO queryForPage = userService.queryForPage(10, this.findPoliceByPageVO.getCurrentPage(),this.findPoliceByPageVO.getPolice_name());
+			String  redWord = new Gson().toJson(queryForPage);
+			if(this.findPoliceByPageVO.getPolice_name()!=null&&!"".equals(this.findPoliceByPageVO.getPolice_name())) {
+				redWord=redWord.replaceAll(this.findPoliceByPageVO.getPolice_name(), "<span style='color:red'>"+this.findPoliceByPageVO.getPolice_name()+"</span>");
+			}
+			//把搜索关键字转换成红色
+			response.getWriter().write(redWord);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -237,6 +242,7 @@ public class UserAction extends ActionSupport {
 	 * 
 	 * @return success 删除成功
 	 * @return failed 删除失败
+	 * null 数组为空
 	 */
 	public void batchDelete() {
 		try {
@@ -255,7 +261,7 @@ public class UserAction extends ActionSupport {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
 			response.setContentType("text/html;charset=utf-8");
-			this.findDepartmentByPageVO = userService.findDepartmentByPage(10,currentPage);
+			this.findDepartmentByPageVO = userService.findDepartmentByPage(99999999,currentPage);
 			response.getWriter().write(new Gson().toJson(this.findDepartmentByPageVO));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -274,7 +280,18 @@ public class UserAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
-
-
+/*	//搜索功能
+	public void fuzzySearch() {
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			this.findPoliceByPageVO = userService.fuzzySearch(10,currentPage,ajdbxt_police.getPolice_name());
+			response.getWriter().write(new Gson().toJson(this.findPoliceByPageVO));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}*/
 
 }

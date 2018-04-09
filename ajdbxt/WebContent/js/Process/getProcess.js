@@ -1,3 +1,4 @@
+
 function getPenalProcess() {
 	var jc = $
 			.confirm({
@@ -155,3 +156,4 @@ function getPenalProcess() {
 			});
 
 }
+

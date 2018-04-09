@@ -36,6 +36,11 @@
 <script src="<%=basePath%>js/jquery.bootstrap.wizard.js"></script>
 <script src="<%=basePath%>js/jquery.slimscroll.min.js"></script>
 <script src="<%=basePath%>js/klorofil-common.js"></script>
+
+<!--------------------------------------------------------------------------------->
+<link rel="stylesheet" href="<%=basePath%>css/jquery.datetimepicker.css" />
+<script type="text/javascript"
+	src="<%=basePath%>js/jquery.datetimepicker.full.js"></script>
 <!--------------------------------------------------------------------------------->
 <script type="text/javascript"
 	src="<%=basePath%>js/User/updatePassword.js"></script>
@@ -85,11 +90,11 @@
 				</a></li> --%>
 				<li class="dropdown" style="float: left;"><a href="<%=basePath%>process/page_list_CaseProcessProcessAction"> <span>办案流程列表</span>
 
-				<li class="dropdown" style="float: left;"><a href="<%=basePath%>total/Total_totalPage" > <span>统计</span>
+				<li class="dropdown" style="float: left;"><a href="<%=basePath%>total/Total_firstPage" > <span>统计</span>
 						<!-- <i class="icon-submenu lnr lnr-chevron-down"></i> -->
 				</a>
 					<ul class="dropdown-menu">
-						<li class="teacher_control"><a href="#"></a></li>
+						<li class="teacher_control"><a href="#"></a></li>s
 						<li class="teacher_control"><a href="#"></a></li>
 					</ul></li>
 				<!--  -->

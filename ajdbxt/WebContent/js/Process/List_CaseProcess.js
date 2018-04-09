@@ -1,3 +1,4 @@
+
 var VO_PenalProcess = null;
 function List_Case_By_PageAndSearch(pageIndex) {
 	var formData = new FormData();
