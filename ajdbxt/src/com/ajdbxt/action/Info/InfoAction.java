@@ -116,7 +116,7 @@ public class InfoAction extends ActionSupport {
 	private void noLogin() {
 		if(ActionContext.getContext().getSession().get("loginPolice")==null) {
 			try {
-				ServletActionContext.getResponse().sendRedirect("/login.jsp");
+				ServletActionContext.getResponse().sendRedirect("//ajdbxt/login.jsp");
 			} catch (IOException e) {
 				new RuntimeException(e);
 			}
