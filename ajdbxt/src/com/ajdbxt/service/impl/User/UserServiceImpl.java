@@ -178,6 +178,7 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
+<<<<<<< HEAD
 	@Override
 	public findPoliceByPageVO fuzzySearch(int pageSize, int currentPage,String police_name) {
 		// TODO Auto-generated method stub
@@ -200,3 +201,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 }
+=======
+}
+>>>>>>> origin/LSY

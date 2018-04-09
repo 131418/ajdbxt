@@ -6,26 +6,26 @@ public class ajdbxt_process {
 	private String process_lengthen_subpoena;//延长传唤
 	private String process_nonage;//未成年人
 	private String process_authenticate;//鉴定
-	private String process_case_goods;//涉案财物
-	private String process_detention;//行政拘留
-	private String process_penalty;//罚款
-	private String process_treatment_category;//戒毒
+	private String process_case_goods;//涉案财物@@
+	private String process_detention;//行政拘留@@
+	private String process_penalty;//罚款@@
+	private String process_treatment_category;//戒毒@@
 	private String process_apply_right;//申请听证
 	private String process_accpet_right;//受理听证
 	private String process_question;//问题整改
 	private String process_score;//案件分数
 	private String process_captain_check;//队长审核
 	private String process_file_hand;//案卷上交
-	private String process_case_end;//案件结束
+	private String process_case_end;//案件结
 	private String process_gmt_create;//流程创建
 	private String process_gmt_modify;//流程修改时间
 	private String process_question_list;//问题清单
 	private String process_subpoena;//传讯
-	private String process_criminal_detention;//刑事拘留
-	private String process_arrest;//逮捕
-	private String process_get_keep_wait_interrogate;//取保候审
-	private String process_live_at_home_unde_surveillance;//监视居住
-	private String process_result_of_prosecution;//起诉结果
+	private String process_criminal_detention;//刑事拘留@@
+	private String process_arrest;//逮捕@@
+	private String process_get_keep_wait_interrogate;//取保候审@@
+	private String process_live_at_home_unde_surveillance;//监视居住@@
+	private String process_result_of_prosecution;//起诉结果 
 	private String process_search_result_one;//第一次侦查
 	private String process_search_result_two;//第二次侦查
 	public String getProcess_question_list() {
