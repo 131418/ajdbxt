@@ -9,6 +9,7 @@ import com.ajdbxt.dao.Info.InfoPoliceDao;
 import com.ajdbxt.dao.Process.ProcessDao;
 import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.DO.ajdbxt_police;
+import com.ajdbxt.domain.VO.Info.LegalSystemAndLeadersVO;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.service.Info.InfoService;
 
@@ -259,11 +260,11 @@ public class InfoServiceImpl implements InfoService {
 
 	@Override
 	public String getAllCase(Page_list_caseInfoVo infoVO) {
-		List<ajdbxt_info> list=infoDao.findSomeCase(infoVO.getCurrPage()*10, infoVO.getPageSize());
+		List<ajdbxt_info> list=infoDao.findSomeCase((infoVO.getCurrPage()-1)*infoVO.getPageSize(), infoVO.getPageSize());
 		infoVO.setCaselist(list);
 		infoVO.setCountRecords(infoDao.countAllCase());
 		int pages=infoVO.getCountRecords()/infoVO.getPageSize();
-		if(infoVO.getCountRecords()/infoVO.getPageSize()>0) {
+		if(infoVO.getCountRecords()%infoVO.getPageSize()>0) {
 			pages++;
 		}
 		infoVO.setTotalPages(pages);
@@ -281,7 +282,6 @@ public class InfoServiceImpl implements InfoService {
 		police=infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police());
 		tel=new ArrayList<Tel>();
 		tel.add(new Tel(police.getPolice_phone_number(),"86"));
-		
 		police=infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_one());
 		tel.add(new Tel(police.getPolice_phone_number(),"86"));
 		if(caseInfo.getInfo_assistant_police_two()!=null||!caseInfo.getInfo_assistant_police_two().isEmpty()) {

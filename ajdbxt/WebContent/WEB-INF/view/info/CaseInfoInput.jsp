@@ -311,20 +311,17 @@ tfoot tr td a:hover {
 									</tr>
 									
 									<tr>
-										<td>法制大队值班民警</td>
-										<td><input style="witdh: 70%;" class="form-control"
-											name="info.info_legal_team_member"
-											type="text"></td>
-										<td>值班局领导</td>
-										<td><input style="witdh: 70%;" class="form-control"
-											name="info.info_bureau_leader"
-											type="text"></td>
-									</tr>
-									<tr>
 										<td>法制大队值班民警<i class="fa fa-spinner fa-pulse load_remind"></td>
 										<td colspan="3"><select style="witdh: 100%;"
 											class="form-control selectpicker" data-live-search="true"
-											name="info.info_bureau_leader" id="breakcase_case"
+											name="info.info_legal_team_member" onclick="legal()"
+											title="请选择"></select></td>
+									</tr>
+									<tr>
+										<td>值班局领导<i class="fa fa-spinner fa-pulse load_remind"></td>
+										<td colspan="3"><select style="witdh: 100%;"
+											class="form-control selectpicker" data-live-search="true"
+											name="info.info_bureau_leader" onclick="leader()"
 											title="请选择"></select></td>
 									</tr>
 								</tbody>

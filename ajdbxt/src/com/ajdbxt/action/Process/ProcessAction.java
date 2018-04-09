@@ -49,8 +49,8 @@ public class ProcessAction  extends ActionSupport{
 	public void setProcessInfoService(ProcessInfoService processInfoService) {
 		this.processInfoService = processInfoService;
 	}
-	public String page_list_CaseProcess(){
-		return "page_list_CaseProcess";
+	public String page_process(){
+		return "processpage";
 	}
 	/**
 	 * 的到与该警官相关的案件信息
@@ -66,6 +66,10 @@ public class ProcessAction  extends ActionSupport{
 			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id);
 		}else if(ajdbxtProcess.getProcess_captain_check()!=null&&!ajdbxtProcess.getProcess_captain_check().equals("true")){
 			json=processInfoService.getInfoList(ProcessInfoService.CAPTAIN_CHECK, police_id);
+		}else if(ajdbxtProcess.getProcess_score()!=null&&!ajdbxtProcess.getProcess_score().equals("true")){
+			json=processInfoService.getInfoList(ProcessInfoService.PROCESS_SCORE, police_id);
+		}else if(ajdbxtProcess.getProcess_question()!=null&&!ajdbxtProcess.getProcess_question().equals("true")) {
+			json=processInfoService.getInfoList(ProcessInfoService.PROCESS_QUESTION, police_id);
 		}else {
 			json=processInfoService.getInfoList(100, police_id);
 		}
@@ -73,7 +77,6 @@ public class ProcessAction  extends ActionSupport{
 		response.setContentType("text/html;charset=utf-8");
 		try {
 			response.getWriter().print(json);
-			System.out.println("hfhffhhbfhgf"+json);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}

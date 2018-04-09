@@ -1,13 +1,11 @@
 package com.ajdbxt.dao.impl.Info;
 
 import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-
 import com.ajdbxt.dao.Info.InfoPoliceDao;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 

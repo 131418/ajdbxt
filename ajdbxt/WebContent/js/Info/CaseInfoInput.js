@@ -1,5 +1,5 @@
 var query_data = {
-		"infoVO.currPage" : "0",
+		"infoVO.currPage" : "1",
 };
 
  //当前页面分页信息
@@ -38,19 +38,47 @@ $(function() {
 
 	/*--------------------------------------------------------*/
 	// 刑事破案添加模态框事件
+	
 	$('#breakCase_input').on(
 			'show.bs.modal',
+			
 			function() {
 				var this_modal = $(this);
+				
 				$.post('/ajdbxt/info/Info_lal', function(Case_data) {
 					// 所有案件循环
 					var option = '';
-					for (var len = 0; len < Case_data.length; len++) {
+					var data_list = Case_data.legals;
+		 			for (var len = 0; len < data_list.length; len++) {
 						option += '<option value="'
-								+ Case_data[len].legals	.ajdbxt_police_id + '">'
-								+ Case_data[len].legals	.police_name + '</option>';
+								+ data_list[len].ajdbxt_police_id + '">'
+								+ data_list[len].police_name + '</option>';
 					}
-					this_modal.find('.selectpicker').html(option).selectpicker(
+				
+					this_modal.find('select[name="info.info_legal_team_member"]').html(option).selectpicker(
+							'refresh');
+					// 除去加载提示
+					this_modal.find('.load_remind').remove();
+				}, 'json');
+
+			})
+			$('#breakCase_input').on(
+			'show.bs.modal',
+			
+			function() {
+				var this_modal = $(this);
+				
+				$.post('/ajdbxt/info/Info_lal', function(Case_data) {
+					// 所有案件循环
+					var option = '';
+					var data_list = Case_data.leaders;
+		 			for (var len = 0; len < data_list.length; len++) {
+						option += '<option value="'
+								+ data_list[len].ajdbxt_police_id + '">'
+								+ data_list[len].police_name + '</option>';
+					}
+				
+					this_modal.find('select[name="info.info_bureau_leader"]').html(option).selectpicker(
 							'refresh');
 					// 除去加载提示
 					this_modal.find('.load_remind').remove();
@@ -106,7 +134,7 @@ $(function() {
 										'/ajdbxt/info/Info_save',
 										$('#breakCase_input form').serialize(),
 										function(xhr) {
-											if (xhr == 'success') {
+											if (xhr == 'json') {
 												toastr.success('添加成功!');
 												get_ListBreakecaseInformationByPageAndSearch(query_data);
 //												$('#breakCase_input').find(
@@ -129,6 +157,56 @@ $(function() {
 })
 
 /*--------------------------------------------------------*/
+function legal(){
+	$('#breakCase_input').on(
+			'show.bs.modal',
+			
+			function() {
+				var this_modal = $(this);
+				
+				$.post('/ajdbxt/info/Info_lal', function(Case_data) {
+					// 所有案件循环
+					var option = '';
+					var data_list = Case_data.legals;
+		 			for (var len = 0; len < data_list.length; len++) {
+						option += '<option value="'
+								+ data_list[len].ajdbxt_police_id + '">'
+								+ data_list[len].police_name + '</option>';
+					}
+				
+					this_modal.find('.selectpicker').html(option).selectpicker(
+							'refresh');
+					// 除去加载提示
+					this_modal.find('.load_remind').remove();
+				}, 'json');
+
+			})
+}
+function leader(){
+	$('#breakCase_input').on(
+			'show.bs.modal',
+			
+			function() {
+				var this_modal = $(this);
+				
+				$.post('/ajdbxt/info/Info_lal', function(Case_data) {
+					// 所有案件循环
+					var option = '';
+					var data_list = Case_data.leaders;
+		 			for (var len = 0; len < data_list.length; len++) {
+						option += '<option value="'
+								+ data_list[len].ajdbxt_police_id + '">'
+								+ data_list[len].police_name + '</option>';
+					}
+				
+					this_modal.find('.selectpicker').html(option).selectpicker(
+							'refresh');
+					// 除去加载提示
+					this_modal.find('.load_remind').remove();
+				}, 'json');})
+
+			//})
+}
 // 列表查询
 function get_ListBreakecaseInformationByPageAndSearch(data) {
 
@@ -598,3 +676,4 @@ function toPage(object) {
 	query_data['infoVO.currPage'] = $(object).val();
 	get_ListBreakecaseInformationByPageAndSearch(query_data);
 }
+

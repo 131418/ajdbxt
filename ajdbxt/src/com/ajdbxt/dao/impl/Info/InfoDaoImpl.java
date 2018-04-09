@@ -104,7 +104,8 @@ public class InfoDaoImpl implements InfoDao {
 		Criteria cri=session.createCriteria(ajdbxt_info.class);
 		cri.addOrder(Order.desc("info_gmt_modify"));
 		cri.setFirstResult(start);
-		cri.setFetchSize(length);
+//		cri.setFetchSize(length);
+		cri.setMaxResults(length);
 		return cri.list();
 	}
 

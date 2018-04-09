@@ -17,16 +17,27 @@ public class ProcessInfoServiceImpl implements ProcessInfoService {
 
 
 	@Override
-	public String getInfoList(int check_end ,String police_id) {
+	public String getInfoList(int check_end_score_question ,String police_id) {
 		List<ajdbxt_info> list;
-		if(check_end==CAPTAIN_CHECK) {
+		switch (check_end_score_question) {
+		case CAPTAIN_CHECK:
 			list=processInfoDao.getInfoListCaptainCheck(police_id);
-		}else if(check_end==CASE_END){
+			break;
+		case CASE_END:
 			list=processInfoDao.getInfoListCaseEnd(police_id);
-		}else {
+			break;
+		case PROCESS_SCORE:
+			list=processInfoDao.getInfoListProcessScore(police_id);
+			break;
+		case PROCESS_QUESTION:
+			list=processInfoDao.getInfoListProcessQuestion(police_id);
+			break;
+		default:
 			list=processInfoDao.getInfoList(police_id);
+			break;
 		}
 		return JsonUtils.toJson(list);
 	}
 
 }
+
