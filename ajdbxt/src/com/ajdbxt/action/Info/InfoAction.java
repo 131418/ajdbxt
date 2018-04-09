@@ -60,14 +60,14 @@ public class InfoAction extends ActionSupport {
 	public void save() {
 		noLogin();
 		String json="";
-		if(info.getInfo_assistant_police_one()==null&&info.getInfo_assistant_police_one().isEmpty()) {
+		if(info.getInfo_assistant_police_one()==null||info.getInfo_assistant_police_one().isEmpty()) {
 			json=infoService.saveCase(info);
 			try {
 				ServletActionContext.getResponse().getWriter().print(json);
 			} catch (IOException e) {
 				new RuntimeException(e);
 			}
-		}else if(info.getInfo_assistant_police_two()==null&&info.getInfo_assistant_police_two().isEmpty()){
+		}else if(info.getInfo_assistant_police_two()==null||info.getInfo_assistant_police_two().isEmpty()){
 			json=infoService.twoceRank(info);
 			try {
 				ServletActionContext.getResponse().getWriter().print(json);
@@ -93,7 +93,7 @@ public class InfoAction extends ActionSupport {
 		}
 	}
 	//得到法制员和局领导和部门的方法
-	public void lalap() {
+	public void lal() {
 		noLogin();
 		try {
 			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
