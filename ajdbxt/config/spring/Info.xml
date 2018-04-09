@@ -8,11 +8,15 @@
 
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	<bean id="infoDepartmentDao" class="com.ajdbxt.dao.impl.Info.InfoDepartmentDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 	<bean id="infoPoliceDao" class="com.ajdbxt.dao.impl.Info.InfoPoliceDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="infoService" class="com.ajdbxt.service.impl.Info.InfoServiceImpl">
 		<property name="infoDao" ref="infoDao"></property>
+		<property name="infoDepartmentDao" ref="infoDepartmentDao"></property>
 		<property name="infoPoliceDao" ref="infoPoliceDao"></property>
 		<property name="processDao" ref="processDao"></property>
 	</bean>
