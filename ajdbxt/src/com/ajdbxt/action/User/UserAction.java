@@ -209,8 +209,13 @@ public class UserAction extends ActionSupport {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
 			response.setContentType("text/html;charset=utf-8");
-			this.findPoliceByPageVO = userService.queryForPage(10, findPoliceByPageVO.getCurrentPage());
-			response.getWriter().write(new Gson().toJson(this.findPoliceByPageVO));
+			findPoliceByPageVO queryForPage = userService.queryForPage(10, this.findPoliceByPageVO.getCurrentPage(),this.findPoliceByPageVO.getPolice_name());
+			String  redWord = new Gson().toJson(queryForPage);
+			if(this.findPoliceByPageVO.getPolice_name()!=null&&!"".equals(this.findPoliceByPageVO.getPolice_name())) {
+				redWord=redWord.replaceAll(this.findPoliceByPageVO.getPolice_name(), "<span style='color:red'>"+this.findPoliceByPageVO.getPolice_name()+"</span>");
+			}
+			//把搜索关键字转换成红色
+			response.getWriter().write(redWord);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -275,7 +280,7 @@ public class UserAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
-	//搜索功能
+/*	//搜索功能
 	public void fuzzySearch() {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
@@ -287,6 +292,6 @@ public class UserAction extends ActionSupport {
 			e.printStackTrace();
 		}
 		
-	}
+	}*/
 
 }

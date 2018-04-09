@@ -31,7 +31,7 @@ public interface UserDao {
 	List<ajdbxt_department> findDepartmentByPage(String hql, int offset, int length);
 <<<<<<< HEAD
 
-	public List<ajdbxt_police> fuzzySearch(String hql,int offset,int length);
+	//public List<ajdbxt_police> fuzzySearch(String hql,int offset,int length);
 }
 =======
 }
