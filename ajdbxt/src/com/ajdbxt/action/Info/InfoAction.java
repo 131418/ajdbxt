@@ -46,7 +46,16 @@ public class InfoAction extends ActionSupport {
 	public InfoService getInfoService() {
 		return infoService;
 	}
-
+	/**
+	 * 第一次调用获取主协办民警
+	 * @param 所有的id，时间，主协办民警都是后台生成的所以不用传
+	 * 
+	 * 第二次调用获取协办民警二
+	 * @param 把我前一次次传给你的对象添加信息后回传给我
+	 * 
+	 * 第三次保存案件信息，开启流程
+	 * @param 把我前俩次传给你的对象添加信息后回传给我
+	 */
 	public void save() {
 		String json="";
 		if(info.getInfo_assistant_police_one()==null&&info.getInfo_assistant_police_one().isEmpty()) {

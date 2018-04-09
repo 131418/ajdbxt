@@ -62,6 +62,8 @@ public class ProcessAction  extends ActionSupport{
 	 * 的到与该警官相关的案件信息
 	 * @param ajdbxtProcess.case_end="false" 查未结案的
 	 * @param ajdbxtProcess.captain_check="false" 查未审核的
+	 * @param ajdbxtProcess.process_score="false" 查未评分的
+	 * @param ajdbxtProcess.process_qustion="false" 查未整改问题的
 	 */
 	public void getInfo() {
 		Object o =ActionContext.getContext().getSession().get("loginPolice");//得到该警察
@@ -145,7 +147,6 @@ public class ProcessAction  extends ActionSupport{
 	}
 
 	public String findSome() {
-System.out.println("11111");
 
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		try {
