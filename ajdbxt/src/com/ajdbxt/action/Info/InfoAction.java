@@ -5,6 +5,7 @@ import org.apache.struts2.ServletActionContext;
 import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.service.Info.InfoService;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class InfoAction extends ActionSupport {
@@ -57,6 +58,7 @@ public class InfoAction extends ActionSupport {
 	 * @param 把我前俩次传给你的对象添加信息后回传给我
 	 */
 	public void save() {
+		noLogin();
 		String json="";
 		if(info.getInfo_assistant_police_one()==null&&info.getInfo_assistant_police_one().isEmpty()) {
 			json=infoService.saveCase(info);
@@ -82,6 +84,7 @@ public class InfoAction extends ActionSupport {
 	 * @return
 	 */
 	public String listAll() {
+		noLogin();
 		try {
 			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 			ServletActionContext.getResponse().getWriter().print(infoService.getAllCase(infoVO));
@@ -92,6 +95,7 @@ public class InfoAction extends ActionSupport {
 	}
 	//得到法制员和局领导的方法
 	public void lal() {
+		noLogin();
 		try {
 			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 			ServletActionContext.getResponse().getWriter().print(infoService.getLegalsAndLeaders());
@@ -104,9 +108,18 @@ public class InfoAction extends ActionSupport {
 	 * @return
 	 */
 	public String add() {
+		noLogin();
 		
 		return null;
 	}
 
-
+	private void noLogin() {
+		if(ActionContext.getContext().getSession().get("loginPolice")==null) {
+			try {
+				ServletActionContext.getResponse().sendRedirect("/login.jsp");
+			} catch (IOException e) {
+				new RuntimeException(e);
+			}
+		}
+	}
 }
