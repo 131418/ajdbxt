@@ -83,7 +83,7 @@ public class InfoAction extends ActionSupport {
 	 * infoVO 是信息列表页面的VO类页面
 	 * @return
 	 */
-	public String listAll() {
+	public void listAll() {
 		noLogin();
 		try {
 			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
@@ -91,7 +91,6 @@ public class InfoAction extends ActionSupport {
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}
-		return null;
 	}
 	//得到法制员和局领导的方法
 	public void lal() {
@@ -107,10 +106,10 @@ public class InfoAction extends ActionSupport {
 	 * 录入案件信息
 	 * @return
 	 */
-	public String add() {
+	public void add() {
 		noLogin();
 		
-		return null;
+	
 	}
 
 	private void noLogin() {

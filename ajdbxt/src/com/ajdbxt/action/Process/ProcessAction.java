@@ -130,7 +130,7 @@ public class ProcessAction  extends ActionSupport{
 	 * 查看流程详情
 	 * @return
 	 */
-	public String findSingle() {
+	public void findSingle() {
 		noLogin();
 		String case_id=ajdbxtProcess.getProcess_case_id();
 		ajdbxt_process process=processService.getSingleProcessByCaseId(case_id);
@@ -147,10 +147,9 @@ public class ProcessAction  extends ActionSupport{
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		return null;
 	}
 
-	public String findSome() {
+	public void findSome() {
 		noLogin();
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		try {
@@ -158,7 +157,6 @@ public class ProcessAction  extends ActionSupport{
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}
-		return null;
 	}
 	
 	/**
