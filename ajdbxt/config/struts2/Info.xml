@@ -5,7 +5,7 @@
 <struts>
 
 	 <package name="Info" namespace="/info" extends="struts-default">
-		<action name="Info_*" class="com.ajdbxt.action.Info.InfoAction"
+		<action name="Info_*" class="infoAction"
 			method="{1}">
 			<result name="page_CaseInfo">/WEB-INF/view/info/CaseInfoInput.jsp
 			</result>

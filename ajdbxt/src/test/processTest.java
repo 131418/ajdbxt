@@ -37,7 +37,7 @@ public void setProcessInfoService(ProcessInfoService processInfoService) {
 @Test
 public void t(){
     
-	processInfoService.getInfoList(1, "001");
+//	processInfoService.getInfoList(1, "001");
 	
 }
 }
