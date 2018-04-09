@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import com.ajdbxt.dao.Info.InfoDao;
+import com.ajdbxt.dao.Info.InfoDepartmentDao;
 import com.ajdbxt.dao.Info.InfoPoliceDao;
 import com.ajdbxt.dao.Process.ProcessDao;
 import com.ajdbxt.domain.DO.ajdbxt_info;
@@ -19,12 +20,21 @@ import util.Tel;
 public class InfoServiceImpl implements InfoService {
 	private InfoDao infoDao;
 	private ProcessDao processDao;
-	public void setInfoPoliceDao(InfoPoliceDao infoPoliceDao) {
-		this.infoPoliceDao = infoPoliceDao;
-	}
+	private InfoDepartmentDao infoDepartmentDao;
 	private InfoPoliceDao infoPoliceDao;
 	private List<Tel> tel ;
 	private String[] params;
+	public InfoDepartmentDao getInfoDepartmentDao() {
+		return infoDepartmentDao;
+	}
+
+	public void setInfoDepartmentDao(InfoDepartmentDao infoDepartmentDao) {
+		this.infoDepartmentDao = infoDepartmentDao;
+	}
+
+	public void setInfoPoliceDao(InfoPoliceDao infoPoliceDao) {
+		this.infoPoliceDao = infoPoliceDao;
+	}
 	public InfoPoliceDao getInfoPoliceDao() {
 		return infoPoliceDao;
 	}
@@ -68,7 +78,6 @@ public class InfoServiceImpl implements InfoService {
 	private void oneceRank(ajdbxt_info caseInfo) {//排班主协办人员
 		List<ajdbxt_police> polices=infoPoliceDao.findPoliceByDepartment(caseInfo.getInfo_department());
 		String police_id=null;
-		
 		//得到所队长id方便分配
 		for(ajdbxt_police police : polices) {
 			if(police.getPolice_duty().equals("所长")||police.getPolice_duty().equals("大队长")) {
@@ -284,10 +293,11 @@ public class InfoServiceImpl implements InfoService {
 	}
 
 	@Override
-	public String getLegalsAndLeaders() {
+	public String getLegalsAndLeadersAndDepartment() {
 		LegalSystemAndLeadersVO lalVO=new LegalSystemAndLeadersVO();
 		lalVO.setLegals(infoPoliceDao.findLegals());
 		lalVO.setLeaders(infoPoliceDao.findLeaders());
+		lalVO.setDepartments(infoDepartmentDao.findAllDepartment());
 		return JsonUtils.toJson(lalVO);
 	}
 	

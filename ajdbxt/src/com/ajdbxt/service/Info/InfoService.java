@@ -31,5 +31,5 @@ public interface InfoService {
 	public String twoceRank(ajdbxt_info caseInfo);
 	public void save(ajdbxt_info caseInfo);
 	public String getAllCase(Page_list_caseInfoVo infoVO);
-	public String getLegalsAndLeaders();
+	public String getLegalsAndLeadersAndDepartment();
 }
