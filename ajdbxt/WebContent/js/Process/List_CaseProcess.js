@@ -1,331 +1,130 @@
-var xmlHttp;
 
-//判断浏览器版本
-function getXmlHttp() {
-	if (window.XMLHttpRequest) {
-		// IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
-		xmlHttp = new XMLHttpRequest();
-	} else {
-		// IE6, IE5 浏览器执行代码
-		xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-	}
-}
-//判断请求响应代码正常
-function isBack() {
-	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-window.onload = function() {
-	getXmlHttp();
-	xmlHttp.open("POST", "/ajdbxt/process/findAllProcessProcessAction", true);
+var VO_PenalProcess = null;
+function List_Case_By_PageAndSearch(pageIndex) {
 	var formData = new FormData();
-	formData.append("currPage", "1");
-//	formData.append("queryString", "");
-	xmlHttp.send(formData);
-	xmlHttp.onreadystatechange = loadUserBack;
-}
+	var xhr = false;
+	xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4) {
+			if (xhr.status == 200) {
+				VO_PenalProcess = JSON.parse(xhr.responseText);
+				var new_tr = null;
+				var new_td = null;
+				var table_penalProcess = document.getElementById("table_penalProcess");
+				/*
+				 * 移出除标题以外的所有行
+				 */
+				var old_tr = document.getElementsByClassName("new_tr");
+				var long = old_tr.length;
+				for (var i = 0; i < long; i++) {
+					old_tr[0].parentNode.removeChild(old_tr[0]);
+				}
+				/*
+				 * 将数据库的数据取出来放到表格里
+				 */
+				for (var num = 0; num < VO_PenalProcess.list.length; num++) {
+					new_tr = document.createElement("tr");
+					new_tr.className = "new_tr";
+					new_tr.appendChild(document.createTextNode(''));
+					table_penalProcess.firstElementChild.appendChild(new_tr);
+					/*
+					 * 隐藏案件流程id
+					 */
+					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.style.display = "none";
+					new_td.className = "ajdbxt_process_id";
+					new_td.innerHTML = VO_PenalProcess.list[num].process.ajdbxt_process_id;
+					
+					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.innerHTML = VO_PenalProcess.list[num].info.info_name;
 
-function cleanInput()
-{
-	$("#addUserForm input").val("");
-}
+					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.innerHTML = VO_PenalProcess.list[num].department.department_name;
 
-function addUser() {
-	for(var i=0;i<document.addUserForm.elements.length-1;i++)
-    {
-     if(document.addUserForm.elements[i].value=="")
-     {
-       toastr.error("当前表单不能有空项");
-       document.form1.elements[i].focus();
-       return false;
-     }
-    }
-	$("#addContent").addClass("hideDiv");
-	$("#addLoadingDiv").removeClass("hideDiv");
-	xmlHttp.open("POST", "/xsjsglxt/user/User_addUser", true);
-	var formData = new FormData(document.getElementById("addUserForm"));
-	xmlHttp.send(formData);
-	xmlHttp.onreadystatechange = addUserBack;
-}
+					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.innerHTML = VO_PenalProcess.list[num].info.info_category;
+					
+					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.innerHTML = VO_PenalProcess.list[num].police[0].police_name;
+					
+					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.innerHTML = (VO_PenalProcess.list[num].plice[1].police_name
+														+ (VO_PenalProcess.list[num].plice[2].police_name == "" ? "" : ("、"+VO_PenalProcess.list[num].plice[2].police_name)));
+					
+					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.innerHTML = (VO_PenalProcess.list[num].process.process_case_end == "是" ? "是" : "否");
+					
+					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.innerHTML = '<i  id="'+VO_PenalProcess.list[num].process.ajdbxt_process_id+'" onClick=DNADetails(this)></i>';
+					new_td.style.cursor="pointer";
+				}
+				/*
+				 * ????
+				 */
+				var i_pulse = document.getElementById("i_pulse");
+				i_pulse.style.display = "none";
 
-function reLoadUser() {
-	$("#addContent input").val("");
-	$("#addContent input[name='user_username']").focus();
-	document.getElementById("userTable").innerHTML = "<tr style='background-color: #696969; color: white;'><td>账号</td><td>姓名</td><td>代码</td><td>单位</td><td>操作</td></tr>";
-	$("#loadingDiv").removeClass("hideDiv");
-	$("#tableDiv").addClass("hideDiv");
-	getXmlHttp();
-	xmlHttp.open("POST", "/xsjsglxt/user/User_getUser", true);
-	var formData = new FormData();
-	formData.append("currPage", "1");
-	formData.append("queryString", "");
-	xmlHttp.send(formData);
-	xmlHttp.onreadystatechange = loadUserBack;
-}
-
-function updateUser(event) {
-	$("#updateLoadingDiv").removeClass("hideDiv");
-	$("#updateContent").addClass("hideDiv");
-	getXmlHttp();
-	xmlHttp.open("POST", "/xsjsglxt/user/User_updateUser", true);
-	var formData = new FormData(updateUserForm);
-	formData.append("user_id", event.value);
-	xmlHttp.send(formData);
-	xmlHttp.onreadystatechange = updateUserBack;
-}
-function updateUserBack() {
-	if (isBack()) {
-		toastr.success("修改成功！");
-		$("#user_password_update").val("");
-		$("#updateLoadingDiv").addClass("hideDiv");
-		$("#updateContent").removeClass("hideDiv");
+				// 当前页
+				document.getElementById("span_pageIndex").innerHTML = VO_PenalProcess.currPage;
+				// 总页数
+				document.getElementById("span_totalPages").innerHTML = VO_PenalProcess.totalPage;
+				// 总记录数
+				document.getElementById("span_totalRecords").innerHTML = VO_PenalProcess.count;
+// document.getElementById("checkbox_all_select").checked=false;
+				
+			} else {
+				toastr.error(xhr.status);
+			}
+		}
 	}
-}
-
-function getProcessById(event) {
-//	$("#updateContent").addClass("hideDiv");
-//	$("#updateLoadingDiv").removeClass("hideDiv");
-	getXmlHttp();
-	xmlHttp.open("POST", "/ajdbxt/process/findSingleProcessAction", true);
-	var formData = new FormData();
-	formData.append("user_id", event.value);
-	xmlHttp.send(formData);
-	xmlHttp.onreadystatechange = getUserByIdBack;
-}
-
-function getUserByIdBack() {
-	if (isBack()) {
-		var result = xmlHttp.responseText;
-		result = JSON.parse(result);
-		$("#user_username_update").val(result.user_username);
-		$("#user_name_update").val(result.user_name);
-		$("#user_number_update").val(result.user_number);
-		$("#user_units_update").val(result.user_units);
-		$("#user_case_technology_power_update").val(
-				result.user_case_technology_power);
-		$("#user_case_query_power_update").val(result.user_case_query_power);
-		$("#user_check_power_update").val(result.user_check_power);
-		$("#user_army_manager_power_update")
-				.val(result.user_army_manager_power);
-		$("#user_technology_manager_power_update").val(
-				result.user_technology_manager_power);
-		$("#user_statistics_power_update").val(result.user_statistics_power);
-		$("#user_user_manager_power_update")
-				.val(result.user_user_manager_power);
-		$("#updateBtn").val(result.user_id);
-		$("#updateLoadingDiv").addClass("hideDiv");
-		$("#updateContent").removeClass("hideDiv");
+	if (pageIndex == null || pageIndex.preventDefault) {
+		pageIndex = 1;
 	}
+	formData.append("processVO.currPage", pageIndex);
+	xhr.open("POST", "/ajdbxt/process/findSomeProcessAction");
+	xhr.send(formData);
 }
 
-function addUserBack() {
-	if (isBack()) {
-		var result = xmlHttp.responseText;
-		if (result == "用户名已经存在") {
-			toastr.error("用户名已经存在请重新填写用户名！");
-			$("#addLoadingDiv").addClass("hideDiv");
-			$("#addContent").removeClass("hideDiv");
+/*
+ * 判断页数
+ */
+function flip(flipPage) {
+	switch (flipPage) {
+	/* 首页 */
+	case 1: {
+		List_DNA_By_PageAndSearch(1)
+		break;
+	}
+	/* 上一页 */
+	case 2: {
+		if (VO_PenalProcess.currPage - 1 == 0) {
+			toastr.warning("已经是第一页了");
 		} else {
-			toastr.success("上传成功！");
-			$("#addLoadingDiv").addClass("hideDiv");
-			$("#addContent").removeClass("hideDiv");
-			$("#addContent input").val("");
-			$("#addContent input[name='user_username']").focus();
+			List_DNA_By_PageAndSearch(VO_PenalProcess.currPage - 1);
 		}
-
+		break;
 	}
-}
-
-//查询案件流程列表内容
-function loadUserBack() {
-	if (isBack()) {
-		var result = xmlHttp.responseText;
-		result = JSON.parse(result);
-		var userTable = document.getElementById("userTable");
-//		var hideQueryString = document.getElementById("hideQueryString");
-//		var hideCurrPage = document.getElementById("hideCurrPage");
-//		var queryString = document.getElementById("queryString");
-		var currPage = document.getElementById("currPage");
-		var totalPage = document.getElementById("totalPage");
-		var skipPage = document.getElementById("skipPage");
-		for (var i = 0; i <result.list.length; i++) {
-			var info_assistant_police_two = result.list[i].info_assistant_police_two == "" ? "" :  ("、"+ result.list[i].info_assistant_police_two);
-			userTable.innerHTML = userTable.innerHTML
-					+ "<tr class='trHover'><td>"
-					+ result.list[i].info_name
-					+ "</td>"
-					+ "<td>"
-					+ result.list[i].info_department
-					+ "</td>"
-					+ "<td>"
-					+ result.list[i].info_category
-					+ "</td>"
-					+ "<td>"
-					+ result.list[i].info_main_police
-					+ "</td>"
-					+ "<td>"
-					+ result.list[i].info_assistant_police_one+info_assistant_police_two
-					+ "</td>"
-					+ "<td>"
-					+ result.list_process[i].process_case_end == "是" ? "是" : "否";
-					+ "</td>"
-					+ "<td>"
-					/*+ "<button onclick='deleteUser(this)' value='"
-					+ result.list[i].user_id
-					+ "' class='btn btn-danger managerPower'>删除</button>"*/
-					+ "<button onclick='getProcessById(this)' value='"
-					+ result.list_process[i].ajdbxt_process_id
-					+ "' data-toggle='modal' data-target='#updateProcess' style='margin-left: 5px;' class='btn btn-primary managerPower'>修改</button>"
-					+ "</td></tr>";
+	/* 下一页 */
+	case 3: {
+		if (VO_PenalProcess.currPage == VO_PenalProcess.totalPage) {
+			toastr.warning("已经是最后一页了");
+		} else {
+			List_DNA_By_PageAndSearch(VO_PenalProcess.currPage + 1);
 		}
-//		hideQueryString.value = result.queryString;
-//		hideCurrPage.value = result.currPage;
-//		queryString.value = result.queryString;
-		currPage.innerHTML = result.currPage;
-		totalPage.innerHTML = result.totalPage;
-		skipPage.value = result.currPage;
-//		$("#loadingDiv").addClass("hideDiv");
-//		$("#tableDiv").removeClass("hideDiv");
-//		deleteByPower('user_user_manager_power','userRole','managerRole');
+		break;
+	}
+	/* 尾页 */
+	case 4: {
+		List_DNA_By_PageAndSearch(VO_PenalProcess.totalPage);
+		break;
+	}
 	}
 }
-
-function queryUser() {
-	$("#loadingDiv").removeClass("hideDiv");
-	$("#tableDiv").addClass("hideDiv");
-	document.getElementById("userTable").innerHTML = "<tr style='background-color: #696969; color: white;'><td>账号</td><td>姓名</td><td>代码</td><td>单位</td><td>操作</td></tr>";
-	var queryString = document.getElementById("queryString").value;
-	getXmlHttp();
-	xmlHttp.open("POST", "/xsjsglxt/user/User_getUser", true);
-	var formData = new FormData();
-	formData.append("currPage", "1");
-	formData.append("queryString", queryString);
-	xmlHttp.send(formData);
-	xmlHttp.onreadystatechange = loadUserBack;
-}
-
-function skipToIndexPage() {
-	var currPage = document.getElementById("hideCurrPage").value;
-	var totalPage = document.getElementById("totalPage").innerHTML;
-	var queryString = document.getElementById("hideQueryString").value;
-	if (currPage == "1") {
-		toastr.error("已经是第一页");
-	} else {
-		$("#loadingDiv").removeClass("hideDiv");
-		$("#tableDiv").addClass("hideDiv");
-		document.getElementById("userTable").innerHTML = "<tr style='background-color: #696969; color: white;'><td>账号</td><td>姓名</td><td>代码</td><td>单位</td><td>操作</td></tr>";
-		var queryString = document.getElementById("queryString").value;
-		getXmlHttp();
-		xmlHttp.open("POST", "/xsjsglxt/user/User_getUser", true);
-		var formData = new FormData();
-		formData.append("currPage", "1");
-		formData.append("queryString", queryString);
-		xmlHttp.send(formData);
-		xmlHttp.onreadystatechange = loadUserBack;
-	}
-}
-
-function deleteUser(event) {
-	getXmlHttp();
-	xmlHttp.open("POST", "/xsjsglxt/user/User_deleteUser", true);
-	var formData = new FormData();
-	formData.append("user_id", event.value);
-	xmlHttp.send(formData);
-	xmlHttp.onreadystatechange = deleteUserBack;
-}
-
-function deleteUserBack() {
-	if (isBack()) {
-		toastr.success("删除成功");
-		reLoadUser();
-	}
-}
-
-function skipToNextPage() {
-	var currPage = document.getElementById("hideCurrPage").value;
-	var totalPage = document.getElementById("totalPage").innerHTML;
-	var queryString = document.getElementById("hideQueryString").value;
-	if (currPage == totalPage) {
-		toastr.error("已经是最后一页");
-	} else {
-
-		$("#loadingDiv").removeClass("hideDiv");
-		$("#tableDiv").addClass("hideDiv");
-		document.getElementById("userTable").innerHTML = "<tr style='background-color: #696969; color: white;'><td>账号</td><td>姓名</td><td>代码</td><td>单位</td><td>操作</td></tr>";
-		var queryString = document.getElementById("queryString").value;
-		getXmlHttp();
-		xmlHttp.open("POST", "/xsjsglxt/user/User_getUser", true);
-		var formData = new FormData();
-		formData.append("currPage", ++currPage);
-		formData.append("queryString", queryString);
-		xmlHttp.send(formData);
-		xmlHttp.onreadystatechange = loadUserBack;
-	}
-}
-
-function skipToPrimaryPage() {
-	var currPage = document.getElementById("hideCurrPage").value;
-	var totalPage = document.getElementById("totalPage").innerHTML;
-	var queryString = document.getElementById("hideQueryString").value;
-	if (currPage == "1") {
-		toastr.error("已经是第一页");
-	} else {
-		$("#loadingDiv").removeClass("hideDiv");
-		$("#tableDiv").addClass("hideDiv");
-		document.getElementById("userTable").innerHTML = "<tr style='background-color: #696969; color: white;'><td>账号</td><td>姓名</td><td>代码</td><td>单位</td><td>操作</td></tr>";
-		var queryString = document.getElementById("queryString").value;
-		getXmlHttp();
-		xmlHttp.open("POST", "/xsjsglxt/user/User_getUser", true);
-		var formData = new FormData();
-		formData.append("currPage", --currPage);
-		formData.append("queryString", queryString);
-		xmlHttp.send(formData);
-		xmlHttp.onreadystatechange = loadUserBack;
-	}
-}
-function skipToLastPage() {
-	var currPage = document.getElementById("hideCurrPage").value;
-	var totalPage = document.getElementById("totalPage").innerHTML;
-	var queryString = document.getElementById("hideQueryString").value;
-	if (currPage == totalPage) {
-		toastr.error("已经是最后一页");
-	} else {
-		$("#loadingDiv").removeClass("hideDiv");
-		$("#tableDiv").addClass("hideDiv");
-		document.getElementById("userTable").innerHTML = "<tr style='background-color: #696969; color: white;'><td>账号</td><td>姓名</td><td>代码</td><td>单位</td><td>操作</td></tr>";
-		var queryString = document.getElementById("queryString").value;
-		getXmlHttp();
-		xmlHttp.open("POST", "/xsjsglxt/user/User_getUser", true);
-		var formData = new FormData();
-		formData.append("currPage", totalPage);
-		formData.append("queryString", queryString);
-		xmlHttp.send(formData);
-		xmlHttp.onreadystatechange = loadUserBack;
-	}
-}
-function skipToArbitrarilyPage() {
-	var currPage = document.getElementById("skipPage").value;
-	var totalPage = document.getElementById("totalPage").innerHTML;
-	var queryString = document.getElementById("hideQueryString").value;
-	if (currPage <= 0 || currPage > totalPage) {
-		toastr.error("不存在此页");
-	} else {
-		$("#loadingDiv").removeClass("hideDiv");
-		$("#tableDiv").addClass("hideDiv");
-		document.getElementById("userTable").innerHTML = "<tr style='background-color: #696969; color: white;'><td>账号</td><td>姓名</td><td>代码</td><td>单位</td><td>操作</td></tr>";
-		var queryString = document.getElementById("queryString").value;
-		getXmlHttp();
-		xmlHttp.open("POST", "/xsjsglxt/user/User_getUser", true);
-		var formData = new FormData();
-		formData.append("currPage", currPage);
-		formData.append("queryString", queryString);
-		xmlHttp.send(formData);
-		xmlHttp.onreadystatechange = loadUserBack;
-	}
-}
-
-
