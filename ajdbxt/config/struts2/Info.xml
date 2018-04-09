@@ -3,6 +3,7 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
+
 	 <package name="Info" namespace="/info" extends="struts-default">
 		<action name="Info_*" class="com.ajdbxt.action.Info.InfoAction"
 			method="{1}">
@@ -10,4 +11,5 @@
 			</result>
 		</action>
 	</package> 
+
 </struts>

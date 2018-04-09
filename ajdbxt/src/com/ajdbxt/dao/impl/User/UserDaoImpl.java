@@ -145,5 +145,14 @@ public class UserDaoImpl implements UserDao {
 		return "success";
 	}
 
+/*	@Override
+	public List<ajdbxt_police> fuzzySearch(String hql,int offset,int length) {
+		// TODO Auto-generated method stub
+		Query q = getSession().createQuery(hql);
+		q.setFirstResult(offset);
+		q.setMaxResults(length);
+		return q.list();
+	}
+*/
 }
 

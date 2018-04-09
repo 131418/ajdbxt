@@ -40,6 +40,9 @@
 tfoot tr td a:hover {
 	cursor: pointer;
 }
+.two{
+display:none
+}
 </style>
 </head>
 
@@ -299,8 +302,11 @@ tfoot tr td a:hover {
 										<td>协办民警1</td>
 										<td><input style="witdh: 70%;" class="form-control"
 											name="info.info_assistant_police_one" type="text"></td>
-										<td>协办民警2</td>
-										<td><input style="witdh: 70%;" class="form-control"
+											<td><button class="anniu">
+											<i class="fa fa-plus-square"></i>
+											</button></td>
+										<td class="two">协办民警2</td>
+										<td class="two"><input style="witdh: 70%;" class="form-control"
 											name="info.info_assistant_police_two" type="text"></td>
 									</tr>
 									<tr>
@@ -371,4 +377,5 @@ tfoot tr td a:hover {
 		}); 
  	</script> 
 </body>
+
 </html>

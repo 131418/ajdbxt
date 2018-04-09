@@ -1,5 +1,6 @@
 var query_data = {
 		"infoVO.currPage" : "1",
+		"info.info_department" : "安源派出所",
 };
 
  //当前页面分页信息

@@ -56,14 +56,18 @@ public class ProcessAction  extends ActionSupport{
 		this.processInfoService = processInfoService;
 	}
 	public String page_process(){
+		noLogin();
 		return "processpage";
 	}
 	/**
 	 * 的到与该警官相关的案件信息
 	 * @param ajdbxtProcess.case_end="false" 查未结案的
 	 * @param ajdbxtProcess.captain_check="false" 查未审核的
+	 * @param ajdbxtProcess.process_score="false" 查未评分的
+	 * @param ajdbxtProcess.process_qustion="false" 查未整改问题的
 	 */
 	public void getInfo() {
+		noLogin();
 		Object o =ActionContext.getContext().getSession().get("loginPolice");//得到该警察
 		ajdbxt_police police=(ajdbxt_police)o;
 		String police_id=police.getAjdbxt_police_id();
@@ -94,6 +98,7 @@ public class ProcessAction  extends ActionSupport{
 	 * 
 	 */
 	public void update() {
+		noLogin();
 		ajdbxt_process process=(ajdbxt_process)ActionContext.getContext().getSession().get("lookedProcess");
 		int send_massage_type=0;
 		Class clazz=ajdbxtProcess.getClass();
@@ -125,7 +130,8 @@ public class ProcessAction  extends ActionSupport{
 	 * 查看流程详情
 	 * @return
 	 */
-	public String findSingle() {
+	public void findSingle() {
+		noLogin();
 		String case_id=ajdbxtProcess.getProcess_case_id();
 		ajdbxt_process process=processService.getSingleProcessByCaseId(case_id);
 		ActionContext.getContext().getSession().put("lookedProcess", process);
@@ -141,17 +147,16 @@ public class ProcessAction  extends ActionSupport{
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		return null;
 	}
 
-	public String findSome() {
+	public void findSome() {
+		noLogin();
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		try {
 			ServletActionContext.getResponse().getWriter().print(processService.getSomeProcessByShowProcessVO(processVO));
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}
-		return "";
 	}
 	
 	/**
@@ -159,6 +164,7 @@ public class ProcessAction  extends ActionSupport{
 	 * @return
 	 */
 	public String page_list_CaseProcess() {
+		noLogin();
 		return "page_list_CaseProcess";
 	}
 	
@@ -167,7 +173,17 @@ public class ProcessAction  extends ActionSupport{
 	 * @return
 	 */
 	public String page_CaseProcessInfo() {
+		noLogin();
 		return "page_CaseProcessInfo";
+	}
+	private void noLogin() {
+		if(ActionContext.getContext().getSession().get("loginPolice")==null) {
+			try {
+				ServletActionContext.getResponse().sendRedirect("/ajdbxt/login.jsp");
+			} catch (IOException e) {
+				new RuntimeException(e);
+			}
+		}
 	}
 }
 

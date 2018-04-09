@@ -37,7 +37,7 @@
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<div id="tableDiv" class="hideDiv">
 				<table class="table table-bordered" style="text-align: center;">
-					<tbody id="penalProcessTable">
+					<tbody id="penalProcessInfoTable">
 					
 					</tbody>
 				</table>

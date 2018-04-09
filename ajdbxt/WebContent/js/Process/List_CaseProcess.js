@@ -1,3 +1,4 @@
+
 var VO_PenalProcess = null;
 function List_Case_By_PageAndSearch(pageIndex) {
 	var formData = new FormData();
@@ -6,7 +7,8 @@ function List_Case_By_PageAndSearch(pageIndex) {
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
 			if (xhr.status == 200) {
-				VO_PenalProcess = JSON.parse(xhr.responseText);
+				VO_PenalProcess = JSON.parse(xhr.responseXML);
+console.log(VO_PenalProcess);
 				var new_tr = null;
 				var new_td = null;
 				var table_penalProcess = document.getElementById("table_penalProcess");
@@ -88,6 +90,8 @@ function List_Case_By_PageAndSearch(pageIndex) {
 		pageIndex = 1;
 	}
 	formData.append("processVO.currPage", pageIndex);
+//	fromData.append("processVO.pageSize",10);
+	
 	xhr.open("POST", "/ajdbxt/process/findSomeProcessAction");
 	xhr.send(formData);
 }
