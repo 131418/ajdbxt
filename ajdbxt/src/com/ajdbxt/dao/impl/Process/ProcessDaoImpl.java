@@ -101,10 +101,7 @@ public class ProcessDaoImpl implements ProcessDao {
 	@Override
 	public int findAllProcess() {
 		Session session=sessionFactory.getCurrentSession();
-		String hql = "select count(*) from ajdbxt_process";
-		Query query = session.createQuery(hql);
-		return (int) query.uniqueResult();
-//		return session.createQuery("from ajdbxt_process").list().size();
+		return session.createQuery("from ajdbxt_process").list().size();
 	}
 	
 }
