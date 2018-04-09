@@ -145,13 +145,15 @@ public class ProcessAction  extends ActionSupport{
 	}
 
 	public String findSome() {
+System.out.println("11111");
+
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		try {
 			ServletActionContext.getResponse().getWriter().print(processService.getSomeProcessByShowProcessVO(processVO));
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}
-		return "";
+		return null;
 	}
 	
 	/**

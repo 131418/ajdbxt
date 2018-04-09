@@ -29,10 +29,8 @@ public interface UserDao {
 	String addDepartment(ajdbxt_department ajdbxt_department);
 
 	List<ajdbxt_department> findDepartmentByPage(String hql, int offset, int length);
-<<<<<<< HEAD
+
 
 	//public List<ajdbxt_police> fuzzySearch(String hql,int offset,int length);
 }
-=======
-}
->>>>>>> origin/LSY
+

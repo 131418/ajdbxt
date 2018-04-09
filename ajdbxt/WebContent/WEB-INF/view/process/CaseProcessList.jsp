@@ -40,41 +40,13 @@
 		<!---------------------------------------------------------------------------------------------------->
 		<!---------------------------------------------------------------------------------------------------->
 		<div class="panel" style="width: 95%; margin: 20px auto;">
-			<!-- 带标题面板
-			<div class="panel-heading">
-				<h3 class="panel-title">DNA信息管理</h3>
-			</div>
-			 -->
-			<%-- <div class="panel-body">
-				<div style="height: 34px;">
-					<!-- <div style="width: 150px;  float: left; margin:0 20px 0 0">
-						<button class="btn btn-default" onclick="CreateDNA()">
-							<i class="fa fa-plus-square"></i> 新增DNA记录
-						</button>
-					</div> -->
-					<!-- <div style="float: left;display:none;">
-						<input type="file" class="form-control" id="input_excel" style="float:left;"/>
-					</div> -->
-					<!-- <div style="width: 150px;  float: left;">
-						<button class="btn btn-default" onclick=""  style="float:left;">
-							<i class="fa fa-plus-square"></i> 导入Excel表
-						</button>
-					</div> -->
-					<!-- 检索 -->
-					<div class="input-group" style="width: 300px; float: right;">
-						<input id="input_DNASearchText" class="form-control"
-							oninput="List_DNA_By_PageAndSearch(1)" type="text"> <span
-							class="input-group-addon"> <i class="fa fa-search"></i>
-						</span>
-					</div>
-				</div> --%>
-				<table id="table_penalProcess" class="table table-hover table-bordered"
+				<table id="table table_penalProcess" class="table table-hover table-bordered"
 					style="text-align: center; margin: 20px 0;">
 					<tbody>
 						<tr>
 							<th>案件名称</th>
 							<th>办案单位</th>
-							<th>案件类别</th>
+							<th>案件类别</th>	
 							<th>主办民警</th>
 							<th>协办民警</th>
 							<th>结案</th>
