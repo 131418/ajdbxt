@@ -97,7 +97,7 @@ public class ProcessInfoDaoImpl implements ProcessInfoDao {
 	public ajdbxt_info findInfoById(String info_id) {
 		Session session=sessionFactory.getCurrentSession();
 		Criteria cri=session.createCriteria(ajdbxt_info.class);
-		cri.add(Restrictions.eq("ajdbxt_department_id", info_id));
+		cri.add(Restrictions.eq("ajdbxt_info_id", info_id));
 		return (ajdbxt_info) cri.uniqueResult();
 	}
 

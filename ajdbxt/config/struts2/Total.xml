@@ -4,9 +4,9 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<package name="Total" namespace="/total" extends="struts-default">
-		<action name="Total_*" class="com.ajdbxt.action.Total.TotalAction"
+		<action name="Total_*" class="com.ajdbxt.action.Total.StatisticAction"
 			method="{1}">
-			<result name="totalpage">/WEB-INF/view/total/ajdbxt_total.jsp</result>
+			<result name="statistic">/WEB-INF/view/total/ajdbxt_total.jsp</result>
 		</action>
 	</package>
 
