@@ -33,3 +33,4 @@ public interface InfoService {
 	public String getAllCase(Page_list_caseInfoVo infoVO);
 	public String getLegalsAndLeadersAndDepartment();
 }
+

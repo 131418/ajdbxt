@@ -3,9 +3,13 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-	<package name="info" namespace="/info" extends="struts-default">
-		<action name="*infoAction" class="infoAction" method="{1}">
-			
+
+	 <package name="Info" namespace="/info" extends="struts-default">
+		<action name="Info_*" class="infoAction"
+			method="{1}">
+			<result name="page_CaseInfo">/WEB-INF/view/info/CaseInfoInput.jsp
+			</result>
 		</action>
-	</package>
+	</package> 
+
 </struts>

@@ -48,3 +48,4 @@ public class InfoPoliceDaoImpl implements InfoPoliceDao {
 		return cri.list();
 	}
 }
+
