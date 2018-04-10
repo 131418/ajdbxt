@@ -1,11 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -58,6 +60,7 @@
 							<table id="table_case_info" class="table table-hover table-bordered"
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
+
 									<tr>
 										<th>案件名称</th>
 										<th>案件类别</th>
@@ -66,6 +69,7 @@
 										<th>主办民警</th>
 										<th>协办民警</th>
 									</tr>
+
 								</tbody>
 							</table>
 
@@ -93,7 +97,6 @@
 
 							</div>
 
-
 						</div>
 					</div>
 					<!-- END TABLE HOVER -->
@@ -101,7 +104,9 @@
 
 			</div>
 		</div>
+
 	</div>
+
 	<script type="text/javascript"
 		src="<%=basePath%>js/Index/indexCaseInfo.js"></script>
 	
