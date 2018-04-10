@@ -6,7 +6,8 @@
 	<package name="Total" namespace="/total" extends="struts-default">
 		<action name="Total_*" class="com.ajdbxt.action.Total.StatisticAction"
 			method="{1}">
-			<result name="statistic">/WEB-INF/view/total/ajdbxt_total.jsp</result>
+			<result name="page_listPoliceCaseStatistics">/WEB-INF/view/total/ajdbxt_total.jsp</result>
+			<result name="page_listPoliceCase">/WEB-INF/view/total/</result>
 		</action>
 	</package>
 
