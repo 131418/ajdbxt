@@ -29,7 +29,6 @@ public class StatisticAction extends ActionSupport{
 	 * 警员案件数量统计页面
 	*/
 	public String page_listPoliceCaseStatistics() {
-		System.out.println("运行了");
 		
 		return "page_listPoliceCaseStatistics";
 	}
@@ -52,7 +51,7 @@ public class StatisticAction extends ActionSupport{
 		HttpServletResponse http_response;
 		listPoliceCaseByPageAndSearchVO=statisticService.getlistPoliceCaseByPageAndSearchVO(listPoliceCaseByPageAndSearchVO);
 		http_response =ServletActionContext.getResponse();
-		http_response.setCharacterEncoding("text/html;charset=utf-8");
+		http_response.setContentType("text/html;charset=utf-8");
 		System.out.println(gson.toJson(listPoliceCaseByPageAndSearchVO));
 		PrintWriter pw = http_response.getWriter();
 		pw.write(gson.toJson(listPoliceCaseByPageAndSearchVO));
@@ -70,7 +69,7 @@ public class StatisticAction extends ActionSupport{
 		HttpServletResponse http_response;
 		http_response =ServletActionContext.getResponse();
 		listEachPoliceCaseVO=statisticService.getPoliceCaseBYpageAndSearch(listEachPoliceCaseVO);
-		http_response.setCharacterEncoding("text/html;charset=utf-8");
+		http_response.setContentType("text/html;charset=utf-8");
 //		http_response.getWriter().write(gson.toJson(listEachPoliceCaseVO));
 		PrintWriter pw = http_response.getWriter();
 		pw.write(gson.toJson(listEachPoliceCaseVO));
