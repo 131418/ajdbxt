@@ -194,25 +194,5 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
-/*	@Override
-	public findPoliceByPageVO fuzzySearch(int pageSize, int currentPage,String police_name) {
-		// TODO Auto-generated method stub
-		String hql = "select count(*) from ajdbxt_police where police_name like '%"+police_name+"%'";
-		int count = userDao.getCount(hql); // 总记录数
-		int totalPage = findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数
-		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
-		int length = pageSize; // 每页记录数
-		int currentpage = findPoliceByPageVO.countCurrentPage(currentPage);
-		List<ajdbxt_police> list = userDao.fuzzySearch("from ajdbxt_police  where police_name like '%"+police_name+"%' order by police_gmt_modify desc", offset, length); // 该分页的记录
-		// 把分页信息保存到Bean中
-		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
-		findPoliceByPageVO.setPageSize(pageSize);
-		findPoliceByPageVO.setCurrentPage(currentpage);
-		findPoliceByPageVO.setAllRow(count);
-		findPoliceByPageVO.setTotalPage(totalPage);
-		findPoliceByPageVO.setList(list);
-		findPoliceByPageVO.init();
-		return findPoliceByPageVO;
-	}*/
 
 }

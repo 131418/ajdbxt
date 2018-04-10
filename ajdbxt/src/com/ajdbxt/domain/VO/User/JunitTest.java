@@ -33,21 +33,21 @@ public class JunitTest {
 	 * : list) { userService.addPolice(P); } }
 	 */
 
-	@Test
-	public void Test_addPolice() {
-		// ajdbxtPoliceId,policeSerialNumber,policePassword,policeName,policeDepartment,policeDuty,policePhoneNumber,policeGmtCreat,policeGmtModify
-		ajdbxt_police ajdbxt_police = new ajdbxt_police(null, "999999", "999999", "ss辉", "sss", "副局长", "18870581880",
-				null, null, "1");
-		System.out.println(userService.addPolice(ajdbxt_police));
-		// System.out.println("000000000000"+ajdbxt_police+"0000000000000000000");
-	}
-
-	@Test
-	public void Test_updatePolice() {
-		ajdbxt_police ajdbxt_police = new ajdbxt_police("c87bc848-4345-42e0-b64c-d388d7555802", "040800", "111111",
-				"易志伟", "法制大队", "xiao队长", "2", "18870581880", null, null);
-		System.out.println(userService.updatePolice(ajdbxt_police));
-	}
+//	@Test
+//	public void Test_addPolice() {
+//		// ajdbxtPoliceId,policeSerialNumber,policePassword,policeName,policeDepartment,policeDuty,policePhoneNumber,policeGmtCreat,policeGmtModify
+//		ajdbxt_police ajdbxt_police = new ajdbxt_police(null, "999999", "999999", "ss辉", "sss", "副局长", "18870581880",
+//				null, null, "1");
+//		System.out.println(userService.addPolice(ajdbxt_police));
+//		// System.out.println("000000000000"+ajdbxt_police+"0000000000000000000");
+//	}
+//
+//	@Test
+//	public void Test_updatePolice() {
+//		ajdbxt_police ajdbxt_police = new ajdbxt_police("c87bc848-4345-42e0-b64c-d388d7555802", "040800", "111111",
+//				"易志伟", "法制大队", "xiao队长", "2", "18870581880", null, null);
+//		System.out.println(userService.updatePolice(ajdbxt_police));
+//	}
 
 	/*
 	 * @Test public void Test_findAllPolice() { List<Ajdbxt_police> findallpolice =
