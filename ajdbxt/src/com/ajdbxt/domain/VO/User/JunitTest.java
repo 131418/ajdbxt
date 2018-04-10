@@ -1,5 +1,8 @@
 package com.ajdbxt.domain.VO.User;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -53,7 +56,12 @@ public class JunitTest {
 	 */
 	@Test
 	public void Test_queryForPage() {
-		findPoliceByPageVO findPoliceByPageVO = userService.queryForPage(10, 1,"");
+		findPoliceByPageVO findPoliceByPageVO = userService.queryForPage(10, 1,"1");
+		ajdbxt_police aj0 =null;
+		for(Object aj : findPoliceByPageVO.getList()) {
+			aj0 = (ajdbxt_police) aj;
+			aj0.setPolice_name(aj0.getPolice_name().replaceAll("1", "<span style='color:red;'>1</span>"));
+		}
 		String  redWord = new Gson().toJson(findPoliceByPageVO);
 		//把搜索关键字转换成红色
 		System.out.println(redWord);
