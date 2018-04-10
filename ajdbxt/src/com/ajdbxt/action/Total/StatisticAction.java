@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.ajdbxt.domain.DTO.Total.StatisticCaseByPoliceDTO;
 import com.ajdbxt.domain.DTO.Total.StatisticPoliceCaseNumDTO;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
 import com.ajdbxt.domain.VO.Total.page_listPoliceCaseNumByPageAndSearchVO;
@@ -24,6 +25,7 @@ public class StatisticAction extends ActionSupport{
 	private page_eachPoliceCaseVO listEachPoliceCaseVO;
 	private StatisticService statisticService;
 	private StatisticPoliceCaseNumDTO statisticPoliceCaseNumDTO;
+	private StatisticCaseByPoliceDTO  statisticCaseByPoliceDTO;
 	
 	/*
 	 * 警员案件数量统计页面
@@ -101,16 +103,20 @@ public class StatisticAction extends ActionSupport{
 		this.statisticService = statisticService;
 	}
 
-
-
-
-
 	public StatisticPoliceCaseNumDTO getStatisticPoliceCaseNumDTO() {
 		return statisticPoliceCaseNumDTO;
 	}
 
 	public void setStatisticPoliceCaseNumDTO(StatisticPoliceCaseNumDTO statisticPoliceCaseNumDTO) {
 		this.statisticPoliceCaseNumDTO = statisticPoliceCaseNumDTO;
+	}
+
+	public StatisticCaseByPoliceDTO getStatisticCaseByPoliceDTO() {
+		return statisticCaseByPoliceDTO;
+	}
+
+	public void setStatisticCaseByPoliceDTO(StatisticCaseByPoliceDTO statisticCaseByPoliceDTO) {
+		this.statisticCaseByPoliceDTO = statisticCaseByPoliceDTO;
 	}
 
 }

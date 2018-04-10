@@ -27,7 +27,7 @@ public class page_eachPoliceCaseVO {
 	//警员id
 	private String police_id;
 	
-	private List caseListByPolice;
+	private List<StatisticCaseByPoliceDTO> caseListByPolice;
 
 	public int getCurrePage() {
 		return currePage;
@@ -109,11 +109,11 @@ public class page_eachPoliceCaseVO {
 		this.police_id = police_id;
 	}
 
-	public List getCaseListByPolice() {
+	public List<StatisticCaseByPoliceDTO> getCaseListByPolice() {
 		return caseListByPolice;
 	}
 
-	public void setCaseListByPolice(List caseListByPolice) {
+	public void setCaseListByPolice(List<StatisticCaseByPoliceDTO> caseListByPolice) {
 		this.caseListByPolice = caseListByPolice;
 	}
 

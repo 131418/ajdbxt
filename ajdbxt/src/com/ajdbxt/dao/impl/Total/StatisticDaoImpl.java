@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 
 import com.ajdbxt.dao.Total.StatisticDao;
 import com.ajdbxt.domain.DO.ajdbxt_police;
+import com.ajdbxt.domain.DTO.Total.StatisticCaseByPoliceDTO;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
 import com.ajdbxt.domain.VO.Total.page_listPoliceCaseNumByPageAndSearchVO;
 
@@ -70,12 +71,12 @@ public class StatisticDaoImpl implements StatisticDao {
 	 * 民警的案件列表
 	*/
 	@Override
-	public List getStatisticCaseList(page_eachPoliceCaseVO eachPoliceCaseVO) {
+	public List<StatisticCaseByPoliceDTO> getStatisticCaseList(page_eachPoliceCaseVO eachPoliceCaseVO) {
 		Session session=getSession();
-		List listPage=new ArrayList();
+		List<StatisticCaseByPoliceDTO> listPoliceCase=new ArrayList<StatisticCaseByPoliceDTO>();
 		String start_time = "0000-00-00";
 		String stop_time = "9999-99-99";
-		String hql="select ajdbxt_police.ajdbxt_police_id,ajdbxt_police.police_name,ajdbxt_info*,ajdbxt_process.process_case_id,ajdbxt_process.process_score"
+		String hql="select ajdbxt_police*,ajdbxt_info*,ajdbxt_process*"
 				+ "from ajdbxt_police,ajdbxt_info,ajdbxt_process "
 				+ "where ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_main_police "
 				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_one "
@@ -93,15 +94,14 @@ public class StatisticDaoImpl implements StatisticDao {
 			stop_time=eachPoliceCaseVO.getStop_time();
 		}
 		hql+="and eachPoliceCaseVO.getStop_time()>='"+start_time+"' and  eachPoliceCaseVO.getStop_time()<='"+stop_time+"'"
-				+ "order by ajdbxt_info.info_gmt_ceate desc";
+				+ "order by ajdbxt_info.info_gmt_ceate desc limit 1";
 		System.out.println(hql);
 		Query query=session.createQuery(hql);
-		query.setFirstResult(
-				(eachPoliceCaseVO.getCurrePage() - 1) * eachPoliceCaseVO.getPageSize());
+		query.setFirstResult((eachPoliceCaseVO.getCurrePage() - 1) * eachPoliceCaseVO.getPageSize());
 		query.setMaxResults(eachPoliceCaseVO.getPageSize());
-		listPage=query.list();
+		listPoliceCase=query.list();
 		session.clear();
-		return listPage;
+		return listPoliceCase;
 	}
 
 	/*
@@ -130,7 +130,7 @@ public class StatisticDaoImpl implements StatisticDao {
 			stop_time=eachPoliceCaseVO.getStop_time();
 		}
 		hql+="and eachPoliceCaseVO.getStop_time()>='"+start_time+"' and  eachPoliceCaseVO.getStop_time()<='"+stop_time+"'"
-				+ "order by ajdbxt_info.info_gmt_ceate desc";
+				+ "order by ajdbxt_info.info_gmt_ceate desc limit 1";
 		System.out.println(hql);
 		Query query=session.createQuery(hql);
 		lo=(long) query.uniqueResult();

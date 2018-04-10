@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ajdbxt.dao.Total.StatisticDao;
 import com.ajdbxt.domain.DO.ajdbxt_police;
+import com.ajdbxt.domain.DTO.Total.StatisticCaseByPoliceDTO;
 import com.ajdbxt.domain.DTO.Total.StatisticPoliceCaseNumDTO;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
 import com.ajdbxt.domain.VO.Total.page_listPoliceCaseNumByPageAndSearchVO;
@@ -64,7 +65,7 @@ public class StatisticServiceImpl implements StatisticService {
 	//警员案件分页
 	@Override
 	public page_eachPoliceCaseVO getPoliceCaseBYpageAndSearch(page_eachPoliceCaseVO listEachPoliceCaseVO) {
-		List list=new ArrayList();
+		List<StatisticCaseByPoliceDTO> list=new ArrayList<StatisticCaseByPoliceDTO>();
 		int i=statisticDao.getCaseRecords(listEachPoliceCaseVO);
 		listEachPoliceCaseVO.setTotalRecords(i);
 		listEachPoliceCaseVO.setTotalPages(((i-1)/listEachPoliceCaseVO.getPageSize())+1);
