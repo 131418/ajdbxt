@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.ajdbxt.domain.DTO.Total.StatisticPoliceCaseNumDTO;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
 import com.ajdbxt.domain.VO.Total.page_listPoliceCaseNumByPageAndSearchVO;
 import com.ajdbxt.service.Total.StatisticService;
@@ -15,11 +16,13 @@ public class StatisticAction {
 	private page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseByPageAndSearchVO;
 	private page_eachPoliceCaseVO listEachPoliceCaseVO;
 	private StatisticService statisticService;
+	private StatisticPoliceCaseNumDTO statisticPoliceCaseNumDTO;
 	
 	/*
 	 * 警员案件数量统计页面
 	*/
 	public String page_listPoliceCaseStatistics() {
+		System.out.println("运行了");
 		
 		return "page_listPoliceCaseStatistics";
 	}
@@ -90,6 +93,14 @@ public class StatisticAction {
 
 	public void setHttp_response(HttpServletResponse http_response) {
 		this.http_response = http_response;
+	}
+
+	public StatisticPoliceCaseNumDTO getStatisticPoliceCaseNumDTO() {
+		return statisticPoliceCaseNumDTO;
+	}
+
+	public void setStatisticPoliceCaseNumDTO(StatisticPoliceCaseNumDTO statisticPoliceCaseNumDTO) {
+		this.statisticPoliceCaseNumDTO = statisticPoliceCaseNumDTO;
 	}
 
 }
