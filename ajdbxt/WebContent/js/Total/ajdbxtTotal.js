@@ -86,15 +86,15 @@ function List_Total_By_Page(pageIndex) {
 		}
 	}
 	var formData = new FormData();
-	formData.append("page_listPoliceCaseNumByPageAndSearchVO.currePage",
+	formData.append("listPoliceCaseByPageAndSearchVO.currePage",
 			pageIndex);
-	formData.append("page_listPoliceCaseNumByPageAndSearchVO.searchPolice",
+	formData.append("listPoliceCaseByPageAndSearchVO.searchPolice",
 			input_Total_PoliceSearchText);
-	formData.append("page_listPoliceCaseNumByPageAndSearchVO.department",
+	formData.append("listPoliceCaseByPageAndSearchVO.department",
 			select_case_department);
-	formData.append("page_listPoliceCaseNumByPageAndSearchVO.start_time",
+	formData.append("listPoliceCaseByPageAndSearchVO.start_time",
 			select_start_time);
-	formData.append("page_listPoliceCaseNumByPageAndSearchVO.stop_time",
+	formData.append("listPoliceCaseByPageAndSearchVO.stop_time",
 			select_stop_time);
 	xhr.open("POST", "/ajdbxt/total/Total_getListPoliceCaseStatistics", "true");
 	xhr.send(formData);

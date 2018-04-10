@@ -1,8 +1,11 @@
 package com.ajdbxt.action.Total;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.ServletActionContext;
 
 import com.ajdbxt.domain.DTO.Total.StatisticPoliceCaseNumDTO;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
@@ -10,9 +13,13 @@ import com.ajdbxt.domain.VO.Total.page_listPoliceCaseNumByPageAndSearchVO;
 import com.ajdbxt.service.Total.StatisticService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
 
-public class StatisticAction {
-	private HttpServletResponse http_response;
+public class StatisticAction extends ActionSupport{
+	/**
+	 * 
+	 */
 	private page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseByPageAndSearchVO;
 	private page_eachPoliceCaseVO listEachPoliceCaseVO;
 	private StatisticService statisticService;
@@ -42,10 +49,15 @@ public class StatisticAction {
 		GsonBuilder gsonBuilder=new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();//格式化数据
 		Gson gson=gsonBuilder.create();
+		HttpServletResponse http_response;
 		listPoliceCaseByPageAndSearchVO=statisticService.getlistPoliceCaseByPageAndSearchVO(listPoliceCaseByPageAndSearchVO);
+		http_response =ServletActionContext.getResponse();
 		http_response.setCharacterEncoding("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(listPoliceCaseByPageAndSearchVO));
-		
+		System.out.println(gson.toJson(listPoliceCaseByPageAndSearchVO));
+		PrintWriter pw = http_response.getWriter();
+		pw.write(gson.toJson(listPoliceCaseByPageAndSearchVO));
+		pw.flush();
+		pw.close();
 	}
 	
 	/*
@@ -55,10 +67,15 @@ public class StatisticAction {
 		GsonBuilder gsonBuilder=new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();//格式化数据
 		Gson gson=gsonBuilder.create();
+		HttpServletResponse http_response;
+		http_response =ServletActionContext.getResponse();
 		listEachPoliceCaseVO=statisticService.getPoliceCaseBYpageAndSearch(listEachPoliceCaseVO);
 		http_response.setCharacterEncoding("text/html;charset=utf-8");
-		http_response.getWriter().write(gson.toJson(listEachPoliceCaseVO));
-		
+//		http_response.getWriter().write(gson.toJson(listEachPoliceCaseVO));
+		PrintWriter pw = http_response.getWriter();
+		pw.write(gson.toJson(listEachPoliceCaseVO));
+		pw.flush();
+		pw.close();
 	}
 	
 	
@@ -86,14 +103,8 @@ public class StatisticAction {
 	}
 
 
-	public HttpServletResponse getHttp_response() {
-		return http_response;
-	}
 
 
-	public void setHttp_response(HttpServletResponse http_response) {
-		this.http_response = http_response;
-	}
 
 	public StatisticPoliceCaseNumDTO getStatisticPoliceCaseNumDTO() {
 		return statisticPoliceCaseNumDTO;
