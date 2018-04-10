@@ -22,10 +22,9 @@
 	cursor: pointer;
 }
 
-.span_catagory{
+.span_catagory {
 	float: left;
-	margin:0 5px 0 0;
-	
+	margin: 0 5px 0 0;
 }
 </style>
 </head>
@@ -33,11 +32,11 @@
 <body>
 	<s:action name="User_navbar" namespace="/user" executeResult="true" />
 
-	<div style="margin: 80px 0 0 0;float: left; width: 100%;">
+	<div style="margin: 80px 0 0 0; float: left; width: 100%;">
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
-				<h3 class="panel-title">XXX人员</h3> 
+				<h3 class="panel-title">XXX人员</h3>
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
@@ -69,9 +68,9 @@
 								<!-- 检索 -->
 								<div class="input-group" style="width: 300px; float: right;">
 									<input id="input_Total_PoliceSearchText" class="form-control"
-										oninput="List_Total_By_Page(1)" type="text"
-										placeholder="搜索人员" /> <span class="input-group-addon"
-										style="border-radius: unset;"> <i class="fa fa-search"></i>
+										oninput="List_Total_By_Page(1)" type="text" placeholder="搜索人员" />
+									<span class="input-group-addon" style="border-radius: unset;">
+										<i class="fa fa-search"></i>
 									</span>
 								</div>
 							</div>
@@ -80,8 +79,11 @@
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
-									<th><select id="total_user" class="form-control">
-										</select></th>									
+										<th><select id="select_case_kind" class="form-control">
+												<option value="">所有类型</option>
+												<option value="adminCase">行政案件</option>
+												<option value="criminalCase">刑事案件</option>
+										</select></th>
 										<th>案件名</th>
 										<th>评分</th>
 										<th>主办民警</th>
@@ -126,7 +128,7 @@
 	<script type="text/javascript" src="<%=basePath%>js/laydate/laydate.js"></script>
 	<script src="/laydate/laydate.js"></script>
 	<script type="text/javascript"
-		src="<%=basePath%>js/Total/ajdbxtTotalUnit.js"></script>
+		src="<%=basePath%>js/Total/ajdbxtTotalUser.js"></script>
 	<script type="text/javascript">
 		List_Total_User_By_Page(1);
 	</script>
