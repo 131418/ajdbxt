@@ -45,14 +45,14 @@
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">按日期筛选：</span>
 									<input id="select_start_time" class="form-control mydate"
 										style="width: 150px; float: left; text-align: center;"
-										type="text" placeholder="起始时间" />
+										type="text" placeholder="起始时间" value="2018-04-05"/>
 									<%--  --%>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">至</span>
 									<!--  -->
 									<input id="select_stop_time" class="form-control mydate"
 										style="width: 150px; float: left; margin: 0 0 0 20px; text-align: center;"
-										type="text" placeholder="结束时间" />
+										type="text" placeholder="结束时间" value="2018-04-09" />
 									<%--  --%>
 								</div>
 								<!-- 检索 -->
