@@ -145,8 +145,6 @@ function List_Index_CaseInfo_By_Page(pageIndex){
 		}else{
 			return;
 		}
-		console.log("pageIndex:" + pageIndex);
-		formData.append("infoVO.currPage", type_chose);
 		xhr.open("POST", "/ajdbxt/process/getInfoProcessAction");
 		xhr.send(formData);
 

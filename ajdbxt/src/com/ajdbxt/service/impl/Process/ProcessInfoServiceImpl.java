@@ -20,6 +20,7 @@ public class ProcessInfoServiceImpl implements ProcessInfoService {
 	@Override
 	public String getInfoList(int check_end_score_question ,String police_id,Page_list_caseInfoVo infoVO) {
 		List<ajdbxt_info> list;
+		System.out.println(infoVO);
 		int length=infoVO.getPageSize();
 		int nowPage=(infoVO.getCurrPage()-1)*length;
 		int countList=0;
