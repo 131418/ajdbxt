@@ -68,12 +68,12 @@
 								</div>
 								<!-- 检索 -->
 								<div class="input-group" style="width: 300px; float: right;">
-									<input id="input_DNASearchText" class="form-control"
-										oninput="List_DNA_By_PageAndSearch(1)" type="text"> <span
-										class="input-group-addon"> <i class="fa fa-search"></i>
+									<input id="input_Total_PoliceSearchText" class="form-control"
+										oninput="List_Total_By_Page(1)" type="text"
+										placeholder="搜索人员" /> <span class="input-group-addon"
+										style="border-radius: unset;"> <i class="fa fa-search"></i>
 									</span>
 								</div>
-
 							</div>
 
 							<table id="table_total" class="table table-hover table-bordered"
@@ -128,7 +128,7 @@
 	<script type="text/javascript"
 		src="<%=basePath%>js/Total/ajdbxtTotalUnit.js"></script>
 	<script type="text/javascript">
-		List_Total_By_Page(1);
+		List_Total_User_By_Page(1);
 	</script>
 	<script type="text/javascript">
 		$.datetimepicker.setLocale('ch');

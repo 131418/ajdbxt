@@ -1,6 +1,6 @@
 var xhr;
 var total_vo = null;
-function List_Total_By_Page(pageIndex) {
+function List_Total_User_By_Page(pageIndex) {
 	var input_Total_PoliceSearchText = document
 			.getElementById("input_Total_PoliceSearchText").value;
 	getXMLHttp();
@@ -34,35 +34,40 @@ function List_Total_By_Page(pageIndex) {
 					new_tr.appendChild(document.createTextNode(''));
 					table_total.firstElementChild.appendChild(new_tr);
 					/*
-					 * 1. 办案单位
+					 * 1. 所有類型
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
 					new_td.innerHTML = total_vo.list[num].department;
 
 					/*
-					 * 2. 人员
+					 * 2. 案件名
 					 */
 					new_td = document.createElement("td");
 					new_a = document.createElement("a");
-				/*	<new_a href="<%=basePath%>total/Total_"page_listPoliceCase"" >*/
 					new_td.appendChild(new_a);
 					new_tr.appendChild(new_td);
 					new_a.innerHTML = total_vo.list[num].police_id;
 					new_a.style.cursor = "pointer";
-					
 					/*
-					 * 3. 行政案件
+					 * 3. 評分
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
 					new_td.innerHTML = total_vo.list[num].adminCase;
 					/*
-					 * 4. 刑事案件
+					 * 4. 主辦民警
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
 					new_td.innerHTML = total_vo.list[num].criminalCase;
+					/*
+					 * 5. 主辦民警
+					 */
+					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.innerHTML = total_vo.list[num].criminalCase;
+
 
 					/* 加载图标 */
 					var i_pulse = document.getElementById("i_pulse");
@@ -84,7 +89,7 @@ function List_Total_By_Page(pageIndex) {
 	formData.append("page_listPoliceCaseNumByPageAndSearchVO.searchPolice",input_Total_PoliceSearchText);
 	formData.append("page_listPoliceCaseNumByPageAndSearchVO.start_time", select_start_time);
 	formData.append("page_listPoliceCaseNumByPageAndSearchVO.stop_time", select_stop_time);
-	xhr.open("POST", "/ajdbxt/total/Total_getListPoliceCaseStatistics", "true");
+	xhr.open("POST", "/ajdbxt/total/Total_getListPoiceCase", "true");
 	xhr.send(formData);
 }
 /*
