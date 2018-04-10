@@ -86,13 +86,13 @@ function List_Total_User_By_Page(pageIndex) {
 		}
 	}
 	var formData = new FormData();
-	formData.append("page_eachPoliceCaseVO.currePage", pageIndex);
-	formData.append("page_listPoliceCaseNumByPageAndSearchVO.searchPolice",input_Total_PoliceSearchText);
+	formData.append("listEachPoliceCaseVO.currePage", pageIndex);
+	formData.append("listPoliceCaseByPageAndSearchVO.searchPolice",input_Total_PoliceSearchText);
 	formData.append("caseInfo.info_category",select_case_kind);//要确认！
 	formData.append("StatisticPoliceCaseNumDTO.adminCase",adminCase);
 	formData.append("StatisticPoliceCaseNumDTO.criminalCase",criminalCase);
-	formData.append("page_eachPoliceCaseVO.start_time", select_start_time);
-	formData.append("page_eachPoliceCaseVO.stop_time", select_stop_time);
+	formData.append("listEachPoliceCaseVO.start_time", select_start_time);
+	formData.append("listEachPoliceCaseVO.stop_time", select_stop_time);
 	xhr.open("POST", "/ajdbxt/total/Total_getListPoiceCase", "true");
 	xhr.send(formData);
 }
