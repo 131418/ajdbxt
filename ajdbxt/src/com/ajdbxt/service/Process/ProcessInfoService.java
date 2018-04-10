@@ -11,3 +11,4 @@ public interface ProcessInfoService {
 	public String getInfoList(int check_end_score_question ,String police_id,Page_list_caseInfoVo infoVO);
 	public ajdbxt_info getSingleInfo(String process_id);
 }
+

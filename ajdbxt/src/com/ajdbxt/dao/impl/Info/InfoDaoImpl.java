@@ -105,7 +105,9 @@ public class InfoDaoImpl implements InfoDao {
 		cri.setFirstResult(start);
 //		cri.setFetchSize(length);
 		cri.setMaxResults(length);
+
 		cri.addOrder(Order.desc("info_gmt_modify"));
+
 		return cri.list();
 	}
 
