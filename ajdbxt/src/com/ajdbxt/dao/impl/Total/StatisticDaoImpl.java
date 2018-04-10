@@ -49,7 +49,7 @@ public class StatisticDaoImpl implements StatisticDao {
 		}
 		hql+="and info_gmt_ceate >='"+start_time+"' and info_gmt_ceate <='"+stop_time+"'";
 		Query query=session.createQuery(hql);
-		System.out.println(hql);
+		System.out.println("统计案件数量"+hql);
 		i=(Long) query.uniqueResult();
 		return i.intValue();
 	}
