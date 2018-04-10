@@ -12,7 +12,17 @@
 
 <title>统计</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+#table_total tbody tr {
+	text-align: center;
+}
+
+#page_flip span a:hover,#select_start_time, #select_stop_time{
+	cursor: pointer;
+}
+</style>
 </head>
+
 <body>
 
 	<s:action name="User_navbar" namespace="/user" executeResult="true" />
@@ -35,21 +45,22 @@
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">按日期筛选：</span>
 									<input id="select_start_time" class="form-control mydate"
 										style="width: 150px; float: left; text-align: center;"
-										type="text">
+										type="text" placeholder="起始时间" />
 									<%--  --%>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">至</span>
 									<!--  -->
 									<input id="select_stop_time" class="form-control mydate"
 										style="width: 150px; float: left; margin: 0 0 0 20px; text-align: center;"
-										type="text">
+										type="text" placeholder="结束时间" />
 									<%--  --%>
 								</div>
 								<!-- 检索 -->
 								<div class="input-group" style="width: 300px; float: right;">
-									<input id="input_DNASearchText" class="form-control"
-										oninput="List_DNA_By_PageAndSearch(1)" type="text"> <span
-										class="input-group-addon"> <i class="fa fa-search"></i>
+									<input id="input_Total_PoliceSearchText" class="form-control"
+										oninput="List_Total_By_Page(1)" type="text"
+										placeholder="搜索人员" /> <span class="input-group-addon"
+										style="border-radius: unset;"> <i class="fa fa-search"></i>
 									</span>
 								</div>
 							</div>
@@ -58,7 +69,7 @@
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
-										<th><select id="case_department" class="form-control">
+										<th><select id="select_case_department" style="width:70%;margin:0 auto;" class="form-control">
 										</select></th>
 										<th>人员</th>
 										<th>行政案件</th>
@@ -105,9 +116,34 @@
 	<script src="/laydate/laydate.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>js/Total/ajdbxtTotal.js"></script>
+		
+		<script type="text/javascript">
+		$(function(){
+			$
+					.post(
+							'/ajdbxt/user/User_findDepartmentByPage',
+							function(Department_data) {
+								// 所有案件循环
+								var option = '';
+								for (var len = 0; len < Department_data.list.length; len++) {
+									option += '<option ';
+									option += ' value="'
+											+ Department_data.list[len].department_name
+											+ '">'
+											+ Department_data.list[len].department_name
+											+ '</option>';
+								}
+								$('#select_case_department').html(
+										'<option selected="selected" value="">所有单位</option>'
+												+ option);
+							}, 'json');
+		});
+		
+		</script>
 	<script type="text/javascript">
 		List_Total_By_Page(1);
 	</script>
+	
 	<script type="text/javascript">
 		$.datetimepicker.setLocale('ch');
 		$('.mydate').datetimepicker({
