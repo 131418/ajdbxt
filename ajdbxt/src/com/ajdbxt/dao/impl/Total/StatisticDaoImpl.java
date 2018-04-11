@@ -80,7 +80,7 @@ public class StatisticDaoImpl implements StatisticDao {
 				+ "from ajdbxt_police,ajdbxt_info,ajdbxt_process "
 				+ "where ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_main_police "
 				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_one "
-				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_two"
+				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_two "
 				+ "and ajdbxt_info.ajdbxt_info_id=ajdbxt_process.process_case_id and ajdbxt_police.ajdbxt_police_id='"+eachPoliceCaseVO.getPolice_id()+"'";
 		if(eachPoliceCaseVO.getQueryCaseName() !=null && eachPoliceCaseVO.getQueryCaseName().trim().length()>0) {
 			String info_name ="%" + eachPoliceCaseVO.getQueryCaseName().trim()+ "%";
@@ -116,7 +116,7 @@ public class StatisticDaoImpl implements StatisticDao {
 		String hql="select count(*) from ajdbxt_police,ajdbxt_info,ajdbxt_process "
 				+ "where ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_main_police "
 				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_one "
-				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_two"
+				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_two "
 				+ "and ajdbxt_info.ajdbxt_info_id=ajdbxt_process.process_case_id and ajdbxt_police.ajdbxt_police_id='"+eachPoliceCaseVO.getPolice_id()+"'";
 		if(eachPoliceCaseVO.getQueryCaseName() !=null && eachPoliceCaseVO.getQueryCaseName().trim().length()>0) {
 			String info_name ="%" + eachPoliceCaseVO.getQueryCaseName().trim()+ "%";
