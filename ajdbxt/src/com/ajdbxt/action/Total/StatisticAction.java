@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.ajdbxt.domain.DTO.Total.StatisticCaseByPoliceDTO;
 import com.ajdbxt.domain.DTO.Total.StatisticPoliceCaseNumDTO;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
 import com.ajdbxt.domain.VO.Total.page_listPoliceCaseNumByPageAndSearchVO;
@@ -24,12 +25,12 @@ public class StatisticAction extends ActionSupport{
 	private page_eachPoliceCaseVO listEachPoliceCaseVO;
 	private StatisticService statisticService;
 	private StatisticPoliceCaseNumDTO statisticPoliceCaseNumDTO;
+	private StatisticCaseByPoliceDTO  statisticCaseByPoliceDTO;
 	
 	/*
 	 * 警员案件数量统计页面
 	*/
 	public String page_listPoliceCaseStatistics() {
-		System.out.println("运行了");
 		
 		return "page_listPoliceCaseStatistics";
 	}
@@ -52,7 +53,7 @@ public class StatisticAction extends ActionSupport{
 		HttpServletResponse http_response;
 		listPoliceCaseByPageAndSearchVO=statisticService.getlistPoliceCaseByPageAndSearchVO(listPoliceCaseByPageAndSearchVO);
 		http_response =ServletActionContext.getResponse();
-		http_response.setCharacterEncoding("text/html;charset=utf-8");
+		http_response.setContentType("text/html;charset=utf-8");
 		System.out.println(gson.toJson(listPoliceCaseByPageAndSearchVO));
 		PrintWriter pw = http_response.getWriter();
 		pw.write(gson.toJson(listPoliceCaseByPageAndSearchVO));
@@ -70,7 +71,7 @@ public class StatisticAction extends ActionSupport{
 		HttpServletResponse http_response;
 		http_response =ServletActionContext.getResponse();
 		listEachPoliceCaseVO=statisticService.getPoliceCaseBYpageAndSearch(listEachPoliceCaseVO);
-		http_response.setCharacterEncoding("text/html;charset=utf-8");
+		http_response.setContentType("text/html;charset=utf-8");
 //		http_response.getWriter().write(gson.toJson(listEachPoliceCaseVO));
 		PrintWriter pw = http_response.getWriter();
 		pw.write(gson.toJson(listEachPoliceCaseVO));
@@ -102,16 +103,20 @@ public class StatisticAction extends ActionSupport{
 		this.statisticService = statisticService;
 	}
 
-
-
-
-
 	public StatisticPoliceCaseNumDTO getStatisticPoliceCaseNumDTO() {
 		return statisticPoliceCaseNumDTO;
 	}
 
 	public void setStatisticPoliceCaseNumDTO(StatisticPoliceCaseNumDTO statisticPoliceCaseNumDTO) {
 		this.statisticPoliceCaseNumDTO = statisticPoliceCaseNumDTO;
+	}
+
+	public StatisticCaseByPoliceDTO getStatisticCaseByPoliceDTO() {
+		return statisticCaseByPoliceDTO;
+	}
+
+	public void setStatisticCaseByPoliceDTO(StatisticCaseByPoliceDTO statisticCaseByPoliceDTO) {
+		this.statisticCaseByPoliceDTO = statisticCaseByPoliceDTO;
 	}
 
 }

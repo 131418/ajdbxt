@@ -8,6 +8,7 @@ public class StatisticCaseByPoliceDTO {
 	private ajdbxt_police police;
 	private ajdbxt_info caseInfo;
 	private ajdbxt_process caseProcess;
+	
 	public ajdbxt_police getPolice() {
 		return police;
 	}
