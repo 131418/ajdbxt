@@ -9,8 +9,8 @@ public class page_listPoliceCaseNumByPageAndSearchVO {
 			private int currePage = 1;
 		    //总记录数
 			private int totalRecords = 0;
-		    //每页显示的页数
-			private int pageSize = 20;
+		    //每页显示的记录数
+			private int pageSize = 10;
 			// 总页数
 			private int totalPages = 1;
 			// 上一页
