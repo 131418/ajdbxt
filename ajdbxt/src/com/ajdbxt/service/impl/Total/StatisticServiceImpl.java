@@ -32,19 +32,6 @@ public class StatisticServiceImpl implements StatisticService {
 			list.add(statisticPoliceNumDTO);
 		}
 		System.out.println("执行了赋值操作");
-		
-		/*if(listPoliceCaseNumByPageAndSearchVO.getSearchPolice() !=null && listPoliceCaseNumByPageAndSearchVO.getSearchPolice().length()>0) {
-			for(StatisticPoliceCaseNumDTO listDto : list) {
-				if(listDto.getPolice().getPolice_name().contains(listPoliceCaseNumByPageAndSearchVO.getSearchPolice())) {
-					System.out.println(listDto.getPolice().getPolice_name());
-					//警员名字变红
-				}else {
-					
-					list.remove(listDto);
-				}
-				
-			}
-		}*/
 		 
 		
 		//分页
