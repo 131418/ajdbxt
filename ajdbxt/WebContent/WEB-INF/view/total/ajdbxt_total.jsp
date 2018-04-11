@@ -65,11 +65,11 @@
 								</div>
 							</div>
 
-							<table id="table_total" class="table table-hover table-bordered"
+							<table id="table_total" class="table table-hover "
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
-										<th><select id="select_case_department" style="width:70%;margin:0 auto;" class="form-control" onchange="	List_Total_By_Page(1)">
+										<th><select id="select_case_department" style="width:70%;margin:0 auto;" class="form-control" onchange="List_Total_By_Page(1)">
 										</select></th>
 										<th>人员</th>
 										<th>行政案件</th>
