@@ -136,7 +136,7 @@ function flip(flipPage) {
 		break;
 	}
 
-	}
+	}  
 }
 
 function getXMLHttp() {
