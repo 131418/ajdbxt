@@ -94,6 +94,9 @@ public class ProcessInfoServiceImpl implements ProcessInfoService {
 			case_list.add(processInfo);
 		}
 		pages=countList/length;
+		if(countList%length>0) {
+			pages++;
+		}
 		infoVO.setCountRecords(countList);
 		infoVO.setTotalPages(pages);
 		infoVO.setCaselist(case_list);
