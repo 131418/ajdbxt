@@ -294,5 +294,10 @@ public class InfoServiceImpl implements InfoService {
 		processInfoDTO.setPolice(policeList);
 		return processInfoDTO;
 	}
+	@Override
+	public String getPolices(String info_department) {
+		List list=infoPoliceDao.findPoliceByDepartment(info_department);
+		return JsonUtils.toJson(list);
+	}
 	
 }

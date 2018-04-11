@@ -170,6 +170,17 @@ public class InfoAction extends ActionSupport {
 		}
 		infoService.updateCase(info);
 	}
+	/**
+	 * 得到同部门的警察
+	 */
+	public void getPolices() {
+		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+		try {
+			ServletActionContext.getResponse().getWriter().print(infoService.getPolices(info.getInfo_department()));
+		} catch (IOException e) {
+			new RuntimeException(e);
+		}
+	}
 	private void noLogin() {
 		if(ActionContext.getContext().getSession().get("loginPolice")==null) {
 			try {
