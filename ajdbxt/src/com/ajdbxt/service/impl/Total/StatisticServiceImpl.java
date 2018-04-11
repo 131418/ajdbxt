@@ -51,7 +51,13 @@ public class StatisticServiceImpl implements StatisticService {
 		List<StatisticPoliceCaseNumDTO> newlist=new ArrayList<StatisticPoliceCaseNumDTO>();
 		for(int i=(listPoliceCaseNumByPageAndSearchVO.getCurrePage()-1);
 				i<(listPoliceCaseNumByPageAndSearchVO.getCurrePage()+listPoliceCaseNumByPageAndSearchVO.getPageSize());i++){
+			System.out.println(i);
+			System.out.println(list.size());
+				if(i<list.size()) {
 					newlist.add(list.get(i));
+				}else {
+					break;
+				}
 		}
 		
 		listPoliceCaseNumByPageAndSearchVO.setStatisticPoliceCaseNumDTO(newlist);
