@@ -12,6 +12,7 @@ function List_Total_User_By_Page(pageIndex) {
 		if (xhr.readyState == 4) {
 			if (xhr.status == 200) {
 				total_vo = JSON.parse(xhr.responseText);
+				console.log("xhr.total_vo:" + xhr.responseText);
 				var new_tr = null;
 				var new_td = null;
 				var ner_a = null;
@@ -32,7 +33,7 @@ function List_Total_User_By_Page(pageIndex) {
 				/*
 				 * 将数据库的数据取出来放到表格里
 				 */
-				for (var num = 0; num < total_vo.list.length; num++) {
+				for (var num = 0; num < total_vo.caseListByPolice.length; num++) {
 					new_tr = document.createElement("tr");
 					new_tr.className = "new_tr";
 					new_tr.appendChild(document.createTextNode(''));

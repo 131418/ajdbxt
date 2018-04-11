@@ -116,7 +116,6 @@ public class page_listPoliceCaseNumByPageAndSearchVO {
 			public void setSearchPolice(String searchPolice) {
 				this.searchPolice = searchPolice;
 			}
-
 			
 			
 			
