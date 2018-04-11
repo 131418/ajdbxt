@@ -6,4 +6,5 @@ import com.ajdbxt.domain.DO.ajdbxt_department;
 
 public interface InfoDepartmentDao {
 	public List<ajdbxt_department> findAllDepartment();
+	public ajdbxt_department findDepartmentById(String department_id);
 }
