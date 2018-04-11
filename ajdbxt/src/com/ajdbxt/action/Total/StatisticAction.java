@@ -55,6 +55,7 @@ public class StatisticAction extends ActionSupport{
 		http_response =ServletActionContext.getResponse();
 		http_response.setContentType("text/html;charset=utf-8");
 		System.out.println(gson.toJson(listPoliceCaseByPageAndSearchVO));
+		System.out.println(listPoliceCaseByPageAndSearchVO.getSearchPolice()+"查询姓名");
 		PrintWriter pw = http_response.getWriter();
 		pw.write(gson.toJson(listPoliceCaseByPageAndSearchVO));
 		pw.flush();
