@@ -8,6 +8,7 @@ import com.ajdbxt.dao.Info.InfoDao;
 import com.ajdbxt.dao.Info.InfoDepartmentDao;
 import com.ajdbxt.dao.Info.InfoPoliceDao;
 import com.ajdbxt.dao.Process.ProcessDao;
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.DTO.Process.ProcessInfoDTO;
@@ -28,7 +29,6 @@ public class InfoServiceImpl implements InfoService {
 	public InfoDepartmentDao getInfoDepartmentDao() {
 		return infoDepartmentDao;
 	}
-
 	public void setInfoDepartmentDao(InfoDepartmentDao infoDepartmentDao) {
 		this.infoDepartmentDao = infoDepartmentDao;
 	}
@@ -215,56 +215,13 @@ public class InfoServiceImpl implements InfoService {
 	
 	@Override
 	public void updateCase(ajdbxt_info caseInfo) {
-		// TODO Auto-generated method stub
 		caseInfo.setInfo_gmt_modify(util.Time.getStringSecond());
 		infoDao.updateCase(caseInfo);
-		
 	}
 
 	@Override
 	public void deleteCase(String caseInfo_id) {
-		// TODO Auto-generated method stub
 		infoDao.deleteCase(caseInfo_id);
-	}
-
-//	@Override
-//	public Page_list_caseInfoVo showCaseList(Page_list_caseInfoVo page_list_caseInfoVo) {
-//		List<ajdbxt_info> listCase=new ArrayList<ajdbxt_info>();
-//		int totalRecords=caseInfoDao.getTotalCase(page_list_caseInfoVo);
-//		Page_list_caseInfoVo caseInfoVo=new Page_list_caseInfoVo();
-//		caseInfoVo.setCurrPage(page_list_caseInfoVo.getCurrPage());
-//		caseInfoVo.setPageSize(page_list_caseInfoVo.getPageSize());
-//		caseInfoVo.setCountRecords(totalRecords);
-//		
-//		caseInfoVo.setTotalPages((int)Math.ceil((totalRecords)/(page_list_caseInfoVo.getPageSize())));
-//		if(page_list_caseInfoVo.getCurrPage()<=1) {
-//			page_list_caseInfoVo.setHavePrePage(false);
-//		}else {
-//			page_list_caseInfoVo.setHavePrePage(true);
-//		}
-//		
-//		if(page_list_caseInfoVo.getCurrPage()>=page_list_caseInfoVo.getTotalPages()) {
-//			page_list_caseInfoVo.setHaveNexPage(false);
-//		}else {
-//			page_list_caseInfoVo.setHaveNexPage(true);
-//		}
-//		
-//		listCase=caseInfoDao.getCaseByPage(page_list_caseInfoVo);
-//		page_list_caseInfoVo.setCaselist(listCase);
-//		
-//		return page_list_caseInfoVo;
-//	}
-
-	@Override
-	public ajdbxt_info findOneCase(ajdbxt_info caseInfo) {
-		// TODO Auto-generated method stub
-		return infoDao.findOneCase(caseInfo);
-	}
-
-	@Override
-	public Page_list_caseInfoVo showCaseList(Page_list_caseInfoVo page_list_caseInfoVo) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -318,6 +275,24 @@ public class InfoServiceImpl implements InfoService {
 		lalVO.setLeaders(infoPoliceDao.findLeaders());
 		lalVO.setDepartments(infoDepartmentDao.findAllDepartment());
 		return JsonUtils.toJson(lalVO);
+	}
+
+	@Override
+	public ProcessInfoDTO getSingleInfo(String info_id) {
+		ajdbxt_info info=infoDao.findCaseById(info_id);
+		ajdbxt_department department=infoDepartmentDao.findDepartmentById(info.getInfo_department());
+		ProcessInfoDTO processInfoDTO=new ProcessInfoDTO();
+		processInfoDTO.setInfo(info);
+		processInfoDTO.setDepartment(department);
+		List<ajdbxt_police> policeList=new ArrayList<ajdbxt_police>();
+		policeList.add(infoPoliceDao.findPoliceById(info.getInfo_main_police()));
+		policeList.add(infoPoliceDao.findPoliceById(info.getInfo_assistant_police_one()));
+		String three=info.getInfo_assistant_police_two();
+		if(three!=null&&three.isEmpty()==false) {
+			policeList.add(infoPoliceDao.findPoliceById(three));
+		}
+		processInfoDTO.setPolice(policeList);
+		return processInfoDTO;
 	}
 	
 }

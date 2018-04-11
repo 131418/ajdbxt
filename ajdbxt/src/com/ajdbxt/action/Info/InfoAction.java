@@ -1,12 +1,18 @@
 package com.ajdbxt.action.Info;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+
 import org.apache.struts2.ServletActionContext;
 import com.ajdbxt.domain.DO.ajdbxt_info;
+import com.ajdbxt.domain.DO.ajdbxt_process;
+import com.ajdbxt.domain.DTO.Process.ProcessInfoDTO;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.service.Info.InfoService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+
+import util.JsonUtils;
 
 public class InfoAction extends ActionSupport {
 	private ajdbxt_info info;
@@ -109,7 +115,61 @@ public class InfoAction extends ActionSupport {
 	public void add() {
 		noLogin();
 	}
-
+	
+	/**
+	 * 得到单个案件信息、
+	 * @param info.ajxdbxt_info_id
+	 */
+	public void getSingleInfo() {
+		ProcessInfoDTO processInfoDTO =infoService.getSingleInfo(info.getAjdbxt_info_id());
+		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+		String json=JsonUtils.toJson(processInfoDTO);
+		try {
+			ServletActionContext.getResponse().getWriter().print(json);
+		} catch (IOException e) {
+			new RuntimeException(e);
+			System.out.println(e.getMessage());
+		}
+	}
+	/**
+	 * 删除单个案件信息
+	 * @param info.ajxdbxt_info_id
+	 */
+	public void delete() {
+		infoService.deleteCase(info.getAjdbxt_info_id());
+	}
+	/**
+	 * 更新案件信息
+	 * @param 修改后的info的所有
+	 */
+	public void update() {
+		ProcessInfoDTO getProcessDTO=infoService.getSingleInfo(info.getAjdbxt_info_id());
+		ajdbxt_info getInfo=getProcessDTO.getInfo();
+		int send_massage_type=0;
+		Class clazz=info.getClass();
+		Field [] f= clazz.getDeclaredFields();
+		for(Field field: f){
+			field.setAccessible(true);
+			try {
+				Object o =field.get(info);
+				if(o!=null) {
+					field.set(getInfo, o);
+//					switch (field.getName()) {
+//						case "process_case_goods":
+//							send_massage_type=MsgSend.CANCEL_DISPATCH;
+//							break;
+//	
+//						case "process_penalty":
+//						case ""
+//							break;
+//					}
+				}
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		infoService.updateCase(info);
+	}
 	private void noLogin() {
 		if(ActionContext.getContext().getSession().get("loginPolice")==null) {
 			try {
