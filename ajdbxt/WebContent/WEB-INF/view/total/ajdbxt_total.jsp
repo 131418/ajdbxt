@@ -45,7 +45,7 @@
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">按日期筛选：</span>
 									<input id="select_start_time" class="form-control mydate"
 										style="width: 150px; float: left; text-align: center;"
-										type="text" placeholder="起始时间"  onchange="List_Total_By_Page(1)" value="2018-1-1" />
+										type="text" placeholder="起始时间"  onchange="List_Total_By_Page(1)" value="2018-01-01" />
 									<%--  --%>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">至</span>
