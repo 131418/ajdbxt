@@ -24,6 +24,14 @@ public class ProcessAction  extends ActionSupport{
 	private ProcessInfoService processInfoService;
 	private showProcessVO processVO;
 	private Page_list_caseInfoVo infoVO;
+	public Page_list_caseInfoVo getInfoVO() {
+		return infoVO;
+	}
+
+	public void setInfoVO(Page_list_caseInfoVo infoVO) {
+		this.infoVO = infoVO;
+	}
+
 	public showProcessVO getProcessVO() {
 		return processVO;
 	}
@@ -71,9 +79,9 @@ public class ProcessAction  extends ActionSupport{
 		Object o =ActionContext.getContext().getSession().get("loginPolice");//得到该警察
 		ajdbxt_police police=(ajdbxt_police)o;
 		String police_id=police.getAjdbxt_police_id();
-		String json="";
+		String json="";		
 		if(ajdbxtProcess.getProcess_case_end()!=null&&!ajdbxtProcess.getProcess_case_end().equals("true")) {
-			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id,infoVO );
+			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id,infoVO);
 		}else if(ajdbxtProcess.getProcess_captain_check()!=null&&!ajdbxtProcess.getProcess_captain_check().equals("true")){
 			json=processInfoService.getInfoList(ProcessInfoService.CAPTAIN_CHECK, police_id,infoVO);
 		}else if(ajdbxtProcess.getProcess_score()!=null&&!ajdbxtProcess.getProcess_score().equals("true")){
@@ -151,9 +159,11 @@ public class ProcessAction  extends ActionSupport{
 
 	public void findSome() {
 		noLogin();
+		String json="";
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		try {
-			ServletActionContext.getResponse().getWriter().print(processService.getSomeProcessByShowProcessVO(processVO));
+			json=JsonUtils.toJson(processService.getSomeProcessByShowProcessVO(processVO));
+			ServletActionContext.getResponse().getWriter().print(json);
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}

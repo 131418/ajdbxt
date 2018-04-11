@@ -3,15 +3,20 @@ package com.ajdbxt.domain.VO.Info;
 import java.util.List;
 
 import com.ajdbxt.domain.DO.ajdbxt_info;
+import com.ajdbxt.domain.DTO.Process.ProcessInfoDTO;
 
 public class Page_list_caseInfoVo {
 	private int currPage=1;
 	private int totalPages=1;
 	private int countRecords=0;
 	private int pageSize=10;
-	private boolean havePrePage=false;
-	private boolean haveNexPage=false;
-	private List<ajdbxt_info> Caselist;
+	public List<ProcessInfoDTO> getCaselist() {
+		return Caselist;
+	}
+	public void setCaselist(List<ProcessInfoDTO> caselist) {
+		Caselist = caselist;
+	}
+	private List<ProcessInfoDTO> Caselist;
 	
 	
 	public int getCurrPage() {
@@ -38,24 +43,7 @@ public class Page_list_caseInfoVo {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
-	public boolean isHavePrePage() {
-		return havePrePage;
-	}
-	public void setHavePrePage(boolean havePrePage) {
-		this.havePrePage = havePrePage;
-	}
-	public boolean isHaveNexPage() {
-		return haveNexPage;
-	}
-	public void setHaveNexPage(boolean haveNexPage) {
-		this.haveNexPage = haveNexPage;
-	}
-	public List<ajdbxt_info> getCaselist() {
-		return Caselist;
-	}
-	public void setCaselist(List<ajdbxt_info> caselist) {
-		Caselist = caselist;
-	}
+	
 	
 
 }
