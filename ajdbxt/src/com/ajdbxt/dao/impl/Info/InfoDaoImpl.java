@@ -41,20 +41,10 @@ public class InfoDaoImpl implements InfoDao {
 
 	@Override
 	public void saveCase(ajdbxt_info caseInfo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int findTotalCase(Page_list_caseInfoVo page_list_caseInfoVo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<ajdbxt_info> findCaseByPage(Page_list_caseInfoVo page_list_caseInfoVo) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session=this.getSession();
+		session.saveOrUpdate(caseInfo);
+		session.flush();
+		session.clear();
 	}
 
 	@Override
