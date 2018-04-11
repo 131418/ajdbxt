@@ -45,14 +45,14 @@
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">按日期筛选：</span>
 									<input id="select_start_time" class="form-control mydate"
 										style="width: 150px; float: left; text-align: center;"
-										type="text" placeholder="起始时间" value="2018-04-05"/>
+										type="text" placeholder="起始时间" />
 									<%--  --%>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">至</span>
 									<!--  -->
 									<input id="select_stop_time" class="form-control mydate"
 										style="width: 150px; float: left; margin: 0 0 0 20px; text-align: center;"
-										type="text" placeholder="结束时间" value="2018-04-09" />
+										type="text" placeholder="结束时间"  />
 									<%--  --%>
 								</div>
 								<!-- 检索 -->
@@ -140,6 +140,21 @@
 		
 		</script>
 	<script type="text/javascript">
+	var select_start_time = document.getElementById("select_start_time");
+	var select_stop_time = document.getElementById("select_stop_time");
+	var str='';
+	var now_date=new Date();
+	var now_date_year=now_date.getFullYear();
+	str+=now_date_year;
+	var now_date_month=now_date.getMonth()+1;
+	str+="-"+now_date_month;
+	var now_date_date=now_date.getDate();
+	str+="-"+now_date_date;
+	console.log("str:"+str);
+	select_start_time.value=str;
+	select_stop_time.value=str;
+	console.log("select_start_time1:" + select_start_time.value);
+	console.log("select_stop_time1:" + select_stop_time.value);
 		List_Total_By_Page(1);
 	</script>
 	

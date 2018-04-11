@@ -1,16 +1,17 @@
 var xhr;
 var total_vo = null;
 
-
 function List_Total_By_Page(pageIndex) {
+	var select_start_time = document.getElementById("select_start_time");
+	var select_stop_time = document.getElementById("select_stop_time");
+	console.log("select_start_time2:" + select_start_time.value);
+	console.log("select_stop_time2:" + select_stop_time.value);
 	var input_Total_PoliceSearchText = document
 			.getElementById("input_Total_PoliceSearchText").value;
 	var select_case_department = document.getElementById("select_case_department").value;
-	var select_start_time = document.getElementById("select_start_time").value;
-	var select_stop_time = document.getElementById("select_stop_time").value;
+	
 	console.log("select_case_department:" + select_case_department);
-	console.log("select_start_time:" + select_start_time);
-	console.log("select_stop_time:" + select_stop_time);
+	
 
 	getXMLHttp();
 	xhr.onreadystatechange = function() {
@@ -94,9 +95,9 @@ function List_Total_By_Page(pageIndex) {
 	formData.append("listPoliceCaseByPageAndSearchVO.department",
 			select_case_department);
 	formData.append("listPoliceCaseByPageAndSearchVO.start_time",
-			select_start_time);
+			select_start_time.value);
 	formData.append("listPoliceCaseByPageAndSearchVO.stop_time",
-			select_stop_time);
+			select_stop_time.value);
 	xhr.open("POST", "/ajdbxt/total/Total_getListPoliceCaseStatistics", "true");
 	xhr.send(formData);
 }
