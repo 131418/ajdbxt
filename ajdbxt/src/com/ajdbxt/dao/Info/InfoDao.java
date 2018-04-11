@@ -19,10 +19,6 @@ public interface InfoDao {
 	
 	public ajdbxt_info findCaseById(String info_id);
 	
-	public ajdbxt_info findOneCase(ajdbxt_info caseInfo);
-	
-	public ajdbxt_info findCaseByCaseName(String info_name);
-	
 	public List<ajdbxt_info> findSomeCase(int start,int length);
 	
 	public boolean isCaptainWorked(String captainId);
