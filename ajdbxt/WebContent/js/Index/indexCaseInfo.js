@@ -145,6 +145,7 @@ function List_Index_CaseInfo_By_Page(pageIndex){
 		}else{
 			return;
 		}
+
 		xhr.open("POST", "/ajdbxt/process/getInfoProcessAction");
 		xhr.send(formData);
 
