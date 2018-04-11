@@ -42,32 +42,32 @@ function List_Total_User_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.list[num].caseInfo.info_category;
+					new_td.innerHTML = total_vo.caseListByPolice[num].caseInfo.info_category;
 
 					/*
 					 * 2. 案件名
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.list[num].queryCaseName;
+					new_td.innerHTML = total_vo.caseListByPolice[num].queryCaseName;
 					/*
 					 * 3. 评分
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.list[num].caseProcess.process_score;
+					new_td.innerHTML = total_vo.caseListByPolice[num].caseProcess.process_score;
 					/*
 					 * 4. 主办民警
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.list[num].caseInfo.info_main_police;
+					new_td.innerHTML = total_vo.caseListByPolice[num].caseInfo.info_main_police;
 					/*
 					 * 5. 协办民警
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.list[num].caseInfo.info_assistant_police_one + caseInfo.info_assistant_police_two;
+					new_td.innerHTML = total_vo.caseListByPolice[num].caseInfo.info_assistant_police_one + caseInfo.info_assistant_police_two;
 
 
 					/* 加载图标 */
