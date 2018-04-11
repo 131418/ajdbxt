@@ -21,7 +21,6 @@ public class ProcessInfoServiceImpl implements ProcessInfoService {
 		return processPoliceDao;
 	}
 
-
 	public void setProcessPoliceDao(ProcessPoliceDao processPoliceDao) {
 		this.processPoliceDao = processPoliceDao;
 	}
