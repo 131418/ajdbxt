@@ -40,8 +40,6 @@
 tfoot tr td a:hover {
 	cursor: pointer;
 }
-.two{
-display:none
 }
 </style>
 </head>
@@ -124,93 +122,93 @@ display:none
 	<!---------------------------------------------------------------------------------------------------->
 	<!---------------------------------------------------------------------------------------------------->
 	<!---------------------------------------------------------------------------------------------------->
-	<!-- 新建查询-模态框（Modal） -->
-	<div class="modal fade" id="newQuery" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">刑事破案修改查询</h4>
-				</div>
-				<div class="modal-body">
-					<form id="query_infomantion_inmodal" action="">
-						<table style="width: 50%; margin: auto;" class="Query_table">
-							<tbody>
-								<tr>
-									<td>勘验编号</td>
-									<td><input
-										name="page_list_BreakecaseInformation.snece_inquestId"
-										class="form-control" type="text"></td>
-								</tr>
-								<tr>
-									<td>案件名</td>
-									<td><input
-										name="page_list_BreakecaseInformation.snece_inquestId"
-										class="form-control" type="text"></td>
-								</tr>
-								<tr>
-									<td>案件类别</td>
-									<td><select
-										name="page_list_BreakecaseInformation.case_totalCategory"
-										onchange="setSectionCase(this.selectedIndex)"
-										class="main_case form-control"><option
-												selected="selected" value="">请选择案件总类别</option>
-											<option value="盗窃案">盗窃案</option>
-											<option value="抢劫案">抢劫案</option>
-											<option value="抢夺案">抢夺案</option>
-											<option value="强奸案">强奸案</option>
-											<option value="绑架案">绑架案</option>
-											<option value="杀人案">杀人案</option>
-											<option value="故意伤害案">故意伤害案</option>
-											<option value="爆炸案">爆炸案</option>
-											<option value="放火案">放火案</option>
-											<option value="非法拘禁案">非法拘禁案</option>
-											<option value="非正常死亡">非正常死亡</option>
-											<option value="故意损坏公私财物">故意损坏公私财物</option>
-											<option value="其它">其它</option></select> <select
-										name="page_list_BreakecaseInformation.case_sonCategory"
-										class="other_case form-control">
-											<option selected value="">请选择案件子类别</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td>嫌疑人姓名</td>
-									<td><input
-										name="page_list_BreakecaseInformation.breakecase_suspectName"
-										class="form-control" type="text"></td>
-								</tr>
-								<tr>
-									<td>抓获单位</td>
-									<td><input
-										name="page_list_BreakecaseInformation.breakecase_captureUnit"
-										class="form-control" type="text"></td>
-								</tr>
-								<tr>
-									<td>接警时间</td>
-									<td><input
-										name="page_list_BreakecaseInformation.start_time"
-										style="float: left;" type="text" class="form-control mydate"
-										placeholder="起始日期"><input
-										name="page_list_BreakecaseInformation.stop_time"
-										style="float: right;" type="text" class="form-control"
-										placeholder="结束日期"></td>
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary to_quert">确认查询</button>
-					<button type="button" class="btn btn-danger empty_quert">清空查询</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal -->
-	</div>
+<!-- 	<!-- 新建查询-模态框（Modal） --> 
+<!-- 	<div class="modal fade" id="newQuery" tabindex="-1" role="dialog" -->
+<!-- 		aria-labelledby="myModalLabel" aria-hidden="true"> -->
+<!-- 		<div class="modal-dialog modal-lg"> -->
+<!-- 			<div class="modal-content"> -->
+<!-- 				<div class="modal-header"> -->
+<!-- 					<button type="button" class="close" data-dismiss="modal" -->
+<!-- 						aria-hidden="true">&times;</button> -->
+<!-- 					<h4 class="modal-title" id="myModalLabel">刑事破案修改查询</h4> -->
+<!-- 				</div> -->
+<!-- 				<div class="modal-body"> -->
+<!-- 					<form id="query_infomantion_inmodal" action=""> -->
+<!-- 						<table style="width: 50%; margin: auto;" class="Query_table"> -->
+<!-- 							<tbody> -->
+<!-- 								<tr> -->
+<!-- 									<td>勘验编号</td> -->
+<!-- 									<td><input -->
+<!-- 										name="page_list_BreakecaseInformation.snece_inquestId" -->
+<!-- 										class="form-control" type="text"></td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td>案件名</td> -->
+<!-- 									<td><input -->
+<!-- 										name="page_list_BreakecaseInformation.snece_inquestId" -->
+<!-- 										class="form-control" type="text"></td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td>案件类别</td> -->
+<%-- 									<td><select --%>
+<%-- 										name="page_list_BreakecaseInformation.case_totalCategory" --%>
+<%-- 										onchange="setSectionCase(this.selectedIndex)" --%>
+<%-- 										class="main_case form-control"><option --%>
+<!-- 												selected="selected" value="">请选择案件总类别</option> -->
+<!-- 											<option value="盗窃案">盗窃案</option> -->
+<!-- 											<option value="抢劫案">抢劫案</option> -->
+<!-- 											<option value="抢夺案">抢夺案</option> -->
+<!-- 											<option value="强奸案">强奸案</option> -->
+<!-- 											<option value="绑架案">绑架案</option> -->
+<!-- 											<option value="杀人案">杀人案</option> -->
+<!-- 											<option value="故意伤害案">故意伤害案</option> -->
+<!-- 											<option value="爆炸案">爆炸案</option> -->
+<!-- 											<option value="放火案">放火案</option> -->
+<!-- 											<option value="非法拘禁案">非法拘禁案</option> -->
+<!-- 											<option value="非正常死亡">非正常死亡</option> -->
+<!-- 											<option value="故意损坏公私财物">故意损坏公私财物</option> -->
+<%-- 											<option value="其它">其它</option></select> <select --%>
+<%-- 										name="page_list_BreakecaseInformation.case_sonCategory" --%>
+<%-- 										class="other_case form-control"> --%>
+<!-- 											<option selected value="">请选择案件子类别</option> -->
+<%-- 									</select></td> --%>
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td>嫌疑人姓名</td> -->
+<!-- 									<td><input -->
+<!-- 										name="page_list_BreakecaseInformation.breakecase_suspectName" -->
+<!-- 										class="form-control" type="text"></td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td>抓获单位</td> -->
+<!-- 									<td><input -->
+<!-- 										name="page_list_BreakecaseInformation.breakecase_captureUnit" -->
+<!-- 										class="form-control" type="text"></td> -->
+<!-- 								</tr> -->
+<!-- 								<tr> -->
+<!-- 									<td>接警时间</td> -->
+<!-- 									<td><input -->
+<!-- 										name="page_list_BreakecaseInformation.start_time" -->
+<!-- 										style="float: left;" type="text" class="form-control mydate" -->
+<!-- 										placeholder="起始日期"><input -->
+<!-- 										name="page_list_BreakecaseInformation.stop_time" -->
+<!-- 										style="float: right;" type="text" class="form-control" -->
+<!-- 										placeholder="结束日期"></td> -->
+<!-- 								</tr> -->
+<!-- 							</tbody> -->
+<!-- 						</table> -->
+<!-- 					</form> -->
+<!-- 				</div> -->
+<!-- 				<div class="modal-footer"> -->
+<!-- 					<button type="button" class="btn btn-primary to_quert">确认查询</button> -->
+<!-- 					<button type="button" class="btn btn-danger empty_quert">清空查询</button> -->
+<!-- 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 			<!-- /.modal-content --> 
+<!-- 		</div> -->
+<!-- 		<!-- /.modal --> 
+<!-- 	</div> -->
 	<!---------------------------------------------------------------------------------------------------->
 	<!------------------------------------------------------------------------------------------------->
 	<!---------------------------------------------------------------------------------------------------->
@@ -279,10 +277,11 @@ display:none
 									</tr>
 									
 									<tr>
-										<td>办案单位</td>
-											<td><input style="witdh: 70%;"
-											class="form-control mydate"
-											name="info.info_department" type="text"></td>
+										<td>办案单位<i class="fa fa-spinner fa-pulse load_remind"></td>
+										<td colspan="3"><select style="witdh: 100%;"
+											class="form-control selectpicker" data-live-search="true"
+											name="info.info_department" id="info_department"
+											title="请选择"></select></td>
 									</tr>
 									
 									<tr>
@@ -291,7 +290,7 @@ display:none
 											class="form-control mydate"
 											name="info.info_catch_time" type="text"></td>
 										<td>主办民警</td>
-										<td colspan="3"><input style="witdh: 100%;"
+										<td ><input style="witdh: 100%;"
 											class="form-control selectpicker" data-live-search="true"
 											name="info.info_main_police" 
 											></td>
@@ -302,11 +301,9 @@ display:none
 										<td>协办民警1</td>
 										<td><input style="witdh: 70%;" class="form-control"
 											name="info.info_assistant_police_one" type="text"></td>
-											<td><button class="anniu">
-											<i class="fa fa-plus-square"></i>
-											</button></td>
-										<td class="two">协办民警2</td>
-										<td class="two"><input style="witdh: 70%;" class="form-control"
+											<td id="add_img"><img alt="" src="<%=basePath%>img/addition_fill.png" id="add_police_two"></td>
+										<td id="police_two_td" >协办民警2</td>
+										<td id="police_two_tdd" ><input style="witdh: 70%;" class="form-control"
 											name="info.info_assistant_police_two" type="text"></td>
 									</tr>
 									<tr>
