@@ -27,7 +27,6 @@ function List_Index_CaseInfo_By_Page(pageIndex){
 			if (xhr.readyState == 4) {
 				if (xhr.status == 200) {
 					index_case_info_vo = JSON.parse(xhr.responseText);
-					alert(xhr.readyState);
 					/*
 					 * 
 					 */
@@ -53,7 +52,7 @@ function List_Index_CaseInfo_By_Page(pageIndex){
 					/*
 					 * 将数据库的数据取出来放到表格里
 					 */
-					for (var num = 0; num < index_case_info_vo.list.length; num++) {
+					for (var num = 0; num < index_case_info_vo.Caselist.length; num++) {
 						new_tr = document.createElement("tr");
 						new_tr.className = "new_tr";
 						new_tr.appendChild(document.createTextNode(''));
@@ -65,48 +64,49 @@ function List_Index_CaseInfo_By_Page(pageIndex){
 						new_tr.appendChild(new_td);
 						new_td.style.display = "none";
 						new_td.className = "input_ajdbxt_police_id";
-						new_td.innerHTML = index_case_info_vo.list[num].ajdbxt_info_id;
+						new_td.innerHTML = index_case_info_vo.Caselist[num].ajdbxt_info_id;
 						/*
 						 * 1. 案件名称
 						 */
 						new_td = document.createElement("td");
 						new_a=document.createElement("a");
+						new_a.innerHTML = index_case_info_vo.Caselist[num].info_name;
 						new_a.href="";
 						new_td.appendChild(new_a);
 						new_tr.appendChild(new_td);
-						new_td.innerHTML = index_case_info_vo.list[num].info_name;
+						
 						/*
 						 * 2. 案件类别
 						 */
 						new_td = document.createElement("td");
 						new_tr.appendChild(new_td);
-						new_td.innerHTML = index_case_info_vo.list[num].info_category;
+						new_td.innerHTML = index_case_info_vo.Caselist[num].info_category;
 						/*
 						 * 3. 办案单位
 						 */
 						new_td = document.createElement("td");
 						new_tr.appendChild(new_td);
-						new_td.innerHTML = index_case_info_vo.list[num].info_department;
+						new_td.innerHTML = index_case_info_vo.Caselist[num].info_department;
 						/*
 						 * 4. 抓获时间
 						 */
 						new_td = document.createElement("td");
 						new_tr.appendChild(new_td);
-						new_td.innerHTML = index_case_info_vo.list[num].info_catch_time;
+						new_td.innerHTML = index_case_info_vo.Caselist[num].info_catch_time;
 						/*
 						 * 5. 主办民警
 						 */
 						new_td = document.createElement("td");
 						new_tr.appendChild(new_td);
-						new_td.innerHTML = index_case_info_vo.list[num].info_main_police;
+						new_td.innerHTML = index_case_info_vo.Caselist[num].info_main_police;
 
 						/*
 						 * 6. 协办民警
 						 */
 						new_td = document.createElement("td");
 						new_tr.appendChild(new_td);
-						new_td.innerHTML = index_case_info_vo.list[num].info_assistant_police_one;
-						new_td.innerHTML +=index_case_info_vo.list[num].info_assistant_police_two;
+						new_td.innerHTML = index_case_info_vo.Caselist[num].info_assistant_police_one;
+						new_td.innerHTML +=index_case_info_vo.Caselist[num].info_assistant_police_two;
 
 					}
 					/*
@@ -120,7 +120,7 @@ function List_Index_CaseInfo_By_Page(pageIndex){
 					 * * 设置页数 /
 					 */
 					document.getElementById("span_pageIndex").innerHTML = index_case_info_vo.currPage;// 当前页
-					document.getElementById("span_totalPages").innerHTML = index_case_info_vo.totalPages;// 总页数
+					document.getElementById("span_totalPagess").innerHTML = index_case_info_vo.totalPagess;// 总页数
 					document.getElementById("span_totalRecords").innerHTML = index_case_info_vo.countRecords;// 总记录数
 
 				} else {
@@ -149,4 +149,43 @@ function List_Index_CaseInfo_By_Page(pageIndex){
 		xhr.open("POST", "/ajdbxt/process/getInfoProcessAction");
 		xhr.send(formData);
 
+}
+
+
+/*
+ * 判断页数
+ */
+function flip(flipPage) {
+	switch (flipPage) {
+	/* 首页 */
+	case 1: {
+		List_Police_By_Page(1)
+		break;
+	}
+		/* 上一页 */
+	case 2: {
+		if (index_case_info_vo.currPage - 1 == 0) {
+			toastr.warning("已经是第一页了");
+		} else {
+			List_Police_By_Page(index_case_info_vo.currPage - 1);
+		}
+		break;
+	}
+		/* 下一页 */
+	case 3: {
+		if (index_case_info_vo.currPage == index_case_info_vo.totalPages) {
+			toastr.warning("已经是最后一页了");
+		} else {
+			List_Police_By_Page(index_case_info_vo.currPage + 1);
+		}
+		break;
+	}
+		/* 尾页 */
+	case 4: {
+		List_Police_By_Page(index_case_info_vo.totalPages);
+
+		break;
+	}
+
+	}
 }
