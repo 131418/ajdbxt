@@ -55,11 +55,20 @@ public class StatisticDaoImpl implements StatisticDao {
 		return i.intValue();
 	}
 
-		//得到所有的民警
+		//得到对应的民警
 		@Override
-		public List<ajdbxt_police> getAllPolice() {
+		public List<ajdbxt_police> getPolice(page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseByPageAndSearchVO) {
+			System.out.println("dao"+listPoliceCaseByPageAndSearchVO.getSearchPolice());
 			Session session=getSession();
-			String hql=" from ajdbxt_police where 1=1";
+			String hql="from ajdbxt_police where 1=1 ";
+			if(listPoliceCaseByPageAndSearchVO.getDepartment() !=null && listPoliceCaseByPageAndSearchVO.getDepartment().length()>0) {
+				hql+="and police_department='"+listPoliceCaseByPageAndSearchVO.getDepartment() +"'";
+			}
+			if(listPoliceCaseByPageAndSearchVO.getSearchPolice() !=null && listPoliceCaseByPageAndSearchVO.getSearchPolice().trim().length()>0) {
+				String serachPolice="%"+listPoliceCaseByPageAndSearchVO.getSearchPolice().trim()+"%";
+				hql+="and police_name like'"+serachPolice+"'";
+			}
+			System.out.println(hql);
 			Query query=session.createQuery(hql);
 			List<ajdbxt_police> list=query.list();
 			System.out.println(list.toString());
@@ -80,7 +89,7 @@ public class StatisticDaoImpl implements StatisticDao {
 				+ "from ajdbxt_police,ajdbxt_info,ajdbxt_process "
 				+ "where ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_main_police "
 				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_one "
-				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_two"
+				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_two "
 				+ "and ajdbxt_info.ajdbxt_info_id=ajdbxt_process.process_case_id and ajdbxt_police.ajdbxt_police_id='"+eachPoliceCaseVO.getPolice_id()+"'";
 		if(eachPoliceCaseVO.getQueryCaseName() !=null && eachPoliceCaseVO.getQueryCaseName().trim().length()>0) {
 			String info_name ="%" + eachPoliceCaseVO.getQueryCaseName().trim()+ "%";
@@ -116,7 +125,7 @@ public class StatisticDaoImpl implements StatisticDao {
 		String hql="select count(*) from ajdbxt_police,ajdbxt_info,ajdbxt_process "
 				+ "where ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_main_police "
 				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_one "
-				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_two"
+				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_two "
 				+ "and ajdbxt_info.ajdbxt_info_id=ajdbxt_process.process_case_id and ajdbxt_police.ajdbxt_police_id='"+eachPoliceCaseVO.getPolice_id()+"'";
 		if(eachPoliceCaseVO.getQueryCaseName() !=null && eachPoliceCaseVO.getQueryCaseName().trim().length()>0) {
 			String info_name ="%" + eachPoliceCaseVO.getQueryCaseName().trim()+ "%";

@@ -19,10 +19,11 @@ public class StatisticServiceImpl implements StatisticService {
 	@Override
 	public page_listPoliceCaseNumByPageAndSearchVO getlistPoliceCaseByPageAndSearchVO(
 			page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseNumByPageAndSearchVO) {
+		System.out.println("拿到了"+listPoliceCaseNumByPageAndSearchVO.getSearchPolice());
 		
 		List<StatisticPoliceCaseNumDTO> list=new ArrayList<StatisticPoliceCaseNumDTO>();
 		List<ajdbxt_police> listPolice=new ArrayList<ajdbxt_police>();
-		listPolice=statisticDao.getAllPolice();
+		listPolice=statisticDao.getPolice(listPoliceCaseNumByPageAndSearchVO);
 		for(int i=0;i<listPolice.size();i++) {
 			StatisticPoliceCaseNumDTO statisticPoliceNumDTO=new StatisticPoliceCaseNumDTO();
 			statisticPoliceNumDTO.setPolice(listPolice.get(i));
@@ -31,20 +32,31 @@ public class StatisticServiceImpl implements StatisticService {
 			list.add(statisticPoliceNumDTO);
 		}
 		System.out.println("执行了赋值操作");
-		listPoliceCaseNumByPageAndSearchVO.setStatisticPoliceCaseNumDTO(list);
 		
-		if(listPoliceCaseNumByPageAndSearchVO.getSearchPolice() !=null && listPoliceCaseNumByPageAndSearchVO.getSearchPolice().length()>0) {
-			for(StatisticPoliceCaseNumDTO police : list) {
-				if(police.getPolice().getPolice_name().contains(listPoliceCaseNumByPageAndSearchVO.getSearchPolice())) {
-					list.remove(police);
-				}else {
+		/*if(listPoliceCaseNumByPageAndSearchVO.getSearchPolice() !=null && listPoliceCaseNumByPageAndSearchVO.getSearchPolice().length()>0) {
+			for(StatisticPoliceCaseNumDTO listDto : list) {
+				if(listDto.getPolice().getPolice_name().contains(listPoliceCaseNumByPageAndSearchVO.getSearchPolice())) {
+					System.out.println(listDto.getPolice().getPolice_name());
 					//警员名字变红
+				}else {
+					
+					list.remove(listDto);
 				}
 				
 			}
+		}*/
+		 
+		
+		//分页
+		List<StatisticPoliceCaseNumDTO> newlist=new ArrayList<StatisticPoliceCaseNumDTO>();
+		for(int i=(listPoliceCaseNumByPageAndSearchVO.getCurrePage()-1);
+				i<(listPoliceCaseNumByPageAndSearchVO.getCurrePage()+listPoliceCaseNumByPageAndSearchVO.getPageSize());i++){
+					newlist.add(list.get(i));
 		}
+		
+		listPoliceCaseNumByPageAndSearchVO.setStatisticPoliceCaseNumDTO(newlist);
 		System.out.println(list.toString());
-		//总记录数
+		//总记录数;
 		 int i= list.size();
 		 listPoliceCaseNumByPageAndSearchVO.setTotalRecords(i);
 		 listPoliceCaseNumByPageAndSearchVO.setTotalPages(((i-1)/listPoliceCaseNumByPageAndSearchVO.getPageSize())+1);

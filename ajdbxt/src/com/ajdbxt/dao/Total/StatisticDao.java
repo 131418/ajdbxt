@@ -9,7 +9,7 @@ import com.ajdbxt.domain.VO.Total.page_listPoliceCaseNumByPageAndSearchVO;
 
 public interface StatisticDao {
 	//得到所有的民警
-	public List<ajdbxt_police> getAllPolice();
+	public List<ajdbxt_police> getPolice(page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseByPageAndSearchVO);
 	
 	//得到民警的不同案件类型的案件数量
 	public int getAllCaseNumByPolice(page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseByPageAndSearchVO ,String police_id,String category);
