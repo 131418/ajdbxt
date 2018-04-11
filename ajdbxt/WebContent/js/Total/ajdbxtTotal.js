@@ -14,9 +14,9 @@ function List_Total_By_Page(pageIndex) {
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
 			if (xhr.status == 200) {
-				console.log("xhr.readyState" + xhr.readyState);
+				
 				total_vo = JSON.parse(xhr.responseText);
-
+				console.log("xhr.total_vo:" + xhr.responseText);
 				var new_tr = null;
 				var new_td = null;
 				var ner_a = null;
@@ -34,7 +34,7 @@ function List_Total_By_Page(pageIndex) {
 				/*
 				 * 将数据库的数据取出来放到表格里
 				 */
-				for (var num = 0; num < total_vo.list.length; num++) {
+				for (var num = 0; num < total_vo.statisticPoliceCaseNumDTO.length; num++) {
 					new_tr = document.createElement("tr");
 					new_tr.className = "new_tr";
 					new_tr.appendChild(document.createTextNode(''));
@@ -44,7 +44,7 @@ function List_Total_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.list[num].police.police_department;
+					new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].police.police_department;
 
 					/*
 					 * 2. 人员
@@ -54,7 +54,7 @@ function List_Total_By_Page(pageIndex) {
 					new_a.href = '/ajdbxt/total/Total_page_listPoliceCase';
 					new_td.appendChild(new_a);
 					new_tr.appendChild(new_td);
-					new_a.innerHTML = total_vo.list[num].police.police_name;
+					new_a.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].police.police_name;
 					new_a.style.cursor = "pointer";
 
 					/*
@@ -62,13 +62,13 @@ function List_Total_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.list[num].adminCase;
+					new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].adminCase;
 					/*
 					 * 4. 刑事案件
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.list[num].criminalCase;
+					new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].criminalCase;
 
 					/* 加载图标 */
 					var i_pulse = document.getElementById("i_pulse");
@@ -96,7 +96,7 @@ function List_Total_By_Page(pageIndex) {
 			select_start_time);
 	formData.append("listPoliceCaseByPageAndSearchVO.stop_time",
 			select_stop_time);
-	xhr.open("POST", "/ajdbxt/total/Total_getListPoliceCaseStatistics", "true");
+	xhr.open("POST", "/ajdbxt/total/Total_getListPoliceCaseStatistics", true);
 	xhr.send(formData);
 }
 /*

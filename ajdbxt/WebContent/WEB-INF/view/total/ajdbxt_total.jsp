@@ -69,7 +69,7 @@
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
-										<th><select id="select_case_department" style="width:70%;margin:0 auto;" class="form-control">
+										<th><select id="select_case_department" style="width:70%;margin:0 auto;" class="form-control" onchange="	List_Total_By_Page(1)">
 										</select></th>
 										<th>人员</th>
 										<th>行政案件</th>
@@ -113,7 +113,6 @@
 	<script type="text/javascript" src="<%=basePath%>js/icheck.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/Input_Select.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/laydate/laydate.js"></script>
-	<script src="/laydate/laydate.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>js/Total/ajdbxtTotal.js"></script>
 		
