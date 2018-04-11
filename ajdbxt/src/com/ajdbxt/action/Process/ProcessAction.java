@@ -159,9 +159,11 @@ public class ProcessAction  extends ActionSupport{
 
 	public void findSome() {
 		noLogin();
+		String json="";
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		try {
-			ServletActionContext.getResponse().getWriter().print(processService.getSomeProcessByShowProcessVO(processVO));
+			json=JsonUtils.toJson(processService.getSomeProcessByShowProcessVO(processVO));
+			ServletActionContext.getResponse().getWriter().print(json);
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}

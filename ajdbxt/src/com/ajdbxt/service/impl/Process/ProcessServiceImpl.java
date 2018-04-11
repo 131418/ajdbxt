@@ -76,7 +76,7 @@ public class ProcessServiceImpl implements ProcessService {
 	}
 
 	@Override
-	public String getSomeProcessByShowProcessVO(showProcessVO processVO) {
+	public showProcessVO getSomeProcessByShowProcessVO(showProcessVO processVO) {
 		int length=processVO.getPageSize();
 		List<ProcessDTO> processDTOList=new ArrayList<ProcessDTO>();
 		ProcessDTO processDTO;
@@ -102,7 +102,7 @@ public class ProcessServiceImpl implements ProcessService {
 			processDTOList.add(processDTO);
 		}
 		processVO.setList(processDTOList);
-		return JsonUtils.toJson(processVO);
+		return processVO;
 	}
 
 }
