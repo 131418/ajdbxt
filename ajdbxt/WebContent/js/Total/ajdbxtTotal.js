@@ -48,7 +48,7 @@ function List_Total_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].police.police_department;
+					new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].department.department_name;
 
 					/*
 					 * 2. 人员
