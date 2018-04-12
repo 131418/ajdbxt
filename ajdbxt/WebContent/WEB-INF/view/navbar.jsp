@@ -86,7 +86,7 @@
 
 <!-- 						<i class="icon-submenu lnr lnr-chevron-down"></i> -->
 <!-- 				</a></li> --%> -->
-				<li class="dropdown" style="float: left;"><a href="<%=basePath%>process/page_list_CaseProcessProcessAction"> <span>办案流程</span>
+<%-- 				<li class="dropdown" style="float: left;"><a href="<%=basePath%>process/page_list_CaseProcessProcessAction"> <span>办案流程</span> --%>
 
 
 				<li class="dropdown" style="float: left;"><a href="<%=basePath%>total/Total_firstPage" > <span>统计</span>
