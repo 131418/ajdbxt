@@ -101,7 +101,7 @@ function List_Total_By_Page(pageIndex) {
 			select_start_time.value);
 	formData.append("listPoliceCaseByPageAndSearchVO.stop_time",
 			select_stop_time.value);
-	xhr.open("POST", "/ajdbxt/total/Total_getListPoliceCaseStatistics", true);
+	xhr.open("POST", "/ajdbxt/total/Total_getListPoliceCaseStatistics",true);
 	xhr.send(formData);
 }
 /*
