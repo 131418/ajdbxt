@@ -577,7 +577,7 @@ function updatePolice(button) {
 										 * input_police_department.value =
 										 * police_vo.list[num].police_department;
 										 */
-										var deparment = update_police_vo.ajdbxt_department.department_name;
+										var deparment = update_police_vo.ajdbxt_department.ajdbxt_department_id;
 										
 										$
 												.post(
@@ -587,10 +587,12 @@ function updatePolice(button) {
 															// 所有案件循环
 															var option = '';
 															for (var len = 0; len < Department_data.list.length; len++) {
-																console.log("deparment:"+deparment);
-																console.log("Department_data.list[len].department_name:"+Department_data.list[len].department_name);
+																console.log("deparment:"+update_police_vo.ajdbxt_department.department_name+"："+deparment);
+																console.log("Department_data.list[len].department_name:"+Department_data.list[len].department_name+"："+Department_data.list[len].ajdbxt_department_id);
+																console.log("Department_data.list[len].department_name == deparment"+Department_data.list[len].ajdbxt_department_id == deparment);
+																
+																
 																option += '<option ';
-																console.log("Department_data.list[len].department_name == deparment"+Department_data.list[len].department_name == deparment);
 																if (Department_data.list[len].ajdbxt_department_id == deparment) {
 																	option += 'selected';
 																}
