@@ -20,7 +20,7 @@
  }
  } 
  */
-	var police_vo = null;
+	var police_vo = null;   
 // 列表显示 
 function List_Police_By_Page(pageIndex) {
 
