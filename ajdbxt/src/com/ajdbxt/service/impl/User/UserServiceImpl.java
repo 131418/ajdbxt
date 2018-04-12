@@ -199,4 +199,11 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
+	@Override
+	public policedptVO findPoliceById(String ajdbxt_police_id) {
+		// TODO Auto-generated method stub
+		policedptVO policeOne = userDao.findPoliceById(ajdbxt_police_id);
+		return policeOne;
+	}
+
 }

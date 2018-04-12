@@ -289,6 +289,17 @@ public class UserAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
-
+	//根据id查询单挑记录
+	public void findPoliceById() {
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			policedptVO policeOne = userService.findPoliceById(ajdbxt_police.getAjdbxt_police_id());
+			response.getWriter().write(new Gson().toJson(policeOne));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }
