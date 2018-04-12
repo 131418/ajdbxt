@@ -289,18 +289,17 @@ public class UserAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
-/*	//搜索功能
-	public void fuzzySearch() {
+	//根据id查询单挑记录
+	public void findPoliceById() {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
 			response.setContentType("text/html;charset=utf-8");
-			this.findPoliceByPageVO = userService.fuzzySearch(10,currentPage,ajdbxt_police.getPolice_name());
-			response.getWriter().write(new Gson().toJson(this.findPoliceByPageVO));
+			policedptVO policeOne = userService.findPoliceById(ajdbxt_police.getAjdbxt_police_id());
+			response.getWriter().write(new Gson().toJson(policeOne));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	}*/
+	}
 
 }

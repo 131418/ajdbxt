@@ -124,5 +124,10 @@ public class JunitTest {
 		int pageSize = 10;
 		System.out.println((totalCount - 1) / pageSize + 1);
 	}
+	@Test
+	public void testFindPoliceById() {
+		policedptVO policeOne = userService.findPoliceById("129fb032-7286-48c7-8b7d-1bf710c9b598");
+		System.out.println(new Gson().toJson(policeOne));
+	}
 
 }

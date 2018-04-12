@@ -117,14 +117,14 @@ public class UserServiceImpl implements UserService {
 		int currentpage = findPoliceByPageVO.countCurrentPage(currentPage);
 		List<policedptVO> list = userDao.queryForPage(hql, offset, length); // 该分页的记录
 		// 把分页信息保存到Bean中
-		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
-		findPoliceByPageVO.setPageSize(pageSize);
-		findPoliceByPageVO.setCurrentPage(currentpage);
-		findPoliceByPageVO.setAllRow(count);
-		findPoliceByPageVO.setTotalPage(totalPage);
-		findPoliceByPageVO.setList(list);
-		findPoliceByPageVO.init();
-		return findPoliceByPageVO;
+		findPoliceByPageVO ffindPoliceByPageVO = new findPoliceByPageVO();
+		ffindPoliceByPageVO.setPageSize(pageSize);
+		ffindPoliceByPageVO.setCurrentPage(currentpage);
+		ffindPoliceByPageVO.setAllRow(count);
+		ffindPoliceByPageVO.setTotalPage(totalPage);
+		ffindPoliceByPageVO.setList(list);
+		ffindPoliceByPageVO.init();
+		return ffindPoliceByPageVO;
 	}
 
 	@Override
@@ -197,6 +197,13 @@ public class UserServiceImpl implements UserService {
 		ajdbxt_department.setDepartment_gmt_modify(TeamUtil.getStringSecond());
 		String result = userDao.addDepartment(ajdbxt_department);
 		return result;
+	}
+
+	@Override
+	public policedptVO findPoliceById(String ajdbxt_police_id) {
+		// TODO Auto-generated method stub
+		policedptVO policeOne = userDao.findPoliceById(ajdbxt_police_id);
+		return policeOne;
 	}
 
 }

@@ -147,10 +147,14 @@ public class UserDaoImpl implements UserDao {
 		return "success";
 	}
 
-	/*
-	 * @Override public List<ajdbxt_police> fuzzySearch(String hql,int offset,int
-	 * length) { // TODO Auto-generated method stub Query q =
-	 * getSession().createQuery(hql); q.setFirstResult(offset);
-	 * q.setMaxResults(length); return q.list(); }
-	 */
+	@Override
+	public policedptVO findPoliceById(String ajdbxt_police_id) {
+		// TODO Auto-generated method stub
+		String hql = "select new com.ajdbxt.domain.VO.User.policedptVO(p,d) from ajdbxt_police p,ajdbxt_department d where p.police_department = d.ajdbxt_department_id and p.ajdbxt_police_id =  '" +ajdbxt_police_id+ "' order by p.police_gmt_modify desc ";
+		Query query = getSession().createQuery(hql);
+		policedptVO policeOne = (policedptVO) query.uniqueResult();
+		return policeOne;
+	}
+
+	
 }
