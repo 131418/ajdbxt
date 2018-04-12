@@ -14,6 +14,28 @@ public class ajdbxt_police {
 	private String police_gmt_create;
 	private String police_gmt_modify;
 	private String police_power;
+	public ajdbxt_police() {
+		
+	}
+	public ajdbxt_police(String ajdbxt_police_id) {
+		super();
+		this.ajdbxt_police_id = ajdbxt_police_id;
+	}
+	public ajdbxt_police(String ajdbxt_police_id, String police_serial_number, String police_password,
+			String police_name, String police_department, String police_duty, String police_phone_number,
+			String police_gmt_create, String police_gmt_modify, String police_power) {
+		super();
+		this.ajdbxt_police_id = ajdbxt_police_id;
+		this.police_serial_number = police_serial_number;
+		this.police_password = police_password;
+		this.police_name = police_name;
+		this.police_department = police_department;
+		this.police_duty = police_duty;
+		this.police_phone_number = police_phone_number;
+		this.police_gmt_create = police_gmt_create;
+		this.police_gmt_modify = police_gmt_modify;
+		this.police_power = police_power;
+	}
 	public String getAjdbxt_police_id() {
 		return ajdbxt_police_id;
 	}
@@ -74,16 +96,7 @@ public class ajdbxt_police {
 	public void setPolice_power(String police_power) {
 		this.police_power = police_power;
 	}
-	@Override
-	public String toString() {
-		return "ajdbxt_police [ajdbxt_police_id=" + ajdbxt_police_id + ", police_serial_number=" + police_serial_number
-				+ ", police_password=" + police_password + ", police_name=" + police_name + ", police_department="
-				+ police_department + ", police_duty=" + police_duty + ", police_phone_number=" + police_phone_number
-				+ ", police_gmt_create=" + police_gmt_create + ", police_gmt_modify=" + police_gmt_modify
-				+ ", police_power=" + police_power + "]";
-	}
 
-	
 	
 
 }
