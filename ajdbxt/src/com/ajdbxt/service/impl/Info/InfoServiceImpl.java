@@ -294,8 +294,11 @@ public class InfoServiceImpl implements InfoService {
 
 	@Override
 	public ProcessInfoDTO getSingleInfo(String info_id) {
+		System.out.println("进来了"+info_id);
 		ajdbxt_info info=infoDao.findCaseById(info_id);
+		System.out.println("案件信息"+info.toString());
 		ajdbxt_department department=infoDepartmentDao.findDepartmentById(info.getInfo_department());
+		System.out.println("部门信息"+department.toString());
 		ProcessInfoDTO processInfoDTO=new ProcessInfoDTO();
 		processInfoDTO.setInfo(info);
 		processInfoDTO.setDepartment(department);

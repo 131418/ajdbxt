@@ -99,7 +99,8 @@ public class ProcessAction  extends ActionSupport{
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=utf-8");
 		try {
-			response.getWriter().print(json);
+			//response.getWriter().print(json);
+			ServletActionContext.getResponse().getWriter().print(json);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
