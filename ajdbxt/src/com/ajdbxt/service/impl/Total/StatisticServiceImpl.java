@@ -26,11 +26,11 @@ public class StatisticServiceImpl implements StatisticService {
 		List<ajdbxt_police> listPolice=new ArrayList<ajdbxt_police>();
 		List<ajdbxt_department> listDepartment=new ArrayList<ajdbxt_department>();
 		listPolice=statisticDao.getPolice(listPoliceCaseNumByPageAndSearchVO);
-		//listDepartment=statisticDao.getDepartment(police_id);
 		for(int i=0;i<listPolice.size();i++) {
 			StatisticPoliceCaseNumDTO statisticPoliceNumDTO=new StatisticPoliceCaseNumDTO();
 			statisticPoliceNumDTO.setPolice(listPolice.get(i));
-			statisticPoliceNumDTO.setDepartment(statisticDao.getDepartment(listPolice.get(i).getAjdbxt_police_id()).get(i));
+			listDepartment=statisticDao.getDepartment(listPolice.get(i).getPolice_department());
+			statisticPoliceNumDTO.setDepartment(listDepartment.get(0));
 			statisticPoliceNumDTO.setAdminCase(statisticDao.getAllCaseNumByPolice(listPoliceCaseNumByPageAndSearchVO, listPolice.get(i).getAjdbxt_police_id(), "行政案件"));
 			statisticPoliceNumDTO.setCriminalCase(statisticDao.getAllCaseNumByPolice(listPoliceCaseNumByPageAndSearchVO, listPolice.get(i).getAjdbxt_police_id(), "刑事案件"));
 			list.add(statisticPoliceNumDTO);

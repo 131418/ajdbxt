@@ -18,9 +18,9 @@ public class page_eachPoliceCaseVO {
 	// 下一页
 	private boolean hasNextPage = false;
 	// 开始时间
-	private String start_time = "0000-00-00";
+	private String start_time = "";
 	// 结束时间
-	private String stop_time = "9999-99-99";
+	private String stop_time = "";
 	//案件名
 	private String queryCaseName;
 	
