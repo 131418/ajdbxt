@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ajdbxt.dao.Total.StatisticDao;
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.DTO.Total.StatisticCaseByPoliceDTO;
 import com.ajdbxt.domain.DTO.Total.StatisticPoliceCaseNumDTO;
@@ -23,17 +24,19 @@ public class StatisticServiceImpl implements StatisticService {
 		
 		List<StatisticPoliceCaseNumDTO> list=new ArrayList<StatisticPoliceCaseNumDTO>();
 		List<ajdbxt_police> listPolice=new ArrayList<ajdbxt_police>();
+		List<ajdbxt_department> listDepartment=new ArrayList<ajdbxt_department>();
 		listPolice=statisticDao.getPolice(listPoliceCaseNumByPageAndSearchVO);
-		
+		//listDepartment=statisticDao.getDepartment(police_id);
 		for(int i=0;i<listPolice.size();i++) {
 			StatisticPoliceCaseNumDTO statisticPoliceNumDTO=new StatisticPoliceCaseNumDTO();
 			statisticPoliceNumDTO.setPolice(listPolice.get(i));
+			statisticPoliceNumDTO.setDepartment(statisticDao.getDepartment(listPolice.get(i).getAjdbxt_police_id()).get(i));
 			statisticPoliceNumDTO.setAdminCase(statisticDao.getAllCaseNumByPolice(listPoliceCaseNumByPageAndSearchVO, listPolice.get(i).getAjdbxt_police_id(), "行政案件"));
 			statisticPoliceNumDTO.setCriminalCase(statisticDao.getAllCaseNumByPolice(listPoliceCaseNumByPageAndSearchVO, listPolice.get(i).getAjdbxt_police_id(), "刑事案件"));
 			list.add(statisticPoliceNumDTO);
 		}
 		System.out.println("执行了赋值操作");
-		 
+		 System.out.println("police.size"+listPolice.size());
 		
 		//分页
 		List<StatisticPoliceCaseNumDTO> newlist=new ArrayList<StatisticPoliceCaseNumDTO>();
