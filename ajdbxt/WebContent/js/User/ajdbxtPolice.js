@@ -555,7 +555,7 @@ function updatePolice(button) {
 							 */
 							var deparment = police_vo.list[num].ajdbxt_department.department_name;
 							$
-									.post(
+									.post( 
 											'/ajdbxt/user/User_findDepartmentByPage',
 											function(Department_data) {
 												// 所有案件循环
