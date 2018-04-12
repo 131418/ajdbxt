@@ -13,7 +13,6 @@ import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.VO.User.findDepartmentByPageVO;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
-import com.ajdbxt.domain.VO.User.policedptVO;
 import com.ajdbxt.service.User.UserService;
 
 import util.TeamUtil;
@@ -89,23 +88,29 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public findPoliceByPageVO queryForPage(int pageSize, int currentPage,String police_name) {
 		// TODO Auto-generated method stub
+		/*String hql_count= "select count(*) from ajdbxt_police";
+		int count = userDao.getCount(hql_count); // 总记录数
+		int totalPage = findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数
+		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
+		int length = pageSize; // 每页记录数
+		int currentpage = findPoliceByPageVO.countCurrentPage(currentPage);*/
 		String hql_count;
 		String hql;
+		//String  hql="from ajdbxt_police order by police_gmt_modify desc";
 		if(police_name!=null&&!"".equals(police_name)) {
 			hql_count = "select count(*) from ajdbxt_police where police_name like '%"+police_name+"%'";
-			hql="select new com.ajdbxt.domain.VO.User.policedptVO(p,d) from ajdbxt_police p,ajdbxt_department d where p.police_department = d.ajdbxt_department_id and p.police_name like '%"+police_name+"%' order by p.police_gmt_modify desc";
+			hql="from ajdbxt_police where police_name like '%"+police_name+"%' order by police_gmt_modify desc";
 		}
 		else {
 			hql_count = "select count(*) from ajdbxt_police";
-			//hql="from ajdbxt_police order by police_gmt_modify desc";
-			hql = "select new com.ajdbxt.domain.VO.User.policedptVO(p,d) from ajdbxt_police p,ajdbxt_department d where p.police_department = d.ajdbxt_department_id order by p.police_gmt_modify desc";
+			hql="from ajdbxt_police order by police_gmt_modify desc";
 		}
 		int count = userDao.getCount(hql_count); // 总记录数
 		int totalPage = findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数
 		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
 		int length = pageSize; // 每页记录数
 		int currentpage = findPoliceByPageVO.countCurrentPage(currentPage);
-		List<policedptVO> list = userDao.queryForPage(hql, offset, length); // 该分页的记录
+		List<ajdbxt_police> list = userDao.queryForPage(hql, offset, length); // 该分页的记录
 		// 把分页信息保存到Bean中
 		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
 		findPoliceByPageVO.setPageSize(pageSize);

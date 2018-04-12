@@ -10,7 +10,6 @@ import org.hibernate.SessionFactory;
 import com.ajdbxt.dao.User.UserDao;
 import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
-import com.ajdbxt.domain.VO.User.policedptVO;
 
 public class UserDaoImpl implements UserDao {
 
@@ -67,7 +66,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<policedptVO> queryForPage(String hql, int offset, int length) {
+	public List<ajdbxt_police> queryForPage(String hql, int offset, int length) {
 		// TODO Auto-generated method stub
 		Query q = getSession().createQuery(hql);
 		q.setFirstResult(offset);
