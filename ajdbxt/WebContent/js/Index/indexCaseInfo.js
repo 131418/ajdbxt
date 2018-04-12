@@ -27,6 +27,8 @@ function List_Index_CaseInfo_By_Page(pageIndex){
 			if (xhr.readyState == 4) {
 				if (xhr.status == 200) {
 					index_case_info_vo = JSON.parse(xhr.responseText);
+					alert(index_case_info_vo.Caselist);
+				//	alert("k"+index_case_info_vo.Caselist[0].info_name);
 					/*
 					 * 
 					 */
@@ -65,6 +67,7 @@ function List_Index_CaseInfo_By_Page(pageIndex){
 						new_td.style.display = "none";
 						new_td.className = "input_ajdbxt_police_id";
 						new_td.innerHTML = index_case_info_vo.Caselist[num].ajdbxt_info_id;
+						alert(index_case_info_vo.Caselist[num].ajdbxt_info_id);
 						/*
 						 * 1. 案件名称
 						 */

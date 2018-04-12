@@ -137,6 +137,12 @@ public class InfoAction extends ActionSupport {
 	 */
 	public void delete() {
 		infoService.deleteCase(info.getAjdbxt_info_id());
+		try {
+			ServletActionContext.getResponse().getWriter().print("success");
+		} catch (IOException e) {
+			new RuntimeException(e);
+			System.out.println(e.getMessage());
+		}
 	}
 	/**
 	 * 更新案件信息
@@ -169,6 +175,12 @@ public class InfoAction extends ActionSupport {
 			}
 		}
 		infoService.updateCase(info);
+		try {
+			ServletActionContext.getResponse().getWriter().print("success");
+		} catch (IOException e) {
+			new RuntimeException(e);
+			System.out.println(e.getMessage());
+		}
 	}
 	/**
 	 * 得到同部门的警察
