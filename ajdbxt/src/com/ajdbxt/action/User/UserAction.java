@@ -11,6 +11,7 @@ import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.VO.User.findDepartmentByPageVO;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
+import com.ajdbxt.domain.VO.User.policedptVO;
 import com.ajdbxt.service.User.UserService;
 import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionContext;
@@ -212,9 +213,16 @@ public class UserAction extends ActionSupport {
 			String policeName = this.findPoliceByPageVO.getPolice_name();
 			findPoliceByPageVO queryForPage = userService.queryForPage(10, this.findPoliceByPageVO.getCurrentPage(),policeName);
 			if(policeName!=null&&!"".equals(policeName)) {
-				ajdbxt_police aj0 =null;
+				/*ajdbxt_police aj0 =null;
 				for(Object aj : queryForPage.getList()) {
 					aj0 = (ajdbxt_police) aj;
+					aj0.setPolice_name(aj0.getPolice_name().replaceAll(policeName, "<span style='color:red;'>"+policeName+"</span>"));
+				}*/
+				ajdbxt_police aj0 =null;
+				policedptVO aj =null;
+				for(Object ob : queryForPage.getList()) {
+					aj=(policedptVO) ob;
+					aj0 = aj.getAjdbxt_police();
 					aj0.setPolice_name(aj0.getPolice_name().replaceAll(policeName, "<span style='color:red;'>"+policeName+"</span>"));
 				}
 			}
@@ -227,20 +235,6 @@ public class UserAction extends ActionSupport {
 		}
 	}
 
-	// 分页查询部门人员
-	public void queryForPageByDepartment() {
-		try {
-			HttpServletResponse response = ServletActionContext.getResponse();
-			response.setContentType("text/html;charset=utf-8");
-			ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
-			String department = loginPolice.getPolice_department();
-			this.findPoliceByPageVO = userService.queryForPageByDepartment(10, currentPage, department);
-			response.getWriter().write(new Gson().toJson(this.findPoliceByPageVO));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * 批量删除
