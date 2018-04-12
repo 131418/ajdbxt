@@ -8,6 +8,7 @@ import com.ajdbxt.dao.Info.InfoDao;
 import com.ajdbxt.dao.Info.InfoDepartmentDao;
 import com.ajdbxt.dao.Info.InfoPoliceDao;
 import com.ajdbxt.dao.Process.ProcessDao;
+import com.ajdbxt.domain.DTO.Process.ProcessDTO;
 import com.ajdbxt.domain.DTO.Process.ProcessInfoDTO;
 import com.ajdbxt.domain.VO.Info.LegalSystemAndLeadersVO;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
@@ -64,14 +65,22 @@ public class InfoServiceImpl implements InfoService {
 	
 	@Override
 	public String saveCase(ajdbxt_info caseInfo) {
+		ProcessDTO processDTO=new ProcessDTO();//回传dto而不是Info
 		caseInfo.setAjdbxt_info_id(UUID.randomUUID().toString());
 		caseInfo.setInfo_gmt_ceate(util.Time.getStringSecond());
 		caseInfo.setInfo_gmt_modify(caseInfo.getInfo_gmt_ceate());//保存时将修改时间设为创建时间
-		oneceRank(caseInfo);
+		oneceRank(caseInfo);//下面要得到警察写逻辑
 		//哲理要写排班逻辑
-		processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());		
+		processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());	
+		processDTO.setProcess(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).get(0));
+		processDTO.setInfo(caseInfo);
+		List<ajdbxt_police> polices=new ArrayList<>();
+		polices.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police()));
+		polices.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_one()));
+		processDTO.setPolice(polices);
+		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
 		infoDao.saveCase(caseInfo);
-		return JsonUtils.toJson(caseInfo);
+		return JsonUtils.toJson(processDTO);
 	}
 	private void oneceRank(ajdbxt_info caseInfo) {//排班主协办人员
 		List<ajdbxt_police> polices=infoPoliceDao.findPoliceByDepartment(caseInfo.getInfo_department());
@@ -105,8 +114,7 @@ public class InfoServiceImpl implements InfoService {
 		}
 		//如副所队长没执勤过
 		if(countCap==0) {
-			System.out.println("it is working");
-			ajdbxt_police police=cap.get(new Random().nextInt(cap.size()-1));
+			ajdbxt_police police=cap.get(new Random().nextInt(cap.size()));
 			if(caseInfo.getInfo_main_police()==null||caseInfo.getInfo_main_police().isEmpty()) {
 				caseInfo.setInfo_main_police(police.getAjdbxt_police_id());
 			}else {
@@ -206,8 +214,16 @@ public class InfoServiceImpl implements InfoService {
 				}
 			}
 		}
+		ProcessDTO processDTO=new ProcessDTO();
+		processDTO.setInfo(caseInfo);
+		List<ajdbxt_police> policelist=new ArrayList<>();
+		policelist.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police()));
+		policelist.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_one()));
+		policelist.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_two()));
+		processDTO.setPolice(polices);
+		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
 		infoDao.saveCase(caseInfo);
-		return JsonUtils.toJson(caseInfo);
+		return JsonUtils.toJson(processDTO);
 	}
 	
 	@Override

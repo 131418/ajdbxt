@@ -173,7 +173,10 @@ public class ProcessAction  extends ActionSupport{
 			new RuntimeException(e);
 		}
 	}
-	
+	public void findAboutMeSome() {
+		ajdbxt_police police=(ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+		
+	}
 	/**
 	 * 跳转到办案流程列表页
 	 * @return
@@ -182,6 +185,7 @@ public class ProcessAction  extends ActionSupport{
 		noLogin();
 		return "page_list_CaseProcess";
 	}
+	
 	
 	/**
 	 * 跳转都办案流程详情页
