@@ -67,10 +67,17 @@ public class StatisticDaoImpl implements StatisticDao {
 			if(listPoliceCaseByPageAndSearchVO.getSearchPolice() !=null && listPoliceCaseByPageAndSearchVO.getSearchPolice().trim().length()>0) {
 				String serachPolice="%"+listPoliceCaseByPageAndSearchVO.getSearchPolice().trim()+"%";
 				hql+="and police_name like'"+serachPolice+"'";
+				
 			}
 			System.out.println(hql);
 			Query query=session.createQuery(hql);
 			List<ajdbxt_police> list=query.list();
+			for(ajdbxt_police police:list) {
+				if(listPoliceCaseByPageAndSearchVO.getSearchPolice() !=null && listPoliceCaseByPageAndSearchVO.getSearchPolice().trim().length()>0) {
+					police.setPolice_name(police.getPolice_name().replaceAll(listPoliceCaseByPageAndSearchVO.getSearchPolice().trim(), 
+						"<span style='color: #ff5063;'>" + listPoliceCaseByPageAndSearchVO.getSearchPolice().trim() + "</span>"));
+				}
+			}
 			System.out.println(list.toString());
 			session.clear();
 			return list;

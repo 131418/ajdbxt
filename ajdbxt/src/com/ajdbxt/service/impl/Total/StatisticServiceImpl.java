@@ -24,6 +24,7 @@ public class StatisticServiceImpl implements StatisticService {
 		List<StatisticPoliceCaseNumDTO> list=new ArrayList<StatisticPoliceCaseNumDTO>();
 		List<ajdbxt_police> listPolice=new ArrayList<ajdbxt_police>();
 		listPolice=statisticDao.getPolice(listPoliceCaseNumByPageAndSearchVO);
+		
 		for(int i=0;i<listPolice.size();i++) {
 			StatisticPoliceCaseNumDTO statisticPoliceNumDTO=new StatisticPoliceCaseNumDTO();
 			statisticPoliceNumDTO.setPolice(listPolice.get(i));
