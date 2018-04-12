@@ -289,18 +289,6 @@ public class UserAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
-/*	//搜索功能
-	public void fuzzySearch() {
-		try {
-			HttpServletResponse response = ServletActionContext.getResponse();
-			response.setContentType("text/html;charset=utf-8");
-			this.findPoliceByPageVO = userService.fuzzySearch(10,currentPage,ajdbxt_police.getPolice_name());
-			response.getWriter().write(new Gson().toJson(this.findPoliceByPageVO));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}*/
+
 
 }
