@@ -7,9 +7,11 @@
 		<action name="*ProcessAction" class="processAction" method="{1}">
 			<!-- <result name="success">/processTest.jsp</result>
 			<result name="false">/somethingBad.jsp</result> -->
-			<result name="page_list_CaseProcess">/WEB-INF/view/process/CaseProcessList.jsp</result>
-			<result name="page_CaseProcessInfo">/WEB-INF/view/process/CaseProcessInfo.jsp</result>
+
 			
+			<result name="page_list_CaseProcess">/WEB-INF/view/process/CaseProcess.jsp</result>
+			<result name="page_CaseProcessInfo">/WEB-INF/view/process/CaseProcessInfo.jsp</result>
+
 		</action>
 	</package>
 </struts>

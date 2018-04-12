@@ -15,4 +15,5 @@ public interface ProcessInfoDao {
 	public int countInfoListProcessScore(String police_id);
 	public int countInfoListProcessQuestion(String police_id);
 	public int countInfoList(String police_id);
+
 }

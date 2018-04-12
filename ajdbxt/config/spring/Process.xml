@@ -29,6 +29,8 @@
 	</bean>
 	<bean id="processInfoService" class="com.ajdbxt.service.impl.Process.ProcessInfoServiceImpl">
 		<property name="processInfoDao" ref="processInfoDao"></property>
+		<property name="processPoliceDao" ref="processPoliceDao"></property>
+		<property name="processDepartmentDao" ref="processDepartmentDao"></property>
 	</bean>
 	<bean id="processAction" class="com.ajdbxt.action.Process.ProcessAction">
 		<property name="processService" ref="processService"></property>

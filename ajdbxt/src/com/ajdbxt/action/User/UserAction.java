@@ -56,6 +56,7 @@ public class UserAction extends ActionSupport {
 
 	// Ajdbxt_police的getter\set方法
 	public ajdbxt_police getAjdbxt_police() {
+		System.out.println(211);
 		return ajdbxt_police;
 	}
 

@@ -10,3 +10,4 @@ public interface InfoPoliceDao {
 	public List<ajdbxt_police> findLegals();
 	public List<ajdbxt_police> findLeaders();
 }
+

@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import com.ajdbxt.dao.Info.InfoDao;
+import com.ajdbxt.dao.Info.InfoDepartmentDao;
 import com.ajdbxt.dao.Info.InfoPoliceDao;
 import com.ajdbxt.dao.Process.ProcessDao;
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.DO.ajdbxt_police;
+import com.ajdbxt.domain.DTO.Process.ProcessInfoDTO;
 import com.ajdbxt.domain.VO.Info.LegalSystemAndLeadersVO;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.service.Info.InfoService;
@@ -19,12 +22,20 @@ import util.Tel;
 public class InfoServiceImpl implements InfoService {
 	private InfoDao infoDao;
 	private ProcessDao processDao;
-	public void setInfoPoliceDao(InfoPoliceDao infoPoliceDao) {
-		this.infoPoliceDao = infoPoliceDao;
-	}
+	private InfoDepartmentDao infoDepartmentDao;
 	private InfoPoliceDao infoPoliceDao;
 	private List<Tel> tel ;
 	private String[] params;
+	public InfoDepartmentDao getInfoDepartmentDao() {
+		return infoDepartmentDao;
+	}
+	public void setInfoDepartmentDao(InfoDepartmentDao infoDepartmentDao) {
+		this.infoDepartmentDao = infoDepartmentDao;
+	}
+
+	public void setInfoPoliceDao(InfoPoliceDao infoPoliceDao) {
+		this.infoPoliceDao = infoPoliceDao;
+	}
 	public InfoPoliceDao getInfoPoliceDao() {
 		return infoPoliceDao;
 	}
@@ -68,7 +79,6 @@ public class InfoServiceImpl implements InfoService {
 	private void oneceRank(ajdbxt_info caseInfo) {//排班主协办人员
 		List<ajdbxt_police> polices=infoPoliceDao.findPoliceByDepartment(caseInfo.getInfo_department());
 		String police_id=null;
-		
 		//得到所队长id方便分配
 		for(ajdbxt_police police : polices) {
 			if(police.getPolice_duty().equals("所长")||police.getPolice_duty().equals("大队长")) {
@@ -98,7 +108,8 @@ public class InfoServiceImpl implements InfoService {
 		}
 		//如副所队长没执勤过
 		if(countCap==0) {
-			ajdbxt_police police=cap.get(new Random().nextInt(cap.size()));
+			System.out.println("it is working");
+			ajdbxt_police police=cap.get(new Random().nextInt(cap.size()-1));
 			if(caseInfo.getInfo_main_police()==null||caseInfo.getInfo_main_police().isEmpty()) {
 				caseInfo.setInfo_main_police(police.getAjdbxt_police_id());
 			}else {
@@ -204,62 +215,36 @@ public class InfoServiceImpl implements InfoService {
 	
 	@Override
 	public void updateCase(ajdbxt_info caseInfo) {
-		// TODO Auto-generated method stub
 		caseInfo.setInfo_gmt_modify(util.Time.getStringSecond());
 		infoDao.updateCase(caseInfo);
-		
 	}
 
 	@Override
 	public void deleteCase(String caseInfo_id) {
-		// TODO Auto-generated method stub
 		infoDao.deleteCase(caseInfo_id);
-	}
-
-//	@Override
-//	public Page_list_caseInfoVo showCaseList(Page_list_caseInfoVo page_list_caseInfoVo) {
-//		List<ajdbxt_info> listCase=new ArrayList<ajdbxt_info>();
-//		int totalRecords=caseInfoDao.getTotalCase(page_list_caseInfoVo);
-//		Page_list_caseInfoVo caseInfoVo=new Page_list_caseInfoVo();
-//		caseInfoVo.setCurrPage(page_list_caseInfoVo.getCurrPage());
-//		caseInfoVo.setPageSize(page_list_caseInfoVo.getPageSize());
-//		caseInfoVo.setCountRecords(totalRecords);
-//		
-//		caseInfoVo.setTotalPages((int)Math.ceil((totalRecords)/(page_list_caseInfoVo.getPageSize())));
-//		if(page_list_caseInfoVo.getCurrPage()<=1) {
-//			page_list_caseInfoVo.setHavePrePage(false);
-//		}else {
-//			page_list_caseInfoVo.setHavePrePage(true);
-//		}
-//		
-//		if(page_list_caseInfoVo.getCurrPage()>=page_list_caseInfoVo.getTotalPages()) {
-//			page_list_caseInfoVo.setHaveNexPage(false);
-//		}else {
-//			page_list_caseInfoVo.setHaveNexPage(true);
-//		}
-//		
-//		listCase=caseInfoDao.getCaseByPage(page_list_caseInfoVo);
-//		page_list_caseInfoVo.setCaselist(listCase);
-//		
-//		return page_list_caseInfoVo;
-//	}
-
-	@Override
-	public ajdbxt_info findOneCase(ajdbxt_info caseInfo) {
-		// TODO Auto-generated method stub
-		return infoDao.findOneCase(caseInfo);
-	}
-
-	@Override
-	public Page_list_caseInfoVo showCaseList(Page_list_caseInfoVo page_list_caseInfoVo) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
 	public String getAllCase(Page_list_caseInfoVo infoVO) {
+		List<ProcessInfoDTO> case_list=new ArrayList<ProcessInfoDTO>();
 		List<ajdbxt_info> list=infoDao.findSomeCase((infoVO.getCurrPage()-1)*infoVO.getPageSize(), infoVO.getPageSize());
-		infoVO.setCaselist(list);
+		ProcessInfoDTO processInfo;
+		List<ajdbxt_police> policeList;
+		for(ajdbxt_info info:list) {
+			processInfo=new ProcessInfoDTO();
+			processInfo.setInfo(info);
+			processInfo.setDepartment(infoDepartmentDao.findDepartmentById(info.getInfo_department()));
+			policeList=new ArrayList<ajdbxt_police>();
+			policeList.add(infoPoliceDao.findPoliceById(info.getInfo_main_police()));
+			policeList.add(infoPoliceDao.findPoliceById(info.getInfo_assistant_police_one()));
+			String three=info.getInfo_assistant_police_two();
+			if(three!=null&&three.isEmpty()==false) {
+				policeList.add(infoPoliceDao.findPoliceById(three));
+			}
+			processInfo.setPolice(policeList);
+			case_list.add(processInfo);
+		}
+		infoVO.setCaselist(case_list);
 		infoVO.setCountRecords(infoDao.countAllCase());
 		int pages=infoVO.getCountRecords()/infoVO.getPageSize();
 		if(infoVO.getCountRecords()%infoVO.getPageSize()>0) {
@@ -284,11 +269,35 @@ public class InfoServiceImpl implements InfoService {
 	}
 
 	@Override
-	public String getLegalsAndLeaders() {
+	public String getLegalsAndLeadersAndDepartment() {
 		LegalSystemAndLeadersVO lalVO=new LegalSystemAndLeadersVO();
 		lalVO.setLegals(infoPoliceDao.findLegals());
 		lalVO.setLeaders(infoPoliceDao.findLeaders());
+		lalVO.setDepartments(infoDepartmentDao.findAllDepartment());
 		return JsonUtils.toJson(lalVO);
+	}
+
+	@Override
+	public ProcessInfoDTO getSingleInfo(String info_id) {
+		ajdbxt_info info=infoDao.findCaseById(info_id);
+		ajdbxt_department department=infoDepartmentDao.findDepartmentById(info.getInfo_department());
+		ProcessInfoDTO processInfoDTO=new ProcessInfoDTO();
+		processInfoDTO.setInfo(info);
+		processInfoDTO.setDepartment(department);
+		List<ajdbxt_police> policeList=new ArrayList<ajdbxt_police>();
+		policeList.add(infoPoliceDao.findPoliceById(info.getInfo_main_police()));
+		policeList.add(infoPoliceDao.findPoliceById(info.getInfo_assistant_police_one()));
+		String three=info.getInfo_assistant_police_two();
+		if(three!=null&&three.isEmpty()==false) {
+			policeList.add(infoPoliceDao.findPoliceById(three));
+		}
+		processInfoDTO.setPolice(policeList);
+		return processInfoDTO;
+	}
+	@Override
+	public String getPolices(String info_department) {
+		List list=infoPoliceDao.findPoliceByDepartment(info_department);
+		return JsonUtils.toJson(list);
 	}
 	
 }

@@ -24,6 +24,14 @@ public class ProcessAction  extends ActionSupport{
 	private ProcessInfoService processInfoService;
 	private showProcessVO processVO;
 	private Page_list_caseInfoVo infoVO;
+	public Page_list_caseInfoVo getInfoVO() {
+		return infoVO;
+	}
+
+	public void setInfoVO(Page_list_caseInfoVo infoVO) {
+		this.infoVO = infoVO;
+	}
+
 	public showProcessVO getProcessVO() {
 		return processVO;
 	}
@@ -56,20 +64,24 @@ public class ProcessAction  extends ActionSupport{
 		this.processInfoService = processInfoService;
 	}
 	public String page_process(){
+		noLogin();
 		return "processpage";
 	}
 	/**
 	 * 的到与该警官相关的案件信息
 	 * @param ajdbxtProcess.case_end="false" 查未结案的
 	 * @param ajdbxtProcess.captain_check="false" 查未审核的
+	 * @param ajdbxtProcess.process_score="false" 查未评分的
+	 * @param ajdbxtProcess.process_qustion="false" 查未整改问题的
 	 */
 	public void getInfo() {
+		noLogin();
 		Object o =ActionContext.getContext().getSession().get("loginPolice");//得到该警察
 		ajdbxt_police police=(ajdbxt_police)o;
 		String police_id=police.getAjdbxt_police_id();
-		String json="";
+		String json="";		
 		if(ajdbxtProcess.getProcess_case_end()!=null&&!ajdbxtProcess.getProcess_case_end().equals("true")) {
-			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id,infoVO );
+			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id,infoVO);
 		}else if(ajdbxtProcess.getProcess_captain_check()!=null&&!ajdbxtProcess.getProcess_captain_check().equals("true")){
 			json=processInfoService.getInfoList(ProcessInfoService.CAPTAIN_CHECK, police_id,infoVO);
 		}else if(ajdbxtProcess.getProcess_score()!=null&&!ajdbxtProcess.getProcess_score().equals("true")){
@@ -94,6 +106,7 @@ public class ProcessAction  extends ActionSupport{
 	 * 
 	 */
 	public void update() {
+		noLogin();
 		ajdbxt_process process=(ajdbxt_process)ActionContext.getContext().getSession().get("lookedProcess");
 		int send_massage_type=0;
 		Class clazz=ajdbxtProcess.getClass();
@@ -125,7 +138,8 @@ public class ProcessAction  extends ActionSupport{
 	 * 查看流程详情
 	 * @return
 	 */
-	public String findSingle() {
+	public void findSingle() {
+		noLogin();
 		String case_id=ajdbxtProcess.getProcess_case_id();
 		ajdbxt_process process=processService.getSingleProcessByCaseId(case_id);
 		ActionContext.getContext().getSession().put("lookedProcess", process);
@@ -141,19 +155,18 @@ public class ProcessAction  extends ActionSupport{
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		return null;
 	}
 
-	public String findSome() {
-System.out.println("11111");
-
+	public void findSome() {
+		noLogin();
+		String json="";
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		try {
-			ServletActionContext.getResponse().getWriter().print(processService.getSomeProcessByShowProcessVO(processVO));
+			json=JsonUtils.toJson(processService.getSomeProcessByShowProcessVO(processVO));
+			ServletActionContext.getResponse().getWriter().print(json);
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}
-		return null;
 	}
 	
 	/**
@@ -161,6 +174,7 @@ System.out.println("11111");
 	 * @return
 	 */
 	public String page_list_CaseProcess() {
+		noLogin();
 		return "page_list_CaseProcess";
 	}
 	
@@ -169,7 +183,17 @@ System.out.println("11111");
 	 * @return
 	 */
 	public String page_CaseProcessInfo() {
+		noLogin();
 		return "page_CaseProcessInfo";
+	}
+	private void noLogin() {
+		if(ActionContext.getContext().getSession().get("loginPolice")==null) {
+			try {
+				ServletActionContext.getResponse().sendRedirect("/ajdbxt/login.jsp");
+			} catch (IOException e) {
+				new RuntimeException(e);
+			}
+		}
 	}
 }
 

@@ -1,11 +1,18 @@
 package com.ajdbxt.action.Info;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+
 import org.apache.struts2.ServletActionContext;
 import com.ajdbxt.domain.DO.ajdbxt_info;
+import com.ajdbxt.domain.DO.ajdbxt_process;
+import com.ajdbxt.domain.DTO.Process.ProcessInfoDTO;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.service.Info.InfoService;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+
+import util.JsonUtils;
 
 public class InfoAction extends ActionSupport {
 	private ajdbxt_info info;
@@ -46,17 +53,27 @@ public class InfoAction extends ActionSupport {
 	public InfoService getInfoService() {
 		return infoService;
 	}
-
+	/**
+	 * 第一次调用获取主协办民警
+	 * @param 所有的id，时间，主协办民警都是后台生成的所以不用传，你要传给我部门id
+	 * 
+	 * 第二次调用获取协办民警二
+	 * @param 把我前一次次传给你的对象添加信息后回传给我
+	 * 
+	 * 第三次保存案件信息，开启流程
+	 * @param 把我前俩次传给你的对象添加信息后回传给我
+	 */
 	public void save() {
+		noLogin();
 		String json="";
-		if(info.getInfo_assistant_police_one()==null&&info.getInfo_assistant_police_one().isEmpty()) {
+		if(info.getInfo_assistant_police_one()==null||info.getInfo_assistant_police_one().isEmpty()) {
 			json=infoService.saveCase(info);
 			try {
 				ServletActionContext.getResponse().getWriter().print(json);
 			} catch (IOException e) {
 				new RuntimeException(e);
 			}
-		}else if(info.getInfo_assistant_police_two()==null&&info.getInfo_assistant_police_two().isEmpty()){
+		}else if(info.getInfo_assistant_police_two()==null||info.getInfo_assistant_police_two().isEmpty()){
 			json=infoService.twoceRank(info);
 			try {
 				ServletActionContext.getResponse().getWriter().print(json);
@@ -72,20 +89,21 @@ public class InfoAction extends ActionSupport {
 	 * infoVO 是信息列表页面的VO类页面
 	 * @return
 	 */
-	public String listAll() {
+	public void listAll() {
+		noLogin();
 		try {
 			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 			ServletActionContext.getResponse().getWriter().print(infoService.getAllCase(infoVO));
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}
-		return null;
 	}
-	//得到法制员和局领导的方法
+	//得到法制员和局领导和部门的方法
 	public void lal() {
+		noLogin();
 		try {
 			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
-			ServletActionContext.getResponse().getWriter().print(infoService.getLegalsAndLeaders());
+			ServletActionContext.getResponse().getWriter().print(infoService.getLegalsAndLeadersAndDepartment());
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}
@@ -94,10 +112,83 @@ public class InfoAction extends ActionSupport {
 	 * 录入案件信息
 	 * @return
 	 */
-	public String add() {
-		
-		return null;
+	public void add() {
+		noLogin();
 	}
-
-
+	
+	/**
+	 * 得到单个案件信息、
+	 * @param info.ajxdbxt_info_id
+	 */
+	public void getSingleInfo() {
+		ProcessInfoDTO processInfoDTO =infoService.getSingleInfo(info.getAjdbxt_info_id());
+		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+		String json=JsonUtils.toJson(processInfoDTO);
+		try {
+			ServletActionContext.getResponse().getWriter().print(json);
+		} catch (IOException e) {
+			new RuntimeException(e);
+			System.out.println(e.getMessage());
+		}
+	}
+	/**
+	 * 删除单个案件信息
+	 * @param info.ajxdbxt_info_id
+	 */
+	public void delete() {
+		infoService.deleteCase(info.getAjdbxt_info_id());
+	}
+	/**
+	 * 更新案件信息
+	 * @param 修改后的info的所有
+	 */
+	public void update() {
+		ProcessInfoDTO getProcessDTO=infoService.getSingleInfo(info.getAjdbxt_info_id());
+		ajdbxt_info getInfo=getProcessDTO.getInfo();
+		int send_massage_type=0;
+		Class clazz=info.getClass();
+		Field [] f= clazz.getDeclaredFields();
+		for(Field field: f){
+			field.setAccessible(true);
+			try {
+				Object o =field.get(info);
+				if(o!=null) {
+					field.set(getInfo, o);
+//					switch (field.getName()) {
+//						case "process_case_goods":
+//							send_massage_type=MsgSend.CANCEL_DISPATCH;
+//							break;
+//	
+//						case "process_penalty":
+//						case ""
+//							break;
+//					}
+				}
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		infoService.updateCase(info);
+	}
+	/**
+	 * 得到同部门的警察
+	 */
+	public void getPolices() {
+		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+		try {
+			ServletActionContext.getResponse().getWriter().print(infoService.getPolices(info.getInfo_department()));
+		} catch (IOException e) {
+			new RuntimeException(e);
+		}
+	}
+	private void noLogin() {
+		if(ActionContext.getContext().getSession().get("loginPolice")==null) {
+			try {
+				ServletActionContext.getResponse().sendRedirect("/ajdbxt/login.jsp");
+			} catch (IOException e) {
+				new RuntimeException(e);
+			}
+		}
+	}
 }
+

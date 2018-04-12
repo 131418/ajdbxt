@@ -14,3 +14,4 @@ public interface ProcessDao {
 	public List<ajdbxt_process> findProcessByCaseId(String case_id);
 	public int findAllProcess();
 }
+
