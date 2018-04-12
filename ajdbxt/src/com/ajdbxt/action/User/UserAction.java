@@ -290,6 +290,7 @@ public class UserAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
+	
 	//根据id查询单挑记录
 	public void findPoliceById() {
 		try {
