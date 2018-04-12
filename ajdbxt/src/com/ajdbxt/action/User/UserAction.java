@@ -277,6 +277,7 @@ public class UserAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
+	
 	//增加部门
 	public void addDepartment() {
 		try {
