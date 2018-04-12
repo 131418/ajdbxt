@@ -6,7 +6,7 @@
     "outline": {
       
     },
-    "angular1": {
+    "angular": {
       
     }
   },
@@ -14,4 +14,5 @@
     "ecma5",
     "browser"
   ]
+
 }
