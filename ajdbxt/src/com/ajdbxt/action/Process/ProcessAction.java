@@ -174,6 +174,34 @@ public class ProcessAction  extends ActionSupport{
 			new RuntimeException(e);
 		}
 	}
+	public void findAboutMeSome() {
+		Object o=ActionContext.getContext().getSession().get("loginPolice");
+		ajdbxt_police police=(ajdbxt_police)o;
+		String police_id=police.getAjdbxt_police_id();
+		String json="";
+		if(ajdbxtProcess.getProcess_case_end()!=null&&ajdbxtProcess.getProcess_case_end().equals("true")==false) {
+			json=processInfoService.getProcessList(ProcessInfoService.CASE_END, police_id,processVO);
+			ajdbxtProcess.setProcess_case_end(null);
+		}else if(ajdbxtProcess.getProcess_captain_check()!=null&&ajdbxtProcess.getProcess_captain_check().equals("true")==false){
+			json=processInfoService.getProcessList(ProcessInfoService.CAPTAIN_CHECK, police_id,processVO);
+			ajdbxtProcess.setProcess_captain_check(null);
+		}else if(ajdbxtProcess.getProcess_score()!=null&&ajdbxtProcess.getProcess_score().equals("true")==false){
+			json=processInfoService.getProcessList(ProcessInfoService.PROCESS_SCORE, police_id,processVO);
+			ajdbxtProcess.setProcess_score(null);
+		}else if(ajdbxtProcess.getProcess_question()!=null&&ajdbxtProcess.getProcess_question().equals("true")==false) {
+			json=processInfoService.getProcessList(ProcessInfoService.PROCESS_QUESTION, police_id,processVO);
+			ajdbxtProcess.setProcess_question(null);
+		}else {
+			json=processInfoService.getInfoList(100, police_id,infoVO);
+		}
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=utf-8");
+		try {
+			response.getWriter().print(json);
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 	
 	/**
 	 * 跳转到办案流程列表页
@@ -183,6 +211,7 @@ public class ProcessAction  extends ActionSupport{
 		noLogin();
 		return "page_list_CaseProcess";
 	}
+	
 	
 	/**
 	 * 跳转都办案流程详情页

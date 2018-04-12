@@ -28,6 +28,7 @@
 		<property name="processDepartmentDao" ref="processDepartmentDao"></property>
 	</bean>
 	<bean id="processInfoService" class="com.ajdbxt.service.impl.Process.ProcessInfoServiceImpl">
+		<property name="processDao" ref="processDao"></property>
 		<property name="processInfoDao" ref="processInfoDao"></property>
 		<property name="processPoliceDao" ref="processPoliceDao"></property>
 		<property name="processDepartmentDao" ref="processDepartmentDao"></property>
