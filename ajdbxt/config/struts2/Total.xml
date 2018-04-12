@@ -3,17 +3,13 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-<!-- 	<package name="Total" namespace="/total" extends="struts-default">
-		<action name="Total_*" class="com.ajdbxt.action.User.UserAction"
+	<package name="Total" namespace="/total" extends="struts-default">
+		<action name="Total_*" class="com.ajdbxt.action.Total.StatisticAction"
 			method="{1}">
-			<result name="index">/WEB-INF/view/index.jsp
-			</result>
-			<result name="navbar">/WEB-INF/view/navbar.jsp
-			</result>
-			<result name="SUCCESS">/success.jsp</result>
-			<result name="FALSE">false.jsp</result>
+			<result name="page_listPoliceCaseStatistics">/WEB-INF/view/total/ajdbxt_total.jsp</result>
+			<result name="page_listPoliceCase">/WEB-INF/view/total/ajdbxt_total_user.jsp</result>
 		</action>
 	</package>
- -->
+
  
  </struts>

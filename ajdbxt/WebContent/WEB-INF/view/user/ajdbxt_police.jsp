@@ -11,10 +11,10 @@
 <head>
 
 
-<title>首页</title>
+<title>人员管理</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
-.table_case_info tbody tr {
+.table_police tbody tr {
 	text-align: center;
 }
 
@@ -31,47 +31,62 @@
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
-				<h3 class="panel-title">首页</h3>
+				<h3 class="panel-title">人员管理</h3>
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
 					<div class="panel">
+
 						<!--  -->
 						<div class="panel-body">
 							<div style="height: 34px; width: 100%;">
+								<div style="width: 150px; float: left; margin: 0 20px 0 0">
+									<button class="btn btn-default role_one"
+										onclick="createPolice()">
+										<i class="fa fa-plus-square"></i> 新增人员
+									</button>
 
-								<div class="operation" style="margin-bottom: 6px;">
-									<select id="type_chose"
-										style="width: 220px; float: left;"
-										class="form-control" onchange="List_Index_CaseInfo_By_Page(1)">
-										<!-- <option selected="selected" value="">请选择</option> -->
-										<option   value="正在参与的案件"
-											selected="selected">正在参与的案件</option>
-										<option   value="待核对案件">待核对案件</option>
-										<option   value="等待提交问题清单的案件">等待提交问题清单的案件</option>
-										<option   value="等待评分的案件">等待评分的案件</option>
-
-									</select>
 								</div>
+								<!-- 检索 -->
+								<div class="input-group" style="width: 300px; float: right;">
+									<input id="input_PoliceSearchText" class="form-control"
+										oninput="List_Police_By_Page(1);" type="text"
+										placeholder="搜索人员" /> <span class="input-group-addon"
+										style="border-radius: unset;"> <i class="fa fa-search"></i>
+									</span>
+								</div>
+
 							</div>
 
-							<table id="table_case_info" class="table table-hover table-bordered"
+							<table id="table_police" class="table table-hover table-bordered"
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
-										<th>案件名称</th>
-										<th>案件类别</th>
-										<th>办案单位</th>
-										<th>抓获时间</th>
-										<th>主办民警</th>
-										<th>协办民警</th>
+										<th>序号</th>
+										<th>警号</th>
+										<th>姓名</th>
+										<th>单位</th>
+										<th>职务</th>
+										<th>权限</th>
+										<th>手机号码</th>
+										<th>操作</th>
+										<th><label class="fancy-checkbox"> <input
+												id="checkbox_all_select" type="checkbox"
+												onclick="all_select()"> <span></span>
+										</label></th>
 									</tr>
 								</tbody>
 							</table>
-
 							<!-- 加载图标 -->
 							<div id="i_pulse" style="text-align: center;">
 								<i class="fa fa-spinner fa-pulse fa-3x"></i>
+							</div>
+							<!-- 删除按钮 -->
+							<div style="height: 34px;">
+								<button class="btn btn-danger role_one" onclick="deletePolice()"
+									style="float: right; margin: 0 10px;">
+									<i class="fa fa-trash-o"></i> 删除所选
+								</button>
 							</div>
 							<!--翻页  -->
 							<div id="page_flip"
@@ -101,8 +116,14 @@
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript" src="<%=basePath%>js/icheck.js"></script>
+	<script type="text/javascript" src="<%=basePath%>js/Input_Select.js"></script>
 	<script type="text/javascript"
-		src="<%=basePath%>js/Index/indexCaseInfo.js"></script>
-	
+		src="<%=basePath%>js/User/ajdbxtPolice.js"></script>
+	<script type="text/javascript">
+		List_Police_By_Page(1);
+	</script>
+
 </body>
 </html>

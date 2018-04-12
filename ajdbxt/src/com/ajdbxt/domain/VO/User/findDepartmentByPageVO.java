@@ -2,7 +2,7 @@ package com.ajdbxt.domain.VO.User;
 
 import java.util.List;
 
-public class findPoliceByPageVO {
+public class findDepartmentByPageVO {
 	
 	private List list;//要返回的某一页的记录列表
 	
@@ -21,8 +21,6 @@ public class findPoliceByPageVO {
 	private boolean hasPreviousPage;//是否有前一页
 	
 	private boolean hasNextPage;//是否游下一页
-	
-	private String police_name;
 
 	public List getList() {
 		return list;
@@ -70,14 +68,6 @@ public class findPoliceByPageVO {
 	 * 
 	 */
 	
-	public String getPolice_name() {
-		return police_name;
-	}
-
-	public void setPolice_name(String police_name) {
-		this.police_name = police_name;
-	}
-
 	public void init() {
 		this.isFirstPage = isFirstPage();
 		this.isLastPage = isLastPage();
@@ -118,7 +108,8 @@ public class findPoliceByPageVO {
 	@return 总页数
 	*/
 	public static int countTotalPage(final int pageSize, final int allRow) {
-		int totalPage = allRow % pageSize == 0 ? allRow / pageSize : allRow / pageSize + 1;
+		//int totalPage = allRow % pageSize == 0 ? allRow / pageSize : allRow / pageSize + 1;
+		int totalPage = (allRow-1)/pageSize + 1;
 		return totalPage;
 	}
 	

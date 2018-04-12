@@ -8,17 +8,16 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.ajdbxt.dao.User.UserDao;
-import com.ajdbxt.domain.DO.Ajdbxt_police;
-import com.ajdbxt.domain.DO.police;
-import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
+import com.ajdbxt.domain.DO.ajdbxt_department;
+import com.ajdbxt.domain.DO.ajdbxt_police;
 
 public class UserDaoImpl implements UserDao {
 
 	@Override
-	public Ajdbxt_police findPolice(String policeSerialNumber) {
-		String hql = "from Ajdbxt_police where policeSerialNumber = '"+ policeSerialNumber +"'";
+	public ajdbxt_police findPolice(String police_serial_number) {
+		String hql = "from ajdbxt_police where police_serial_number = '"+ police_serial_number +"'";
 		Query query = getSession().createQuery(hql);
-		Ajdbxt_police p = (Ajdbxt_police) query.uniqueResult();
+		ajdbxt_police p = (ajdbxt_police) query.uniqueResult();
 		return p;
 	}
 
@@ -33,7 +32,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean addPolice(Ajdbxt_police ajdbxt_police) {
+	public boolean addPolice(ajdbxt_police ajdbxt_police) {
 		// TODO Auto-generated method stub
 		try {
 			getSession().saveOrUpdate(ajdbxt_police);
@@ -46,29 +45,15 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean deletePolice(Ajdbxt_police ajdbxtPolice) {
+	public ajdbxt_police findPoliceByPoliceSerialNumber(String police_serial_number) {
 		// TODO Auto-generated method stub
-
-		try {
-			getSession().delete(ajdbxtPolice);
-		} catch (HibernateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public Ajdbxt_police findPoliceByPoliceSerialNumber(String policeSerialNumber) {
-		// TODO Auto-generated method stub
-		String hql = "from Ajdbxt_police where policeSerialNumber = '" + policeSerialNumber + "'";
-		return (Ajdbxt_police) getSession().createQuery(hql).uniqueResult();
+		String hql = "from ajdbxt_police where police_serial_number = '" + police_serial_number + "'";
+		return (ajdbxt_police) getSession().createQuery(hql).uniqueResult();
 
 	}
 
 	@Override
-	public boolean updatePolice(Ajdbxt_police ajdbxt_police) {
+	public boolean updatePolice(ajdbxt_police ajdbxt_police) {
 		// TODO Auto-generated method stub
 		try {
 			getSession().update(ajdbxt_police);
@@ -80,26 +65,8 @@ public class UserDaoImpl implements UserDao {
 		return true;
 	}
 
-/*	@Override
-	public List<Ajdbxt_police> findPoliceByPoliceDepartment(String policeDepartment) {
-		// TODO Auto-generated method stub
-		String hql = "from Ajdbxt_police where policeDepartment  = '" + policeDepartment + "'";
-		Query query = getSession().createQuery(hql);
-		List<Ajdbxt_police> policeofdepartment = query.list();
-		return policeofdepartment;
-	}*/
-
-/*	@SuppressWarnings("unchecked")
 	@Override
-	public List<Ajdbxt_police> findAllPolice() {
-		String hql = "from  Ajdbxt_police";
-		List<Ajdbxt_police> findallpolice = getSession().createQuery(hql).list();
-		return findallpolice;
-	}
-*/
-
-	@Override
-	public List<Ajdbxt_police> queryForPage(String hql, int offset, int length) {
+	public List<ajdbxt_police> queryForPage(String hql, int offset, int length) {
 		// TODO Auto-generated method stub
 		Query q = getSession().createQuery(hql);
 		q.setFirstResult(offset);
@@ -115,7 +82,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<Ajdbxt_police> queryForPageByDepartment(String hql, int offset, int length) {
+	public List<ajdbxt_police> queryForPageByDepartment(String hql, int offset, int length) {
 		// TODO Auto-generated method stub
 		Query q = getSession().createQuery(hql);
 		q.setFirstResult(offset);
@@ -124,10 +91,10 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public String changePassword(String ajdbxtPoliceId,String newPassword) {
+	public String changePassword(String ajdbxt_police_id,String newPassword) {
 		// TODO Auto-generated method stub
 		try {
-			String hql = "update Ajdbxt_police set policePassword ='" + newPassword + "' where policeSerialNumber = '" + ajdbxtPoliceId + "'";
+			String hql = "update ajdbxt_police set police_password ='" + newPassword + "' where ajdbxt_police_id = '" + ajdbxt_police_id + "'";
 			getSession().createQuery(hql).executeUpdate();
 		} catch (HibernateException e) {
 			// TODO Auto-generated catch block
@@ -137,19 +104,54 @@ public class UserDaoImpl implements UserDao {
 		return "success";
 	}
 
-/*	@Override
-	public List<Ajdbxt_police> findPoliceByPage(findPoliceByPageVO findPoliceByPage) {
+	@Override
+	public String batchDelete(String[] ids) {
 		// TODO Auto-generated method stub
-		String hql = "from Ajdbxt_police";
-		return null;
-	}*/
+		try {
+			for(int i=0;i<ids.length;i++) {
+				//getSession().delete(ids[i]);自带方法只能引用对象
+				String hql = "delete ajdbxt_police where ajdbxt_police_id = '"+ids[i]+"'";
+				getSession().createQuery(hql).executeUpdate();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "failed";
+		}
+		return "success";
+	}
 
-	/*
-	 * @Override public void listPolice() { // TODO Auto-generated method stub
-	 * Criteria criteria = getSession().createCriteria(Ajdbxt_police.class);
-	 * List<Ajdbxt_police> list = criteria.list(); for(Ajdbxt_police
-	 * ajdbxt_police:list) {
-	 * 
-	 * } }
-	 */
+
+	@Override
+	public List<ajdbxt_department> findDepartmentByPage(String hql, int offset, int length) {
+		// TODO Auto-generated method stub
+		Query q = getSession().createQuery(hql);
+		q.setFirstResult(offset);
+		q.setMaxResults(length);
+		return q.list();
+	}
+
+	@Override
+	public String addDepartment(ajdbxt_department ajdbxt_department) {
+		// TODO Auto-generated method stub
+		try {
+			getSession().saveOrUpdate(ajdbxt_department);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "falied";
+		}
+		return "success";
+	}
+
+/*	@Override
+	public List<ajdbxt_police> fuzzySearch(String hql,int offset,int length) {
+		// TODO Auto-generated method stub
+		Query q = getSession().createQuery(hql);
+		q.setFirstResult(offset);
+		q.setMaxResults(length);
+		return q.list();
+	}
+*/
 }
