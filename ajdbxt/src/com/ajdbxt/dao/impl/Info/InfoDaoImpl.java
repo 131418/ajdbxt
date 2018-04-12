@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.ajdbxt.dao.Info.InfoDao;
 import com.ajdbxt.domain.DO.ajdbxt_info;
@@ -39,41 +40,19 @@ public class InfoDaoImpl implements InfoDao {
 	}
 
 	@Override
-	public ajdbxt_info findOneCase(ajdbxt_info caseInfo) {
-		// TODO Auto-generated method stub
-		String hql=" from ajdbxt_info ai where ai.ajdbxt_info_id='"+caseInfo.getAjdbxt_info_id()+"'";
-		caseInfo=(ajdbxt_info) this.getSession().createQuery(hql).uniqueResult();
-		return caseInfo;
-	}
-
-	@Override
 	public void saveCase(ajdbxt_info caseInfo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int findTotalCase(Page_list_caseInfoVo page_list_caseInfoVo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<ajdbxt_info> findCaseByPage(Page_list_caseInfoVo page_list_caseInfoVo) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session=this.getSession();
+		session.saveOrUpdate(caseInfo);
+		session.flush();
+		session.clear();
 	}
 
 	@Override
 	public ajdbxt_info findCaseById(String info_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ajdbxt_info findCaseByCaseName(String info_name) {
-		// TODO Auto-generated method stub
-		return null;
+		Session  session=this.getSession();
+		Criteria cri=session.createCriteria(ajdbxt_info.class);
+		cri.add(Restrictions.eq("ajdbxt_info_id", info_id));
+		return (ajdbxt_info) cri.uniqueResult();
 	}
 
 	@Override
@@ -103,11 +82,8 @@ public class InfoDaoImpl implements InfoDao {
 		Session session=sessionFactory.getCurrentSession();
 		Criteria cri=session.createCriteria(ajdbxt_info.class);
 		cri.setFirstResult(start);
-//		cri.setFetchSize(length);
 		cri.setMaxResults(length);
-
 		cri.addOrder(Order.desc("info_gmt_modify"));
-
 		return cri.list();
 	}
 

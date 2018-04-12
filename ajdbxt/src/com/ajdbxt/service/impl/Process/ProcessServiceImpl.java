@@ -69,12 +69,13 @@ public class ProcessServiceImpl implements ProcessService {
 		processDao.updateProcess(process);
 		return ;
 	}
+	
 	@Override
 	public boolean update(ajdbxt_process process, int send_massage_type) {
 		
 		return false;
 	}
-
+	
 	@Override
 	public showProcessVO getSomeProcessByShowProcessVO(showProcessVO processVO) {
 		int length=processVO.getPageSize();
@@ -104,6 +105,5 @@ public class ProcessServiceImpl implements ProcessService {
 		processVO.setList(processDTOList);
 		return processVO;
 	}
-
 }
 

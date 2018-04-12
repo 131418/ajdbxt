@@ -19,7 +19,7 @@ public class InfoPoliceDaoImpl implements InfoPoliceDao {
 	@Override
 	public List<ajdbxt_police> findPoliceByDepartment(String department) {
 		Session session=sessionFactory.getCurrentSession();
-		Query query=session.createQuery("from ajdbxt_police where police_department=?");
+		Query query=session.createQuery("from ajdbxt_police where police_department='67ed5ab3-d773-4ac1-981b-2839ed0cec5c'");
 		query.setString(0, department);
 		return query.list();
 	}

@@ -36,3 +36,4 @@ public class ProcessInfoDTO {
 	//办案单位
 	private ajdbxt_department department;
 }
+

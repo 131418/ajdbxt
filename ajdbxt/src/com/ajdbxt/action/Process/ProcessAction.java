@@ -69,32 +69,38 @@ public class ProcessAction  extends ActionSupport{
 	}
 	/**
 	 * 的到与该警官相关的案件信息
-	 * @param ajdbxtProcess.case_end="false" 查未结案的
-	 * @param ajdbxtProcess.captain_check="false" 查未审核的
+	 * @param ajdbxtProcess.process_case_end="false" 查未结案的
+	 * @param ajdbxtProcess.process_captain_check="false" 查未审核的
 	 * @param ajdbxtProcess.process_score="false" 查未评分的
-	 * @param ajdbxtProcess.process_qustion="false" 查未整改问题的
+	 * @param ajdbxtProcess.process_question="false" 查未整改问题的
 	 */
 	public void getInfo() {
 		noLogin();
 		Object o =ActionContext.getContext().getSession().get("loginPolice");//得到该警察
 		ajdbxt_police police=(ajdbxt_police)o;
 		String police_id=police.getAjdbxt_police_id();
-		String json="";		
-		if(ajdbxtProcess.getProcess_case_end()!=null&&!ajdbxtProcess.getProcess_case_end().equals("true")) {
+		String json="";
+		System.out.println(ajdbxtProcess);
+		if(ajdbxtProcess.getProcess_case_end()!=null&&ajdbxtProcess.getProcess_case_end().equals("true")==false) {
 			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id,infoVO);
-		}else if(ajdbxtProcess.getProcess_captain_check()!=null&&!ajdbxtProcess.getProcess_captain_check().equals("true")){
+			ajdbxtProcess.setProcess_case_end(null);
+		}else if(ajdbxtProcess.getProcess_captain_check()!=null&&ajdbxtProcess.getProcess_captain_check().equals("true")==false){
 			json=processInfoService.getInfoList(ProcessInfoService.CAPTAIN_CHECK, police_id,infoVO);
-		}else if(ajdbxtProcess.getProcess_score()!=null&&!ajdbxtProcess.getProcess_score().equals("true")){
+			ajdbxtProcess.setProcess_captain_check(null);
+		}else if(ajdbxtProcess.getProcess_score()!=null&&ajdbxtProcess.getProcess_score().equals("true")==false){
 			json=processInfoService.getInfoList(ProcessInfoService.PROCESS_SCORE, police_id,infoVO);
-		}else if(ajdbxtProcess.getProcess_question()!=null&&!ajdbxtProcess.getProcess_question().equals("true")) {
+			ajdbxtProcess.setProcess_score(null);
+		}else if(ajdbxtProcess.getProcess_question()!=null&&ajdbxtProcess.getProcess_question().equals("true")==false) {
 			json=processInfoService.getInfoList(ProcessInfoService.PROCESS_QUESTION, police_id,infoVO);
+			ajdbxtProcess.setProcess_question(null);
 		}else {
 			json=processInfoService.getInfoList(100, police_id,infoVO);
 		}
 		HttpServletResponse response=ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=utf-8");
 		try {
-			response.getWriter().print(json);
+			//response.getWriter().print(json);
+			ServletActionContext.getResponse().getWriter().print(json);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
@@ -168,6 +174,34 @@ public class ProcessAction  extends ActionSupport{
 			new RuntimeException(e);
 		}
 	}
+	public void findAboutMeSome() {
+		Object o=ActionContext.getContext().getSession().get("loginPolice");
+		ajdbxt_police police=(ajdbxt_police)o;
+		String police_id=police.getAjdbxt_police_id();
+		String json="";
+		if(ajdbxtProcess.getProcess_case_end()!=null&&ajdbxtProcess.getProcess_case_end().equals("true")==false) {
+			json=processInfoService.getProcessList(ProcessInfoService.CASE_END, police_id,processVO);
+			ajdbxtProcess.setProcess_case_end(null);
+		}else if(ajdbxtProcess.getProcess_captain_check()!=null&&ajdbxtProcess.getProcess_captain_check().equals("true")==false){
+			json=processInfoService.getProcessList(ProcessInfoService.CAPTAIN_CHECK, police_id,processVO);
+			ajdbxtProcess.setProcess_captain_check(null);
+		}else if(ajdbxtProcess.getProcess_score()!=null&&ajdbxtProcess.getProcess_score().equals("true")==false){
+			json=processInfoService.getProcessList(ProcessInfoService.PROCESS_SCORE, police_id,processVO);
+			ajdbxtProcess.setProcess_score(null);
+		}else if(ajdbxtProcess.getProcess_question()!=null&&ajdbxtProcess.getProcess_question().equals("true")==false) {
+			json=processInfoService.getProcessList(ProcessInfoService.PROCESS_QUESTION, police_id,processVO);
+			ajdbxtProcess.setProcess_question(null);
+		}else {
+			json=processInfoService.getInfoList(100, police_id,infoVO);
+		}
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=utf-8");
+		try {
+			response.getWriter().print(json);
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 	
 	/**
 	 * 跳转到办案流程列表页
@@ -177,6 +211,7 @@ public class ProcessAction  extends ActionSupport{
 		noLogin();
 		return "page_list_CaseProcess";
 	}
+	
 	
 	/**
 	 * 跳转都办案流程详情页

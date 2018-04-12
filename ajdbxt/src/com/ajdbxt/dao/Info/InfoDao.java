@@ -13,15 +13,7 @@ public interface InfoDao {
 	
 	public void deleteCase(String caseInfo_id);
 	
-	public int findTotalCase(Page_list_caseInfoVo page_list_caseInfoVo);
-	
-	public List<ajdbxt_info> findCaseByPage(Page_list_caseInfoVo page_list_caseInfoVo);
-	
 	public ajdbxt_info findCaseById(String info_id);
-	
-	public ajdbxt_info findOneCase(ajdbxt_info caseInfo);
-	
-	public ajdbxt_info findCaseByCaseName(String info_name);
 	
 	public List<ajdbxt_info> findSomeCase(int start,int length);
 	
