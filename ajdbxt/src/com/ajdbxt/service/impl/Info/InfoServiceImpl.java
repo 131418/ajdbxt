@@ -8,14 +8,11 @@ import com.ajdbxt.dao.Info.InfoDao;
 import com.ajdbxt.dao.Info.InfoDepartmentDao;
 import com.ajdbxt.dao.Info.InfoPoliceDao;
 import com.ajdbxt.dao.Process.ProcessDao;
-import com.ajdbxt.domain.DO.ajdbxt_department;
-import com.ajdbxt.domain.DO.ajdbxt_info;
-import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.DTO.Process.ProcessInfoDTO;
 import com.ajdbxt.domain.VO.Info.LegalSystemAndLeadersVO;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.service.Info.InfoService;
-
+import com.ajdbxt.domain.DO.*;
 import util.JsonUtils;
 import util.Tel;
 
