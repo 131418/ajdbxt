@@ -20,9 +20,10 @@
  }
  } 
  */
+	var police_vo = null;
 // 列表显示 
 function List_Police_By_Page(pageIndex) {
-	var police_vo = null;
+
 	var input_PoliceSearchText = document
 			.getElementById("input_PoliceSearchText").value;
 	var formData = new FormData();
