@@ -62,7 +62,6 @@ public class JunitTest {
 		findPoliceByPageVO findPoliceByPageVO = userService.queryForPage(10, 1, "");
 		ajdbxt_police aj0 = null;
 		policedptVO aj = null;
-		System.out.println(findPoliceByPageVO.getList());
 		for (Object ob : findPoliceByPageVO.getList()) {
 			aj = (policedptVO) ob;
 			aj0 = aj.getAjdbxt_police();
@@ -71,7 +70,6 @@ public class JunitTest {
 
 		String redWord = new Gson().toJson(findPoliceByPageVO);
 		// 把搜索关键字转换成红色
-		System.out.println(redWord);
 		// System.out.println(redWord.replaceAll("张", "<span
 		// style='color:red;'>张</span>"));
 	}
