@@ -331,7 +331,7 @@ function createPolice() {
 										for (var len = 0; len < Department_data.list.length; len++) {
 											option += '<option ';
 											option += ' value="'
-													+ Department_data.list[len].department_name
+													+ Department_data.list[len].ajdbxt_department_id
 													+ '">'
 													+ Department_data.list[len].department_name
 													+ '</option>';
@@ -570,7 +570,7 @@ function updatePolice(button) {
 														option += 'selected';
 													}
 													option += ' value="'
-															+ Department_data.list[len].department_name
+															+ Department_data.list[len].ajdbxt_department_id
 															+ '">'
 															+ Department_data.list[len].department_name
 															+ '</option>';
