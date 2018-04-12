@@ -300,7 +300,7 @@ function createPolice() {
 						formData.append("ajdbxt_police.police_name",
 								input_police_name);
 						// 单位
-						formData.append("ajdbxt_department.department_name",
+						formData.append("ajdbxt_police.police_department",
 								input_police_department);
 						// 职位
 						formData.append("ajdbxt_police.police_duty",
