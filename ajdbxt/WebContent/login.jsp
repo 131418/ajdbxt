@@ -39,7 +39,6 @@
 <title>登录</title>
 </head>
 <body>
-	
 	<div class="bg">
 			<div class="bg_center">
 				<p>案件督办系统</p>
