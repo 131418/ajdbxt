@@ -38,7 +38,7 @@ public class StatisticServiceImpl implements StatisticService {
 		//分页
 		List<StatisticPoliceCaseNumDTO> newlist=new ArrayList<StatisticPoliceCaseNumDTO>();
 		for(int i=(listPoliceCaseNumByPageAndSearchVO.getCurrePage()-1);
-				i<(listPoliceCaseNumByPageAndSearchVO.getCurrePage()+listPoliceCaseNumByPageAndSearchVO.getPageSize());i++){
+				i<(listPoliceCaseNumByPageAndSearchVO.getCurrePage()+listPoliceCaseNumByPageAndSearchVO.getPageSize()-1);i++){
 			System.out.println(i);
 			System.out.println(list.size());
 				if(i<list.size()) {
