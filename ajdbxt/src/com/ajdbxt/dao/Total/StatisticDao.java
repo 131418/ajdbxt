@@ -22,6 +22,6 @@ public interface StatisticDao {
 	public int getCaseRecords(page_eachPoliceCaseVO eachPoliceCaseVO);
 	
 	//得到对应民警的部门
-	public List<ajdbxt_department> getDepartment(String police_id);
+	public List<ajdbxt_department> getDepartment(String police_department_id);
 
 }

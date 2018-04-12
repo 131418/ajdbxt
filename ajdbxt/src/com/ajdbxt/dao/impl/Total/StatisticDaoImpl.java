@@ -38,8 +38,8 @@ public class StatisticDaoImpl implements StatisticDao {
 	@Override
 	public int getAllCaseNumByPolice(page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseByPageAndSearchVO,String police_id,String category) {
 		Session session=getSession();
-		String start_time = "0000-00-00";
-		String stop_time = "9999-99-99";
+		String start_time = "";
+		String stop_time = "";
 		Long i;
 		String hql="select count(*) from ajdbxt_info where info_main_police='"+police_id+"'or info_assistant_police_one='"+police_id+"'"
 				+ "or info_assistant_police_two='"+police_id+"' and info_category='"+category+"'" ;
@@ -93,14 +93,14 @@ public class StatisticDaoImpl implements StatisticDao {
 	public List<StatisticCaseByPoliceDTO> getStatisticCaseList(page_eachPoliceCaseVO eachPoliceCaseVO) {
 		Session session=getSession();
 		List<StatisticCaseByPoliceDTO> listPoliceCase=new ArrayList<StatisticCaseByPoliceDTO>();
-		String start_time = "0000-00-00";
-		String stop_time = "9999-99-99";
-		String hql="select ajdbxt_police*,ajdbxt_info*,ajdbxt_process*"
-				+ "from ajdbxt_police,ajdbxt_info,ajdbxt_process "
-				+ "where ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_main_police "
-				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_one "
-				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_two "
-				+ "and ajdbxt_info.ajdbxt_info_id=ajdbxt_process.process_case_id and ajdbxt_police.ajdbxt_police_id='"+eachPoliceCaseVO.getPolice_id()+"'";
+		String start_time = "";
+		String stop_time = "";
+		//select ajdbxt_police*,ajdbxt_info*,ajdbxt_process*
+		String hql="from ajdbxt_police,ajdbxt_info,ajdbxt_process "
+				+ "where (ajdbxt_info.info_main_police=ajdbxt_police.ajdbxt_police_id "
+				+ "or ajdbxt_info.info_assistant_police_one=ajdbxt_police.ajdbxt_police_id "
+				+ "or ajdbxt_info.info_assistant_police_two=ajdbxt_police.ajdbxt_police_id) "
+				+ "and ajdbxt_process.process_case_id=ajdbxt_info.ajdbxt_info_id and ajdbxt_police.ajdbxt_police_id='"+eachPoliceCaseVO.getPolice_id()+"'";
 		if(eachPoliceCaseVO.getQueryCaseName() !=null && eachPoliceCaseVO.getQueryCaseName().trim().length()>0) {
 			String info_name ="%" + eachPoliceCaseVO.getQueryCaseName().trim()+ "%";
 			hql+="and ajdbxt_info.info_name like'"+info_name+"'";
@@ -130,8 +130,8 @@ public class StatisticDaoImpl implements StatisticDao {
 	public int getCaseRecords(page_eachPoliceCaseVO eachPoliceCaseVO) {
 		Session session=getSession();
 		Long lo;
-		String start_time = "0000-00-00";
-		String stop_time = "9999-99-99";
+		String start_time="";
+		String stop_time="";
 		String hql="select count(*) from ajdbxt_police,ajdbxt_info,ajdbxt_process "
 				+ "where ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_main_police "
 				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_one "
@@ -159,13 +159,14 @@ public class StatisticDaoImpl implements StatisticDao {
 
 	//得到对应的办案部门
 	@Override
-	public List<ajdbxt_department> getDepartment(String police_id) {
+	public List<ajdbxt_department> getDepartment(String police_department_id) {
 		Session session =getSession();
-		String hql="select department_name from ajdbxt_department where ajdbxt_department.ajdbxt_department_id=ajdbxt_police.police_department "
-				+ "and ajdbxt_police.ajdbxt_police_id='"+police_id+"'";
+		String hql="from ajdbxt_department where ajdbxt_department_id='"+police_department_id+"'";
 		Query query=session.createQuery(hql);
 		List<ajdbxt_department> listDepartment=query.list();
 		System.out.println(hql);
+		
+		System.out.println(listDepartment.iterator());
 		session.clear();
 		return listDepartment;
 	}
