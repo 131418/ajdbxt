@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import com.ajdbxt.domain.VO.User.policedptVO;
+
 import com.ajdbxt.action.User.UserAction;
 import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
@@ -26,19 +26,46 @@ public class JunitTest {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+
+	/*
+	 * @Test 这是一个复制当前用户表然后重新生成新的含有id和时间的用户表的方法 public void Test_excelImport() {
+	 * List<Ajdbxt_police> list = userService.findAllPolice(); for (Ajdbxt_police P
+	 * : list) { userService.addPolice(P); } }
+	 */
+
+//	@Test
+//	public void Test_addPolice() {
+//		// ajdbxtPoliceId,policeSerialNumber,policePassword,policeName,policeDepartment,policeDuty,policePhoneNumber,policeGmtCreat,policeGmtModify
+//		ajdbxt_police ajdbxt_police = new ajdbxt_police(null, "999999", "999999", "ss辉", "sss", "副局长", "18870581880",
+//				null, null, "1");
+//		System.out.println(userService.addPolice(ajdbxt_police));
+//		// System.out.println("000000000000"+ajdbxt_police+"0000000000000000000");
+//	}
+//
+//	@Test
+//	public void Test_updatePolice() {
+//		ajdbxt_police ajdbxt_police = new ajdbxt_police("c87bc848-4345-42e0-b64c-d388d7555802", "040800", "111111",
+//				"易志伟", "法制大队", "xiao队长", "2", "18870581880", null, null);
+//		System.out.println(userService.updatePolice(ajdbxt_police));
+//	}
+
+	/*
+	 * @Test public void Test_findAllPolice() { List<Ajdbxt_police> findallpolice =
+	 * userService.findAllPolice(); //将插叙那结果转jsOn System.out.println(new
+	 * Gson().toJson(findallpolice)); }
+	 */
 	@Test
 	public void Test_queryForPage() {
-		findPoliceByPageVO findPoliceByPageVO = userService.queryForPage(10, 1,"张");
+		findPoliceByPageVO findPoliceByPageVO = userService.queryForPage(10, 1,"1");
 		ajdbxt_police aj0 =null;
-		policedptVO aj =null;
-		for(Object ob : findPoliceByPageVO.getList()) {
-			aj=(policedptVO) ob;
-			aj0 = aj.getAjdbxt_police();
-			aj0.setPolice_name(aj0.getPolice_name().replaceAll("张", "<span style='color:red;'>张</span>"));
+		for(Object aj : findPoliceByPageVO.getList()) {
+			aj0 = (ajdbxt_police) aj;
+			aj0.setPolice_name(aj0.getPolice_name().replaceAll("1", "<span style='color:red;'>1</span>"));
 		}
 		String  redWord = new Gson().toJson(findPoliceByPageVO);
 		//把搜索关键字转换成红色
 		System.out.println(redWord);
+		//System.out.println(redWord.replaceAll("张", "<span style='color:red;'>张</span>"));
 	}
 
 	@Test
@@ -72,7 +99,7 @@ public class JunitTest {
 	}
 	@Test
 	public void Test_addDept() {
-		ajdbxt_department ajdbxt_department = new ajdbxt_department(null, "公安局", null, null);
+		ajdbxt_department ajdbxt_department = new ajdbxt_department(null, "白源", null, null);
 		System.out.println(userService.addDepartment(ajdbxt_department));
 	}
 	@Test
@@ -82,11 +109,9 @@ public class JunitTest {
 	}
 	@Test
 	public void count(){
-		int totalCount=9;
-		System.out.println("jsdlsdfasdfj");
+		int totalCount=0;
 		int pageSize=10;
 		System.out.println((totalCount-1)/pageSize + 1);
-		System.out.println("jdsl;kafjl;idsaj");
 	}
 
 }
