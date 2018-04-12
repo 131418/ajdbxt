@@ -41,6 +41,8 @@ function List_Total_By_Page(pageIndex) {
 					new_tr.className = "new_tr";
 					new_tr.appendChild(document.createTextNode(''));
 					table_total.firstElementChild.appendChild(new_tr);
+					
+
 					/*
 					 * 1. 办案单位
 					 */
@@ -94,11 +96,12 @@ function List_Total_By_Page(pageIndex) {
 			input_Total_PoliceSearchText);
 	formData.append("listPoliceCaseByPageAndSearchVO.department",
 			select_case_department);
+	console.log("select_case_department:"+select_case_department);
 	formData.append("listPoliceCaseByPageAndSearchVO.start_time",
 			select_start_time.value);
 	formData.append("listPoliceCaseByPageAndSearchVO.stop_time",
 			select_stop_time.value);
-	xhr.open("POST", "/ajdbxt/total/Total_getListPoliceCaseStatistics", "true");
+	xhr.open("POST", "/ajdbxt/total/Total_getListPoliceCaseStatistics", true);
 	xhr.send(formData);
 }
 /*
