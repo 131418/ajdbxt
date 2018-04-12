@@ -66,7 +66,7 @@ function List_Police_By_Page(pageIndex) {
 					new_tr.appendChild(new_td);
 					new_td.style.display = "none";
 					new_td.className = "input_ajdbxt_police_id";
-					new_td.innerHTML = police_vo.list[num].ajdbxt_police_id;
+					new_td.innerHTML = police_vo.list[num].ajdbxt_police.ajdbxt_police_id;
 					/*
 					 * 1. 序号
 					 */
@@ -78,32 +78,32 @@ function List_Police_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].police_serial_number;
+					new_td.innerHTML = police_vo.list[num].ajdbxt_police.police_serial_number;
 					/*
 					 * 3. 姓名
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].police_name;
+					new_td.innerHTML = police_vo.list[num].ajdbxt_police.police_name;
 					/*
 					 * 4. 单位
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].police_department;
+					new_td.innerHTML = police_vo.list[num].ajdbxt_department.department_name;
 					/*
 					 * 5. 职务
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].police_duty;
+					new_td.innerHTML = police_vo.list[num].ajdbxt_police.police_duty;
 
 					/*
 					 * 5. 权限
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					if(police_vo.list[num].police_power=="1"){
+					if(police_vo.list[num].ajdbxt_police.police_power=="1"){
 						new_td.innerHTML ="浏览" ;
 					}else{
 						new_td.innerHTML ="管理" ;
@@ -114,7 +114,7 @@ function List_Police_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = police_vo.list[num].police_phone_number;
+					new_td.innerHTML = police_vo.list[num].ajdbxt_police.police_phone_number;
 
 					/*
 					 * 7. 操作
@@ -122,7 +122,7 @@ function List_Police_By_Page(pageIndex) {
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
 					new_td.innerHTML = '<i  id="'
-							+ police_vo.list[num].ajdbxt_police_id
+							+ police_vo.list[num].ajdbxt_police.ajdbxt_police_id
 							+ '" onClick=updatePolice(this) class="fa fa-pencil-square-o role_one" aria-hidden="true"></i>';
 					new_td.style.cursor = "pointer";
 
