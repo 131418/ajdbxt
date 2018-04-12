@@ -160,6 +160,6 @@ public class ProcessInfoDaoImpl implements ProcessInfoDao {
 		}
 		return query.list().size();
 	}
-
+	
 }
 

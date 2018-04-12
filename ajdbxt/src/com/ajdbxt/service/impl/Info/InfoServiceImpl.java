@@ -254,6 +254,8 @@ public class InfoServiceImpl implements InfoService {
 			if(three!=null&&three.isEmpty()==false) {
 				policeList.add(infoPoliceDao.findPoliceById(three));
 			}
+			policeList.add(infoPoliceDao.findPoliceById(info.getInfo_legal_team_member()));
+			policeList.add(infoPoliceDao.findPoliceById(info.getInfo_bureau_leader()));
 			processInfo.setPolice(policeList);
 			case_list.add(processInfo);
 		}
