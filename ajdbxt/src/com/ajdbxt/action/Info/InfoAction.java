@@ -64,6 +64,7 @@ public class InfoAction extends ActionSupport {
 	 * @param 把我前俩次传给你的对象添加信息后回传给我
 	 */
 	public void save() {
+		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		noLogin();
 		String json="";
 		if(info.getInfo_assistant_police_one()==null||info.getInfo_assistant_police_one().isEmpty()) {
