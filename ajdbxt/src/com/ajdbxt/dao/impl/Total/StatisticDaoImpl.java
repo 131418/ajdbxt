@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.ajdbxt.dao.Total.StatisticDao;
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.DTO.Total.StatisticCaseByPoliceDTO;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
@@ -59,9 +60,11 @@ public class StatisticDaoImpl implements StatisticDao {
 		@Override
 		public List<ajdbxt_police> getPolice(page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseByPageAndSearchVO) {
 			System.out.println("dao"+listPoliceCaseByPageAndSearchVO.getSearchPolice());
+			System.out.println(listPoliceCaseByPageAndSearchVO.getDepartment());
 			Session session=getSession();
 			String hql="from ajdbxt_police where 1=1 ";
 			if(listPoliceCaseByPageAndSearchVO.getDepartment() !=null && listPoliceCaseByPageAndSearchVO.getDepartment().length()>0) {
+				//实为id
 				hql+="and police_department='"+listPoliceCaseByPageAndSearchVO.getDepartment() +"'";
 			}
 			if(listPoliceCaseByPageAndSearchVO.getSearchPolice() !=null && listPoliceCaseByPageAndSearchVO.getSearchPolice().trim().length()>0) {
@@ -78,7 +81,7 @@ public class StatisticDaoImpl implements StatisticDao {
 						"<span style='color: #ff5063;'>" + listPoliceCaseByPageAndSearchVO.getSearchPolice().trim() + "</span>"));
 				}
 			}
-			System.out.println(list.toString());
+			System.out.println("toString"+list.size());
 			session.clear();
 			return list;
 		}
@@ -152,6 +155,19 @@ public class StatisticDaoImpl implements StatisticDao {
 		lo=(long) query.uniqueResult();
 		session.clear();
 		return lo.intValue();
+	}
+
+	//得到对应的办案部门
+	@Override
+	public List<ajdbxt_department> getDepartment(String police_id) {
+		Session session =getSession();
+		String hql="select department_name from ajdbxt_department where ajdbxt_department.ajdbxt_department_id=ajdbxt_police.police_department "
+				+ "and ajdbxt_police.ajdbxt_police_id='"+police_id+"'";
+		Query query=session.createQuery(hql);
+		List<ajdbxt_department> listDepartment=query.list();
+		System.out.println(hql);
+		session.clear();
+		return listDepartment;
 	}
 
 
