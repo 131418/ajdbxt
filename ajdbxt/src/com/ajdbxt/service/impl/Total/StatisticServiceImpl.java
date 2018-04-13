@@ -35,13 +35,12 @@ public class StatisticServiceImpl implements StatisticService {
 			statisticPoliceNumDTO.setCriminalCase(statisticDao.getAllCaseNumByPolice(listPoliceCaseNumByPageAndSearchVO, listPolice.get(i).getAjdbxt_police_id(), "刑事案件"));
 			list.add(statisticPoliceNumDTO);
 		}
-		System.out.println("执行了赋值操作");
 		 System.out.println("police.size"+listPolice.size());
 		
 		//分页
 		List<StatisticPoliceCaseNumDTO> newlist=new ArrayList<StatisticPoliceCaseNumDTO>();
-		for(int i=(listPoliceCaseNumByPageAndSearchVO.getCurrePage()-1);
-				i<(listPoliceCaseNumByPageAndSearchVO.getCurrePage()+listPoliceCaseNumByPageAndSearchVO.getPageSize()-1);i++){
+		for(int i=((listPoliceCaseNumByPageAndSearchVO.getCurrePage()-1)* listPoliceCaseNumByPageAndSearchVO.getPageSize());
+				i<(listPoliceCaseNumByPageAndSearchVO.getCurrePage()*listPoliceCaseNumByPageAndSearchVO.getPageSize());i++){
 			System.out.println(i);
 			System.out.println(list.size());
 				if(i<list.size()) {
@@ -50,9 +49,8 @@ public class StatisticServiceImpl implements StatisticService {
 					break;
 				}
 		}
-		
 		listPoliceCaseNumByPageAndSearchVO.setStatisticPoliceCaseNumDTO(newlist);
-		System.out.println(list.toString());
+		
 		//总记录数;
 		 int i= list.size();
 		 listPoliceCaseNumByPageAndSearchVO.setTotalRecords(i);
@@ -71,7 +69,7 @@ public class StatisticServiceImpl implements StatisticService {
 		return listPoliceCaseNumByPageAndSearchVO;
 	}
 
-	//警员案件分页
+	//警员案件
 	@Override
 	public page_eachPoliceCaseVO getPoliceCaseBYpageAndSearch(page_eachPoliceCaseVO listEachPoliceCaseVO) {
 		List<StatisticCaseByPoliceDTO> list=new ArrayList<StatisticCaseByPoliceDTO>();
