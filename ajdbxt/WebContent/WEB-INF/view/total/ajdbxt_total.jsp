@@ -17,7 +17,7 @@
 	text-align: center;
 }
 
-#page_flip span a:hover,#select_start_time, #select_stop_time{
+#page_flip span a:hover, #select_start_time, #select_stop_time {
 	cursor: pointer;
 }
 </style>
@@ -45,22 +45,24 @@
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">按日期筛选：</span>
 									<input id="select_start_time" class="form-control mydate"
 										style="width: 150px; float: left; text-align: center;"
-										type="text" placeholder="起始时间"  onchange="List_Total_By_Page(1)" value="2018-01-01" />
+										type="text" placeholder="起始时间"
+										onchange="List_Total_By_Page(1)" value="2018-01-01" />
 									<%--  --%>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">至</span>
 									<!--  -->
 									<input id="select_stop_time" class="form-control mydate"
 										style="width: 150px; float: left; margin: 0 0 0 20px; text-align: center;"
-										type="text" placeholder="结束时间" onchange="List_Total_By_Page(1)" />
+										type="text" placeholder="结束时间"
+										onchange="List_Total_By_Page(1)" />
 									<%--  --%>
 								</div>
 								<!-- 检索 -->
 								<div class="input-group" style="width: 300px; float: right;">
 									<input id="input_Total_PoliceSearchText" class="form-control"
-										oninput="List_Total_By_Page(1)" type="text"
-										placeholder="搜索人员" /> <span class="input-group-addon"
-										style="border-radius: unset;"> <i class="fa fa-search"></i>
+										oninput="List_Total_By_Page(1)" type="text" placeholder="搜索人员" />
+									<span class="input-group-addon" style="border-radius: unset;">
+										<i class="fa fa-search"></i>
 									</span>
 								</div>
 							</div>
@@ -69,7 +71,9 @@
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
-										<th><select id="select_case_department" style="width:70%;margin:0 auto;" class="form-control" onchange="List_Total_By_Page(1)">
+										<th><select id="select_case_department"
+											style="width: 70%; margin: 0 auto;" class="form-control"
+											onchange="List_Total_By_Page(1)">
 										</select></th>
 										<th>人员</th>
 										<th>行政案件</th>
@@ -115,9 +119,9 @@
 	<script type="text/javascript" src="<%=basePath%>js/laydate/laydate.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>js/Total/ajdbxtTotal.js"></script>
-		
-		<script type="text/javascript">
-		$(function(){
+
+	<script type="text/javascript">
+		$(function() {
 			$
 					.post(
 							'/ajdbxt/user/User_findDepartmentByPage',
@@ -137,27 +141,26 @@
 												+ option);
 							}, 'json');
 		});
-		
-		</script>
+	</script>
 	<script type="text/javascript">
-	var select_start_time = document.getElementById("select_start_time");
-	var select_stop_time = document.getElementById("select_stop_time");
-	var str='';
-	var now_date=new Date();
-	var now_date_year=now_date.getFullYear();
-	str+=now_date_year;
-	var now_date_month=now_date.getMonth()+1;
-	str+="-"+now_date_month;
-	var now_date_date=now_date.getDate();
-	str+="-"+now_date_date;
-	console.log("str:"+str);
-	/* select_start_time.value=str; */
-	select_stop_time.value=str;
-	console.log("select_start_time1:" + select_start_time.value);
-	console.log("select_stop_time1:" + select_stop_time.value);
+		var select_start_time = document.getElementById("select_start_time");
+		var select_stop_time = document.getElementById("select_stop_time");
+		var str = '';
+		var now_date = new Date();
+		var now_date_year = now_date.getFullYear();
+		str += now_date_year;
+		var now_date_month = now_date.getMonth() + 1;
+		str += "-" + now_date_month;
+		var now_date_date = now_date.getDate();
+		str += "-" + now_date_date;
+		console.log("str:" + str);
+		/* select_start_time.value=str; */
+		select_stop_time.value = str;
+		console.log("select_start_time1:" + select_start_time.value);
+		console.log("select_stop_time1:" + select_stop_time.value);
 		List_Total_By_Page(1);
 	</script>
-	
+
 	<script type="text/javascript">
 		$.datetimepicker.setLocale('ch');
 		$('.mydate').datetimepicker({

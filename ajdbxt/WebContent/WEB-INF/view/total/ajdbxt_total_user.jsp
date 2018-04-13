@@ -82,7 +82,7 @@
 										<th><select id="select_case_kind" class="form-control" onchange="List_Total_User_By_Page(1)">
 												<option>所有类型</option>
 												<option>行政案件</option>
-												<option >刑事案件</option>
+												<option>刑事案件</option>
 										</select></th>
 										<th>案件名</th>
 										<th>评分</th>
