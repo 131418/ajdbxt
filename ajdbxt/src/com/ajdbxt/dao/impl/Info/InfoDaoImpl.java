@@ -44,7 +44,6 @@ public class InfoDaoImpl implements InfoDao {
 		Session session=this.getSession();
 		session.saveOrUpdate(caseInfo);
 		session.flush();
-		session.clear();
 	}
 
 	@Override
