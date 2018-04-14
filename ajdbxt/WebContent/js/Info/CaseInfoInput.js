@@ -195,7 +195,7 @@ function get_ListBreakecaseInformationByPageAndSearch(data) {
 							str += '<tr>';
 							str += '<td>' + (len + 1) + '</td>';// 序号
 							str += '<td>'
-									+ data_list[len].info.info_name
+									+data_list[len].info.info_name
 									+ '</td>';// 案件名称
 							str += '<td>'
 									+ data_list[len].info.info_category
@@ -646,8 +646,11 @@ $("select#info_department").change(function(){
 			+ Case_data.police[0].ajdbxt_police_id + '">'
 			+ Case_data.police[0].police_name + '</option>';
 	  $('select[name="info.info_main_police"]').html(option).selectpicker('refresh').selectpicker('val',Case_data.police[0].ajdbxt_police_id);
-	   //find('select[name="info.info_main_police"]').html(option).selectpicker('val','Case_data.police[0].police_name'
-		//);
+	   var option1='';
+	   option1 += '<option value="'
+			+ Case_data.police[1].ajdbxt_police_id + '">'
+			+ Case_data.police[1].police_name + '</option>';
+	   $('select[name="info.info_assistant_police_one"]').html(option1).selectpicker('refresh').selectpicker('val',Case_data.police[1].ajdbxt_police_id);
 	},'json')
 			
 });
@@ -656,7 +659,15 @@ $("#police_two_td").hide();
 $("#police_two_tdd").hide();
 $("img#add_police_two").click(function(){
 	   $("#police_two_td").show(0,function(){
-		   //alert("l");
+		   $.post('/ajdbxt/info/Info_save',$('#breakCase_input form').serialize(),function(Case_data) {
+				
+			   var option='';
+			  option += '<option value="'
+					+ Case_data.police[2].ajdbxt_police_id + '">'
+					+ Case_data.police[2].police_name + '</option>';
+			  $('select[name="info.info_assistant_police_two"]').html(option).selectpicker('refresh').selectpicker('val',Case_data.police[2].ajdbxt_police_id);
+			  
+			},'json')
 	   });
 	   $("#police_two_tdd").show();
 	   $("#add_img").hide();
