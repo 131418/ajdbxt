@@ -121,6 +121,26 @@ public class MsgSend {
 	}
 	
 	/**
+	 * 简单版发短信
+	 * @param params 参数列表
+	 * @param tel 电话号码链表
+	 * @param tpl_id 发送的模板
+	 * @return 腾讯云回馈的信息
+	 */
+	public static String doSendSimple(String[] params,  List<String> tel, Integer tpl_id) {
+		List<Tel> telList=new ArrayList<>();
+		for(String telNum:tel) {
+			telList.add(new Tel(telNum,"86"));
+		}
+		String result_msg;
+		try {
+			result_msg=doSend("", "", params, POlICE_OFFICE, telList, tpl_id);
+		} catch (Exception e) {
+			result_msg=e.getMessage();
+		}
+		return result_msg;
+	}
+	/**
 	 **** 所需传参数
 	 * 
 	 * @param ext

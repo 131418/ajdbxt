@@ -270,7 +270,17 @@ public class InfoServiceImpl implements InfoService {
 	}
 
 	@Override
-	public void save(ajdbxt_info caseInfo) {
+	public String save(ajdbxt_info caseInfo) {
+		ProcessDTO processDTO=new ProcessDTO();
+		processDTO.setInfo(caseInfo);
+		List<ajdbxt_police> policeList=new ArrayList<>();
+		policeList.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police()));
+		policeList.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_one()));
+		if(caseInfo.getInfo_assistant_police_two()==null&&caseInfo.getInfo_assistant_police_two().isEmpty()==false) {
+			policeList.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_two()));
+		}
+		processDTO.setProcess(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).get(0));
+		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
 		infoDao.saveCase(caseInfo);
 		ajdbxt_police police;
 		police=infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police());
@@ -281,6 +291,7 @@ public class InfoServiceImpl implements InfoService {
 		if(caseInfo.getInfo_assistant_police_two()!=null||!caseInfo.getInfo_assistant_police_two().isEmpty()) {
 			
 		}
+		return JsonUtils.toJson(processDTO);
 	}
 
 	@Override

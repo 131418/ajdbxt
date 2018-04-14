@@ -64,25 +64,21 @@ public class InfoAction extends ActionSupport {
 	 * @param 把我前俩次传给你的对象添加信息后回传给我
 	 */
 	public void save() {
+		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		noLogin();
 		String json="";
-		if(info.getInfo_assistant_police_one()==null||info.getInfo_assistant_police_one().isEmpty()) {
-			json=infoService.saveCase(info);
-			try {
-				ServletActionContext.getResponse().getWriter().print(json);
-			} catch (IOException e) {
-				new RuntimeException(e);
+		
+			if(info.getInfo_assistant_police_one()==null||info.getInfo_assistant_police_one().isEmpty()) {
+				json=infoService.saveCase(info);
+			}else if(info.getInfo_assistant_police_two()==null||info.getInfo_assistant_police_two().isEmpty()){
+				json=infoService.twoceRank(info);
+			}else {
+				json=infoService.save(info);
 			}
-		}else if(info.getInfo_assistant_police_two()==null||info.getInfo_assistant_police_two().isEmpty()){
-			json=infoService.twoceRank(info);
-			try {
-				ServletActionContext.getResponse().getWriter().print(json);
-			} catch (IOException e) {
-				new RuntimeException(e);
-			}
-			
-		}else {
-			infoService.save(info);
+		try {
+			ServletActionContext.getResponse().getWriter().print(json);
+		} catch (IOException e) {
+			new RuntimeException(e);
 		}
 	}
 	/**
