@@ -60,8 +60,6 @@ public class InfoAction extends ActionSupport {
 	 * 第二次调用获取协办民警二,如果
 	 * @param 把我前一次次传给你的对象添加信息后回传给我
 	 * 
-	 * 第三次保存案件信息，开启流程
-	 * @param 把我前俩次传给你的对象添加信息后回传给我
 	 */
 	public void save() {
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
@@ -78,6 +76,7 @@ public class InfoAction extends ActionSupport {
 			new RuntimeException(e);
 		}
 	}
+	//专门用来保存新案件
 	public void saveCase() {
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		noLogin();
