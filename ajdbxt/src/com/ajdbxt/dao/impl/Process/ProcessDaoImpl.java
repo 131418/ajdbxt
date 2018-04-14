@@ -91,7 +91,7 @@ public class ProcessDaoImpl implements ProcessDao {
 		for(Field field:fields) {
 			field.setAccessible(true);
 			try {
-				if(field.get(process)==null&&field.get(process).equals("")) {
+				if(field.get(process)==null||field.get(process).equals("")) {
 					field.set(process, "否");
 				}
 			} catch (Exception e) {

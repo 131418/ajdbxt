@@ -324,7 +324,6 @@ public class InfoServiceImpl implements InfoService {
 			}else {
 				caseInfo.setInfo_assistant_police_two(police.getAjdbxt_police_id());
 			}
-			
 		}
 		processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());
 		processDTO.setProcess(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).get(0));
