@@ -118,7 +118,6 @@ public class InfoServiceImpl implements InfoService {
 				capM.put(police, temp);
 			}
 		}
-		//
 		//如副所队长没执勤过
 		if(countCap==0) {
 			ajdbxt_police police=cap.get(new Random().nextInt(cap.size()));
@@ -127,6 +126,7 @@ public class InfoServiceImpl implements InfoService {
 			}else {
 				caseInfo.setInfo_assistant_police_one(police.getAjdbxt_police_id());
 			}
+			cap.remove(police);
 		}
 		Comparator<Map.Entry<ajdbxt_police, Integer>> sort=new Comparator<Map.Entry<ajdbxt_police,Integer>>() {//map排序器降
 			@Override
@@ -326,10 +326,10 @@ public class InfoServiceImpl implements InfoService {
 			}
 			
 		}
+		processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());
 		processDTO.setProcess(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).get(0));
 		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
 		infoDao.saveCase(caseInfo);
-		processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());
 		if(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).size()<=0) {
 			processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());
 		}
