@@ -289,12 +289,12 @@ tfoot tr td a:hover {
 										<td><input style="witdh: 70%;"
 											class="form-control mydate"
 											name="info.info_catch_time" type="text"></td>
-										<td>主办民警</td>
-										<td ><input style="witdh: 100%;"
-											class="form-control selectpicker" data-live-search="true"
-											name="info.info_main_police" 
-											></td>
 										
+										<td>主办民警<i class="fa fa-spinner fa-pulse load_remind"></td>
+										<td ><select style="witdh: 100%;"
+											class="form-control selectpicker" data-live-search="true"
+											name="info.info_main_police" id="info.info_main_police"
+											></select></td>
 									</tr>
 									
 									<tr>
