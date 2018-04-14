@@ -21,7 +21,7 @@ public class page_listPoliceCaseNumByPageAndSearchVO {
 			private String start_time = "";
 			// 结束时间
 			private String stop_time = "";
-			//办案部门
+			//办案部门id
 			private String department;
 			//查找民警
 			private String searchPolice;

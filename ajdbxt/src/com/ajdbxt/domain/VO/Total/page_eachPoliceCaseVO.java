@@ -26,6 +26,8 @@ public class page_eachPoliceCaseVO {
 	
 	//警员id
 	private String police_id;
+	//案件类别
+	private String category;
 	
 	private List<StatisticCaseByPoliceDTO> caseListByPolice;
 
@@ -115,6 +117,14 @@ public class page_eachPoliceCaseVO {
 
 	public void setCaseListByPolice(List<StatisticCaseByPoliceDTO> caseListByPolice) {
 		this.caseListByPolice = caseListByPolice;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 }

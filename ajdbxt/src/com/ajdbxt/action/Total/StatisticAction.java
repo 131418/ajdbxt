@@ -3,6 +3,7 @@ package com.ajdbxt.action.Total;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
@@ -26,6 +27,7 @@ public class StatisticAction extends ActionSupport{
 	private StatisticService statisticService;
 	private StatisticPoliceCaseNumDTO statisticPoliceCaseNumDTO;
 	private StatisticCaseByPoliceDTO  statisticCaseByPoliceDTO;
+	private HttpServletRequest http_request;
 	
 	/*
 	 * 警员案件数量统计页面
@@ -39,7 +41,7 @@ public class StatisticAction extends ActionSupport{
 	 * 警员案件列表
 	*/
 	public String page_listPoliceCase() {
-		
+		ActionContext.getContext().getValueStack().set("police_id", http_request.getParameter("police_id"));		
 		return "page_listPoliceCase";
 	}
 	
@@ -117,6 +119,14 @@ public class StatisticAction extends ActionSupport{
 
 	public void setStatisticCaseByPoliceDTO(StatisticCaseByPoliceDTO statisticCaseByPoliceDTO) {
 		this.statisticCaseByPoliceDTO = statisticCaseByPoliceDTO;
+	}
+
+	public HttpServletRequest getHttp_request() {
+		return http_request;
+	}
+
+	public void setHttp_request(HttpServletRequest http_request) {
+		this.http_request = http_request;
 	}
 
 }
