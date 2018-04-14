@@ -16,16 +16,18 @@ import com.google.gson.Gson;
 
 /**
  * 基于腾讯云-短信 服务的短信发送工具类
- * SDK APPID 1400078037 固定帐号信息 
+ * SDK APPID 1400082910 固定帐号信息 
  * App Key 60d642699deae3beaeda20ae44f96f80 固定帐号信息
  * @author ppMonkey工作室
  *
  */
 public class MsgSend {
 	// URL，其中sdkappid为SDKAPPID
-	private final static String URL_BASE = "https://yun.tim.qq.com/v5/tlssmssvr/sendmultisms2?sdkappid=1400078037&random=";
+	private final static String URL_BASE = "https://yun.tim.qq.com/v5/tlssmssvr/sendmultisms2?sdkappid=1400082910&random=";
+	//腾讯云语音通知URL
+	private final static String URL_BASE＿VOICE="https://yun.tim.qq.com/v5/tlsvoicesvr/sendvoiceprompt?sdkappid=1400082910&random=";
 	// App Key 要高度保密
-	private final static String APPKEY = "60d642699deae3beaeda20ae44f96f80";
+	private final static String APPKEY = "02c9cf3cef358f484514dad73e5b0159";
 	/**
 	 * 撤案通知<br>  {1}警官，请在3日内通知嫌疑人、被害人或其近亲属，{2}案件撤案
 	 */

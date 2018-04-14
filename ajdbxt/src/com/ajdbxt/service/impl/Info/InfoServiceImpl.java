@@ -76,7 +76,6 @@ public class InfoServiceImpl implements InfoService {
 		caseInfo.setInfo_gmt_modify(caseInfo.getInfo_gmt_ceate());//保存时将修改时间设为创建时间
 		oneceRank(caseInfo);//下面要得到警察写逻辑
 		//哲理要写排班逻辑
-		processDTO.setProcess(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).get(0));
 		processDTO.setInfo(caseInfo);
 		List<ajdbxt_police> polices=new ArrayList<>();
 		polices.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police()));
