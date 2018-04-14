@@ -41,8 +41,9 @@ public class StatisticAction extends ActionSupport{
 	 * 警员案件列表
 	*/
 	public String page_listPoliceCase() {
-		ActionContext.getContext().getValueStack().set("police_id", http_request.getParameter("police_id"));		
+		ActionContext.getContext().getValueStack().set("police_id", http_request.getParameter("police_id"));
 		return "page_listPoliceCase";
+		
 	}
 	
 	/*

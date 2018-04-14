@@ -26,6 +26,7 @@ public class page_eachPoliceCaseVO {
 	
 	//警员id
 	private String police_id;
+	
 	//案件类别
 	private String category;
 	
