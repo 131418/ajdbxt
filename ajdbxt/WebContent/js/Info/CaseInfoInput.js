@@ -155,7 +155,7 @@ $(function() {
 					function() {
 						$
 								.post(
-										'/ajdbxt/info/Info_save',
+										'/ajdbxt/info/Info_saveCase',
 										$('#breakCase_input form').serialize(),
 										function(xhr) {
 											if (xhr == 'json') {
