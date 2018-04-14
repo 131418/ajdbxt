@@ -71,7 +71,6 @@ public class InfoServiceImpl implements InfoService {
 		caseInfo.setInfo_gmt_modify(caseInfo.getInfo_gmt_ceate());//保存时将修改时间设为创建时间
 		oneceRank(caseInfo);//下面要得到警察写逻辑
 		//哲理要写排班逻辑
-		processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());	
 		processDTO.setProcess(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).get(0));
 		processDTO.setInfo(caseInfo);
 		List<ajdbxt_police> polices=new ArrayList<>();
@@ -79,7 +78,6 @@ public class InfoServiceImpl implements InfoService {
 		polices.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_one()));
 		processDTO.setPolice(polices);
 		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
-		infoDao.saveCase(caseInfo);
 		return JsonUtils.toJson(processDTO);
 	}
 	private void oneceRank(ajdbxt_info caseInfo) {//排班主协办人员
@@ -104,10 +102,10 @@ public class InfoServiceImpl implements InfoService {
 		List<ajdbxt_police> nom=new ArrayList();
 		for(ajdbxt_police police :polices) {
 			int temp=infoDao.countProcessByPoliceId(police.getAjdbxt_police_id());
-			if(police.getPolice_duty().equals("警员")) {
+			if(police.getPolice_duty().contains("警员")) {
 				countNom+=temp;
 				nom.add(police);
-			}else if(police.getPolice_duty().equals("副队长")||police.getPolice_duty().equals("副所长")){
+			}else if(police.getPolice_duty().contains("副队长")||police.getPolice_duty().contains("副所长")){
 				countCap+=temp;
 				cap.add(police);
 			}
@@ -183,10 +181,10 @@ public class InfoServiceImpl implements InfoService {
 		List<ajdbxt_police> nom=new ArrayList();
 		for(ajdbxt_police police :polices) {
 			int temp=infoDao.countProcessByPoliceId(police.getAjdbxt_police_id());
-			if(police.getPolice_duty().equals("警员")) {
+			if(police.getPolice_duty().contains("警员")) {
 				countNom+=temp;
 				nom.add(police);
-			}else if(police.getPolice_duty().equals("副队长")||police.getPolice_duty().equals("副所长")){
+			}else if(police.getPolice_duty().contains("副队长")||police.getPolice_duty().contains("副所长")){
 				countCap+=temp;
 				cap.add(police);
 			}
@@ -222,7 +220,6 @@ public class InfoServiceImpl implements InfoService {
 		policelist.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_two()));
 		processDTO.setPolice(polices);
 		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
-		infoDao.saveCase(caseInfo);
 		return JsonUtils.toJson(processDTO);
 	}
 	
@@ -281,9 +278,13 @@ public class InfoServiceImpl implements InfoService {
 		}
 		processDTO.setProcess(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).get(0));
 		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
+		
 		infoDao.saveCase(caseInfo);
-		ajdbxt_police police;
-		police=infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police());
+		processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());
+		ajdbxt_police police=infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police());
+		if(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).size()<=0) {
+			processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());
+		}
 		tel=new ArrayList<Tel>();
 		tel.add(new Tel(police.getPolice_phone_number(),"86"));
 		police=infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_one());

@@ -13,19 +13,27 @@ public class SMSThread extends Thread {
 	private List<String> tel;
 	private Integer tpl_id;
 	private String CASE_ID;
+	private boolean caseFild;
 	private final ProcessDao processDao=new ProcessDaoImpl();//用来得到案件流程信息
-	public SMSThread(String ext, String extend, String[] params,  List<String> tel, Integer tpl_id,String CASE_ID) {
+	private boolean caseFiled;
+	/**
+	 * @param params 参数列表
+	 * @param tel 电话号码链表
+	 * @param tpl_id 模板id
+	 * @param CASE_ID 案件信息id
+	 * @param caseFiled 案件实现（true为行政案件，false为刑事案件）
+	 */
+	public SMSThread(String[] params,  List<String> tel, Integer tpl_id,String CASE_ID,boolean caseFiled) {
 		this.params = params;
 		this.tel = tel;
 		this.tpl_id = tpl_id;
 		this.CASE_ID=CASE_ID;
 	}
 
-	@Override
 	public void run() {
 		switch (tpl_id) {
 		case MsgSend.SUBPOENA_A_SUSPECT://传唤嫌疑人民警
-
+			
 			break;
 		case MsgSend.SUBPOENA_A_SUSPECT_CAPTAIN://传唤嫌疑人所队长
 			
@@ -80,12 +88,20 @@ public class SMSThread extends Thread {
 	 * 刚指派通知民警传唤嫌疑人
 	 * @throws Exception 
 	 */
-	private void sendPoliceCallTheMan() throws Exception {
-		int hour=Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-		if(hour>=8&&hour<=20) {
+	private void sendPoliceCallTheMan(){
+		if(caseFiled) {
+			int hour=Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+			if(hour>=8&&hour<=20) {
+				ajdbxt_process process=getTheProcess();
+				MsgSend.doSendSimple(params, tel, tpl_id);
+				
+			}
 			
-			MsgSend.doSendSimple(params, tel, tpl_id);
+			
+		}else {
+			
 		}
+			
 	}
 	/**
 	 * 刚指派通知所队长谁做这件事
