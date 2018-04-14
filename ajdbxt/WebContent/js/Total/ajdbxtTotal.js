@@ -64,7 +64,7 @@ function List_Total_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_a = document.createElement("a");
-					new_a.href = '"/ajdbxt/total/Total_page_listPoliceCase?td_ajdbxt_police_id="+td_ajdbxt_police_id';
+					new_a.href = "/ajdbxt/total/Total_page_listPoliceCase?police_id="+td_ajdbxt_police_id;
 					new_td.appendChild(new_a);
 					new_tr.appendChild(new_td);
 					new_a.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].police.police_name;
