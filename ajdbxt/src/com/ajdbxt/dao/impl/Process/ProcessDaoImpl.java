@@ -82,24 +82,26 @@ public class ProcessDaoImpl implements ProcessDao {
 
 	@Override
 	public void saveProcessByCaseId(String case_id) {
-		ajdbxt_process process=new ajdbxt_process();
-		process.setAjdbxt_process_id(UUID.randomUUID().toString());
-		process.setProcess_gmt_create(TeamUtil.getStringSecond());
-		process.setProcess_gmt_modify(TeamUtil.getStringSecond());
-		Class clazz=process.getClass();
-		Field[] fields=clazz.getDeclaredFields();
-		for(Field field:fields) {
-			field.setAccessible(true);
-			try {
-				if(field.get(process)==null||field.get(process).equals("")) {
-					field.set(process, "否");
+		if(findProcessByCaseId(case_id).size()<=0) {		
+			ajdbxt_process process=new ajdbxt_process();
+			process.setAjdbxt_process_id(UUID.randomUUID().toString());
+			process.setProcess_gmt_create(TeamUtil.getStringSecond());
+			process.setProcess_gmt_modify(TeamUtil.getStringSecond());
+			Class clazz=process.getClass();
+			Field[] fields=clazz.getDeclaredFields();
+			for(Field field:fields) {
+				field.setAccessible(true);
+				try {
+					if(field.get(process)==null||field.get(process).equals("")) {
+						field.set(process, "否");
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
+			process.setProcess_case_id(case_id);
+			saveProcess(process);
 		}
-		process.setProcess_case_id(case_id);
-		saveProcess(process);
 	}
 
 	@Override
