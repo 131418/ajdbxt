@@ -18,7 +18,7 @@ import com.google.gson.GsonBuilder;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class StatisticAction extends ActionSupport{
+public class StatisticAction extends ActionSupport {
 	/**
 	 * 
 	 */
@@ -26,35 +26,39 @@ public class StatisticAction extends ActionSupport{
 	private page_eachPoliceCaseVO listEachPoliceCaseVO;
 	private StatisticService statisticService;
 	private StatisticPoliceCaseNumDTO statisticPoliceCaseNumDTO;
-	private StatisticCaseByPoliceDTO  statisticCaseByPoliceDTO;
+	private StatisticCaseByPoliceDTO statisticCaseByPoliceDTO;
 	private HttpServletRequest http_request;
-	
+
 	/*
 	 * 警员案件数量统计页面
-	*/
+	 */
 	public String page_listPoliceCaseStatistics() {
-		
+
 		return "page_listPoliceCaseStatistics";
 	}
-	
+
 	/*
 	 * 警员案件列表
-	*/
+	 */
 	public String page_listPoliceCase() {
-		ActionContext.getContext().getValueStack().set("police_id", http_request.getParameter("police_id"));		
+		http_request=ServletActionContext.getRequest();
+		System.out.println(http_request.getParameter("police_id"));
+		ActionContext.getContext().getValueStack().set("police_id", http_request.getParameter("police_id"));
+
 		return "page_listPoliceCase";
 	}
-	
+
 	/*
 	 * 统计警员案件数量列表
-	*/
+	 */
 	public void getListPoliceCaseStatistics() throws IOException {
-		GsonBuilder gsonBuilder=new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();//格式化数据
-		Gson gson=gsonBuilder.create();
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化数据
+		Gson gson = gsonBuilder.create();
 		HttpServletResponse http_response;
-		listPoliceCaseByPageAndSearchVO=statisticService.getlistPoliceCaseByPageAndSearchVO(listPoliceCaseByPageAndSearchVO);
-		http_response =ServletActionContext.getResponse();
+		listPoliceCaseByPageAndSearchVO = statisticService
+				.getlistPoliceCaseByPageAndSearchVO(listPoliceCaseByPageAndSearchVO);
+		http_response = ServletActionContext.getResponse();
 		http_response.setContentType("text/html;charset=utf-8");
 		System.out.println(gson.toJson(listPoliceCaseByPageAndSearchVO));
 		PrintWriter pw = http_response.getWriter();
@@ -62,44 +66,45 @@ public class StatisticAction extends ActionSupport{
 		pw.flush();
 		pw.close();
 	}
-	
+
 	/*
 	 * 警员案件列表
 	 */
 	public void getListPoiceCase() throws IOException {
-		GsonBuilder gsonBuilder=new GsonBuilder();
-		gsonBuilder.setPrettyPrinting();//格式化数据
-		Gson gson=gsonBuilder.create();
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setPrettyPrinting();// 格式化数据
+		Gson gson = gsonBuilder.create();
 		HttpServletResponse http_response;
-		http_response =ServletActionContext.getResponse();
-		listEachPoliceCaseVO=statisticService.getPoliceCaseBYpageAndSearch(listEachPoliceCaseVO);
+		http_response = ServletActionContext.getResponse();
+		listEachPoliceCaseVO = statisticService.getPoliceCaseBYpageAndSearch(listEachPoliceCaseVO);
 		http_response.setContentType("text/html;charset=utf-8");
-//		http_response.getWriter().write(gson.toJson(listEachPoliceCaseVO));
+		// http_response.getWriter().write(gson.toJson(listEachPoliceCaseVO));
 		PrintWriter pw = http_response.getWriter();
 		pw.write(gson.toJson(listEachPoliceCaseVO));
 		pw.flush();
 		pw.close();
 	}
-	
-	
+
 	public page_listPoliceCaseNumByPageAndSearchVO getListPoliceCaseByPageAndSearchVO() {
 		return listPoliceCaseByPageAndSearchVO;
 	}
-	public void setListPoliceCaseByPageAndSearchVO(page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseByPageAndSearchVO) {
+
+	public void setListPoliceCaseByPageAndSearchVO(
+			page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseByPageAndSearchVO) {
 		this.listPoliceCaseByPageAndSearchVO = listPoliceCaseByPageAndSearchVO;
 	}
+
 	public page_eachPoliceCaseVO getListEachPoliceCaseVO() {
 		return listEachPoliceCaseVO;
 	}
+
 	public void setListEachPoliceCaseVO(page_eachPoliceCaseVO listEachPoliceCaseVO) {
 		this.listEachPoliceCaseVO = listEachPoliceCaseVO;
 	}
 
-
 	public StatisticService getStatisticService() {
 		return statisticService;
 	}
-
 
 	public void setStatisticService(StatisticService statisticService) {
 		this.statisticService = statisticService;
