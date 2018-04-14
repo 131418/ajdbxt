@@ -1,40 +1,91 @@
 package util;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import com.ajdbxt.dao.Process.ProcessDao;
+import com.ajdbxt.dao.impl.Process.ProcessDaoImpl;
+import com.ajdbxt.domain.DO.ajdbxt_process;
+
 public class SMSThread extends Thread {
-	private String ext;
-	private String extend;
 	private String[] params;
-	private String sign;
-	private List<Tel> tel;
+	private List<String> tel;
 	private Integer tpl_id;
-	private int time;
-	public SMSThread(String ext, String extend, String[] params, String sign, List<Tel> tel, Integer tpl_id, int time) {
-		this.ext = ext;
-		this.extend = extend;
+	private String CASE_ID;
+	private final ProcessDao processDao=new ProcessDaoImpl();//用来得到案件流程信息
+	public SMSThread(String ext, String extend, String[] params,  List<String> tel, Integer tpl_id,String CASE_ID) {
 		this.params = params;
-		this.sign = sign;
 		this.tel = tel;
 		this.tpl_id = tpl_id;
-		this.time = time;
+		this.CASE_ID=CASE_ID;
 	}
 
 	@Override
 	public void run() {
-			try {
-				this.wait(time);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
+		switch (tpl_id) {
+		case MsgSend.SUBPOENA_A_SUSPECT://传唤嫌疑人民警
+
+			break;
+		case MsgSend.SUBPOENA_A_SUSPECT_CAPTAIN://传唤嫌疑人所队长
+			
+			break;
+		case MsgSend.SUBPOENA_A_SUSPECT_LEGAL_PERSONNEL://传唤嫌疑人法制员
+			
+			break;
+		case MsgSend.SUBPOENA_A_SUSPECT_DIRECTOR://传唤嫌疑人局长
+			
+			break;
+		case MsgSend.CANCEL_DISPATCH://取消指派
+			
+			break;
+		case MsgSend.PUNISH_FINE://罚款
+					
+			break;
+		case MsgSend.PUNISH_DETENTION://拘留
+			
+			break;
+		case MsgSend.PENALTY_AND_DETENTION://罚款并拘留
+			
+			break;
+		case MsgSend.MANDATORY_ABANDON_DRUG://强制戒毒
+			
+			break;
+		case MsgSend.COMMUNITY_ABANDON_DRUG://社区戒毒
+			
+			break;
+		case MsgSend.MONITORING_LIVE://监视居住
+			
+			break;
+		case MsgSend.GET_KEEP_WAIT_EXAMINE://取保候审民警，刑事
+			
+			break;
+		case MsgSend.GET_KEEP_WAIT_EXAMINE_CAPTAIN://取保候审所队长，刑事
+			
+			break;
+		case MsgSend.SUE_RESULT_CATCH_POLICE://逮捕民警,刑事
+			break;
+		case MsgSend.SUE_RESULT_CATCH_CAPTAIN://逮捕，所队长,刑事
+		    break;
+		case MsgSend.WITHDRAW_CASE://撤案
+			break;
+		case MsgSend.PROCURATORATE_WITHDRAW_CASE://检察院撤案
+			break;
+		case MsgSend.CASE_PAGE_HAND_IN://案卷上交
+			
+			break;
+		}		
 	}
 	/**
 	 * 刚指派通知民警传唤嫌疑人
+	 * @throws Exception 
 	 */
-	private void sendPoliceCallTheMan() {
-		
+	private void sendPoliceCallTheMan() throws Exception {
+		int hour=Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		if(hour>=8&&hour<=20) {
+			
+			MsgSend.doSendSimple(params, tel, tpl_id);
+		}
 	}
 	/**
 	 * 刚指派通知所队长谁做这件事
@@ -144,4 +195,8 @@ public class SMSThread extends Thread {
 	private void sendPoliceAndCaptainWithdrawtTheCase() {
 		
 	}
+	private ajdbxt_process getTheProcess() {
+		ajdbxt_process process=processDao.findProcessByCaseId(CASE_ID).get(0);
+		return process;
+	}  
 }
