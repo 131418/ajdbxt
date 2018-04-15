@@ -36,7 +36,7 @@
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
-				<h3 class="panel-title">统计-<span id="span_total_user"></span>人员</h3>
+				<h3 class="panel-title">统计-<span id="span_total_user">人员</span></h3>
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
