@@ -9,8 +9,9 @@ function List_Total_User_By_Page(pageIndex) {
 	var select_stop_time = document.getElementById("select_stop_time");
 	
 	var input_police_id=document.getElementById("input_police_id").value;
-	console.log("select_start_time2:" + select_start_time.value);
-	console.log("select_stop_time2:" + select_stop_time.value);
+/*	var span_total_user=document.getElementById("span_total_user").value;*/
+	/*console.log("select_start_time2:" + select_start_time.value);
+	console.log("select_stop_time2:" + select_stop_time.value);*/
 	getXMLHttp();
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
@@ -22,6 +23,8 @@ function List_Total_User_By_Page(pageIndex) {
 				var ner_a = null;
 				var table_total_user = document
 						.getElementById("table_total_user");
+				
+				/*document.getElementById("span_total_user").innerHTML=total_vo.caseListByPolice[num].police.police_name;*/
 
 				/*
 				 * 移出除标题以外的所有行
@@ -46,7 +49,7 @@ function List_Total_User_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.caseListByPolice[num].caseInfo.info_category;
+					new_td.innerHTML = total_vo.caseListByPolice[num].category;
 
 					/*
 					 * 2. 案件名

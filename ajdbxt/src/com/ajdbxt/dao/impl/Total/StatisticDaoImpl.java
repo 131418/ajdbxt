@@ -227,10 +227,4 @@ public class StatisticDaoImpl implements StatisticDao {
 		return listDepartment;
 	}
 
-
-
-	
-
-	
-
 }
