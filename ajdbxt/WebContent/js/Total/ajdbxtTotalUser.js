@@ -84,6 +84,7 @@ function List_Total_User_By_Page(pageIndex) {
 		
 				/*获取人员*/
 				document.getElementById("span_total_user").innerHTML=total_vo.policeName;
+			/*	document.getElementById("span_total_user").style.color="black";*/
 				/*
 				 * * 设置页数 /
 				 */
