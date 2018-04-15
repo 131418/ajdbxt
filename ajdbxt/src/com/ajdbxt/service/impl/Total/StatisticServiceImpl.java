@@ -5,7 +5,9 @@ import java.util.List;
 
 import com.ajdbxt.dao.Total.StatisticDao;
 import com.ajdbxt.domain.DO.ajdbxt_department;
+import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.DO.ajdbxt_police;
+import com.ajdbxt.domain.DO.ajdbxt_process;
 import com.ajdbxt.domain.DTO.Total.StatisticCaseByPoliceDTO;
 import com.ajdbxt.domain.DTO.Total.StatisticPoliceCaseNumDTO;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
