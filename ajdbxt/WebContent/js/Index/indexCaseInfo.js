@@ -27,7 +27,7 @@ function List_Index_CaseInfo_By_Page(pageIndex){
 			if (xhr.readyState == 4) {
 				if (xhr.status == 200) {
 					index_case_info_vo = JSON.parse(xhr.responseText);
-//					alert(index_case_info_vo.Caselist);
+
 				//	alert("k"+index_case_info_vo.Caselist[0].info_name);
 					/*
 					 * 
