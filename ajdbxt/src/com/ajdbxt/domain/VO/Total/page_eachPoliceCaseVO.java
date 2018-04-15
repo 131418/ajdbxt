@@ -30,6 +30,9 @@ public class page_eachPoliceCaseVO {
 	//案件类别
 	private String category;
 	
+	//返回的警员名
+	private String policeName;
+	
 	private List<StatisticCaseByPoliceDTO> caseListByPolice;
 
 	public int getCurrePage() {
@@ -126,6 +129,14 @@ public class page_eachPoliceCaseVO {
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public String getPoliceName() {
+		return policeName;
+	}
+
+	public void setPoliceName(String policeName) {
+		this.policeName = policeName;
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.ajdbxt.service.Total;
 
-import java.util.List;
-import com.ajdbxt.domain.DTO.Total.StatisticPoliceCaseNumDTO;
+import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
 import com.ajdbxt.domain.VO.Total.page_listPoliceCaseNumByPageAndSearchVO;
 
