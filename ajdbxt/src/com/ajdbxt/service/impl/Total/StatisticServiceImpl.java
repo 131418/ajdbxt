@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ajdbxt.dao.Total.StatisticDao;
+import com.ajdbxt.domain.DO.ajdbxt_department;
+import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.DO.ajdbxt_police;
+import com.ajdbxt.domain.DO.ajdbxt_process;
 import com.ajdbxt.domain.DTO.Total.StatisticCaseByPoliceDTO;
 import com.ajdbxt.domain.DTO.Total.StatisticPoliceCaseNumDTO;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
@@ -19,26 +22,25 @@ public class StatisticServiceImpl implements StatisticService {
 	@Override
 	public page_listPoliceCaseNumByPageAndSearchVO getlistPoliceCaseByPageAndSearchVO(
 			page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseNumByPageAndSearchVO) {
-		System.out.println("拿到了"+listPoliceCaseNumByPageAndSearchVO.getSearchPolice());
-		
 		List<StatisticPoliceCaseNumDTO> list=new ArrayList<StatisticPoliceCaseNumDTO>();
 		List<ajdbxt_police> listPolice=new ArrayList<ajdbxt_police>();
+		List<ajdbxt_department> listDepartment=new ArrayList<ajdbxt_department>();
 		listPolice=statisticDao.getPolice(listPoliceCaseNumByPageAndSearchVO);
-		
 		for(int i=0;i<listPolice.size();i++) {
 			StatisticPoliceCaseNumDTO statisticPoliceNumDTO=new StatisticPoliceCaseNumDTO();
 			statisticPoliceNumDTO.setPolice(listPolice.get(i));
+			listDepartment=statisticDao.getDepartment(listPolice.get(i).getPolice_department());
+			statisticPoliceNumDTO.setDepartment(listDepartment.get(0));
 			statisticPoliceNumDTO.setAdminCase(statisticDao.getAllCaseNumByPolice(listPoliceCaseNumByPageAndSearchVO, listPolice.get(i).getAjdbxt_police_id(), "行政案件"));
 			statisticPoliceNumDTO.setCriminalCase(statisticDao.getAllCaseNumByPolice(listPoliceCaseNumByPageAndSearchVO, listPolice.get(i).getAjdbxt_police_id(), "刑事案件"));
 			list.add(statisticPoliceNumDTO);
 		}
-		System.out.println("执行了赋值操作");
-		 
+		 System.out.println("police.size"+listPolice.size());
 		
 		//分页
 		List<StatisticPoliceCaseNumDTO> newlist=new ArrayList<StatisticPoliceCaseNumDTO>();
-		for(int i=(listPoliceCaseNumByPageAndSearchVO.getCurrePage()-1);
-				i<(listPoliceCaseNumByPageAndSearchVO.getCurrePage()+listPoliceCaseNumByPageAndSearchVO.getPageSize());i++){
+		for(int i=((listPoliceCaseNumByPageAndSearchVO.getCurrePage()-1)* listPoliceCaseNumByPageAndSearchVO.getPageSize());
+				i<(listPoliceCaseNumByPageAndSearchVO.getCurrePage()*listPoliceCaseNumByPageAndSearchVO.getPageSize());i++){
 			System.out.println(i);
 			System.out.println(list.size());
 				if(i<list.size()) {
@@ -47,9 +49,8 @@ public class StatisticServiceImpl implements StatisticService {
 					break;
 				}
 		}
-		
 		listPoliceCaseNumByPageAndSearchVO.setStatisticPoliceCaseNumDTO(newlist);
-		System.out.println(list.toString());
+		
 		//总记录数;
 		 int i= list.size();
 		 listPoliceCaseNumByPageAndSearchVO.setTotalRecords(i);
@@ -68,10 +69,11 @@ public class StatisticServiceImpl implements StatisticService {
 		return listPoliceCaseNumByPageAndSearchVO;
 	}
 
-	//警员案件分页
+	//警员案件
 	@Override
 	public page_eachPoliceCaseVO getPoliceCaseBYpageAndSearch(page_eachPoliceCaseVO listEachPoliceCaseVO) {
 		List<StatisticCaseByPoliceDTO> list=new ArrayList<StatisticCaseByPoliceDTO>();
+		ajdbxt_police police=statisticDao.getPoliceName(listEachPoliceCaseVO.getPolice_id());
 		int i=statisticDao.getCaseRecords(listEachPoliceCaseVO);
 		listEachPoliceCaseVO.setTotalRecords(i);
 		listEachPoliceCaseVO.setTotalPages(((i-1)/listEachPoliceCaseVO.getPageSize())+1);
@@ -86,8 +88,10 @@ public class StatisticServiceImpl implements StatisticService {
 			 listEachPoliceCaseVO.setHasNextPage(true);
 		 }
 		list=statisticDao.getStatisticCaseList(listEachPoliceCaseVO);
+		listEachPoliceCaseVO.setPoliceName(police.getPolice_name());
+		//变红
 		listEachPoliceCaseVO.setCaseListByPolice(list);
-		
+		System.out.println(list.size());
 		return listEachPoliceCaseVO;
 	}
 

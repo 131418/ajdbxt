@@ -2,6 +2,7 @@ package com.ajdbxt.dao.Total;
 
 import java.util.List;
 
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.DTO.Total.StatisticCaseByPoliceDTO;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
@@ -19,5 +20,11 @@ public interface StatisticDao {
 	
 	//得到某警员的所有案件数
 	public int getCaseRecords(page_eachPoliceCaseVO eachPoliceCaseVO);
+	
+	//得到对应民警的部门
+	public List<ajdbxt_department> getDepartment(String police_department_id);
+	
+	//得到点击的民警名
+	public ajdbxt_police getPoliceName(String police_id);
 
 }

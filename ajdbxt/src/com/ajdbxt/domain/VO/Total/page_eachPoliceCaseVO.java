@@ -18,14 +18,20 @@ public class page_eachPoliceCaseVO {
 	// 下一页
 	private boolean hasNextPage = false;
 	// 开始时间
-	private String start_time = "0000-00-00";
+	private String start_time = "";
 	// 结束时间
-	private String stop_time = "9999-99-99";
+	private String stop_time = "";
 	//案件名
 	private String queryCaseName;
 	
 	//警员id
 	private String police_id;
+	
+	//案件类别
+	private String category;
+	
+	//返回的警员名
+	private String policeName;
 	
 	private List<StatisticCaseByPoliceDTO> caseListByPolice;
 
@@ -115,6 +121,22 @@ public class page_eachPoliceCaseVO {
 
 	public void setCaseListByPolice(List<StatisticCaseByPoliceDTO> caseListByPolice) {
 		this.caseListByPolice = caseListByPolice;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getPoliceName() {
+		return policeName;
+	}
+
+	public void setPoliceName(String policeName) {
+		this.policeName = policeName;
 	}
 
 }

@@ -8,7 +8,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.ajdbxt.dao.Total.StatisticDao;
+import com.ajdbxt.domain.DO.ajdbxt_department;
+import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.DO.ajdbxt_police;
+import com.ajdbxt.domain.DO.ajdbxt_process;
 import com.ajdbxt.domain.DTO.Total.StatisticCaseByPoliceDTO;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
 import com.ajdbxt.domain.VO.Total.page_listPoliceCaseNumByPageAndSearchVO;
@@ -37,8 +40,8 @@ public class StatisticDaoImpl implements StatisticDao {
 	@Override
 	public int getAllCaseNumByPolice(page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseByPageAndSearchVO,String police_id,String category) {
 		Session session=getSession();
-		String start_time = "0000-00-00";
-		String stop_time = "9999-99-99";
+		String start_time = "";
+		String stop_time = "";
 		Long i;
 		String hql="select count(*) from ajdbxt_info where info_main_police='"+police_id+"'or info_assistant_police_one='"+police_id+"'"
 				+ "or info_assistant_police_two='"+police_id+"' and info_category='"+category+"'" ;
@@ -48,7 +51,7 @@ public class StatisticDaoImpl implements StatisticDao {
 		if(listPoliceCaseByPageAndSearchVO.getStop_time()!=null && listPoliceCaseByPageAndSearchVO.getStop_time().length()>0) {
 			stop_time=listPoliceCaseByPageAndSearchVO.getStop_time();
 		}
-		hql+="and info_gmt_ceate >='"+start_time+"' and info_gmt_ceate <='"+stop_time+"'";
+		 hql+="and info_gmt_ceate >='"+start_time+"' and info_gmt_ceate <='"+stop_time+"'";
 		Query query=session.createQuery(hql);
 		System.out.println("统计案件数量"+hql);
 		i=(Long) query.uniqueResult();
@@ -59,9 +62,11 @@ public class StatisticDaoImpl implements StatisticDao {
 		@Override
 		public List<ajdbxt_police> getPolice(page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseByPageAndSearchVO) {
 			System.out.println("dao"+listPoliceCaseByPageAndSearchVO.getSearchPolice());
+			System.out.println(listPoliceCaseByPageAndSearchVO.getDepartment());
 			Session session=getSession();
 			String hql="from ajdbxt_police where 1=1 ";
 			if(listPoliceCaseByPageAndSearchVO.getDepartment() !=null && listPoliceCaseByPageAndSearchVO.getDepartment().length()>0) {
+				//实为id
 				hql+="and police_department='"+listPoliceCaseByPageAndSearchVO.getDepartment() +"'";
 			}
 			if(listPoliceCaseByPageAndSearchVO.getSearchPolice() !=null && listPoliceCaseByPageAndSearchVO.getSearchPolice().trim().length()>0) {
@@ -78,7 +83,7 @@ public class StatisticDaoImpl implements StatisticDao {
 						"<span style='color: #ff5063;'>" + listPoliceCaseByPageAndSearchVO.getSearchPolice().trim() + "</span>"));
 				}
 			}
-			System.out.println(list.toString());
+			System.out.println("toString"+list.size());
 			session.clear();
 			return list;
 		}
@@ -89,18 +94,30 @@ public class StatisticDaoImpl implements StatisticDao {
 	@Override
 	public List<StatisticCaseByPoliceDTO> getStatisticCaseList(page_eachPoliceCaseVO eachPoliceCaseVO) {
 		Session session=getSession();
+		System.out.println(eachPoliceCaseVO.getCategory());
 		List<StatisticCaseByPoliceDTO> listPoliceCase=new ArrayList<StatisticCaseByPoliceDTO>();
-		String start_time = "0000-00-00";
-		String stop_time = "9999-99-99";
-		String hql="select ajdbxt_police*,ajdbxt_info*,ajdbxt_process*"
-				+ "from ajdbxt_police,ajdbxt_info,ajdbxt_process "
-				+ "where ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_main_police "
-				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_one "
-				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_two "
-				+ "and ajdbxt_info.ajdbxt_info_id=ajdbxt_process.process_case_id and ajdbxt_police.ajdbxt_police_id='"+eachPoliceCaseVO.getPolice_id()+"'";
+		String start_time = "";
+		String stop_time = "";
+		String hql="SELECT info.ajdbxt_info_id,info.info_name,info.info_category,mainP.police_name,"
+				+ "fP1.police_name,fp2.police_name,pro.process_score,dep.department_name" + 
+				" FROM ajdbxt_info info,ajdbxt_police mainP,ajdbxt_police fP1,ajdbxt_police fp2,ajdbxt_process pro,ajdbxt_department dep" + 
+				" WHERE info.info_main_police = mainP.ajdbxt_police_id" + 
+				" AND info.info_assistant_police_one = fP1.ajdbxt_police_id" + 
+				" AND info.info_assistant_police_two = fp2.ajdbxt_police_id" + 
+				" AND pro.process_case_id = info.ajdbxt_info_id" + 
+				" AND mainP.police_department = dep.ajdbxt_department_id" + 
+				" AND fP1.police_department = dep.ajdbxt_department_id" + 
+				" AND fp2.police_department = dep.ajdbxt_department_id" + 
+				" AND (mainP.ajdbxt_police_id = '"+eachPoliceCaseVO.getPolice_id()+"'" + 
+				" OR fP1.ajdbxt_police_id = '"+eachPoliceCaseVO.getPolice_id()+"'" + 
+				" OR fp2.ajdbxt_police_id = '"+eachPoliceCaseVO.getPolice_id()+"')";
+		
+		if(eachPoliceCaseVO.getCategory() !=null && eachPoliceCaseVO.getCategory().trim().length()>0) {
+			hql+=" and info.info_category='"+eachPoliceCaseVO.getCategory().trim()+"'";	
+		}
 		if(eachPoliceCaseVO.getQueryCaseName() !=null && eachPoliceCaseVO.getQueryCaseName().trim().length()>0) {
 			String info_name ="%" + eachPoliceCaseVO.getQueryCaseName().trim()+ "%";
-			hql+="and ajdbxt_info.info_name like'"+info_name+"'";
+			hql+=" and info.info_name like'"+info_name+"'";
 			
 		}
 		if(eachPoliceCaseVO.getStart_time()!=null && eachPoliceCaseVO.getStart_time().length()>0) {
@@ -109,13 +126,46 @@ public class StatisticDaoImpl implements StatisticDao {
 		if(eachPoliceCaseVO.getStop_time()!=null && eachPoliceCaseVO.getStop_time().length()>0) {
 			stop_time=eachPoliceCaseVO.getStop_time();
 		}
-		hql+="and eachPoliceCaseVO.getStop_time()>='"+start_time+"' and  eachPoliceCaseVO.getStop_time()<='"+stop_time+"'"
-				+ "order by ajdbxt_info.info_gmt_ceate desc limit 1";
+			hql+=" and info.info_gmt_ceate between str_to_date('"+start_time+"', '%Y-%m-%d') and str_to_date('"+stop_time+"', '%Y-%m-%d')";
 		System.out.println(hql);
 		Query query=session.createQuery(hql);
 		query.setFirstResult((eachPoliceCaseVO.getCurrePage() - 1) * eachPoliceCaseVO.getPageSize());
 		query.setMaxResults(eachPoliceCaseVO.getPageSize());
-		listPoliceCase=query.list();
+		List<Object> list=query.list();
+		for(int i=0;i<list.size();i++) {
+			StatisticCaseByPoliceDTO statisticCaseByPoliceDTO=new StatisticCaseByPoliceDTO();
+			Object[] obj = (Object[])list.get(i);
+		    System.out.println(obj.length);
+	        	//民警1
+	 		ajdbxt_police mainPolice=new ajdbxt_police();
+	 			//民警2
+	 		ajdbxt_police insisPoliceOne=new ajdbxt_police();
+	 			//民警3
+	 		ajdbxt_police insisPoliceTwo=new ajdbxt_police();
+	 			//案件
+	 		ajdbxt_info caseInfo=new ajdbxt_info();
+	 			//案件流程
+	 		ajdbxt_process caseProcess=new  ajdbxt_process();
+	 			//办案单位
+	 		ajdbxt_department department=new ajdbxt_department();
+	 		caseInfo.setAjdbxt_info_id(obj[0].toString());
+	 		caseInfo.setInfo_name(obj[1].toString());
+	 		caseInfo.setInfo_category(obj[2].toString());
+	 		mainPolice.setPolice_name(obj[3].toString());
+	 		insisPoliceOne.setPolice_name(obj[4].toString());
+	 		insisPoliceTwo.setPolice_name(obj[5].toString());
+	 		caseProcess.setProcess_score(obj[6].toString());
+	 		department.setDepartment_name(obj[7].toString());
+	 		statisticCaseByPoliceDTO.setCaseInfo(caseInfo);
+	 		statisticCaseByPoliceDTO.setCaseProcess(caseProcess);
+	 		statisticCaseByPoliceDTO.setDepartment(department);
+	 		statisticCaseByPoliceDTO.setMainPolice(mainPolice);
+	 		statisticCaseByPoliceDTO.setInsisPoliceOne(insisPoliceOne);
+	 		statisticCaseByPoliceDTO.setInsisPOliceTwo(insisPoliceTwo);
+	 		listPoliceCase.add(statisticCaseByPoliceDTO);
+		}
+		System.out.println(query.list().size());
+		System.out.println("listPoliceCase"+listPoliceCase.size());
 		session.clear();
 		return listPoliceCase;
 	}
@@ -127,16 +177,27 @@ public class StatisticDaoImpl implements StatisticDao {
 	public int getCaseRecords(page_eachPoliceCaseVO eachPoliceCaseVO) {
 		Session session=getSession();
 		Long lo;
-		String start_time = "0000-00-00";
-		String stop_time = "9999-99-99";
-		String hql="select count(*) from ajdbxt_police,ajdbxt_info,ajdbxt_process "
-				+ "where ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_main_police "
-				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_one "
-				+ "or ajdbxt_police.ajdbxt_police_id=ajdbxt_info.info_assistant_police_two "
-				+ "and ajdbxt_info.ajdbxt_info_id=ajdbxt_process.process_case_id and ajdbxt_police.ajdbxt_police_id='"+eachPoliceCaseVO.getPolice_id()+"'";
+		String start_time="";
+		String stop_time="";
+		String hql="SELECT count(*) FROM ajdbxt_info info,ajdbxt_police mainP,ajdbxt_police fP1,ajdbxt_police fp2,"
+				+ "ajdbxt_process pro,ajdbxt_department dep" + 
+				" WHERE info.info_main_police = mainP.ajdbxt_police_id" + 
+				" AND info.info_assistant_police_one = fP1.ajdbxt_police_id" + 
+				" AND info.info_assistant_police_two = fp2.ajdbxt_police_id" + 
+				" AND pro.process_case_id = info.ajdbxt_info_id" + 
+				" AND mainP.police_department = dep.ajdbxt_department_id" + 
+				" AND fP1.police_department = dep.ajdbxt_department_id" + 
+				" AND fp2.police_department = dep.ajdbxt_department_id" + 
+				" AND (mainP.ajdbxt_police_id = '"+eachPoliceCaseVO.getPolice_id()+"'" + 
+				" OR fP1.ajdbxt_police_id = '"+eachPoliceCaseVO.getPolice_id()+"'" + 
+				" OR fp2.ajdbxt_police_id = '"+eachPoliceCaseVO.getPolice_id()+"')";
+		
+		if(eachPoliceCaseVO.getCategory() !=null && eachPoliceCaseVO.getCategory().trim().length()>0) {
+			hql+=" and info.info_category='"+eachPoliceCaseVO.getCategory().trim()+"'";	
+		}
 		if(eachPoliceCaseVO.getQueryCaseName() !=null && eachPoliceCaseVO.getQueryCaseName().trim().length()>0) {
 			String info_name ="%" + eachPoliceCaseVO.getQueryCaseName().trim()+ "%";
-			hql+="and ajdbxt_info.info_name='"+info_name+"'";
+			hql+=" and info.info_name like'"+info_name+"'";
 			
 		}
 		if(eachPoliceCaseVO.getStart_time()!=null && eachPoliceCaseVO.getStart_time().length()>0) {
@@ -145,19 +206,34 @@ public class StatisticDaoImpl implements StatisticDao {
 		if(eachPoliceCaseVO.getStop_time()!=null && eachPoliceCaseVO.getStop_time().length()>0) {
 			stop_time=eachPoliceCaseVO.getStop_time();
 		}
-		hql+="and eachPoliceCaseVO.getStop_time()>='"+start_time+"' and  eachPoliceCaseVO.getStop_time()<='"+stop_time+"'"
-				+ "order by ajdbxt_info.info_gmt_ceate desc limit 1";
+		hql+=" and info.info_gmt_ceate between str_to_date('"+start_time+"', '%Y-%m-%d') and str_to_date('"+stop_time+"', '%Y-%m-%d')";
 		System.out.println(hql);
 		Query query=session.createQuery(hql);
 		lo=(long) query.uniqueResult();
+		System.out.println("案件数量"+lo);
 		session.clear();
 		return lo.intValue();
 	}
 
+	//得到对应的办案部门
+	@Override
+	public List<ajdbxt_department> getDepartment(String police_department_id) {
+		Session session =getSession();
+		String hql="from ajdbxt_department where ajdbxt_department_id='"+police_department_id+"'";
+		Query query=session.createQuery(hql);
+		List<ajdbxt_department> listDepartment=query.list(); 
+		System.out.println(hql);
+		session.clear();
+		return listDepartment;
+	}
 
-
-	
-
-	
+	@Override
+	public ajdbxt_police getPoliceName(String police_id) {
+		Session session=getSession();
+		String hql=" from ajdbxt_police where ajdbxt_police_id='"+police_id+"'";
+		Query query =session.createQuery(hql);
+		ajdbxt_police policeName=(ajdbxt_police) query.uniqueResult();
+		return policeName;
+	}
 
 }
