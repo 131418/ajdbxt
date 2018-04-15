@@ -44,8 +44,8 @@ public class StatisticAction extends ActionSupport {
 		http_request=ServletActionContext.getRequest();
 		System.out.println(http_request.getParameter("police_id"));
 		ActionContext.getContext().getValueStack().set("police_id", http_request.getParameter("police_id"));
-
 		return "page_listPoliceCase";
+		
 	}
 
 	/*
@@ -78,8 +78,8 @@ public class StatisticAction extends ActionSupport {
 		http_response = ServletActionContext.getResponse();
 		listEachPoliceCaseVO = statisticService.getPoliceCaseBYpageAndSearch(listEachPoliceCaseVO);
 		http_response.setContentType("text/html;charset=utf-8");
-		// http_response.getWriter().write(gson.toJson(listEachPoliceCaseVO));
 		PrintWriter pw = http_response.getWriter();
+		System.out.println(gson.toJson(listEachPoliceCaseVO));
 		pw.write(gson.toJson(listEachPoliceCaseVO));
 		pw.flush();
 		pw.close();

@@ -20,8 +20,6 @@ public class StatisticServiceImpl implements StatisticService {
 	@Override
 	public page_listPoliceCaseNumByPageAndSearchVO getlistPoliceCaseByPageAndSearchVO(
 			page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseNumByPageAndSearchVO) {
-		System.out.println("拿到了"+listPoliceCaseNumByPageAndSearchVO.getSearchPolice());
-		
 		List<StatisticPoliceCaseNumDTO> list=new ArrayList<StatisticPoliceCaseNumDTO>();
 		List<ajdbxt_police> listPolice=new ArrayList<ajdbxt_police>();
 		List<ajdbxt_department> listDepartment=new ArrayList<ajdbxt_department>();
@@ -88,7 +86,7 @@ public class StatisticServiceImpl implements StatisticService {
 		 }
 		list=statisticDao.getStatisticCaseList(listEachPoliceCaseVO);
 		listEachPoliceCaseVO.setCaseListByPolice(list);
-		
+		System.out.println(list.size());
 		return listEachPoliceCaseVO;
 	}
 
