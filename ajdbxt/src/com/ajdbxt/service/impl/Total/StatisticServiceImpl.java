@@ -89,7 +89,6 @@ public class StatisticServiceImpl implements StatisticService {
 		 }
 		list=statisticDao.getStatisticCaseList(listEachPoliceCaseVO);
 		listEachPoliceCaseVO.setPoliceName(police.getPolice_name());
-		//变红
 		listEachPoliceCaseVO.setCaseListByPolice(list);
 		System.out.println(list.size());
 		return listEachPoliceCaseVO;

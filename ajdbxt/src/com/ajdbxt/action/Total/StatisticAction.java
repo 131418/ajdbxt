@@ -79,8 +79,9 @@ public class StatisticAction extends ActionSupport {
 		listEachPoliceCaseVO = statisticService.getPoliceCaseBYpageAndSearch(listEachPoliceCaseVO);
 		http_response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = http_response.getWriter();
+		String name=listEachPoliceCaseVO.getPoliceName();
 		System.out.println(gson.toJson(listEachPoliceCaseVO));
-		pw.write(gson.toJson(listEachPoliceCaseVO));
+		pw.write(gson.toJson(listEachPoliceCaseVO).replaceAll(name, "<span style='color: #ff5063;'>"+name+"</span>"));
 		pw.flush();
 		pw.close();
 	}

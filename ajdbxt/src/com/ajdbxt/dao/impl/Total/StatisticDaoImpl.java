@@ -94,7 +94,6 @@ public class StatisticDaoImpl implements StatisticDao {
 	@Override
 	public List<StatisticCaseByPoliceDTO> getStatisticCaseList(page_eachPoliceCaseVO eachPoliceCaseVO) {
 		Session session=getSession();
-		System.out.println(eachPoliceCaseVO.getCategory());
 		List<StatisticCaseByPoliceDTO> listPoliceCase=new ArrayList<StatisticCaseByPoliceDTO>();
 		String start_time = "";
 		String stop_time = "";
@@ -135,7 +134,7 @@ public class StatisticDaoImpl implements StatisticDao {
 		for(int i=0;i<list.size();i++) {
 			StatisticCaseByPoliceDTO statisticCaseByPoliceDTO=new StatisticCaseByPoliceDTO();
 			Object[] obj = (Object[])list.get(i);
-		    System.out.println(obj.length);
+		    System.out.println("---------------"+obj.length);
 	       //民警1
 	 		ajdbxt_police mainPolice=new ajdbxt_police();
 	 		//民警2
