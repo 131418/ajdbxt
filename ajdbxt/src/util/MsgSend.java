@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -25,9 +26,11 @@ public class MsgSend {
 	// URL，其中sdkappid为SDKAPPID
 	private final static String URL_BASE = "https://yun.tim.qq.com/v5/tlssmssvr/sendmultisms2?sdkappid=1400082910&random=";
 	//腾讯云语音通知URL
-	private final static String URL_BASE＿VOICE="https://yun.tim.qq.com/v5/tlsvoicesvr/sendvoiceprompt?sdkappid=1400082910&random=";
+	private final static String URL_BASE_VOICE="https://yun.tim.qq.com/v5/tlsvoicesvr/sendvoiceprompt?sdkappid=1400082910&random=";
 	// App Key 要高度保密
 	private final static String APPKEY = "02c9cf3cef358f484514dad73e5b0159";
+	//签名
+	public static final String POlICE_OFFICE="安源公安分局";
 	/**
 	 * 撤案通知<br>  {1}警官，请在3日内通知嫌疑人、被害人或其近亲属，{2}案件撤案
 	 */
@@ -104,22 +107,41 @@ public class MsgSend {
 	 * 处罚2拘留<br>	{1}警官，{2}案件嫌疑人拘留，请24小时内通知嫌疑人家属
 	 */
 	public static final int PUNISH_DETENTION=104119;
-	//签名
-	public static final String POlICE_OFFICE="萍乡市安源区公安分局";
+	
+	
+	//語音模板
+	public static final String SUBPOENA_A_SUSPECT_died_line_VOICE="_，传唤_案件嫌疑人时间不足_小时，请尽快传唤嫌疑人。";
+	public static final String SUBPOENA_A_SUSPECT_TIME_OUT_VOICE="_，你未在8小时内传唤_案件嫌疑人，请办理延长传唤手续.";
+	public static final String SUBPOENA_A_SUSPECT_TIME_OUT_CAPTAIN_VOICE="_所队长，_案件嫌疑人还未传唤，请督促办案民警处理。";
+	public static final String COMMUNITY_ABANDON_DRUG_VOICE="_，请24小时内通知_案件嫌疑人家属、戒毒人员户籍所在社区或现住地社区";
+	public static final String PUNISH_FINE_VOICE="_，请通知_案件嫌疑人15日内到银行缴纳罚款";
+	public static final String CASE_PAGE_HAND_IN_VOICE="_，请在7天内把_案件案卷上交法制大队";
+	public static final String SUBPOENA_A_SUSPECT_VOICE="_，请在8小时内传唤_案件嫌疑人。";
+	public static final String MANDATORY_ABANDON_DRUG_VOICE="_，请24小时内通知_案件嫌疑人家属";
+	public static final String PENALTY_AND_DETENTION_VOICE="_，请24小时内通知_案件嫌疑人家属，并通知嫌疑人15日内到银行缴纳罚款";
+	public static final String PUNISH_DETENTION_VOICE="_，_案件嫌疑人被行政拘留，请24小时内通知其家属。";
+	public static final String SUE_RESULT_CATCH_POLICE_VOICE="_，检察院对_案件嫌疑人作出逮捕决定，请24小时内执行逮捕，并在逮捕后24小时内通知家属";
+	public static final String MONITORING_LIVE_VOICE="_案件嫌疑人被强制监视居住6个月";
+	public static final String GET_KEEP_WAIT_EXAMINE_VOICE="_，对_案取保候审人进行侦查";
+	
 	/**
 	 * 测试方法
 	 */
 	@Test
 	public void sendTest() {
-		try {
-			List<Tel> tel = new ArrayList<Tel>();
-			tel.add(new Tel("15270634643", "86"));
-			String[] params = { "8" };
-			String result_msg = doSend("", "", params, "萍乡市安源区公安分局", tel, 98357);
-			System.out.println(result_msg);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			List<Tel> tel = new ArrayList<Tel>();
+//			tel.add(new Tel("15270634643", "86"));
+//			String[] params = { "8" };
+//			String result_msg = doSend("", "", params, "萍乡市安源区公安分局", tel, 98357);
+//			System.out.println(result_msg);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		
+		String [] params= {"李木木","王五抢劫案"};
+		String s=doSendVoiceSimple(params, "15270634643",PUNISH_DETENTION_VOICE);
+		System.out.println(s);
 	}
 	
 	/**
@@ -141,6 +163,73 @@ public class MsgSend {
 			result_msg=e.getMessage();
 		}
 		return result_msg;
+	}
+	
+	public static String doSendVoiceSimple(String [] params,String telNum,String voiceMadel) {
+		Tel tel=new Tel(telNum,"86");
+		String msg="";
+		try {
+			msg=doSendVoice("",2,params,tel,voiceMadel);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return msg;
+	}
+	public static String doSendVoice(String ext,int playTimes,String [] params,Tel tel,String voiceMadel) throws Exception {
+		// 生成随机数
+		int random = (int) Math.floor(Math.random() * 100);
+		String url = URL_BASE_VOICE + random;
+		URL restURL = new URL(url);
+		// 此处的urlConnection对象实际上是根据URL的请求协议(此处是http)生成的URLConnection类的子类HttpURLConnection
+		HttpURLConnection conn = (HttpURLConnection) restURL.openConnection();
+		// 设置请求的内容类型
+		conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
+		// 请求方式
+		conn.setRequestMethod("POST");
+		// 发送POST请求必须设置如下两行
+		// 设置接受数据
+		conn.setDoInput(true);
+		// 设置发送数据
+		conn.setDoOutput(true);
+		// 对象中的mobile转为字符串
+		String strMobile =tel.getMobile();
+		// 获取当前时间戳，并设置于10秒后发送
+		long time = new Date().getTime() / 1000;
+		// SHA256算法生成sig
+		String sig = getSHA256StrJava(
+				"appkey=" + APPKEY + "&random=" + random + "&time=" + time + "&mobile=" + strMobile);
+		String promptfile=voiceMadel;
+		for(String str:params) {
+			promptfile=promptfile.replaceFirst("_", str);
+		}
+		VoiceMsgPojo voice=new VoiceMsgPojo("",playTimes,promptfile,2,sig,tel,time);
+		String JsonData=JsonUtils.toJson(voice);
+		System.out.println(JsonData);
+		voice = null;//s虽然我不知道这句有什么用
+		// 发送数据,使用输出流
+		OutputStream outputStream = conn.getOutputStream();
+		// 发送数据
+		outputStream.write(JsonData.getBytes());
+		// 接收数据
+		InputStream inputStream = conn.getInputStream();
+		// 定义字节数组
+		byte[] b = new byte[1024];
+		// 定义一个输出流存储接收到的数据
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		// 开始接收数据
+		int len = 0;
+		while (true) {
+			len = inputStream.read(b);
+			if (len == -1) {
+				// 数据读完
+				break;
+			}
+			byteArrayOutputStream.write(b, 0, len);
+		}
+		// 从输出流中获取读取到数据(服务端返回的)
+		String response = byteArrayOutputStream.toString();
+		return response;
 	}
 	/**
 	 **** 所需传参数
