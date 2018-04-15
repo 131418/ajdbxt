@@ -9,7 +9,9 @@ import org.hibernate.SessionFactory;
 
 import com.ajdbxt.dao.Total.StatisticDao;
 import com.ajdbxt.domain.DO.ajdbxt_department;
+import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.DO.ajdbxt_police;
+import com.ajdbxt.domain.DO.ajdbxt_process;
 import com.ajdbxt.domain.DTO.Total.StatisticCaseByPoliceDTO;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
 import com.ajdbxt.domain.VO.Total.page_listPoliceCaseNumByPageAndSearchVO;
@@ -96,7 +98,7 @@ public class StatisticDaoImpl implements StatisticDao {
 		List<StatisticCaseByPoliceDTO> listPoliceCase=new ArrayList<StatisticCaseByPoliceDTO>();
 		String start_time = "";
 		String stop_time = "";
-		String hql="SELECT info.ajdbxt_info_id,info.info_name,info.info_category,info.info_gmt_ceate,mainP.police_name,"
+		String hql="SELECT info.ajdbxt_info_id,info.info_name,info.info_category,mainP.police_name,"
 				+ "fP1.police_name,fp2.police_name,pro.process_score,dep.department_name" + 
 				" FROM ajdbxt_info info,ajdbxt_police mainP,ajdbxt_police fP1,ajdbxt_police fp2,ajdbxt_process pro,ajdbxt_department dep" + 
 				" WHERE info.info_main_police = mainP.ajdbxt_police_id" + 
@@ -129,7 +131,39 @@ public class StatisticDaoImpl implements StatisticDao {
 		Query query=session.createQuery(hql);
 		query.setFirstResult((eachPoliceCaseVO.getCurrePage() - 1) * eachPoliceCaseVO.getPageSize());
 		query.setMaxResults(eachPoliceCaseVO.getPageSize());
-		listPoliceCase=query.list();
+		List<Object> list=query.list();
+		for(int i=0;i<list.size();i++) {
+			StatisticCaseByPoliceDTO statisticCaseByPoliceDTO=new StatisticCaseByPoliceDTO();
+			Object[] obj = (Object[])list.get(i);
+		    System.out.println(obj.length);
+	        	//民警1
+	 		ajdbxt_police mainPolice=new ajdbxt_police();
+	 			//民警2
+	 		ajdbxt_police insisPoliceOne=new ajdbxt_police();
+	 			//民警3
+	 		ajdbxt_police insisPoliceTwo=new ajdbxt_police();
+	 			//案件
+	 		ajdbxt_info caseInfo=new ajdbxt_info();
+	 			//案件流程
+	 		ajdbxt_process caseProcess=new  ajdbxt_process();
+	 			//办案单位
+	 		ajdbxt_department department=new ajdbxt_department();
+	 		caseInfo.setAjdbxt_info_id(obj[0].toString());
+	 		caseInfo.setInfo_name(obj[1].toString());
+	 		caseInfo.setInfo_category(obj[2].toString());
+	 		mainPolice.setPolice_name(obj[3].toString());
+	 		insisPoliceOne.setPolice_name(obj[4].toString());
+	 		insisPoliceTwo.setPolice_name(obj[5].toString());
+	 		caseProcess.setProcess_score(obj[6].toString());
+	 		department.setDepartment_name(obj[7].toString());
+	 		statisticCaseByPoliceDTO.setCaseInfo(caseInfo);
+	 		statisticCaseByPoliceDTO.setCaseProcess(caseProcess);
+	 		statisticCaseByPoliceDTO.setDepartment(department);
+	 		statisticCaseByPoliceDTO.setMainPolice(mainPolice);
+	 		statisticCaseByPoliceDTO.setInsisPoliceOne(insisPoliceOne);
+	 		statisticCaseByPoliceDTO.setInsisPOliceTwo(insisPoliceTwo);
+	 		listPoliceCase.add(statisticCaseByPoliceDTO);
+		}
 		System.out.println(query.list().size());
 		System.out.println("listPoliceCase"+listPoliceCase.size());
 		session.clear();

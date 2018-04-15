@@ -6,20 +6,35 @@ import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.DO.ajdbxt_process;
 
 public class StatisticCaseByPoliceDTO {
-	//民警
-	private ajdbxt_police police;
+	//民警1
+	private ajdbxt_police mainPolice;
+	//民警2
+	private ajdbxt_police insisPoliceOne;
+	//民警3
+	private ajdbxt_police insisPOliceTwo;
 	//案件
 	private ajdbxt_info caseInfo;
 	//案件流程
 	private ajdbxt_process caseProcess;
 	//办案单位
 	private ajdbxt_department department;
-	
-	public ajdbxt_police getPolice() {
-		return police;
+	public ajdbxt_police getMainPolice() {
+		return mainPolice;
 	}
-	public void setPolice(ajdbxt_police police) {
-		this.police = police;
+	public void setMainPolice(ajdbxt_police mainPolice) {
+		this.mainPolice = mainPolice;
+	}
+	public ajdbxt_police getInsisPoliceOne() {
+		return insisPoliceOne;
+	}
+	public void setInsisPoliceOne(ajdbxt_police insisPoliceOne) {
+		this.insisPoliceOne = insisPoliceOne;
+	}
+	public ajdbxt_police getInsisPOliceTwo() {
+		return insisPOliceTwo;
+	}
+	public void setInsisPOliceTwo(ajdbxt_police insisPOliceTwo) {
+		this.insisPOliceTwo = insisPOliceTwo;
 	}
 	public ajdbxt_info getCaseInfo() {
 		return caseInfo;
@@ -40,5 +55,4 @@ public class StatisticCaseByPoliceDTO {
 		this.department = department;
 	}
 	
-
 }
