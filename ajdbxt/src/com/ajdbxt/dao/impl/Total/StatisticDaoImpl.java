@@ -227,4 +227,13 @@ public class StatisticDaoImpl implements StatisticDao {
 		return listDepartment;
 	}
 
+	@Override
+	public ajdbxt_police getPoliceName(String police_id) {
+		Session session=getSession();
+		String hql=" from ajdbxt_police where ajdbxt_police_id='"+police_id+"'";
+		Query query =session.createQuery(hql);
+		ajdbxt_police policeName=(ajdbxt_police) query.uniqueResult();
+		return policeName;
+	}
+
 }

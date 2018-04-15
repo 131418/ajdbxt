@@ -23,5 +23,8 @@ public interface StatisticDao {
 	
 	//得到对应民警的部门
 	public List<ajdbxt_department> getDepartment(String police_department_id);
+	
+	//得到点击的民警名
+	public ajdbxt_police getPoliceName(String police_id);
 
 }
