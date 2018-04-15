@@ -5,6 +5,7 @@ import java.util.List;
 import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
+import com.ajdbxt.domain.VO.User.policedptVO;
 
 public interface UserDao {
 
@@ -16,7 +17,7 @@ public interface UserDao {
 
 	boolean updatePolice(ajdbxt_police ajdbxt_police);
 	//分页查询
-	public List<ajdbxt_police> queryForPage(String hql,int offset,int length);
+	public List<policedptVO> queryForPage(String hql,int offset,int length);
 	//总记录条数
 	public int getCount(String hql);
 
@@ -29,6 +30,8 @@ public interface UserDao {
 	String addDepartment(ajdbxt_department ajdbxt_department);
 
 	List<ajdbxt_department> findDepartmentByPage(String hql, int offset, int length);
+
+	policedptVO findPoliceById(String ajdbxt_police_id);
 
 
 	//public List<ajdbxt_police> fuzzySearch(String hql,int offset,int length);
