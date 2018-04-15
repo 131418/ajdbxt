@@ -289,22 +289,26 @@ tfoot tr td a:hover {
 										<td><input style="witdh: 70%;"
 											class="form-control mydate"
 											name="info.info_catch_time" type="text"></td>
-										<td>主办民警</td>
-										<td ><input style="witdh: 100%;"
-											class="form-control selectpicker" data-live-search="true"
-											name="info.info_main_police" 
-											></td>
 										
+										<td>主办民警<i class="fa fa-spinner fa-pulse load_remind"></td>
+										<td ><select style="witdh: 100%;"
+											class="form-control selectpicker" data-live-search="true"
+											name="info.info_main_police" id="info.info_main_police"
+											></select></td>
 									</tr>
 									
 									<tr>
-										<td>协办民警1</td>
-										<td><input style="witdh: 70%;" class="form-control"
-											name="info.info_assistant_police_one" type="text"></td>
+										<td>协办民警1<i class="fa fa-spinner fa-pulse load_remind"></td>
+										<td ><select style="witdh: 100%;"
+											class="form-control selectpicker" data-live-search="true"
+											name="info.info_assistant_police_one" 
+											></select></td>
 											<td id="add_img"><img alt="" src="<%=basePath%>img/addition_fill.png" id="add_police_two"></td>
-										<td id="police_two_td" >协办民警2</td>
-										<td id="police_two_tdd" ><input style="witdh: 70%;" class="form-control"
-											name="info.info_assistant_police_two" type="text"></td>
+										<td id="police_two_td">协办民警2<i class="fa fa-spinner fa-pulse load_remind"></td>
+										<td id="police_two_tdd"><select style="witdh: 100%;"
+											class="form-control selectpicker" data-live-search="true"
+											name="info.info_assistant_police_two" 
+											></select></td>
 									</tr>
 									<tr>
 										<td>所（队）法制员</td>

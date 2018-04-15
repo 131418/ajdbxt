@@ -1,9 +1,15 @@
 package com.ajdbxt.service.impl.Info;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+import java.util.Map.Entry;
 import com.ajdbxt.dao.Info.InfoDao;
 import com.ajdbxt.dao.Info.InfoDepartmentDao;
 import com.ajdbxt.dao.Info.InfoPoliceDao;
@@ -22,8 +28,7 @@ public class InfoServiceImpl implements InfoService {
 	private ProcessDao processDao;
 	private InfoDepartmentDao infoDepartmentDao;
 	private InfoPoliceDao infoPoliceDao;
-	private List<Tel> tel ;
-	private String[] params;
+	
 	public InfoDepartmentDao getInfoDepartmentDao() {
 		return infoDepartmentDao;
 	}
@@ -71,45 +76,46 @@ public class InfoServiceImpl implements InfoService {
 		caseInfo.setInfo_gmt_modify(caseInfo.getInfo_gmt_ceate());//保存时将修改时间设为创建时间
 		oneceRank(caseInfo);//下面要得到警察写逻辑
 		//哲理要写排班逻辑
-		processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());	
-		processDTO.setProcess(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).get(0));
 		processDTO.setInfo(caseInfo);
 		List<ajdbxt_police> polices=new ArrayList<>();
 		polices.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police()));
 		polices.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_one()));
 		processDTO.setPolice(polices);
 		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
-		infoDao.saveCase(caseInfo);
 		return JsonUtils.toJson(processDTO);
 	}
 	private void oneceRank(ajdbxt_info caseInfo) {//排班主协办人员
 		List<ajdbxt_police> polices=infoPoliceDao.findPoliceByDepartment(caseInfo.getInfo_department());
-		String police_id=null;
+		int countCap=0;
+		int countNom=0;
+		ajdbxt_police chief=null;
+		Map<ajdbxt_police,Integer> capM=new HashMap<ajdbxt_police,Integer>();
+		Map<ajdbxt_police,Integer> nomM=new HashMap<ajdbxt_police,Integer>();
+		List<ajdbxt_police> cap=new ArrayList();
+		List<ajdbxt_police> nom=new ArrayList();
 		//得到所队长id方便分配
 		for(ajdbxt_police police : polices) {
 			if(police.getPolice_duty().equals("所长")||police.getPolice_duty().equals("大队长")) {
-				police_id=police.getAjdbxt_police_id();
+				chief=police;
 				polices.remove(police);//取得后移除，因为不在考虑范围
 				break;
 			}
 		}
 		//如果所队长没有负责过，则分配
-		if(new Random().nextBoolean()&&infoDao.isCaptainWorked(police_id)) {
-			caseInfo.setInfo_main_police(police_id);
+		if(new Random().nextBoolean()&&infoDao.isCaptainWorked(chief.getAjdbxt_police_id())) {
+			caseInfo.setInfo_main_police(chief.getAjdbxt_police_id());
 		}
 		//的到副所队长和普通警员的执勤次数
-		int countCap=0;
-		int countNom=0;
-		List<ajdbxt_police> cap=new ArrayList();
-		List<ajdbxt_police> nom=new ArrayList();
 		for(ajdbxt_police police :polices) {
 			int temp=infoDao.countProcessByPoliceId(police.getAjdbxt_police_id());
-			if(police.getPolice_duty().equals("警员")) {
+			if(police.getPolice_duty().contains("警员")) {
 				countNom+=temp;
 				nom.add(police);
-			}else if(police.getPolice_duty().equals("副队长")||police.getPolice_duty().equals("副所长")){
+				nomM.put(police, temp);
+			}else if(police.getPolice_duty().contains("副队长")||police.getPolice_duty().contains("副所长")){
 				countCap+=temp;
 				cap.add(police);
+				capM.put(police, temp);
 			}
 		}
 		//如副所队长没执勤过
@@ -120,98 +126,110 @@ public class InfoServiceImpl implements InfoService {
 			}else {
 				caseInfo.setInfo_assistant_police_one(police.getAjdbxt_police_id());
 			}
+			cap.remove(police);
 		}
-		
-		if(countNom/countCap>=3) {
-			ajdbxt_police police=cap.get(new Random().nextInt(cap.size()));
+		Comparator<Map.Entry<ajdbxt_police, Integer>> sort=new Comparator<Map.Entry<ajdbxt_police,Integer>>() {//map排序器降
+			@Override
+			public int compare(Entry<ajdbxt_police, Integer> o1, Entry<ajdbxt_police, Integer> o2) {
+				return o2.getValue()-o1.getValue();
+			}
+		};
+		List<Map.Entry<ajdbxt_police, Integer>> capList=new ArrayList<Map.Entry<ajdbxt_police,Integer>>(capM.entrySet());
+		List<Map.Entry<ajdbxt_police, Integer>> nomList=new ArrayList<Map.Entry<ajdbxt_police,Integer>>(nomM.entrySet());
+		if(capList.size()>0) {
+			Collections.sort(capList, sort);
+		}
+		if(nomList.size()>0) {
+			Collections.sort(nomList, sort);
+		}
+		if((countNom/countCap>=3&&capList.size()>0)||nomList.size()<=0) {
+			ajdbxt_police police=capList.get(0).getKey();
 			if(caseInfo.getInfo_main_police()==null||caseInfo.getInfo_main_police().isEmpty()) {
 				caseInfo.setInfo_main_police(police.getAjdbxt_police_id());
 			}else {
 				caseInfo.setInfo_assistant_police_one(police.getAjdbxt_police_id());
 			}
+			capList.remove(0);
 			countCap++;
-		}else {
-			ajdbxt_police police=nom.get(new Random().nextInt(nom.size()));
+		}else if(capList.size()<=0||(countNom/countCap<3&&nomList.size()>0)){
+			ajdbxt_police police=nomList.get(0).getKey();
 			if(caseInfo.getInfo_main_police()==null||caseInfo.getInfo_main_police().isEmpty()) {
 				caseInfo.setInfo_main_police(police.getAjdbxt_police_id());
 			}else {
 				caseInfo.setInfo_assistant_police_one(police.getAjdbxt_police_id());
 			}
+			nomList.remove(0);
 			countNom++;
+		}else {
+			caseInfo.setInfo_main_police(chief.getAjdbxt_police_id());//如果该派出所只有一个所队长才会到这里
+			return;
 		}
 		if(caseInfo.getInfo_assistant_police_one()==null||caseInfo.getInfo_assistant_police_one().isEmpty()) {//如果第一协办为设定则设定
-			if(countNom/countCap>=3) {
-				boolean isDouble=true;
-				while(isDouble) {
-					ajdbxt_police police=cap.get(new Random().nextInt(cap.size()));
-					if(!caseInfo.getInfo_main_police().equals(police.getAjdbxt_police_id())) {
-						isDouble=false;
-						caseInfo.setInfo_assistant_police_one(police.getAjdbxt_police_id());
-						countCap++;
-					}
-				}
-			}else {
-				boolean isDouble=true;
-				while(isDouble) {
-					ajdbxt_police police=cap.get(new Random().nextInt(cap.size()));
-					if(!caseInfo.getInfo_main_police().equals(police.getAjdbxt_police_id())) {
-						isDouble=false;
-						caseInfo.setInfo_assistant_police_one(police.getAjdbxt_police_id());
-						countCap++;
-					}
-				}
+			if((countNom/countCap>=3&&capList.size()>0)||nomList.size()<=0) {
+				ajdbxt_police police=capList.get(0).getKey();
+				caseInfo.setInfo_assistant_police_one(police.getAjdbxt_police_id());
+			}else if(capList.size()<=0||(countNom/countCap<3&&nomList.size()>0)){
+				ajdbxt_police police=nomList.get(0).getKey();
+				caseInfo.setInfo_assistant_police_one(police.getAjdbxt_police_id());
 			}
 		}
 	}
 	@Override
 	public String twoceRank(ajdbxt_info caseInfo) {//添加第二个协办人员时调用
 		List<ajdbxt_police> polices=infoPoliceDao.findPoliceByDepartment(caseInfo.getInfo_department());
-		String police_id=null;
-		
-		//得到所队长id方便分配
+		int countCap=0;
+		int countNom=0;
+		ajdbxt_police chief=null;
+		List<ajdbxt_police> cap=new ArrayList();
+		List<ajdbxt_police> nom=new ArrayList();
+		Map<ajdbxt_police,Integer> capM=new HashMap<ajdbxt_police,Integer>();
+		Map<ajdbxt_police,Integer> nomM=new HashMap<ajdbxt_police,Integer>();
 		for(ajdbxt_police police : polices) {
 			if(police.getPolice_duty().equals("所长")||police.getPolice_duty().equals("大队长")) {
-				police_id=police.getAjdbxt_police_id();
+				chief=police;
 				polices.remove(police);//取得后移除，因为不在考虑范围
 				break;
 			}
 		}
-		
-		int countCap=0;
-		int countNom=0;
-		List<ajdbxt_police> cap=new ArrayList();
-		List<ajdbxt_police> nom=new ArrayList();
 		for(ajdbxt_police police :polices) {
 			int temp=infoDao.countProcessByPoliceId(police.getAjdbxt_police_id());
-			if(police.getPolice_duty().equals("警员")) {
+			if(police.getPolice_duty().contains("警员")&&
+					police.getAjdbxt_police_id().equals(caseInfo.getInfo_main_police())==false&&
+						police.getAjdbxt_police_id().equals(caseInfo.getInfo_assistant_police_one())==false) {
 				countNom+=temp;
 				nom.add(police);
-			}else if(police.getPolice_duty().equals("副队长")||police.getPolice_duty().equals("副所长")){
+				nomM.put(police, temp);
+			}else if((police.getPolice_duty().contains("副队长")||police.getPolice_duty().contains("副所长"))
+					&&police.getAjdbxt_police_id().equals(caseInfo.getInfo_main_police())==false
+						&&police.getAjdbxt_police_id().equals(caseInfo.getInfo_assistant_police_one())==false){
 				countCap+=temp;
 				cap.add(police);
+				capM.put(police, temp);
 			}
 		}
+		Comparator<Map.Entry<ajdbxt_police, Integer>> sort=new Comparator<Map.Entry<ajdbxt_police,Integer>>() {//map排序器降
+			@Override
+			public int compare(Entry<ajdbxt_police, Integer> o1, Entry<ajdbxt_police, Integer> o2) {
+				return o2.getValue()-o1.getValue();
+			}
+		};
+		List<Map.Entry<ajdbxt_police, Integer>> capList=new ArrayList<Map.Entry<ajdbxt_police,Integer>>(capM.entrySet());
+		List<Map.Entry<ajdbxt_police, Integer>> nomList=new ArrayList<Map.Entry<ajdbxt_police,Integer>>(nomM.entrySet());
+		if(capList.size()>0) {
+			Collections.sort(capList, sort);
+		}
+		if(nomList.size()>0) {
+			Collections.sort(nomList, sort);
+		}
 		if(caseInfo.getInfo_assistant_police_two()==null||caseInfo.getInfo_assistant_police_two().isEmpty()) {//如果第一协办为设定则设定
-			if(countNom/countCap>=3) {
-				boolean isDouble=true;
-				while(isDouble) {
-					ajdbxt_police police=cap.get(new Random().nextInt(cap.size()));
-					if(!caseInfo.getInfo_main_police().equals(police.getAjdbxt_police_id())&&!caseInfo.getInfo_assistant_police_two().equals(police.getAjdbxt_police_id())) {
-						isDouble=false;
-						caseInfo.setInfo_assistant_police_two(police.getAjdbxt_police_id());
-						countCap++;
-					}
-				}
+			if((countNom/countCap>=3&&capList.size()>0)||nomList.size()<=0) {
+				ajdbxt_police police=capList.get(0).getKey();
+				caseInfo.setInfo_assistant_police_two(police.getAjdbxt_police_id());				
+			}else if(capList.size()<=0||(countNom/countCap<3&&nomList.size()>0)) {
+				ajdbxt_police police=nomList.get(0).getKey();
+				caseInfo.setInfo_assistant_police_two(police.getAjdbxt_police_id());				
 			}else {
-				boolean isDouble=true;
-				while(isDouble) {
-					ajdbxt_police police=cap.get(new Random().nextInt(cap.size()));
-					if(!caseInfo.getInfo_main_police().equals(police.getAjdbxt_police_id())&&!caseInfo.getInfo_assistant_police_two().equals(police.getAjdbxt_police_id())) {
-						isDouble=false;
-						caseInfo.setInfo_assistant_police_two(police.getAjdbxt_police_id());
-						countCap++;
-					}
-				}
+				caseInfo.setInfo_main_police(chief.getAjdbxt_police_id());
 			}
 		}
 		ProcessDTO processDTO=new ProcessDTO();
@@ -222,7 +240,6 @@ public class InfoServiceImpl implements InfoService {
 		policelist.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_two()));
 		processDTO.setPolice(polices);
 		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
-		infoDao.saveCase(caseInfo);
 		return JsonUtils.toJson(processDTO);
 	}
 	
@@ -270,17 +287,52 @@ public class InfoServiceImpl implements InfoService {
 	}
 
 	@Override
-	public void save(ajdbxt_info caseInfo) {
-		infoDao.saveCase(caseInfo);
-		ajdbxt_police police;
-		police=infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police());
-		tel=new ArrayList<Tel>();
-		tel.add(new Tel(police.getPolice_phone_number(),"86"));
-		police=infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_one());
-		tel.add(new Tel(police.getPolice_phone_number(),"86"));
-		if(caseInfo.getInfo_assistant_police_two()!=null||!caseInfo.getInfo_assistant_police_two().isEmpty()) {
-			
+	public String save(ajdbxt_info caseInfo) {
+		ProcessDTO processDTO=new ProcessDTO();
+		processDTO.setInfo(caseInfo);
+		List<ajdbxt_police> policeList=new LinkedList<>();
+		policeList.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police()));
+		if(caseInfo.getInfo_assistant_police_one()==null&&caseInfo.getInfo_assistant_police_one().isEmpty()==false) {
+			policeList.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_one()));
+			if(caseInfo.getInfo_assistant_police_two()==null&&caseInfo.getInfo_assistant_police_two().isEmpty()==false) {
+				policeList.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_two()));
+			}
 		}
+		int l=policeList.size();
+		for(int index=0;index<l;index++) {
+			ajdbxt_police police=policeList.get(index);
+			if(police.getPolice_duty().contains("所长")||police.getPolice_duty().contains("队长")) {
+				ajdbxt_police pT=policeList.get(0);
+				policeList.set(0, police);
+				policeList.set(index, pT);
+				break;
+			}else if((police.getPolice_duty().contains("副所长")||police.getPolice_duty().contains("副队长"))) {
+				ajdbxt_police pT=policeList.get(0);
+				if((pT.getPolice_duty().contains("所长")||pT.getPolice_duty().contains("队长"))==false&&(pT.getPolice_duty().contains("所长")||pT.getPolice_duty().contains("队长"))==false) {
+					policeList.set(0, police);
+					policeList.set(index, pT);
+					break;
+				}
+			}
+		}
+		for(int index=0;index<l;index++) {
+			ajdbxt_police police=policeList.get(index);
+			if(index==0) {
+				caseInfo.setInfo_main_police(police.getAjdbxt_police_id());
+			}else if(index==1) {
+				caseInfo.setInfo_assistant_police_one(police.getAjdbxt_police_id());
+			}else {
+				caseInfo.setInfo_assistant_police_two(police.getAjdbxt_police_id());
+			}
+		}
+		processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());
+		processDTO.setProcess(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).get(0));
+		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
+		infoDao.saveCase(caseInfo);
+		if(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).size()<=0) {
+			processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());
+		}
+		return JsonUtils.toJson(processDTO);
 	}
 
 	@Override
