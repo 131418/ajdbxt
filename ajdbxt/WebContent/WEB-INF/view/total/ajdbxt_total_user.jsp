@@ -36,7 +36,7 @@
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
-				<h3 class="panel-title">统计-<span id="span_total_user">人员</span></h3>
+				<h3 class="panel-title"><span id="span_total_department">单位</span><span>-</span><span id="span_total_user">人员</span></h3>
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
@@ -68,7 +68,7 @@
 								<!-- 检索 -->
 								<div class="input-group" style="width: 300px; float: right;">
 									<input id="input_Total_CaseSearchText" class="form-control"
-										oninput="List_Total_User_By_Page(1)" type="text" placeholder="搜索人员" />
+										oninput="List_Total_User_By_Page(1)" type="text" placeholder="搜索案件" />
 									<span class="input-group-addon" style="border-radius: unset;">
 										<i class="fa fa-search"></i>
 									</span>
@@ -80,7 +80,7 @@
 								<tbody>
 									<tr>
 										<th><select id="select_case_kind" class="form-control" onchange="List_Total_User_By_Page(1)">
-												<option>所有类型</option>
+												<option selected="selected" value="">所有单位</option>
 												<option>行政案件</option>
 												<option>刑事案件</option>
 										</select></th>

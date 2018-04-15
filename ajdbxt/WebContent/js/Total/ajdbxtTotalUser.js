@@ -9,7 +9,7 @@ function List_Total_User_By_Page(pageIndex) {
 	var select_stop_time = document.getElementById("select_stop_time");
 	
 	var input_police_id=document.getElementById("input_police_id").value;
-/*	var span_total_user=document.getElementById("span_total_user").value;*/
+/*	var span_total_department=document.getElementById("span_total_department").value;*/
 	/*console.log("select_start_time2:" + select_start_time.value);
 	console.log("select_stop_time2:" + select_stop_time.value);*/
 	getXMLHttp();
@@ -23,8 +23,6 @@ function List_Total_User_By_Page(pageIndex) {
 				var ner_a = null;
 				var table_total_user = document
 						.getElementById("table_total_user");
-				
-				/*document.getElementById("span_total_user").innerHTML=total_vo.caseListByPolice[num].police.police_name;*/
 
 				/*
 				 * 移出除标题以外的所有行
@@ -43,20 +41,23 @@ function List_Total_User_By_Page(pageIndex) {
 					new_tr.className = "new_tr";
 					new_tr.appendChild(document.createTextNode(''));
 					table_total_user.firstElementChild.appendChild(new_tr);
-
+					/*获取单位*/
+					document.getElementById("span_total_department").innerHTML=total_vo.caseListByPolice[num].department.department_name;
+					/*获取人员*/
+					/*document.getElementById("span_total_user").innerHTML=total_vo.caseListByPolice[num].mainPolice.police_name;*/
 					/*
 					 * 1. 所有類型
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.caseListByPolice[num].category;
+					new_td.innerHTML = total_vo.caseListByPolice[num].caseInfo.info_category;
 
 					/*
 					 * 2. 案件名
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.caseListByPolice[num].queryCaseName;
+					new_td.innerHTML = total_vo.caseListByPolice[num].caseInfo.info_name;
 					/*
 					 * 3. 评分
 					 */
@@ -68,14 +69,14 @@ function List_Total_User_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.caseListByPolice[num].caseInfo.info_main_police;
+					new_td.innerHTML = total_vo.caseListByPolice[num].mainPolice.police_name;
 					/*
 					 * 5. 协办民警
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.caseListByPolice[num].caseInfo.info_assistant_police_one
-							+ caseInfo.info_assistant_police_two;
+					new_td.innerHTML = total_vo.caseListByPolice[num].insisPoliceOne.police_name
+						+","+total_vo.caseListByPolice[num].insisPOliceTwo.police_name;
 
 					/* 加载图标 */
 					var i_pulse = document.getElementById("i_pulse");
@@ -96,7 +97,7 @@ function List_Total_User_By_Page(pageIndex) {
 	formData.append("listEachPoliceCaseVO.currePage", pageIndex);
 	formData.append("listEachPoliceCaseVO.queryCaseName",
 			input_Total_CaseSearchText);
-	formData.append("listEachPoliceCaseVO.caseInfo.info_category", select_case_kind);// 要确认！
+	formData.append("listEachPoliceCaseVO.category", select_case_kind);// 要确认！
 	formData.append("listEachPoliceCaseVO.start_time", select_start_time.value);
 	formData.append("listEachPoliceCaseVO.stop_time", select_stop_time.value);
 	xhr.open("POST", "/ajdbxt/total/Total_getListPoiceCase?listEachPoliceCaseVO.police_id="+input_police_id, true);
