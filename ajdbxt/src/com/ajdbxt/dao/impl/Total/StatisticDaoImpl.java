@@ -136,17 +136,17 @@ public class StatisticDaoImpl implements StatisticDao {
 			StatisticCaseByPoliceDTO statisticCaseByPoliceDTO=new StatisticCaseByPoliceDTO();
 			Object[] obj = (Object[])list.get(i);
 		    System.out.println(obj.length);
-	        	//民警1
+	       //民警1
 	 		ajdbxt_police mainPolice=new ajdbxt_police();
-	 			//民警2
+	 		//民警2
 	 		ajdbxt_police insisPoliceOne=new ajdbxt_police();
-	 			//民警3
+	 		//民警3
 	 		ajdbxt_police insisPoliceTwo=new ajdbxt_police();
-	 			//案件
+	 		//案件
 	 		ajdbxt_info caseInfo=new ajdbxt_info();
-	 			//案件流程
+	 		//案件流程
 	 		ajdbxt_process caseProcess=new  ajdbxt_process();
-	 			//办案单位
+	 		//办案单位
 	 		ajdbxt_department department=new ajdbxt_department();
 	 		caseInfo.setAjdbxt_info_id(obj[0].toString());
 	 		caseInfo.setInfo_name(obj[1].toString());
