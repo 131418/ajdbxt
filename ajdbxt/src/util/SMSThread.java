@@ -1,216 +1,319 @@
 package util;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import com.ajdbxt.dao.Process.ProcessDao;
-import com.ajdbxt.dao.impl.Process.ProcessDaoImpl;
-import com.ajdbxt.domain.DO.ajdbxt_process;
 
-public class SMSThread extends Thread {
-	private String[] params;
-	private List<String> tel;
-	private Integer tpl_id;
+import org.apache.struts2.ServletActionContext;
+import org.junit.Test;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.web.context.WebApplicationContext;
+
+import com.ajdbxt.dao.Info.InfoDao;
+import com.ajdbxt.dao.Process.ProcessDao;
+import com.ajdbxt.dao.impl.Info.InfoDaoImpl;
+import com.ajdbxt.dao.impl.Process.ProcessDaoImpl;
+import com.ajdbxt.domain.DO.ajdbxt_police;
+import com.ajdbxt.domain.DO.ajdbxt_process;
+import com.ajdbxt.domain.DTO.Process.ProcessDTO;
+import com.ajdbxt.service.Process.ProcessService;
+import com.ajdbxt.service.impl.Process.ProcessServiceImpl;
+
+public class SMSThread extends Thread{
+	private String tpl_id;
 	private String CASE_ID;
-	private boolean caseFild;
-	private final ProcessDao processDao=new ProcessDaoImpl();//用来得到案件流程信息
 	private boolean caseFiled;
+	private ApplicationContext applicationCotext; 
 	/**
-	 * @param params 参数列表
-	 * @param tel 电话号码链表
 	 * @param tpl_id 模板id
 	 * @param CASE_ID 案件信息id
 	 * @param caseFiled 案件实现（true为行政案件，false为刑事案件）
+	 * @param processService 流程业务
 	 */
-	public SMSThread(String[] params,  List<String> tel, Integer tpl_id,String CASE_ID,boolean caseFiled) {
-		this.params = params;
-		this.tel = tel;
+	public SMSThread( String tpl_id,String CASE_ID,boolean caseFiled,ApplicationContext applicationContext) {
 		this.tpl_id = tpl_id;
 		this.CASE_ID=CASE_ID;
+		this.caseFiled=caseFiled;
+		this.applicationCotext=applicationContext;
 	}
-
+	
 	public void run() {
-		switch (tpl_id) {
-		case MsgSend.SUBPOENA_A_SUSPECT://传唤嫌疑人民警
-			
-			break;
-		case MsgSend.SUBPOENA_A_SUSPECT_CAPTAIN://传唤嫌疑人所队长
-			
-			break;
-		case MsgSend.SUBPOENA_A_SUSPECT_LEGAL_PERSONNEL://传唤嫌疑人法制员
-			
-			break;
-		case MsgSend.SUBPOENA_A_SUSPECT_DIRECTOR://传唤嫌疑人局长
-			
-			break;
-		case MsgSend.CANCEL_DISPATCH://取消指派
-			
-			break;
-		case MsgSend.PUNISH_FINE://罚款
-					
-			break;
-		case MsgSend.PUNISH_DETENTION://拘留
-			
-			break;
-		case MsgSend.PENALTY_AND_DETENTION://罚款并拘留
-			
-			break;
-		case MsgSend.MANDATORY_ABANDON_DRUG://强制戒毒
-			
-			break;
-		case MsgSend.COMMUNITY_ABANDON_DRUG://社区戒毒
-			
-			break;
-		case MsgSend.MONITORING_LIVE://监视居住
-			
-			break;
-		case MsgSend.GET_KEEP_WAIT_EXAMINE://取保候审民警，刑事
-			
-			break;
-		case MsgSend.GET_KEEP_WAIT_EXAMINE_CAPTAIN://取保候审所队长，刑事
-			
-			break;
-		case MsgSend.SUE_RESULT_CATCH_POLICE://逮捕民警,刑事
-			break;
-		case MsgSend.SUE_RESULT_CATCH_CAPTAIN://逮捕，所队长,刑事
-		    break;
-		case MsgSend.WITHDRAW_CASE://撤案
-			break;
-		case MsgSend.PROCURATORATE_WITHDRAW_CASE://检察院撤案
-			break;
-		case MsgSend.CASE_PAGE_HAND_IN://案卷上交
-			
-			break;
-		}		
-	}
-	/**
-	 * 刚指派通知民警传唤嫌疑人
-	 * @throws Exception 
-	 */
-	private void sendPoliceCallTheMan(){
-		if(caseFiled) {
-			int hour=Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-			if(hour>=8&&hour<=20) {
-				ajdbxt_process process=getTheProcess();
-				MsgSend.doSendSimple(params, tel, tpl_id);
-				
-			}
-			
-			
-		}else {
-			
+		try {
+			switch (tpl_id) {
+			case MsgSend.SUBPOENA_A_SUSPECT_VOICE://传唤嫌疑人
+				subpoenaASuspect();
+				break;
+			case MsgSend.PUNISH_FINE_VOICE://罚款
+				punishFine();
+				break;
+			case MsgSend.CASE_PAGE_HAND_IN_VOICE://案卷上交
+				casePageHandIn();
+				break;
+			case MsgSend.COMMUNITY_ABANDON_DRUG_VOICE://社区戒毒
+				communityAbandonDrug();
+				break;
+			case MsgSend.GET_KEEP_WAIT_EXAMINE_VOICE://取保候审
+				getKeepWaitExamine();
+				break;
+			case MsgSend.MANDATORY_ABANDON_DRUG_VOICE://强制戒毒
+				mandatoryAbandonDrug();
+				break;
+			case MsgSend.MONITORING_LIVE_VOICE://监视居住
+				monitoringLive();
+				break;
+			case MsgSend.PENALTY_AND_DETENTION_VOICE://拘留并罚款
+				penaltyAndDetention();
+				break;
+			case MsgSend.PUNISH_DETENTION_VOICE://拘留
+				punishDetention();
+				break;				
+			}	
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
 		}
-			
 	}
-	/**
-	 * 刚指派通知所队长谁做这件事
+	/*
+	 * 传唤嫌疑人
 	 */
-	private void sendCaptainCallTheMan() {
-		
+	private void subpoenaASuspect() throws InterruptedException {
+		ProcessService processService=applicationCotext.getBean(ProcessService.class);
+		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ajdbxt_process process =processDTO.getProcess();
+		if(process.getProcess_lengthen_subpoena().equals("否")) {
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			for(ajdbxt_police police:policeList) {
+				String name=police.getPolice_name();
+				String num=police.getPolice_phone_number();
+				String [] params= {name,processDTO.getInfo().getInfo_name()};
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.SUBPOENA_A_SUSPECT);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.SUBPOENA_A_SUSPECT_VOICE);
+			}
+		}
+		this.wait(8*60*60*1000);
+		subpoenaASuspectTimeOut();
 	}
-	/**
-	 * 刚指派时通知法制员跟踪案情
+	/*
+	 * 罚款
 	 */
-	private void sendLegalCallTheMan() {
-		
+	private void punishFine() {
+		ProcessService processService=applicationCotext.getBean(ProcessService.class);
+		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ajdbxt_process process =processDTO.getProcess();
+		if(process.getProcess_punish_inform().equals("否")) {
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			for(ajdbxt_police police:policeList) {
+				String name=police.getPolice_name();
+				String num=police.getPolice_phone_number();
+				String [] params= {name,processDTO.getInfo().getInfo_name()};
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.PUNISH_FINE);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.PUNISH_FINE_VOICE);
+			}
+		}
 	}
-	/**
-	 * 刚指派时通知局长有这案子
+	/*
+	 * 案卷上交
 	 */
-	private void sendChiefCallTheMan() {
-		
-	} 
-	/**
-	 * 结案评分后提醒主协办民警上交案卷
-	 */
-	private void sendPoliceFileUp() {
-		
+	private void casePageHandIn() {
+		ProcessService processService=applicationCotext.getBean(ProcessService.class);
+		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ajdbxt_process process =processDTO.getProcess();
+		if(process.getProcess_file_hand().equals("否")) {
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			for(ajdbxt_police police:policeList) {
+				String name=police.getPolice_name();
+				String num=police.getPolice_phone_number();
+				String [] params= {name,processDTO.getInfo().getInfo_name()};
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.CASE_PAGE_HAND_IN);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.CASE_PAGE_HAND_IN_VOICE);
+			}
+		}
 	}
-	/**
-	 * 处罚结果为罚款时提醒主协办民警催促罚款
+	/*
+	 *社区戒毒
 	 */
-	private void sendPolicePunishMoney() {
-		
+	private void communityAbandonDrug() {
+		ProcessService processService=applicationCotext.getBean(ProcessService.class);
+		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ajdbxt_process process =processDTO.getProcess();
+		if(process.getProcess_treatment_category().equals("否")) {
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			for(ajdbxt_police police:policeList) {
+				String name=police.getPolice_name();
+				String num=police.getPolice_phone_number();
+				String [] params= {name,processDTO.getInfo().getInfo_name()};
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.COMMUNITY_ABANDON_DRUG);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.COMMUNITY_ABANDON_DRUG_VOICE);
+			}
+		}
 	}
-	/**
-	 * 处罚为拘留时通知主协办民警
+	/*
+	 * 取保候审
 	 */
-	private void sendPolicePunishDetention() {
-		
+	private void getKeepWaitExamine() {
+		ProcessService processService=applicationCotext.getBean(ProcessService.class);
+		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ajdbxt_process process =processDTO.getProcess();
+		if(process.getProcess_get_keep_wait_interrogate().equals("否")) {
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			for(ajdbxt_police police:policeList) {
+				String name=police.getPolice_name();
+				String num=police.getPolice_phone_number();
+				String [] params= {name,processDTO.getInfo().getInfo_name()};
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.GET_KEEP_WAIT_EXAMINE);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.GET_KEEP_WAIT_EXAMINE_VOICE);
+			}
+		}
 	}
-	/**
-	 * 处罚结果为处罚并罚款时通知主协办民警
+	/*
+	 * 强制戒毒
 	 */
-	private void sendPolicePunishDetentionAndMoney() {
-		
+	private void mandatoryAbandonDrug() {
+		ProcessService processService=applicationCotext.getBean(ProcessService.class);
+		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ajdbxt_process process =processDTO.getProcess();
+		if(process.getProcess_treatment_category().equals("否")) {
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			for(ajdbxt_police police:policeList) {
+				String name=police.getPolice_name();
+				String num=police.getPolice_phone_number();
+				String [] params= {name,processDTO.getInfo().getInfo_name()};
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.MANDATORY_ABANDON_DRUG);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.MANDATORY_ABANDON_DRUG_VOICE);
+			}
+		}
 	}
-	/**
-	 * 处罚结果为强制戒毒时通知主协办民警
+	/*
+	 * 监视居住
 	 */
-	private void sendPoliceCompulsoryAbandonmentOfDrugHabits() {
-		
+	private void monitoringLive() {
+		ProcessService processService=applicationCotext.getBean(ProcessService.class);
+		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ajdbxt_process process =processDTO.getProcess();
+		if(process.getProcess_live_at_home_unde_surveillance().equals("否")) {
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			for(ajdbxt_police police:policeList) {
+				String name=police.getPolice_name();
+				String num=police.getPolice_phone_number();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.MONITORING_LIVE);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.MONITORING_LIVE_VOICE);
+			}
+		}
 	}
-	/**
-	 * 处罚结果为社区戒毒时通知主协办民警
+	/*
+	 * 罚款并拘留
 	 */
-	private void sendPoliceCommunityDetoxification() {
-		
+	private void penaltyAndDetention() {
+		ProcessService processService=applicationCotext.getBean(ProcessService.class);
+		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ajdbxt_process process =processDTO.getProcess();
+		if(process.getProcess_punish_inform().equals("否")) {
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			for(ajdbxt_police police:policeList) {
+				String name=police.getPolice_name();
+				String num=police.getPolice_phone_number();
+				String [] params= {name,processDTO.getInfo().getInfo_name()};
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.PENALTY_AND_DETENTION);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.PENALTY_AND_DETENTION_VOICE);
+			}
+		}
 	}
-	/**
-	 * 传唤超时通知民警办理延长传唤手续
+	/*
+	 * 拘留
 	 */
-	private void sendPoliceCallLong() {
-		
+	private void punishDetention() {
+		ProcessService processService=applicationCotext.getBean(ProcessService.class);
+		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ajdbxt_process process =processDTO.getProcess();
+		if(process.getProcess_punish_inform().equals("否")) {
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			for(ajdbxt_police police:policeList) {
+				String name=police.getPolice_name();
+				String num=police.getPolice_phone_number();
+				String [] params= {name,processDTO.getInfo().getInfo_name()};
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.PUNISH_DETENTION);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.PUNISH_DETENTION_VOICE);
+			}
+		}
 	}
-	/**
-	 * 取消指派民警
+	/*
+	 * 延长传唤
 	 */
-	private void sendPoliceUnassignPolice(){
-		
+	private void subpoenaASuspectTimeOut() throws InterruptedException {
+		ProcessService processService=applicationCotext.getBean(ProcessService.class);
+		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ajdbxt_process process =processDTO.getProcess();
+		if(process.getProcess_lengthen_subpoena().equals("是")) {
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			for(ajdbxt_police police:policeList) {
+				String name=police.getPolice_name();
+				String num=police.getPolice_phone_number();
+				String [] params= {name,processDTO.getInfo().getInfo_name()};
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.SUBPOENA_A_SUSPECT_TIME_OUT);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.SUBPOENA_A_SUSPECT_TIME_OUT_VOICE);
+			}
+		}
+		this.wait(12*60*60*1000);
+		subpoenaASuspectDiedLine();
 	}
-	/**
-	 * 取保候审通知民警
+	/*
+	 * 接近24小时未传唤
 	 */
-	private void sendPoliceGetKeepWaitInterrogate() {
-		
+	private void subpoenaASuspectDiedLine() throws InterruptedException {
+		for(int index=0;index<3;index++) {
+			int died_line=4;
+			ProcessService processService=applicationCotext.getBean(ProcessService.class);
+			ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+			ajdbxt_process process =processDTO.getProcess();
+			if(process.getProcess_lengthen_subpoena().equals("是")) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				for(ajdbxt_police police:policeList) {
+					String name=police.getPolice_name();
+					String num=police.getPolice_phone_number();
+					String [] params= {name,processDTO.getInfo().getInfo_name(),died_line+""};
+					died_line--;
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.SUBPOENA_A_SUSPECT_DIED_LINE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.SUBPOENA_A_SUSPECT_DIED_LINE_VOICE);
+				}
+				ajdbxt_police cap=processDTO.getCap();
+				String [] params= {cap.getPolice_name(),processDTO.getInfo().getInfo_name()};
+				List<String> tel=new ArrayList();
+				tel.add(cap.getPolice_phone_number());
+				MsgSend.doSendSimple(params, tel,  MsgSend.SUBPOENA_A_SUSPECT_DIED_LINE_CAPTAIN);
+				MsgSend.doSendVoiceSimple(params, cap.getPolice_phone_number(),MsgSend.SUBPOENA_A_SUSPECT_DIED_LINE_CAPTAIN_VOICE);
+				this.wait(1*60*60*1000);
+			}else {
+				break;
+			}
+		}
 	}
-	/**
-	 * 取保候审通知所队长
-	 */
-	private void sendCaptainGetKeepWaitInterrogate(){
-		
+	private ProcessDTO getProcessDTO() {
+		ProcessService processService=applicationCotext.getBean(ProcessService.class);
+		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		return processDTO;
 	}
-	/**
-	 * 监视居住通知民警和所队长
-	 */
-	private void sendCaptainAndPoliceMonitoringLive() {
-		
-	}
-	/**
-	 * 通知民警逮捕
-	 */
-	private void sendPoliceArrest() {
-		
-	}
-	/**
-	 * 起诉结果为逮捕时通知所队长
-	 */
-	private void sendCaptainArrest() {
-		
-	}
-	/**
-	 * 通知民警和所队长检察院撤案
-	 */
-	private void sendPoliceAndCaptainProcuratorateWithdrawtTheCase() {
-		
-	}
-	/**
-	 * 通知民警和所队长某案撤案
-	 */
-	private void sendPoliceAndCaptainWithdrawtTheCase() {
-		
-	}
-	private ajdbxt_process getTheProcess() {
-		ajdbxt_process process=processDao.findProcessByCaseId(CASE_ID).get(0);
-		return process;
-	}  
 }

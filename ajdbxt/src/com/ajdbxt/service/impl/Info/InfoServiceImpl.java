@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+
+import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+
 import java.util.Map.Entry;
 import com.ajdbxt.dao.Info.InfoDao;
 import com.ajdbxt.dao.Info.InfoDepartmentDao;
@@ -21,6 +26,8 @@ import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.service.Info.InfoService;
 import com.ajdbxt.domain.DO.*;
 import util.JsonUtils;
+import util.MsgSend;
+import util.SMSThread;
 import util.Tel;
 
 public class InfoServiceImpl implements InfoService {
@@ -126,6 +133,7 @@ public class InfoServiceImpl implements InfoService {
 			}else {
 				caseInfo.setInfo_assistant_police_one(police.getAjdbxt_police_id());
 			}
+			countCap++;
 			cap.remove(police);
 		}
 		Comparator<Map.Entry<ajdbxt_police, Integer>> sort=new Comparator<Map.Entry<ajdbxt_police,Integer>>() {//map排序器降
@@ -177,7 +185,7 @@ public class InfoServiceImpl implements InfoService {
 	@Override
 	public String twoceRank(ajdbxt_info caseInfo) {//添加第二个协办人员时调用
 		List<ajdbxt_police> polices=infoPoliceDao.findPoliceByDepartment(caseInfo.getInfo_department());
-		int countCap=0;
+		int countCap=1;
 		int countNom=0;
 		ajdbxt_police chief=null;
 		List<ajdbxt_police> cap=new ArrayList();
@@ -194,14 +202,14 @@ public class InfoServiceImpl implements InfoService {
 		for(ajdbxt_police police :polices) {
 			int temp=infoDao.countProcessByPoliceId(police.getAjdbxt_police_id());
 			if(police.getPolice_duty().contains("警员")&&
-					police.getAjdbxt_police_id().equals(caseInfo.getInfo_main_police())==false&&
-						police.getAjdbxt_police_id().equals(caseInfo.getInfo_assistant_police_one())==false) {
+					(police.getAjdbxt_police_id().equals(caseInfo.getInfo_main_police())==false)&&
+						(police.getAjdbxt_police_id().equals(caseInfo.getInfo_assistant_police_one())==false)) {
 				countNom+=temp;
 				nom.add(police);
 				nomM.put(police, temp);
 			}else if((police.getPolice_duty().contains("副队长")||police.getPolice_duty().contains("副所长"))
-					&&police.getAjdbxt_police_id().equals(caseInfo.getInfo_main_police())==false
-						&&police.getAjdbxt_police_id().equals(caseInfo.getInfo_assistant_police_one())==false){
+					&&(police.getAjdbxt_police_id().equals(caseInfo.getInfo_main_police())==false)
+						&&(police.getAjdbxt_police_id().equals(caseInfo.getInfo_assistant_police_one())==false)){
 				countCap+=temp;
 				cap.add(police);
 				capM.put(police, temp);
@@ -243,11 +251,6 @@ public class InfoServiceImpl implements InfoService {
 		return JsonUtils.toJson(processDTO);
 	}
 	
-	@Override
-	public void updateCase(ajdbxt_info caseInfo) {
-		caseInfo.setInfo_gmt_modify(util.Time.getStringSecond());
-		infoDao.updateCase(caseInfo);
-	}
 
 	@Override
 	public void deleteCase(String caseInfo_id) {
@@ -268,7 +271,7 @@ public class InfoServiceImpl implements InfoService {
 			policeList.add(infoPoliceDao.findPoliceById(info.getInfo_main_police()));
 			policeList.add(infoPoliceDao.findPoliceById(info.getInfo_assistant_police_one()));
 			String three=info.getInfo_assistant_police_two();
-			if(three!=null&&three.isEmpty()==false) {
+			if(three!=null&&(three.isEmpty()==false)) {
 				policeList.add(infoPoliceDao.findPoliceById(three));
 			}
 			policeList.add(infoPoliceDao.findPoliceById(info.getInfo_legal_team_member()));
@@ -292,9 +295,9 @@ public class InfoServiceImpl implements InfoService {
 		processDTO.setInfo(caseInfo);
 		List<ajdbxt_police> policeList=new LinkedList<>();
 		policeList.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police()));
-		if(caseInfo.getInfo_assistant_police_one()==null&&caseInfo.getInfo_assistant_police_one().isEmpty()==false) {
+		if(caseInfo.getInfo_assistant_police_one()==null&&(caseInfo.getInfo_assistant_police_one().isEmpty()==false)) {
 			policeList.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_one()));
-			if(caseInfo.getInfo_assistant_police_two()==null&&caseInfo.getInfo_assistant_police_two().isEmpty()==false) {
+			if(caseInfo.getInfo_assistant_police_two()==null&&(caseInfo.getInfo_assistant_police_two().isEmpty()==false)) {
 				policeList.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_two()));
 			}
 		}
@@ -308,7 +311,8 @@ public class InfoServiceImpl implements InfoService {
 				break;
 			}else if((police.getPolice_duty().contains("副所长")||police.getPolice_duty().contains("副队长"))) {
 				ajdbxt_police pT=policeList.get(0);
-				if((pT.getPolice_duty().contains("所长")||pT.getPolice_duty().contains("队长"))==false&&(pT.getPolice_duty().contains("所长")||pT.getPolice_duty().contains("队长"))==false) {
+				if((pT.getPolice_duty().contains("所长")||pT.getPolice_duty().contains("队长")==false)
+						&&((pT.getPolice_duty().contains("所长")||pT.getPolice_duty().contains("队长"))==false)) {
 					policeList.set(0, police);
 					policeList.set(index, pT);
 					break;
@@ -325,8 +329,9 @@ public class InfoServiceImpl implements InfoService {
 				caseInfo.setInfo_assistant_police_two(police.getAjdbxt_police_id());
 			}
 		}
+		
 		processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());
-		processDTO.setProcess(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).get(0));
+//		processDTO.setProcess(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).get(0));
 		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
 		infoDao.saveCase(caseInfo);
 		if(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).size()<=0) {
@@ -368,6 +373,35 @@ public class InfoServiceImpl implements InfoService {
 	public String getPolices(String info_department) {
 		List list=infoPoliceDao.findPoliceByDepartment(info_department);
 		return JsonUtils.toJson(list);
+	}
+	@Override
+	public String update(ajdbxt_info info) {
+		infoDao.saveCase(info);
+		processDao.saveProcessByCaseId(info.getAjdbxt_info_id());
+		ProcessDTO processDTO=new ProcessDTO();
+		processDTO.setInfo(info);
+		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(info.getInfo_department()));
+		List<ajdbxt_process> processList=processDao.findProcessByCaseId(info.getAjdbxt_info_id());
+		if(processList.size()>0) {
+			processDTO.setProcess(processList.get(0));
+		}
+		List<ajdbxt_police> policeList=new LinkedList<>();
+		policeList.add(infoPoliceDao.findPoliceById(info.getInfo_main_police()));
+		if(info.getInfo_assistant_police_one()==null&&info.getInfo_assistant_police_one().isEmpty()==false) {
+			policeList.add(infoPoliceDao.findPoliceById(info.getInfo_assistant_police_one()));
+			if(info.getInfo_assistant_police_two()==null&&info.getInfo_assistant_police_two().isEmpty()==false) {
+				policeList.add(infoPoliceDao.findPoliceById(info.getInfo_assistant_police_two()));
+			}
+		}
+		processDTO.setProcess(processDao.findProcessByCaseId(info.getAjdbxt_info_id()).get(0));
+		processDTO.setPolice(policeList);
+		ApplicationContext applicationContext=(ApplicationContext) ServletActionContext.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+		boolean caseFiled=false;
+		if(info.getInfo_category().equals("行政案件")) {
+			caseFiled=true;
+		}
+		new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext).start();//通知
+		return JsonUtils.toJson(processDTO);
 	}
 	
 }
