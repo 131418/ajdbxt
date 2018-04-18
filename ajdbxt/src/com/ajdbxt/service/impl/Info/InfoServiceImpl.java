@@ -74,9 +74,9 @@ public class InfoServiceImpl implements InfoService {
 	
 	@Override
 	public String saveCase(ajdbxt_info caseInfo) {
-		ProcessDTO processDTO=new ProcessDTO();//回传dto而不是Info
 		oneceRank(caseInfo);//下面要得到警察写逻辑
 		//哲理要写排班逻辑
+		ProcessDTO processDTO=new ProcessDTO();//回传dto而不是Info
 		processDTO.setInfo(caseInfo);
 		List<ajdbxt_police> polices=new ArrayList<>();
 		polices.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police()));
@@ -106,7 +106,7 @@ public class InfoServiceImpl implements InfoService {
 		//如果所队长没有负责过，则分配
 		if(new Random().nextBoolean()&&infoDao.isCaptainWorked(chief.getAjdbxt_police_id())) {
 			caseInfo.setInfo_main_police(chief.getAjdbxt_police_id());
-		}
+		} 
 		//的到副所队长和普通警员的执勤次数
 		for(ajdbxt_police police :polices) {
 			int temp=infoDao.countProcessByPoliceId(police.getAjdbxt_police_id());
@@ -241,7 +241,7 @@ public class InfoServiceImpl implements InfoService {
 		policelist.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police()));
 		policelist.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_one()));
 		policelist.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_two()));
-		processDTO.setPolice(polices);
+		processDTO.setPolice(policelist);
 		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
 		return JsonUtils.toJson(processDTO);
 	}
