@@ -339,6 +339,12 @@ public class InfoServiceImpl implements InfoService {
 		if(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).size()<=0) {
 			processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());
 		}
+		ApplicationContext applicationContext=(ApplicationContext) ServletActionContext.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+		boolean caseField=true;
+		if(caseInfo.getInfo_category().equals("刑事案件")) {
+			caseField=false;
+		}
+		new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE, caseInfo.getAjdbxt_info_id(), caseField, applicationContext);
 		return JsonUtils.toJson(processDTO);
 	}
 

@@ -78,8 +78,7 @@ public class SMSThread extends Thread{
 	 * 传唤嫌疑人
 	 */
 	private void subpoenaASuspect() throws InterruptedException {
-		ProcessService processService=applicationCotext.getBean(ProcessService.class);
-		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
 		if(process.getProcess_lengthen_subpoena().equals("否")) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
@@ -93,15 +92,18 @@ public class SMSThread extends Thread{
 				MsgSend.doSendVoiceSimple(params, num, MsgSend.SUBPOENA_A_SUSPECT_VOICE);
 			}
 		}
-		this.wait(8*60*60*1000);
+		if(caseFiled) {
+			this.wait(8*60*60*1000);
+		}else {
+			this.wait(12*60*60*1000);
+		}
 		subpoenaASuspectTimeOut();
 	}
 	/*
 	 * 罚款
 	 */
 	private void punishFine() {
-		ProcessService processService=applicationCotext.getBean(ProcessService.class);
-		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
 		if(process.getProcess_punish_inform().equals("否")) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
@@ -120,8 +122,7 @@ public class SMSThread extends Thread{
 	 * 案卷上交
 	 */
 	private void casePageHandIn() {
-		ProcessService processService=applicationCotext.getBean(ProcessService.class);
-		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
 		if(process.getProcess_file_hand().equals("否")) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
@@ -140,8 +141,7 @@ public class SMSThread extends Thread{
 	 *社区戒毒
 	 */
 	private void communityAbandonDrug() {
-		ProcessService processService=applicationCotext.getBean(ProcessService.class);
-		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
 		if(process.getProcess_treatment_category().equals("否")) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
@@ -160,8 +160,7 @@ public class SMSThread extends Thread{
 	 * 取保候审
 	 */
 	private void getKeepWaitExamine() {
-		ProcessService processService=applicationCotext.getBean(ProcessService.class);
-		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
 		if(process.getProcess_get_keep_wait_interrogate().equals("否")) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
@@ -180,8 +179,7 @@ public class SMSThread extends Thread{
 	 * 强制戒毒
 	 */
 	private void mandatoryAbandonDrug() {
-		ProcessService processService=applicationCotext.getBean(ProcessService.class);
-		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
 		if(process.getProcess_treatment_category().equals("否")) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
@@ -200,8 +198,7 @@ public class SMSThread extends Thread{
 	 * 监视居住
 	 */
 	private void monitoringLive() {
-		ProcessService processService=applicationCotext.getBean(ProcessService.class);
-		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
 		if(process.getProcess_live_at_home_unde_surveillance().equals("否")) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
@@ -220,8 +217,7 @@ public class SMSThread extends Thread{
 	 * 罚款并拘留
 	 */
 	private void penaltyAndDetention() {
-		ProcessService processService=applicationCotext.getBean(ProcessService.class);
-		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
 		if(process.getProcess_punish_inform().equals("否")) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
@@ -240,8 +236,7 @@ public class SMSThread extends Thread{
 	 * 拘留
 	 */
 	private void punishDetention() {
-		ProcessService processService=applicationCotext.getBean(ProcessService.class);
-		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
 		if(process.getProcess_punish_inform().equals("否")) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
@@ -260,8 +255,7 @@ public class SMSThread extends Thread{
 	 * 延长传唤
 	 */
 	private void subpoenaASuspectTimeOut() throws InterruptedException {
-		ProcessService processService=applicationCotext.getBean(ProcessService.class);
-		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
 		if(process.getProcess_lengthen_subpoena().equals("是")) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
@@ -275,7 +269,12 @@ public class SMSThread extends Thread{
 				MsgSend.doSendVoiceSimple(params, num, MsgSend.SUBPOENA_A_SUSPECT_TIME_OUT_VOICE);
 			}
 		}
-		this.wait(12*60*60*1000);
+		if(caseFiled) {
+			this.wait(12*60*60*1000);
+		}else {
+			this.wait(8*60*60*1000);
+		}
+		
 		subpoenaASuspectDiedLine();
 	}
 	/*
@@ -284,8 +283,7 @@ public class SMSThread extends Thread{
 	private void subpoenaASuspectDiedLine() throws InterruptedException {
 		for(int index=0;index<3;index++) {
 			int died_line=4;
-			ProcessService processService=applicationCotext.getBean(ProcessService.class);
-			ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
+			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process =processDTO.getProcess();
 			if(process.getProcess_lengthen_subpoena().equals("是")) {
 				List<ajdbxt_police> policeList=processDTO.getPolice();
