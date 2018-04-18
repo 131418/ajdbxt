@@ -194,9 +194,9 @@ function get_ListBreakecaseInformationByPageAndSearch(data) {
 						for (var len = 0; len < data_list.length; len++) {
 							str += '<tr>';
 							str += '<td>' + (len + 1) + '</td>';// 序号
-							str += '<td>'
+							str += '<td><a href="/ajdbxt/info/Info_page_CaseDetails?ajdbxt_info_id=' + data_list[len].info.ajdbxt_info_id + '">'
 									+data_list[len].info.info_name
-									+ '</td>';// 案件名称
+									+ '</a></td>';// 案件名称
 							str += '<td>'
 									+ data_list[len].info.info_category
 									+ '</td>';// 案件类别
