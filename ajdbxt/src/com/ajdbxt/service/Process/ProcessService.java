@@ -18,7 +18,6 @@ public interface ProcessService {
 	
 	public ProcessDTO getSingleProcessByCaseId(String case_id);
 	public String update(ajdbxt_process process,List<Integer> list);
-	public boolean update(ajdbxt_process process,int send_massage_type);
 	public showProcessVO getSomeProcessByShowProcessVO(showProcessVO processVO);
 }
 

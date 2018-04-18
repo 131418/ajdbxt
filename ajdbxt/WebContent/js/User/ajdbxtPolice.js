@@ -36,7 +36,7 @@ function List_Police_By_Page(pageIndex) {
 				/*
 				 * 
 				 */
-
+				
 				var new_tr = null;
 				var new_td = null;
 				var table_police = document.getElementById("table_police");
