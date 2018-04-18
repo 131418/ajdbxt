@@ -94,6 +94,7 @@ public class InfoAction extends ActionSupport {
 		json=infoService.save(info);
 		try {
 			ServletActionContext.getResponse().getWriter().print(json);
+			ServletActionContext.getResponse().getWriter().print("success");
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}
@@ -191,7 +192,8 @@ public class InfoAction extends ActionSupport {
 		}
 		String Json=infoService.update(info);
 		try {
-			ServletActionContext.getResponse().getWriter().print(Json);
+			//ServletActionContext.getResponse().getWriter().print(Json);
+			ServletActionContext.getResponse().getWriter().print("success");
 		} catch (IOException e) {
 			new RuntimeException(e);
 			System.out.println(e.getMessage());

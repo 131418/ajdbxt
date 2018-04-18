@@ -62,14 +62,14 @@ public class ProcessDaoImpl implements ProcessDao {
 	@Override
 	public void updateProcess(ajdbxt_process process) {
 		Session session=sessionFactory.getCurrentSession();
-		session.update(process);
+		session.saveOrUpdate(process);
 		session.flush();
 	}
 
 	@Override
 	public void saveProcess(ajdbxt_process process) {
 		Session session=sessionFactory.getCurrentSession();
-		session.save(process);
+		session.saveOrUpdate(process);
 		session.flush();
 	}
 

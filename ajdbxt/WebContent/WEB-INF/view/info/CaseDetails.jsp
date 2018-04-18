@@ -15,6 +15,28 @@
 <title>案件详情信息</title>
 <link rel="stylesheet" href="<%=basePath%>css/Info/InfoDetails.css">
 <link rel="stylesheet" href="<%=basePath%>css/Process/processDetails.css">
+<style type="text/css">
+html, body, .radio, .checkbox, .button_process {
+	margin: 0px !important;
+	padding: 0px !important;
+}
+
+.first_process_div {
+	border: solid 1px #eee;
+	margin: 0px 0px 40px 0px;
+	/* float: left; */
+}
+
+.summon_process {
+	border-bottom: solid 1px #eee;
+	padding: 10px 0;
+}
+
+.process_title, button {
+	display: inline-block;
+	vertical-align: middle;
+}
+</style>
 </head>
 <body>
 	<s:action name="User_navbar" namespace="/user" executeResult="true" />
@@ -101,1457 +123,505 @@
 							<td><input name="info.info_legal_team_member" disabled="disabled"
 								class="form-control" type="text"></td>
 						</tr>
+				</table>
+				</form>
+			</div>
+<!-- ------------------------------------------------------------------------------------->
+<!-- ------------------------------------------------------------------------------------->
+<div style="margin: 80px 0 0 0; float: left; width: 100%;">
+		<div class="panel" style="width: 95%; margin: 20px auto;">
+			<!--  -->
+			<div class="panel-heading">
+				<h4 class="panel-title">行政案件流程</h4>
+			</div>
+			<div class="panel-body">
+				<div class="col-md-12">
+					<div class="panel">
+						<!--  -->
+						<div class="panel-body">
+							<!-- 左边 -->
+						<div id="administrative_process_left" class="col-md-4"></div>
+							<!-- 右边 -->
+							<div id="administrative_process_right" class="col-md-8">
+							<!-- 	<div id="administrative_process_right" class="col-md-12"> -->
+								<!-------------------------------------->
+								<!-------------第一阶段 传唤---------------->
+								<div class="first_process_div col-md-12">
+									<div class="first_process">
+										<fieldset>
+											<legend>传唤</legend>
+											<!-- 是否传唤嫌疑人 -->
+											<div class="summon_process col-md-12">
+												<div class="process_title col-md-4">延长传唤嫌疑人：</div>
+												<div class="radio col-md-4">
+													<label style="margin: 0 10px;"> <input type="radio"
+														name="suspect_summon" id="suspect_summon_yes" value="是">
+														是
+													</label><label style="margin: 0 10px;"> <input type="radio"
+														name="suspect_summon" id="suspect_summon_no" value="否">
+														否
+													</label>
+												</div>
+												<div class="col-md-4 process_button">
+													<button type="button" class="btn btn-primary  btn-block"
+														style="width: 40%; float: right;">提交</button>
+												</div>
+											</div>
+											<!-- 询问未成年人 -->
+											<div class="summon_process col-md-12">
+												<div class="process_title col-md-4">询问未成年人：</div>
+												<div class="radio col-md-4">
+													<label style="margin: 0 10px;"> <input type="radio"
+														name="minors_asking" id="minors_asking_yes" value="是">
+														是
+													</label><label style="margin: 0 10px;"> <input type="radio"
+														name="minors_asking" id="minors_asking_no" value="否">
+														否
+													</label>
+												</div>
+												<div class="col-md-4 process_button">
+													<button type="button" class="btn btn-primary  btn-block"
+														style="width: 40%; float: right;">提交</button>
+												</div>
+												<!-- <div class="col-md-4 process_title">提醒：通知监护人到场</div> -->
+											</div>
 
+											<!-- 鉴定 -->
+											<div class="summon_process col-md-12">
+												<div class="process_title col-md-4">鉴定：</div>
+												<div class="radio col-md-4">
+													<label style="margin: 0 10px;"> <input type="radio"
+														name="identification" id="identification_yes" value="是">
+														是
+													</label><label style="margin: 0 10px;"> <input type="radio"
+														name="identification" id="identification_no" value="否">
+														否
+													</label>
+												</div>
+												<!-- <div class="col-md-4 process_title">提醒：请在4日内作出决定，5日内将鉴定意见复印件送达违法嫌疑人及被害人</div> -->
+												<div class="col-md-4 process_button">
+													<button type="button" class="btn btn-primary  btn-block"
+														style="width: 40%; float: right;">提交</button>
+												</div>
+											</div>
+
+											<!-- 涉案财物 -->
+											<div class="summon_process col-md-12">
+												<div class="process_title col-md-4">涉案财物：</div>
+												<div class="radio col-md-4">
+													<label style="margin: 0 10px;"> <input type="radio"
+														name="case_property" id="case_property_yes" value="是">
+														有
+													</label><label style="margin: 0 10px;"> <input type="radio"
+														name="case_property" id="case_property_no" value="否">
+														无
+													</label>
+												</div>
+												<div class="col-md-4 process_button">
+													<button type="button" class="btn btn-primary  btn-block"
+														style="width: 40%; float: right;" onclick="case_propertyBtnClick(this)">提交</button>
+												</div>
+											</div>
+
+											<!-- 涉案财物已入库 -->
+<!-- 											<div id="property_storage_div" class="summon_process col-md-12" style="display:none;"> -->
+<!-- 												<div class="process_title col-md-4">涉案财物已入库：</div> -->
+<!-- 												<div class="radio col-md-4"> -->
+<!-- 													<label style="margin: 0 10px;"> <input type="radio" -->
+<!-- 														name="property_storage" id="property_storage_yes" value=""> -->
+<!-- 														是 -->
+<!-- 													</label><label style="margin: 0 10px;"> <input type="radio" -->
+<!-- 														name="property_storage" id="property_storage_no" value=""> -->
+<!-- 														否 -->
+<!-- 													</label> -->
+<!-- 												</div> -->
+<!-- 												<div class="col-md-4 process_button"> -->
+<!-- 													<button type="button" class="btn btn-primary  btn-block" -->
+<!-- 														style="width: 40%; float: right;">提交</button> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+
+										</fieldset>
+									</div>
+								</div>
+								<!-- ------------------------ -->
+								<!-- 第二阶段    处罚-->
+								<div class="first_process_div col-md-12">
+									<div class="first_process">
+										<fieldset>
+											<legend>处罚</legend>
+											<!-- 处罚 -->
+											<div class="summon_process col-md-12">
+												<div class="process_title col-md-2">处罚:</div>
+												<div class="checkbox col-md-8" >
+													<label style="margin: 0 10px;"> <input
+														type="checkbox" name="process.process_detention" value="是"> 行政拘留
+													</label><label style="margin: 0 10px;"> <input
+														type="checkbox" name="process.process_penalty" value=""> 罚款
+													</label>
+													 <label style="margin: 0 10px;"> <input
+														type="radio" name="punishment" value="是">强制隔离戒毒
+													</label><label style="margin: 0 0px;"> <input
+														type="radio" name="punishment" value="否"> 社区戒毒
+													</label>
+												</div>
+												<div class="col-md-2 process_button">
+													<button type="button" class="btn btn-primary  btn-block" 
+														style="width: 90%; float: right;">提交</button>
+												</div>
+											</div>
+											<!-- 处罚已通知 -->
+<!-- 											<div class="summon_process col-md-12"> -->
+<!-- 												<div class="process_title col-md-4">处罚已通知：</div> -->
+<!-- 												<div class="radio col-md-4"> -->
+<!-- 													<label style="margin: 0 10px;"> <input type="radio" -->
+<!-- 														name="punishment_notice" id="punishment_notice_yes" value=""> -->
+<!-- 														是 -->
+<!-- 													</label><label style="margin: 0 10px;"> <input type="radio" -->
+<!-- 														name="punishment_notice" id="punishment_notice_no" value=""> -->
+<!-- 														否 -->
+<!-- 													</label> -->
+<!-- 												</div> -->
+<!-- 												<div class="col-md-4 process_button"> -->
+<!-- 													<button type="button" class="btn btn-primary  btn-block" -->
+<!-- 														style="width: 40%; float: right;">提交</button> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+
+
+										</fieldset>
+									</div>
+								</div>
+
+								<!-------------------------------------->
+								<!-------------第三阶段 听证---------------->
+								<div class="first_process_div col-md-12">
+									<div class="first_process">
+										<fieldset>
+											<legend>听证</legend>
+											<!-- 听证申请-->
+											<div class="summon_process col-md-12" id="hearing_applying_div">
+												<div class="process_title col-md-4">听证申请：</div>
+												<div class="radio col-md-4">
+													<label style="margin: 0 10px;"> <input type="radio"
+														name="hearing_applying" id="hearing_applying_yes" value="是">
+														是
+													</label><label style="margin: 0 10px;"> <input type="radio"
+														name="hearing_applying" id="hearing_applying_no" value="否">
+														否
+													</label>
+												</div>
+												<div class="col-md-4 process_button">
+													<button type="button" class="btn btn-primary  btn-block"
+														style="width: 40%; float: right;" onclick="hearing_applyingBtnClick(this)">提交</button>
+												</div>
+											</div>
+											<!-- 受理听证-->
+<!-- 											<div class="summon_process col-md-12" id="hearing_accepting_div"  style="display:none;"> -->
+<!-- 												<div class="process_title col-md-4">受理听证：</div> -->
+<!-- 												<div class="radio col-md-4"> -->
+<!-- 													<label style="margin: 0 10px;"> <input type="radio" -->
+<!-- 														name="hearing_accepting" id="hearing_accepting_yes" -->
+<!-- 														value="hearing_accepting_yes"> 是 -->
+<!-- 													</label><label style="margin: 0 10px;"> <input type="radio" -->
+<!-- 														name="hearing_accepting" id="hearing_accepting_no" value="hearing_accepting_no"> -->
+<!-- 														否 -->
+<!-- 													</label> -->
+<!-- 												</div> -->
+<!-- 												<div class="col-md-4 process_button"> -->
+<!-- 													<button type="button" class="btn btn-primary  btn-block" -->
+<!-- 														style="width: 40%; float: right;" onclick="hearing_acceptingBtnClick(this)">提交</button> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 											听证举行 -->
+<!-- 											<div class="summon_process col-md-12" id="hearing_holding_div" style="display:none;"> -->
+<!-- 												<div class="process_title col-md-4">听证举行：</div> -->
+<!-- 												<div class="radio col-md-4"> -->
+<!-- 													<label style="margin: 0 10px;"> <input type="radio" -->
+<!-- 														name="hearing_holding" id="hearing_holding_yes" value="hearing_holding_yes"> -->
+<!-- 														是 -->
+<!-- 													</label><label style="margin: 0 10px;"> <input type="radio" -->
+<!-- 														name="hearing_holding" id="hearing_holding_no" value="hearing_holding_no"> -->
+<!-- 														否 -->
+<!-- 													</label> -->
+<!-- 												</div> -->
+<!-- 												<div class="col-md-4 process_button"> -->
+<!-- 													<button type="button" class="btn btn-primary  btn-block" -->
+<!-- 														style="width: 40%; float: right;" >提交</button> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+										</fieldset>
+									</div>
+								</div>
+								<!-------------------------------------->
+								<!-------------第四阶段 法制大队提出问题---------------->
+								<div class="first_process_div col-md-12">
+									<div class="first_process">
+										<fieldset>
+											<legend>提出问题</legend>
+											<div class="summon_process col-md-12">
+												<div class="process_title col-md-4">提出问题：</div>
+												<div class="radio col-md-4">
+													<label style="margin: 0 10px;"> <input type="radio"
+														name="problem_asking" id="problem_asking_yes" value="是">
+														是
+													</label><label style="margin: 0 10px;"> <input type="radio"
+														name="problem_asking" id="problem_asking_no" value="否">
+														否
+													</label>
+												</div>
+												<div class="col-md-4 process_button">
+													<button type="button" class="btn btn-primary  btn-block"
+														style="width: 40%; float: right;">提交</button>
+												</div>
+											</div>
+										</fieldset>
+									</div>
+								</div>
+
+								<!-------------------------------------->
+								<!-------------第五阶段   所队长 审核---------------->
+								<div class="first_process_div col-md-12">
+									<div class="first_process">
+										<fieldset>
+											<legend>审核</legend>
+											<!--  -->
+											<div class="summon_process col-md-12">
+												<div class="process_title col-md-4">审核：</div>
+												<div class="radio col-md-4">
+													<label style="margin: 0 10px;"> <input type="radio"
+														name="case_review" id="case_review_yes" value="是"> 是
+													</label><label style="margin: 0 10px;"> <input type="radio"
+														name="case_review" id="case_review_no" value="否"> 否
+													</label>
+												</div>
+												<div class="col-md-4 process_button">
+													<button type="button" class="btn btn-primary  btn-block"
+														style="width: 40%; float: right;">提交</button>
+												</div>
+											</div>
+										</fieldset>
+									</div>
+								</div>
+
+								<!-------------------------------------->
+								<!-------------第六阶段 普通警员进行问题整改---------------->
+								<div class="first_process_div col-md-12">
+									<div class="first_process">
+										<fieldset>
+											<legend>问题整改</legend>
+											<!--  -->
+											<div class="summon_process col-md-12">
+												<div class="process_title col-md-4">问题整改：</div>
+												<div class="radio col-md-4">
+													<label style="margin: 0 10px;"> <input type="radio"
+														name="problem_rectification" id="problem_rectification_yes"
+														value="是"> 是
+													</label><label style="margin: 0 10px;"> <input type="radio"
+														name="problem_rectification" id="problem_rectification_no"
+														value="否"> 否
+													</label>
+												</div>
+												<div class="col-md-4 process_button">
+													<button type="button" class="btn btn-primary  btn-block"
+														style="width: 40%; float: right;">提交</button>
+												</div>
+											</div>
+										</fieldset>
+									</div>
+								</div>
+								
+
+								<!-------------------------------------->
+								<!-------------第八阶段 法制大队评分---------------->
+								<div class="first_process_div col-md-12">
+									<div class="first_process">
+										<fieldset>
+											<legend>评分</legend>
+											<!--  -->
+											<div class="summon_process col-md-12">
+												<div class="process_title col-md-4">案件评分：</div>
+												<div class="process_title col-md-4">
+													<input type="text" class="form-control" name="process.process_score"
+														id="input_case_score" placeholder="请填写案件评分">
+												</div>
+												<div class="col-md-4 process_button">
+													<button type="button" class="btn btn-primary  btn-block"
+														style="width: 40%; float: right;">提交</button>
+												</div>
+											</div>
+										</fieldset>
+									</div>
+								</div>
+								
+								<!-------------------------------------->
+								<!-------------第七阶段 法制大队结案---------------->
+								<div class="first_process_div col-md-12">
+									<div class="first_process">
+										<fieldset>
+											<legend>结案</legend>
+											<!--  -->
+											<div class="summon_process col-md-12">
+												<div class="process_title col-md-4">结案：</div>
+												<div class="radio col-md-4">
+													<label style="margin: 0 10px;"> <input type="radio"
+														name="case_ending" id="case_ending_yes" value="是"> 是
+													</label><label style="margin: 0 10px;"> <input type="radio"
+														name="case_ending" id="case_ending_no" value="否"> 否
+													</label>
+												</div>
+												<div class="col-md-4 process_button">
+													<button type="button" class="btn btn-primary  btn-block"
+														style="width: 40%; float: right;">提交</button>
+												</div>
+											</div>
+
+										</fieldset>
+									</div>
+								</div>
+								
+								<!-------------------------------------->
+								<!-------------第九阶段 办案民警---------------->
+								<div class="first_process_div col-md-12">
+									<div class="first_process">
+										<fieldset>
+											<legend>案件上交</legend>
+											<!--  -->
+											<div class="summon_process col-md-12">
+												<div class="process_title col-md-4">案件上交：</div>
+												<div class="process_title col-md-4">
+													<button type="button" class="btn btn-primary  btn-block"
+														style="float: center;">上交案件</button>
+												</div>
+
+											</div>
+										</fieldset>
+									</div>
+								</div>
+								
+							</div>
+							<!-- administrative_process_right  -->
+						</div>
+						<!-- panel-body -->
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+<%-- 	<script type="text/javascript" --%>
+<%-- 		src="<%=basePath%>js/Process/administrativeProcess.js"></script> --%>
+<!-- ------------------------------------------------------------------------------------->
+<!-- ------------------------------------------------------------------------------------->
+<!-- ------------------------------------------案件流程---------------------------------------------------------------------------- -->
+<!-- 				<div class="panel-body staff_body"> -->
+<!-- 				<form id="processDetails" enctype="multipart/form-data" -->
+<!-- 					accept-charset="utf-8"> -->
+<!-- 					<table style="width:90%;margin-left: 30px;"> -->
 <!-- 						<tr> -->
+<!-- 							<td colspan="6" class="staff_info_title">流程信息</td> -->
+<!-- 						</tr> -->
+<!-- 						<tr style="height: 20px"></tr> -->
+<!-- 						<tr> -->
+<!-- 							<td><label>是否延长传唤</label></td> -->
+<!-- 							<td><label style="float: left; width: 50px;" class="fancy-radio" > -->
+<!-- 									<input name="process.process_lengthen_subpoena" onclick="buildCase_chose(this)" -->
+<%-- 									type="radio" value="是"> <span><i></i>是</span> --%>
+<!-- 							</label><label style="float: left; margin-left: 10px;" -->
+<!-- 								class="fancy-radio"> <input name="process.process_lengthen_subpoena" -->
+<!-- 									onclick="buildCase_nochose(this)" type="radio" value="否"> -->
+<%-- 									<span><i></i>否</span> --%>
+<!-- 							</label> <input type="hidden" name="process.process_lengthen_subpoena" id="subpoena"></td> -->
 
-<!-- 							<td><label>最高学历</label></td> -->
-<%-- 							<td><select class="form-control" --%>
-<%-- 								id="staff_MaxEducationalBackground" --%>
-<%-- 								name="policeman.staff_MaxEducationalBackground"> --%>
-<!-- 									<option></option> -->
-<!-- 									<option>小学</option> -->
-<!-- 									<option>初中</option> -->
-<!-- 									<option>高中</option> -->
-<!-- 									<option>大学</option> -->
-<!-- 									<option>硕士</option> -->
-<!-- 									<option>博士</option> -->
-<%-- 							</select></td> --%>
-<!-- 							<td><label>政治面貌</label></td> -->
-<%-- 							<td><select class="form-control" id="staff_politicalStatus" --%>
-<%-- 								name="policeman.staff_politicalStatus"> --%>
-<!-- 									<option></option> -->
-<!-- 									<option>群众</option> -->
-<!-- 									<option>入党积极分子</option> -->
-<!-- 									<option>预备党员</option> -->
-<!-- 									<option>党员</option> -->
-<%-- 							</select></td> --%>
-
+<!-- 							<td><label>是否未成年</label></td>  -->
+<!-- 							<td><label style="float: left; width: 50px;" -->
+<!-- 								class="fancy-radio "> <input name="nonage" -->
+<%-- 									onclick="nonage_isFormat(this)" type="radio" value="是"> <span><i></i>是</span> --%>
+<!-- 							</label> <label style="float: left; margin-left: 10px; width: 50px;" -->
+<!-- 								class="fancy-radio "> <input name="nonage" -->
+<%-- 									onclick="nonage_isNotFormat(this)" type="radio" value="否"> <span><i></i>否</span> --%>
+<!-- 							</label> <input type="hidden" name="process.process_nonage" -->
+<!-- 								id="format" /></td> -->
 <!-- 						</tr> -->
 <!-- 						<tr> -->
-<!-- 							<td><label>入党时间</label></td> -->
-<!-- 							<td><input name="policeman.staff_joinPartyTime" -->
-<!-- 								class="form-control staff_joinPartyTime" type="text"></td> -->
-<!-- 							<td><label>工作时间</label></td> -->
-<!-- 							<td><input name="policeman.staff_joinWorkTime" -->
-<!-- 								class="form-control staff_joinWorkTime" type="text" -->
-<!-- 								placeholder="参加工作时间"></td> -->
-<!-- 							<td><label>性别</label></td> -->
-<!-- 							<td><label style="float: left; width: 50px;" -->
-<!-- 								class="fancy-radio person_radio"> <input -->
-<!-- 									name="sex_content" onclick=changeSex_man(this) type="radio" -->
-<%-- 									value="男"> <span> <i></i>男 --%>
-<%-- 								</span> --%>
-<!-- 							</label> <label style="float: left; width: 50px; margin-left: 10px;" -->
-<!-- 								class="fancy-radio "> <input name="sex_content" -->
-<%-- 									onclick=changeSex_woman(this) type="radio" value="女"> <span><i></i>女</span> --%>
-<!-- 							</label> <input type="hidden" name="policeman.xsjsglxt_sex" id="sex"></td> -->
-
-<!-- 						</tr> -->
-<!-- 						<tr> -->
-<!-- 							<td><label>入警时间</label></td> -->
-<!-- 							<td><input name="policeman.staff_thePoliceTime" -->
-<!-- 								class="form-control staff_thePoliceTime" type="text"></td> -->
-<!-- 							<td><label>生日</label></td> -->
-<!-- 							<td><input name="policeman.staff_birthday" -->
-<!-- 								class="form-control staff_birthday" type="text"></td> -->
-<!-- 							<td><label>是否正式</label></td> -->
-<!-- 							<td><label style="float: left; width: 50px;" -->
-<!-- 								class="fancy-radio "> <input name="format_content" -->
+<!-- 							<td><label>鉴定</label></td> -->
+<!-- 						<td><label style="float: left; width: 50px;" -->
+<!-- 								class="fancy-radio "> <input name="authenticate" -->
 <%-- 									onclick="isFormat(this)" type="radio" value="是"> <span><i></i>是</span> --%>
 <!-- 							</label> <label style="float: left; margin-left: 10px; width: 50px;" -->
-<!-- 								class="fancy-radio "> <input name="format_content" -->
+<!-- 								class="fancy-radio "> <input name="authenticate" -->
 <%-- 									onclick="isNotFormat(this)" type="radio" value="否"> <span><i></i>否</span> --%>
-<!-- 							</label> <input type="hidden" name="policeman.staff_isItFormal" -->
+<!-- 							</label> <input type="hidden" name="process.process_authenticate" -->
 <!-- 								id="format" /></td> -->
-
+                         
+<!-- 							<td><label>涉案财物</label></td> -->
+<!-- 							<td><label style="float: left; width: 50px;" -->
+<!-- 								class="fancy-radio "> <input name="goods" -->
+<%-- 									onclick="goods_isFormat(this)" type="radio" value="是"> <span><i></i>是</span> --%>
+<!-- 							</label> <label style="float: left; margin-left: 10px; width: 50px;" -->
+<!-- 								class="fancy-radio "> <input name="goods" -->
+<%-- 									onclick="goods_isNotFormat(this)" type="radio" value="否"> <span><i></i>否</span> --%>
+<!-- 							</label> <input type="hidden" name="process.process_case_goods" -->
+<%-- 								id="format" /><span id="caiwu" style="display:none;">24小时入库</span></td> --%>
 <!-- 						</tr> -->
+<!-- 	</table> -->
+<!-- 	<div class="panel-body staff_body"> -->
+<%-- 	<span id="jianding" style="display:none;padding-right:0px;">5日内将鉴定意见复印件送达违法嫌疑人及被害人</span> --%>
+<!-- 	</div> -->
+<!-- 	</form> -->
+<!-- 					<button style="float: right; margin-right: 9%; margin-top: 30px;" -->
+<!-- 					type="button" class="btn btn-default button" -->
+<!-- 					onclick="case_relive()"> -->
+<!-- 					<i class="fa fa-pencil"></i> 提交 -->
+<!-- 				</button> -->
+<!-- </div> -->
+<!-- <!-- --------------------------------------------------------------------------------------------------> -->
+<!-- 				<div class="panel-body staff_body"> -->
+<!-- 				<form id="processDetails" enctype="multipart/form-data" -->
+<!-- 					accept-charset="utf-8"> -->
+<!-- 					<table style="width:90%;margin-left: 30px;"> -->
 <!-- 						<tr> -->
-<!-- 							<td><label>职务</label></td> -->
-<%-- 							<td><select id="staff_duty" class="form-control" --%>
-<%-- 								name="policeman.staff_duty"> --%>
-<!-- 									<option>大队长</option> -->
-<!-- 									<option>教导员</option> -->
-<!-- 									<option>副大队长</option> -->
-<!-- 									<option>副教导员</option> -->
-<!-- 									<option>中队长</option> -->
-<!-- 									<option>副中队长</option> -->
-<!-- 									<option>民警</option> -->
-<!-- 									<option>辅警</option> -->
-<%-- 							</select></td> --%>
+<!-- 							<td colspan="6" class="staff_info_title"></td> -->
 <!-- 						</tr> -->
-<!-- 						<tr style="height: 30px"></tr> -->
+<!-- 						<tr style="height: 20px"></tr> -->
 <!-- 						<tr> -->
-<!-- 							<td colspan="6" class="staff_info_title">联系方法</td> -->
+<!-- 							<td><label>行政处罚</label></td> -->
+<!-- 							<td><label style="float: left; width: 80px;"  > -->
+<!-- 									<input name="subpoena" onclick="buildCase_chose(this)" -->
+<%-- 									type="checkbox" value="是"> <span><i></i>行政拘留</span> --%>
+<!-- 							</label> -->
+<!-- 							<label style="float: left; margin-left: 80px;"> <input name="subpoena" -->
+<!-- 									onclick="buildCase_chose(this)" type="checkbox" value="否"> -->
+<%-- 									<span><i></i>罚款</span> --%>
+<!-- 							</label> -->
+<!-- 							<label style="float: left; margin-left: 80px;"> <input name="subpoena" -->
+<!-- 									onclick="buildCase_chose(this)" type="checkbox" value="否"> -->
+<%-- 									<span><i></i>强制隔离戒毒</span> --%>
+<!-- 							</label> -->
+<!-- 							<label style="float: left; margin-left: 80px;"> <input name="subpoena" -->
+<!-- 									onclick="buildCase_chose(this)" type="checkbox" value="否"> -->
+<%-- 									<span><i></i>社区戒毒</span> --%>
+<!-- 							</label> -->
+<!-- 								 <input type="hidden" name="process.process_lengthen_subpoena"></td> -->
 <!-- 						</tr> -->
-<!-- 						<tr style="height: 20px;"></tr> -->
-<!-- 						<tr> -->
-<!-- 							<td><label>手机号</label></td> -->
-<!-- 							<td><input name="policeman.staff_phone" class="form-control" -->
-<!-- 								style="margin-top: 6px;" type="text"></td> -->
-<!-- 							<td><label>警务通号</label></td> -->
-<!-- 							<td><input name="policeman.staff_throughThePolice" -->
-<!-- 								class="form-control" style="margin-top: 6px;"></td> -->
-<!-- 							<td><label>家庭电话</label></td> -->
-<!-- 							<td><input name="policeman.staff_homephone" -->
-<!-- 								class="form-control" style="margin-top: 6px;"></td> -->
-<!-- 						</tr> -->
-<!-- 						<tr> -->
-<!-- 							<td><label>QQ号</label></td> -->
-<!-- 							<td><input name="policeman.staff_QQ" class="form-control" -->
-<!-- 								style="margin-top: 6px;" type="text"></td> -->
-<!-- 							<td><label>微信</label></td> -->
-<!-- 							<td><input name="policeman.staff_weixin" -->
-<!-- 								class="form-control" style="margin-top: 6px;"></td> -->
-<!-- 							<td><label>电子邮箱</label></td> -->
-<!-- 							<td><input name="policeman.staff_outEmail" -->
-<!-- 								class="form-control" style="margin-top: 6px;" -->
-<!-- 								placeholder="外网电子邮箱"> <input -->
-<!-- 								name="policeman.staff_inEmail" class="form-control" -->
-<!-- 								style="margin-top: 6px;" placeholder="内网电子邮箱"></td> -->
-
-<!-- 						</tr> -->
-
-					</table>
-				</form>
-<!-- 				<div class="longBoxs"> -->
-<!-- 					<div class="long_tableBox"> -->
-<%-- 						<span class="staff_info_title">学习经历</span> --%>
-<!-- 						<button style="margin-left: 10px;" class="btn btn-default btn-xs" -->
-<!-- 							type="button" data-toggle="modal" data-target="#addStudy_Modal" -->
-<!-- 							onclick=""> -->
-<!-- 							<i class="fa fa-plus-square"></i> 添加 -->
-<!-- 						</button> -->
-
-<!-- 						<form id="study_exp"> -->
-<!-- 							<div class="long_tb"> -->
-<!-- 								<table> -->
-<!-- 									<tbody> -->
-<!-- 										<tr class="long_table"> -->
-<!-- 											<th>学习地点</th> -->
-<!-- 											<th>起始时间</th> -->
-<!-- 											<th>结束时间</th> -->
-<!-- 											<th>备注</th> -->
-<!-- 											<th>操作</th> -->
-<!-- 										</tr> -->
-
-<!-- 									</tbody> -->
-<!-- 								</table> -->
-<!-- 								<table id="studyExperience_table"> -->
-<!-- 									<tbody> -->
-<!-- 									</tbody> -->
-<!-- 								</table> -->
-								
-<!-- 							</div> -->
-<!-- 						</form> -->
-<!-- 					</div> -->
-<!-- 					<div style="background: #e7e6e6;width:1000px;height: 1px;"></div> -->
-<!-- 					<div class="long_tableBox"> -->
-<%-- 						<span class="staff_info_title">工作经历</span> --%>
-<!-- 						<button style="margin-left: 10px;" class="btn btn-default btn-xs" -->
-<!-- 							type="button" data-toggle="modal" data-target="#addWork_Modal" -->
-<!-- 							onclick=""> -->
-<!-- 							<i class="fa fa-plus-square"></i> 添加 -->
-<!-- 						</button> -->
-<!-- 						<form id="work_exp"> -->
-<!-- 							<div class="long_tb"> -->
-<!-- 								<table> -->
-<!-- 									<tbody> -->
-<!-- 										<tr class="long_table"> -->
-<!-- 											<th>工作地点</th> -->
-<!-- 											<th>职务</th> -->
-<!-- 											<th>起始时间</th> -->
-<!-- 											<th>结束时间</th> -->
-<!-- 											<th>备注</th> -->
-<!-- 											<th>操作</th> -->
-<!-- 										</tr> -->
-<!-- 									</tbody> -->
-<!-- 								</table> -->
-<!-- 								<table id="wordExperience_table"> -->
-<!-- 									<tbody> -->
-										
-<!-- 									</tbody> -->
-<!-- 								</table> -->
-<!-- 							</div> -->
-<!-- 						</form> -->
-<!-- 					</div> -->
-<!-- 					<div style="background: #e7e6e6;width:1000px;height: 1px;"></div> -->
-<!-- 					<div class="long_tableBox"> -->
-<%-- 						<span class="staff_info_title">家庭情况</span> --%>
-<!-- 						<button style="margin-left: 10px;" class="btn btn-default btn-xs" -->
-<!-- 							type="button" data-toggle="modal" data-target="#addFamily_Modal" -->
-<!-- 							onclick=""> -->
-<!-- 							<i class="fa fa-plus-square"></i> 添加 -->
-<!-- 						</button> -->
-<!-- 						<div class="long_tb"> -->
-<!-- 							<table style="width: 150%;"> -->
-
-<!-- 								<tbody> -->
-<!-- 									<tr class="long_table"> -->
-<!-- 										<th>关系</th> -->
-<!-- 										<th>姓名</th> -->
-<!-- 										<th>身份证号</th> -->
-<!-- 										<th>生日</th> -->
-<!-- 										<th>手机号</th> -->
-<!-- 										<th>微信号</th> -->
-<!-- 										<th>工作单位</th> -->
-<!-- 										<th>职位</th> -->
-<!-- 					 					<th>备注</th> -->
-<!-- 										<th>操作</th> -->
-<!-- 									</tr> -->
-<!-- 								</tbody> -->
-
-<!-- 							</table> -->
-<!-- 							<table id="family_table" style="width: 150%;"> -->
-
-<!-- 								<tbody> -->
-									
-<!-- 								</tbody> -->
-
-<!-- 							</table> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!--                     <div style="background: #e7e6e6;width:1000px;height: 1px;"></div> -->
-<!-- 					<div class="long_tableBox"> -->
-<%-- 						<span class="staff_info_title">刑警大队调动情况</span> --%>
-<!-- 						<button style="margin-left: 10px;" class="btn btn-default btn-xs" -->
-<!-- 							type="button" data-toggle="modal" -->
-<!-- 							data-target="#addPoliceChange_Modal" onclick=""> -->
-<!-- 							<i class="fa fa-plus-square"></i> 添加 -->
-<!-- 						</button> -->
-<!-- 						<form id="police_move"> -->
-<!-- 							<div class="long_tb"> -->
-<!-- 								<table> -->
-<!-- 									<tbody> -->
-<!-- 										<tr class="long_table"> -->
-<!-- 											<th>调入时间</th> -->
-<!-- 											<th>调出时间</th> -->
-<!-- 											<th>是否在岗</th> -->
-<!-- 											<th>备注</th> -->
-<!-- 											<th>操作</th> -->
-<!-- 										</tr> -->
-<!-- 									</tbody> -->
-<!-- 								</table> -->
-<!-- 								<table id="policeChange_table"> -->
-<!-- 									<tbody> -->
-										
-<!-- 									</tbody> -->
-<!-- 								</table> -->
-<!-- 							</div> -->
-<!-- 						</form> -->
-<!-- 					</div> -->
-<!-- 					<div style="background: #e7e6e6;width:1000px;height: 1px;"></div> -->
-<!-- 					<div class="long_tableBox"> -->
-<%-- 						<span class="staff_info_title">立功受奖情况</span> --%>
-<!-- 						<button style="margin-left: 10px;" class="btn btn-default btn-xs" -->
-<!-- 							type="button" data-toggle="modal" data-target="#addPrized_Modal" -->
-<!-- 							onclick=""> -->
-<!-- 							<i class="fa fa-plus-square"></i> 添加 -->
-<!-- 						</button> -->
-<!-- 						<form id="staffReward"> -->
-<!-- 							<div class="long_tb"> -->
-<!-- 								<table> -->
-<!-- 									<tbody> -->
-<!-- 										<tr class="long_table"> -->
-<!-- 											<th>表彰情况</th> -->
-<!-- 											<th>表彰时间</th> -->
-<!-- 											<th>备注</th> -->
-<!-- 											<th>操作</th> -->
-<!-- 										</tr> -->
-<!-- 									</tbody> -->
-<!-- 								</table> -->
-<!-- 								<table id="prized_table"> -->
-<!-- 									<tbody> -->
-										
-<!-- 									</tbody> -->
-<!-- 								</table> -->
-<!-- 							</div> -->
-<!-- 						</form> -->
-<!-- 					</div> -->
-<!-- 					<div style="background: #e7e6e6;width:1000px;height: 1px;"></div> -->
-<!-- 					<div class="long_tableBox"> -->
-<%-- 						<span class="staff_info_title">违纪情况</span> --%>
-<!-- 						<button style="margin-left: 10px;" class="btn btn-default btn-xs" -->
-<!-- 							type="button" data-toggle="modal" -->
-<!-- 							data-target="#addAgainstPrinciple_Modal" onclick=""> -->
-<!-- 							<i class="fa fa-plus-square"></i> 添加 -->
-<!-- 						</button> -->
-<!-- 						<form id="againstPrinciple"> -->
-<!-- 							<div class="long_tb"> -->
-<!-- 								<table> -->
-<!-- 									<tbody> -->
-<!-- 										<tr class="long_table"> -->
-<!-- 											<th>违纪情况</th> -->
-<!-- 											<th>违纪时间</th> -->
-<!-- 											<th>备注</th> -->
-<!-- 											<th>操作</th> -->
-<!-- 										</tr> -->
-<!-- 									</tbody> -->
-<!-- 									<table id="againstPrinciple_table"> -->
-<!-- 									<tbody> -->
-										
-<!-- 									</tbody> -->
-<!-- 									</table> -->
-<!-- 								</table> -->
-<!-- 							</div> -->
-<!-- 						</form> -->
-<!-- 					</div> -->
-<!-- 					<div style="background: #e7e6e6;width:1000px;height: 1px;"></div> -->
-<!-- 					<div class="long_tableBox"> -->
-<%-- 						<span class="staff_info_title">处分情况</span> --%>
-<!-- 						<button style="margin-left: 10px;" class="btn btn-default btn-xs" -->
-<!-- 							type="button" data-toggle="modal" data-target="#addPunish_Modal" -->
-<!-- 							onclick=""> -->
-<!-- 							<i class="fa fa-plus-square"></i> 添加 -->
-<!-- 						</button> -->
-<!-- 						<form id="Punishment"> -->
-<!-- 							<div class="long_tb"> -->
-<!-- 								<table > -->
-<!-- 									<tbody> -->
-<!-- 										<tr class="long_table"> -->
-<!-- 											<th>处分情况</th> -->
-<!-- 											<th>处分时间</th> -->
-<!-- 											<th>备注</th> -->
-<!-- 											<th>操作</th> -->
-<!-- 										</tr> -->
-<!-- 									</tbody> -->
-<!-- 								</table> -->
-<!-- 								<table id="punish_table"> -->
-<!-- 									<tbody> -->
-										 
-<!-- 									</tbody> -->
-<!-- 								</table> -->
-<!-- 							</div> -->
-<!-- 						</form> -->
-<!-- 					</div> -->
-<!-- 					<div style="background: #e7e6e6;width:1000px;height: 1px;"></div> -->
-<!-- 					<div class="long_tableBox"> -->
-<%-- 						<span class="staff_info_title">休假情况</span> --%>
-<!-- 						<button style="margin-left: 10px;" class="btn btn-default btn-xs" -->
-<!-- 							type="button" data-toggle="modal" -->
-<!-- 							data-target="#addVocation_Modal" onclick=""> -->
-<!-- 							<i class="fa fa-plus-square"></i> 添加 -->
-<!-- 						</button> -->
-<!-- 						<form id="Furlough"> -->
-<!-- 							<div class="long_tb"> -->
-<!-- 								<table > -->
-<!-- 									<tbody> -->
-<!-- 										<tr class="long_table"> -->
-<!-- 											<th>休假事由</th> -->
-<!-- 											<th>起始时间时间</th> -->
-<!-- 											<th>天数</th> -->
-<!-- 											<th>是否销假</th> -->
-<!-- 											<th>销假时间</th> -->
-<!-- 											<th>备注</th> -->
-<!-- 											<th>操作</th> -->
-<!-- 										</tr> -->
-<!-- 									</tbody> -->
-<!-- 								</table> -->
-<!-- 								<table id="vocation_table"> -->
-<!-- 									<tbody> -->
-										 
-<!-- 									</tbody> -->
-<!-- 								</table> -->
-<!-- 							</div> -->
-<!-- 						</form> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<button style="float: right; margin-right: 9%; margin-top: 30px;" -->
+<!-- 	</table> -->
+<!-- 	</form> -->
+<!-- 					<button style="float: right; margin-right: 9%; margin-top: 30px;" -->
 <!-- 					type="button" class="btn btn-default button" -->
 <!-- 					onclick="staff_relive()"> -->
-<!-- 					<i class="fa fa-pencil"></i> 修改人员 -->
+<!-- 					<i class="fa fa-pencil"></i> 提交 -->
 <!-- 				</button> -->
-			</div>
+<!-- </div> -->
 
 <!-- ------------------------------------------案件流程---------------------------------------------------------------------------- -->
-				<div class="panel-body staff_body">
-				<form id="processDetails" enctype="multipart/form-data"
-					accept-charset="utf-8">
-					<table style="width:90%;margin-left: 30px;">
-						<tr>
-							<td colspan="6" class="staff_info_title">流程信息</td>
-						</tr>
-						<tr style="height: 20px"></tr>
-						<tr>
-							<td><label>是否延长传唤</label></td>
-							<td><label style="float: left; width: 50px;" class="fancy-radio" >
-									<input name="subpoena" onclick="buildCase_chose(this)"
-									type="radio" value="是"> <span><i></i>是</span>
-							</label><label style="float: left; margin-left: 10px;"
-								class="fancy-radio"> <input name="subpoena"
-									onclick="buildCase_chose(this)" type="radio" value="否">
-									<span><i></i>否</span>
-							</label> <input type="hidden" name="process.process_lengthen_subpoena"></td>
-
-							<td><label>是否未成年</label></td> 
-							<td><label style="float: left; width: 50px;"
-								class="fancy-radio "> <input name="nonage"
-									onclick="isFormat(this)" type="radio" value="是"> <span><i></i>是</span>
-							</label> <label style="float: left; margin-left: 10px; width: 50px;"
-								class="fancy-radio "> <input name="nonage"
-									onclick="isNotFormat(this)" type="radio" value="否"> <span><i></i>否</span>
-							</label> <input type="hidden" name="process.process_nonage"
-								id="format" /></td>
-						</tr>
-						<tr>
-							<td><label>鉴定</label></td>
-						<td><label style="float: left; width: 50px;"
-								class="fancy-radio "> <input name="authenticate"
-									onclick="isFormat(this)" type="radio" value="是"> <span><i></i>是</span>
-							</label> <label style="float: left; margin-left: 10px; width: 50px;"
-								class="fancy-radio "> <input name="authenticate"
-									onclick="isNotFormat(this)" type="radio" value="否"> <span><i></i>否</span>
-							</label> <input type="hidden" name="process.process_authenticate"
-								id="format" /></td>
-                         
-							<td><label>涉案财物</label></td>
-							<td><label style="float: left; width: 50px;"
-								class="fancy-radio "> <input name="goods"
-									onclick="goods_isFormat(this)" type="radio" value="是"> <span><i></i>是</span>
-							</label> <label style="float: left; margin-left: 10px; width: 50px;"
-								class="fancy-radio "> <input name="goods"
-									onclick="goods_isNotFormat(this)" type="radio" value="否"> <span><i></i>否</span>
-							</label> <input type="hidden" name="process.process_case_goods"
-								id="format" /><span id="caiwu" style="display:none;">24小时入库</span></td>
-						</tr>
-	</table>
-	<div class="panel-body staff_body">
-	<span id="jianding" style="display:none;padding-right:0px;">5日内将鉴定意见复印件送达违法嫌疑人及被害人</span>
-	</div>
-	</form>
-					<button style="float: right; margin-right: 9%; margin-top: 30px;"
-					type="button" class="btn btn-default button"
-					onclick="case_relive()">
-					<i class="fa fa-pencil"></i> 提交
-				</button>
-</div>
-<!-- -------------------------------------------------------------------------------------------------->
-				<div class="panel-body staff_body">
-				<form id="processDetails" enctype="multipart/form-data"
-					accept-charset="utf-8">
-					<table style="width:90%;margin-left: 30px;">
-						<tr>
-							<td colspan="6" class="staff_info_title"></td>
-						</tr>
-						<tr style="height: 20px"></tr>
-						<tr>
-							<td><label>行政处罚</label></td>
-							<td><label style="float: left; width: 80px;"  >
-									<input name="subpoena" onclick="buildCase_chose(this)"
-									type="checkbox" value="是"> <span><i></i>行政拘留</span>
-							</label>
-							<label style="float: left; margin-left: 80px;"> <input name="subpoena"
-									onclick="buildCase_chose(this)" type="checkbox" value="否">
-									<span><i></i>罚款</span>
-							</label>
-							<label style="float: left; margin-left: 80px;"> <input name="subpoena"
-									onclick="buildCase_chose(this)" type="checkbox" value="否">
-									<span><i></i>强制隔离戒毒</span>
-							</label>
-							<label style="float: left; margin-left: 80px;"> <input name="subpoena"
-									onclick="buildCase_chose(this)" type="checkbox" value="否">
-									<span><i></i>社区戒毒</span>
-							</label>
-								 <input type="hidden" name="process.process_lengthen_subpoena"></td>
-						</tr>
-	</table>
-	</form>
-					<button style="float: right; margin-right: 9%; margin-top: 30px;"
-					type="button" class="btn btn-default button"
-					onclick="staff_relive()">
-					<i class="fa fa-pencil"></i> 提交
-				</button>
-</div>
-
-<!-- -------------------------------------------------------------------------------------------------->
-<!-- ------------------------------------------案件流程---------------------------------------------------------------------------- -->
-		</div>
-	</div>
-	<!--新建添加学习经历模态框 start  -->
-	<div class="modal fade" id="addStudy_Modal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">添加学习经历</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="studyExp_form" accept-charset="utf-8">
-
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">学习地点</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffStudent_address" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">起始时间</label></td>
-									<td><input style="font-size: 12px;"
-										class=" staffStudent_startTime"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">结束时间</label></td>
-									<td><input type="text" class="staffStudent_stopTime" /></td>
-								</tr>
-
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staffStudent_remarks"
-											class="staffStudent_remarks"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="add_oneStudy()" data-dismiss='modal'>新建</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--新建添加学习经历模态框 end  -->
-
-	<!--新建添加工作经历模态框 start  -->
-	<div class="modal fade" id="addWork_Modal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">添加工作经历</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="addWork_form" accept-charset="utf-8">
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">工作地点</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffWork_address" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">职务</label></td>
-									<td><input style="font-size: 12px;" class="staffWork_duty"
-										type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">起始时间</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffWork_startTime"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">结束时间</label></td>
-									<td><input type="text" class="staffWork_stopTime" /></td>
-								</tr>
-
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staff_contactsRemark"
-											class="staffWork_remarks"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="add_oneWork()" data-dismiss='modal'>新建</button>
-				</div>
-			</div>
 		</div>
 	</div>
 
-	<!--新建添加工作经历模态框 end  -->
-	<!--新建添加家庭情况模态框 start  -->
-	<div class="modal fade" id="addFamily_Modal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">新建家庭情况</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="addFamily_form" accept-charset="utf-8">
-
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">关系</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_contactsRelationship" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">姓名</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_name" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">身份证号</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_IDcard" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">生日</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_birthday" class=" study_startTime"
-										type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">手机号</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_tel" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">微信号</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_WeiXin" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">工作单位</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_workSpace" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">职位</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_duty" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staff_contactsRemark"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											class="staffFamily_remarks" rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="add_oneFamily()" data-dismiss='modal'>新建</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--新建添加家庭情况模态框 end  -->
-	<!--新建添加刑警大队调动模态框 start  -->
-	<div class="modal fade" id="addPoliceChange_Modal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">添加刑警大队调动</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="addPoliceChange_form" accept-charset="utf-8">
-
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">调入时间</label></td>
-									<td><input style="font-size: 12px;"
-										class=" staffMove_inTime" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">调出时间</label></td>
-									<td><input style="font-size: 12px;"
-										class=" staffMove_outTime" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">是否在岗</label></td>
-									<td><select class="staffMove_guard">
-											<option>是</option>
-											<option>否</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staff_contactsRemark"
-											class="staffMove_remarks"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="add_oneMove()" data-dismiss='modal'>新建</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--新建添加刑警大队调动模态框 end  -->
-	<!--新建添加立功受奖模态框 start  -->
-	<div class="modal fade" id="addPrized_Modal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">添加立功受奖</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="addPrized_form" accept-charset="utf-8">
-
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">表彰情况</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffReward_situation" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">表彰时间</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffReward_Time"></td>
-								</tr>
-
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staff_contactsRemark"
-											class="staffReward_remarks"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="add_oneReward()" data-dismiss='modal'>新建</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--新建添加立功受奖模态框 end  -->
-	<!--新建添加违纪模态框 start  -->
-	<div class="modal fade" id="addAgainstPrinciple_Modal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">添加违纪</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="addAgainstPrinciple_form"
-						accept-charset="utf-8">
-
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">违纪情况</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffPrinciple_situation" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">违纪时间</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffPrinciple_Time"></td>
-								</tr>
-
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staff_contactsRemark"
-											class="staffPrinciple_remarks"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="add_oneAgainst()" data-dismiss='modal'>新建</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--新建添加违纪模态框 end  -->
-	<!--新建添加处分模态框 start  -->
-	<div class="modal fade" id="addPunish_Modal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">添加处分</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="addPunish_form" accept-charset="utf-8">
-
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">处分情况</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffPunishment_situation" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">处分时间</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffPunishment_Time"></td>
-								</tr>
-
-
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staff_contactsRemark"
-											class="staffPunishment_remarks"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="add_onePunishment()" data-dismiss='modal'>新建</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--新建添加处分模态框 end  -->
-	<!--新建添加休假模态框 start  -->
-	<div class="modal fade" id="addVocation_Modal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">添加休假</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="addVocation_form" accept-charset="utf-8">
-
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">休假事由</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFurlough_mainContent" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">起始时间</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFurlough_startTime"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">天数</label></td>
-									<td><input type="text" class="staffFurlough_days" /></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">是否销假</label></td>
-									<td><select class="staffFurlough_whetherStop">
-											<option>是</option>
-											<option>否</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">销假时间</label></td>
-									<td><input type="text" class="staffFurlough_stopTime" /></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staff_contactsRemark"
-											class="staffFurlough_remarks"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="add_oneFurlough()" data-dismiss='modal'>新建</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--新建添加休假模态框 end  -->
-	<!--修改学习经历模态框 start  -->
-	<div class="modal fade" id="reliveStudy_Modal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">修改学习经历</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="studyExp_form" accept-charset="utf-8">
-
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">学习地点</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffStudent_addressRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">起始时间</label></td>
-									<td><input style="font-size: 12px;"
-										class=" staffStudent_startTimeRelive"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">结束时间</label></td>
-									<td><input type="text" class="staffStudent_stopTimeRelive" /></td>
-								</tr>
-
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staffStudent_remarks"
-											class="staffStudent_remarksRelive"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="relive_study()" data-dismiss='modal'>修改</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--修改学习经历模态框 end  -->
-
-	<!--修改工作经历模态框 start  -->
-	<div class="modal fade" id="reliveWork_Modal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">修改工作经历</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="addWork_form" accept-charset="utf-8">
-						<table>
-							<tbody>
-								<tr>
-									<td><label>工作地点</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffWork_addressRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label>职务</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffWork_dutyRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label>起始时间</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffWork_startTimeRelive"></td>
-								</tr>
-								<tr>
-									<td><label>结束时间</label></td>
-									<td><input type="text" class="staffWork_stopTimeRelive" /></td>
-								</tr>
-
-								<tr>
-									<td><label>备注</label></td>
-									<td colspan="6"><textarea id="staff_contactsRemark"
-											class="staffWork_remarkRelives"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="relive_work()" data-dismiss='modal'>修改</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--修改工作经历模态框 end  -->
-	<!--修改家庭情况模态框 start  -->
-	<div class="modal fade" id="reliveFamily_Modal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">修改家庭情况</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="addFamily_form" accept-charset="utf-8">
-
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">关系</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_contactsRelationshipRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">姓名</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_nameRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">身份证号</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_IDcardRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">生日</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_birthdayRelive" class=" study_startTime"
-										type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">手机号</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_telRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">微信号</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_WeiXinRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">工作单位</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_workSpaceRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">职位</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFamily_dutyRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staff_contactsRemark"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											class="staffFamily_remarksRelive" rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="relive_family()" data-dismiss='modal'>修改</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--修改家庭情况模态框 end  -->
-	<!--修改刑警大队调动模态框 start  -->
-	<div class="modal fade" id="reliveMove_Modal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">修改刑警大队调动</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="addPoliceChange_form" accept-charset="utf-8">
-
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">调入时间</label></td>
-									<td><input style="font-size: 12px;"
-										class=" staffMove_inTimeRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">调出时间</label></td>
-									<td><input style="font-size: 12px;"
-										class=" staffMove_outTimeRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">是否在岗</label></td>
-									<td><select class="staffMove_guardRelive">
-											<option>是</option>
-											<option>否</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staff_contactsRemark"
-											class="staffMove_remarksRelive"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="relive_move()" data-dismiss='modal'>修改</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--修改刑警大队调动模态框 end  -->
-	<!--修改立功受奖模态框 start  -->
-	<div class="modal fade" id="reliveReward_Modal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">修改立功受奖</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="addPrized_form" accept-charset="utf-8">
-
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">表彰情况</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffReward_situationRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">表彰时间</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffReward_TimeRelive"></td>
-								</tr>
-
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staff_contactsRemark"
-											class="staffReward_remarksRelive"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="relive_reward()" data-dismiss='modal'>修改</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--修改立功受奖模态框 end  -->
-	<!--修改违纪模态框 start  -->
-	<div class="modal fade" id="reliveAgainst_Modal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">修改违纪</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="addAgainstPrinciple_form"
-						accept-charset="utf-8">
-
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">违纪情况</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffPrinciple_situationRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">违纪时间</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffPrinciple_TimeRelive"></td>
-								</tr>
-
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staff_contactsRemark"
-											class="staffPrinciple_remarksRelive"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="relive_against()" data-dismiss='modal'>修改</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--修改违纪模态框 end  -->
-	<!--修改处分模态框 start  -->
-	<div class="modal fade" id="relivePunishment_Modal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">修改处分</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="addPunish_form" accept-charset="utf-8">
-
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">处分情况</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffPunishment_situationRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">处分时间</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffPunishment_TimeRelive"></td>
-								</tr>
-
-
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staff_contactsRemark"
-											class="staffPunishment_remarksRelive"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="relive_punishment()" data-dismiss='modal'>修改</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--修改处分模态框 end  -->
-	<!--修改休假模态框 start  -->
-	<div class="modal fade" id="reliveFurlough_Modal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">添加休假</h4>
-				</div>
-				<div class="modal-body">
-
-					<form action="" id="addVocation_form" accept-charset="utf-8">
-
-						<table>
-							<tbody>
-								<tr>
-									<td><label class="staff_info_label">休假事由</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFurlough_mainContentRelive" type="text"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">起始时间</label></td>
-									<td><input style="font-size: 12px;"
-										class="staffFurlough_startTimeRelive"></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">天数</label></td>
-									<td><input type="text" class="staffFurlough_daysRelive" /></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">是否销假</label></td>
-									<td><select class="staffFurlough_whetherStopRelive">
-											<option>是</option>
-											<option>否</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">销假时间</label></td>
-									<td><input type="text"
-										class="staffFurlough_stopTimeRelive" /></td>
-								</tr>
-								<tr>
-									<td><label class="staff_info_label">备注</label></td>
-									<td colspan="6"><textarea id="staff_contactsRemark"
-											class="staffFurlough_remarksRelive"
-											style="border: 1px solid #ccc; text-indent: 30px; margin-top: 10px;"
-											rows="3" cols="62"></textarea></td>
-
-
-								</tr>
-							</tbody>
-						</table>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default "
-						onclick="clear_iquery()" data-dismiss="modal">清空</button>
-					<button type="button" class="btn btn-primary"
-						onclick="relive_furlough()" data-dismiss='modal'>新建</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--修改休假模态框 end  -->
 	<script type="text/javascript"
 		src="<%=basePath%>js/Info/CaseDetails.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>js/Process/processDetails.js"></script>
-<%-- 	<script type="text/javascript" src="<%=basePath%>js/Team/newStaff.js"></script> --%>
-<%-- 	<script type="text/javascript" --%>
-<%-- 		src="<%=basePath%>js/Team/addOne_longTable.js"></script> --%>
-<%-- 	<script type="text/javascript" --%>
-<%-- 		src="<%=basePath%>js/Team/relive_longTable.js"></script> --%>
-<%-- 	<script type="text/javascript" --%>
-<%-- 		src="<%=basePath%>js/Team/delete_longTable.js"></script> --%>
 	<script type="text/javascript">
 		$.datetimepicker.setLocale('ch');
 		$('.staff_joinPartyTime').datetimepicker({
