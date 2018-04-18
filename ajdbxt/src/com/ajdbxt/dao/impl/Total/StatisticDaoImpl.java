@@ -1,5 +1,6 @@
 package com.ajdbxt.dao.impl.Total;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,15 +44,15 @@ public class StatisticDaoImpl implements StatisticDao {
 		String start_time = "";
 		String stop_time = "";
 		Long i;
-		String hql="select count(*) from ajdbxt_info where info_main_police='"+police_id+"'or info_assistant_police_one='"+police_id+"'"
-				+ "or info_assistant_police_two='"+police_id+"' and info_category='"+category+"'" ;
+		String hql="select count(*) from ajdbxt_info where (info_main_police='"+police_id+"'or info_assistant_police_one='"+police_id+"'"
+				+ "or info_assistant_police_two='"+police_id+"') and info_category='"+category+"'" ;
 		if(listPoliceCaseByPageAndSearchVO.getStart_time()!=null && listPoliceCaseByPageAndSearchVO.getStart_time().length()>0) {
 			start_time=listPoliceCaseByPageAndSearchVO.getStart_time();
 		}
 		if(listPoliceCaseByPageAndSearchVO.getStop_time()!=null && listPoliceCaseByPageAndSearchVO.getStop_time().length()>0) {
 			stop_time=listPoliceCaseByPageAndSearchVO.getStop_time();
 		}
-		 hql+="and info_gmt_ceate >='"+start_time+"' and info_gmt_ceate <='"+stop_time+"'";
+			hql+=" and info_gmt_ceate between str_to_date('"+start_time+"', '%Y-%m-%d') and str_to_date('"+stop_time+"', '%Y-%m-%d')";
 		Query query=session.createQuery(hql);
 		System.out.println("统计案件数量"+hql);
 		i=(Long) query.uniqueResult();
@@ -98,16 +99,15 @@ public class StatisticDaoImpl implements StatisticDao {
 		String start_time = "";
 		String stop_time = "";
 		String hql="SELECT info.ajdbxt_info_id,info.info_name,info.info_category,mainP.police_name,"
-				+ "fP1.police_name,fp2.police_name,pro.process_score,dep.department_name" + 
-				" FROM ajdbxt_info info,ajdbxt_police mainP,ajdbxt_police fP1,ajdbxt_police fp2,ajdbxt_process pro,ajdbxt_department dep" + 
-				" WHERE info.info_main_police = mainP.ajdbxt_police_id" + 
-				" AND info.info_assistant_police_one = fP1.ajdbxt_police_id" + 
-				" AND info.info_assistant_police_two = fp2.ajdbxt_police_id" + 
-				" AND pro.process_case_id = info.ajdbxt_info_id" + 
-				" AND mainP.police_department = dep.ajdbxt_department_id" + 
-				" AND fP1.police_department = dep.ajdbxt_department_id" + 
-				" AND fp2.police_department = dep.ajdbxt_department_id" + 
-				" AND (mainP.ajdbxt_police_id = '"+eachPoliceCaseVO.getPolice_id()+"'" + 
+				+ "fP1.police_name AS assistPoliceOne,fp2.police_name AS assistPoliceTwo,pro.process_score,dep.department_name" + 
+				" FROM ajdbxt_info info LEFT JOIN ajdbxt_police mainP ON info.info_main_police=mainP.ajdbxt_police_id " + 
+				" LEFT JOIN ajdbxt_police fP1 ON info.info_assistant_police_one=fP1.ajdbxt_police_id" + 
+				" LEFT JOIN ajdbxt_police fP2 ON info.info_assistant_police_two=fP2.ajdbxt_police_id" + 
+				" LEFT JOIN ajdbxt_process pro ON pro.process_case_id=info.ajdbxt_info_id" + 
+				" LEFT JOIN ajdbxt_department dep ON (mainP.police_department=dep.ajdbxt_department_id" + 
+				" OR fP1.police_department=dep.ajdbxt_department_id" + 
+				" OR fp2.police_department=dep.ajdbxt_department_id)" + 
+				" WHERE (mainP.ajdbxt_police_id = '"+eachPoliceCaseVO.getPolice_id()+"'" + 
 				" OR fP1.ajdbxt_police_id = '"+eachPoliceCaseVO.getPolice_id()+"'" + 
 				" OR fp2.ajdbxt_police_id = '"+eachPoliceCaseVO.getPolice_id()+"')";
 		
@@ -127,14 +127,14 @@ public class StatisticDaoImpl implements StatisticDao {
 		}
 			hql+=" and info.info_gmt_ceate between str_to_date('"+start_time+"', '%Y-%m-%d') and str_to_date('"+stop_time+"', '%Y-%m-%d')";
 		System.out.println(hql);
-		Query query=session.createQuery(hql);
+		Query query=session.createSQLQuery(hql);
 		query.setFirstResult((eachPoliceCaseVO.getCurrePage() - 1) * eachPoliceCaseVO.getPageSize());
 		query.setMaxResults(eachPoliceCaseVO.getPageSize());
 		List<Object> list=query.list();
 		for(int i=0;i<list.size();i++) {
 			StatisticCaseByPoliceDTO statisticCaseByPoliceDTO=new StatisticCaseByPoliceDTO();
 			Object[] obj = (Object[])list.get(i);
-		    System.out.println("---------------"+obj.length);
+		    System.out.println("----"+obj.length);
 	       //民警1
 	 		ajdbxt_police mainPolice=new ajdbxt_police();
 	 		//民警2
@@ -152,8 +152,17 @@ public class StatisticDaoImpl implements StatisticDao {
 	 		caseInfo.setInfo_category(obj[2].toString());
 	 		mainPolice.setPolice_name(obj[3].toString());
 	 		insisPoliceOne.setPolice_name(obj[4].toString());
-	 		insisPoliceTwo.setPolice_name(obj[5].toString());
-	 		caseProcess.setProcess_score(obj[6].toString());
+	 		if(obj[5]==null) {
+	 			insisPoliceTwo.setPolice_name(" ");
+	 		}else {
+	 			insisPoliceTwo.setPolice_name(obj[5].toString());
+	 		}
+	 		if(obj[6]==null) {
+	 			caseProcess.setProcess_score(" ");
+	 		}else {
+	 			caseProcess.setProcess_score(obj[6].toString());
+	 		}
+	 		
 	 		department.setDepartment_name(obj[7].toString());
 	 		statisticCaseByPoliceDTO.setCaseInfo(caseInfo);
 	 		statisticCaseByPoliceDTO.setCaseProcess(caseProcess);
@@ -175,19 +184,17 @@ public class StatisticDaoImpl implements StatisticDao {
 	@Override
 	public int getCaseRecords(page_eachPoliceCaseVO eachPoliceCaseVO) {
 		Session session=getSession();
-		Long lo;
+		BigInteger  i;
 		String start_time="";
 		String stop_time="";
-		String hql="SELECT count(*) FROM ajdbxt_info info,ajdbxt_police mainP,ajdbxt_police fP1,ajdbxt_police fp2,"
-				+ "ajdbxt_process pro,ajdbxt_department dep" + 
-				" WHERE info.info_main_police = mainP.ajdbxt_police_id" + 
-				" AND info.info_assistant_police_one = fP1.ajdbxt_police_id" + 
-				" AND info.info_assistant_police_two = fp2.ajdbxt_police_id" + 
-				" AND pro.process_case_id = info.ajdbxt_info_id" + 
-				" AND mainP.police_department = dep.ajdbxt_department_id" + 
-				" AND fP1.police_department = dep.ajdbxt_department_id" + 
-				" AND fp2.police_department = dep.ajdbxt_department_id" + 
-				" AND (mainP.ajdbxt_police_id = '"+eachPoliceCaseVO.getPolice_id()+"'" + 
+		String hql="SELECT count(*) FROM ajdbxt_info info LEFT JOIN ajdbxt_police mainP ON info.info_main_police=mainP.ajdbxt_police_id"+ 
+				" LEFT JOIN ajdbxt_police fP1 ON info.info_assistant_police_one=fP1.ajdbxt_police_id" + 
+				" LEFT JOIN ajdbxt_police fP2 ON info.info_assistant_police_two=fP2.ajdbxt_police_id" + 
+				" LEFT JOIN ajdbxt_process pro ON pro.process_case_id=info.ajdbxt_info_id" + 
+				" LEFT JOIN ajdbxt_department dep ON (mainP.police_department=dep.ajdbxt_department_id" + 
+				" OR fP1.police_department=dep.ajdbxt_department_id" + 
+				" OR fp2.police_department=dep.ajdbxt_department_id)" + 
+				" WHERE (mainP.ajdbxt_police_id = '"+eachPoliceCaseVO.getPolice_id()+"'" + 
 				" OR fP1.ajdbxt_police_id = '"+eachPoliceCaseVO.getPolice_id()+"'" + 
 				" OR fp2.ajdbxt_police_id = '"+eachPoliceCaseVO.getPolice_id()+"')";
 		
@@ -205,13 +212,13 @@ public class StatisticDaoImpl implements StatisticDao {
 		if(eachPoliceCaseVO.getStop_time()!=null && eachPoliceCaseVO.getStop_time().length()>0) {
 			stop_time=eachPoliceCaseVO.getStop_time();
 		}
-		hql+=" and info.info_gmt_ceate between str_to_date('"+start_time+"', '%Y-%m-%d') and str_to_date('"+stop_time+"', '%Y-%m-%d')";
+			hql+=" and info.info_gmt_ceate between str_to_date('"+start_time+"', '%Y-%m-%d') and str_to_date('"+stop_time+"', '%Y-%m-%d')";
 		System.out.println(hql);
-		Query query=session.createQuery(hql);
-		lo=(long) query.uniqueResult();
-		System.out.println("案件数量"+lo);
+		Query query=session.createSQLQuery(hql);
+		i=(BigInteger) query.uniqueResult();
+		System.out.println("案件数量"+i);
 		session.clear();
-		return lo.intValue();
+		return i.intValue();
 	}
 
 	//得到对应的办案部门

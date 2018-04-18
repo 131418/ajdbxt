@@ -1,25 +1,13 @@
 package com.ajdbxt.domain.VO.User;
-
-
-
-
-
 import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.ajdbxt.domain.DO.ajdbxt_department;
-import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.service.Total.StatisticService;
 import com.ajdbxt.service.User.UserService;
 import com.google.gson.Gson;
-
-
-
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContext*.xml" })
 public class JunitTest {
