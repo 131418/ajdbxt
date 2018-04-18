@@ -44,6 +44,7 @@ function List_Total_User_By_Page(pageIndex) {
 					
 					/*获取单位*/
 					document.getElementById("span_total_department").innerHTML=total_vo.caseListByPolice[num].department.department_name;
+
 					/*
 					 * 1. 所有類型
 					 */
@@ -75,8 +76,8 @@ function List_Total_User_By_Page(pageIndex) {
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
 					new_td.innerHTML = total_vo.caseListByPolice[num].insisPoliceOne.police_name
-						+","+total_vo.caseListByPolice[num].insisPOliceTwo.police_name;
-
+						+"   "+total_vo.caseListByPolice[num].insisPOliceTwo.police_name;
+					
 					/* 加载图标 */
 					var i_pulse = document.getElementById("i_pulse");
 					i_pulse.style.display = "none";
