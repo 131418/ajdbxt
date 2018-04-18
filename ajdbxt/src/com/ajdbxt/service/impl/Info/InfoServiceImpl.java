@@ -9,11 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
-
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
-
 import java.util.Map.Entry;
 import com.ajdbxt.dao.Info.InfoDao;
 import com.ajdbxt.dao.Info.InfoDepartmentDao;
@@ -28,7 +26,6 @@ import com.ajdbxt.domain.DO.*;
 import util.JsonUtils;
 import util.MsgSend;
 import util.SMSThread;
-import util.Tel;
 
 public class InfoServiceImpl implements InfoService {
 	private InfoDao infoDao;
@@ -77,15 +74,17 @@ public class InfoServiceImpl implements InfoService {
 	
 	@Override
 	public String saveCase(ajdbxt_info caseInfo) {
-		ProcessDTO processDTO=new ProcessDTO();//回传dto而不是Info
+
 		oneceRank(caseInfo);//下面要得到警察写逻辑
 		//哲理要写排班逻辑
+		ProcessDTO processDTO=new ProcessDTO();//回传dto而不是Info
 		processDTO.setInfo(caseInfo);
 		List<ajdbxt_police> polices=new ArrayList<>();
 		polices.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police()));
 		polices.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_one()));
 		processDTO.setPolice(polices);
 		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
+		processDTO.setCap(infoPoliceDao.findCaptainByDepartment(caseInfo.getInfo_department()));
 		return JsonUtils.toJson(processDTO);
 	}
 	private void oneceRank(ajdbxt_info caseInfo) {//排班主协办人员
@@ -108,7 +107,7 @@ public class InfoServiceImpl implements InfoService {
 		//如果所队长没有负责过，则分配
 		if(new Random().nextBoolean()&&infoDao.isCaptainWorked(chief.getAjdbxt_police_id())) {
 			caseInfo.setInfo_main_police(chief.getAjdbxt_police_id());
-		}
+		} 
 		//的到副所队长和普通警员的执勤次数
 		for(ajdbxt_police police :polices) {
 			int temp=infoDao.countProcessByPoliceId(police.getAjdbxt_police_id());
@@ -243,7 +242,7 @@ public class InfoServiceImpl implements InfoService {
 		policelist.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police()));
 		policelist.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_one()));
 		policelist.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_assistant_police_two()));
-		processDTO.setPolice(polices);
+		processDTO.setPolice(policelist);
 		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
 		return JsonUtils.toJson(processDTO);
 	}
@@ -289,9 +288,9 @@ public class InfoServiceImpl implements InfoService {
 	@Override
 	public String save(ajdbxt_info caseInfo) {
 		ProcessDTO processDTO=new ProcessDTO();
+		caseInfo.setAjdbxt_info_id(UUID.randomUUID().toString());
 		caseInfo.setInfo_gmt_ceate(util.Time.getStringSecond());
 		caseInfo.setInfo_gmt_modify(caseInfo.getInfo_gmt_ceate());//保存时将修改时间设为创建时间
-		caseInfo.setAjdbxt_info_id(UUID.randomUUID().toString());
 		processDTO.setInfo(caseInfo);
 		List<ajdbxt_police> policeList=new LinkedList<>();
 		policeList.add(infoPoliceDao.findPoliceById(caseInfo.getInfo_main_police()));
@@ -337,6 +336,12 @@ public class InfoServiceImpl implements InfoService {
 		if(processDao.findProcessByCaseId(caseInfo.getAjdbxt_info_id()).size()<=0) {
 			processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());
 		}
+		ApplicationContext applicationContext=(ApplicationContext) ServletActionContext.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+		boolean caseField=true;
+		if(caseInfo.getInfo_category().equals("刑事案件")) {
+			caseField=false;
+		}
+		new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE, caseInfo.getAjdbxt_info_id(), caseField, applicationContext).start();
 		return JsonUtils.toJson(processDTO);
 	}
 
@@ -350,15 +355,12 @@ public class InfoServiceImpl implements InfoService {
 	}
 
 	@Override
-	public ProcessInfoDTO getSingleInfo(String info_id) {
-		System.out.println("进来了"+info_id);
+	public ProcessDTO getSingleInfo(String info_id) {
 		ajdbxt_info info=infoDao.findCaseById(info_id);
-		System.out.println("案件信息"+info.toString());
 		ajdbxt_department department=infoDepartmentDao.findDepartmentById(info.getInfo_department());
-		System.out.println("部门信息"+department.toString());
-		ProcessInfoDTO processInfoDTO=new ProcessInfoDTO();
-		processInfoDTO.setInfo(info);
-		processInfoDTO.setDepartment(department);
+		ProcessDTO processDTO=new ProcessDTO();
+		processDTO.setInfo(info);
+		processDTO.setDepartment(department);
 		List<ajdbxt_police> policeList=new ArrayList<ajdbxt_police>();
 		policeList.add(infoPoliceDao.findPoliceById(info.getInfo_main_police()));
 		policeList.add(infoPoliceDao.findPoliceById(info.getInfo_assistant_police_one()));
@@ -366,8 +368,11 @@ public class InfoServiceImpl implements InfoService {
 		if(three!=null&&three.isEmpty()==false) {
 			policeList.add(infoPoliceDao.findPoliceById(three));
 		}
-		processInfoDTO.setPolice(policeList);
-		return processInfoDTO;
+		processDTO.setProcess(processDao.findProcessByCaseId(info_id).get(0));
+		processDTO.setCap(infoPoliceDao.findPoliceById(info.getInfo_department_captain()));
+		processDTO.setLeader(infoPoliceDao.findPoliceById(info.getInfo_bureau_leader()));
+		processDTO.setLegal(infoPoliceDao.findPoliceById(info.getInfo_legal_team_member()));
+		return processDTO;
 	}
 	@Override
 	public String getPolices(String info_department) {

@@ -112,8 +112,7 @@ public class ProcessAction  extends ActionSupport{
 		ajdbxt_process process=processService.getSingleProcessByCaseId(ajdbxtProcess.getProcess_case_id()).getProcess();
 		Class clazz=ajdbxtProcess.getClass();
 		Field [] f= clazz.getDeclaredFields();
-//		List<Integer> list=new ArrayList<>();//一些特殊的改变保存在这里
-		int sendMsgType=-1;
+		List<Integer> list=new ArrayList<>();//一些特殊的改变保存在这里
 		for(Field field: f){
 			field.setAccessible(true);//解锁
 			try {
@@ -122,36 +121,43 @@ public class ProcessAction  extends ActionSupport{
 					field.set(process, o);
 					switch (field.getName()) {
 						case "process_case_end"://案件流程结束
-							sendMsgType=ProcessService.PROCESS_FILE_HAND;
+							list.add(ProcessService.PROCESS_FILE_HAND);
 							break;
 						case "process_detention"://行政拘留
-							sendMsgType=ProcessService.PROCESS_DETENTION;
+							list.add(ProcessService.PROCESS_DETENTION);
 							break;
 						case "process_penalty"://罚款
-							sendMsgType=ProcessService.PROCESS_PENALTY;
+							list.add(ProcessService.PROCESS_PENALTY);
 							break;
 						case  "process_treatment_category"://戒毒
-							sendMsgType=ProcessService.PROCESS_TREATMENT_CATEGORY;
+							list.add(ProcessService.PROCESS_TREATMENT_CATEGORY);
 							break;
-//						case "process_criminal_detention"://刑事拘留
-//							sendMsgType=ProcessService.PROCESS_CRIMINAL_DETENTION;
-//							break;
+						case "process_criminal_detention"://刑事拘留
+							list.add(ProcessService.PROCESS_CRIMINAL_DETENTION);
+							break;
 						case "process_arrest"://逮捕
-							sendMsgType=ProcessService.PROCESS_ARREST;
+							list.add(ProcessService.PROCESS_ARREST);
 							break;
 						case "process_get_keep_wait_interrogate"://取保候审
-							sendMsgType=ProcessService.PROCESS_GET_KEEP_WAIT_INTERROGATE;
+							list.add(ProcessService.PROCESS_GET_KEEP_WAIT_INTERROGATE);
 							break;
 						case "process_live_at_home_unde_surveillance"://监视居住
-							sendMsgType=ProcessService.PROCESS_LIVE_AT_HOME_UNDE_SURVEILLANCE;
-							break;						
+							list.add(ProcessService.PROCESS_LIVE_AT_HOME_UNDE_SURVEILLANCE);
+							break;		
 					}
 				}
 			}catch(Exception e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		processService.update(process, sendMsgType);
+		String json=processService.update(process, list);
+		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+		try {
+			ServletActionContext.getResponse().getWriter().println(json);
+		} catch (IOException e) {
+			new RuntimeException(e);
+		}
+		
 	}
 	
 	/**

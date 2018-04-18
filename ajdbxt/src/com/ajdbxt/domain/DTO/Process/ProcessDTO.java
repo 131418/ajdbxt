@@ -22,7 +22,20 @@ public class ProcessDTO {
 	//办案单位
 	private ajdbxt_department department;
 	private ajdbxt_police cap;
-	
+	private ajdbxt_police legal;
+	private ajdbxt_police leader;
+	public ajdbxt_police getLegal() {
+		return legal;
+	}
+	public void setLegal(ajdbxt_police legal) {
+		this.legal = legal;
+	}
+	public ajdbxt_police getLeader() {
+		return leader;
+	}
+	public void setLeader(ajdbxt_police leader) {
+		this.leader = leader;
+	}
 	public ajdbxt_police getCap() {
 		return cap;
 	}

@@ -87,18 +87,6 @@ public class ProcessDaoImpl implements ProcessDao {
 			process.setAjdbxt_process_id(UUID.randomUUID().toString());
 			process.setProcess_gmt_create(TeamUtil.getStringSecond());
 			process.setProcess_gmt_modify(TeamUtil.getStringSecond());
-			Class clazz=process.getClass();
-			Field[] fields=clazz.getDeclaredFields();
-			for(Field field:fields) {
-				field.setAccessible(true);
-				try {
-					if(field.get(process)==null||field.get(process).equals("")) {
-						field.set(process, "否");
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
 			process.setProcess_case_id(case_id);
 			saveProcess(process);
 		}

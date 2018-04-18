@@ -11,6 +11,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.DO.ajdbxt_process;
+import com.ajdbxt.domain.DTO.Process.ProcessDTO;
 import com.ajdbxt.domain.DTO.Process.ProcessInfoDTO;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.service.Info.InfoService;
@@ -135,9 +136,9 @@ public class InfoAction extends ActionSupport {
 	 * @param info.ajxdbxt_info_id
 	 */
 	public void getSingleInfo() {
-		ProcessInfoDTO processInfoDTO =infoService.getSingleInfo(info.getAjdbxt_info_id());
+		ProcessDTO processDTO =infoService.getSingleInfo(info.getAjdbxt_info_id());
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
-		String json=JsonUtils.toJson(processInfoDTO);
+		String json=JsonUtils.toJson(processDTO);
 		try {
 			ServletActionContext.getResponse().getWriter().print(json);
 		} catch (IOException e) {
@@ -163,9 +164,8 @@ public class InfoAction extends ActionSupport {
 	 * @param 修改后的info的所有
 	 */
 	public void update() {
-		ProcessInfoDTO getProcessDTO=infoService.getSingleInfo(info.getAjdbxt_info_id());
+		ProcessDTO getProcessDTO=infoService.getSingleInfo(info.getAjdbxt_info_id());
 		ajdbxt_info getInfo=getProcessDTO.getInfo();
-		int send_massage_type=0;
 		Class clazz=info.getClass();
 		Field [] f= clazz.getDeclaredFields();
 		for(Field field: f){

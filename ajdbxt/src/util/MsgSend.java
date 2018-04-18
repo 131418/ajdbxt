@@ -142,7 +142,7 @@ public class MsgSend {
 		}
 		VoiceMsgPojo voice=new VoiceMsgPojo("",playTimes,promptfile,2,sig,tel,time);
 		String JsonData=JsonUtils.toJson(voice);
-		System.out.println(JsonData);
+		System.out.println("神地方三年级"+JsonData);
 		voice = null;//s虽然我不知道这句有什么用
 		// 发送数据,使用输出流
 		OutputStream outputStream = conn.getOutputStream();

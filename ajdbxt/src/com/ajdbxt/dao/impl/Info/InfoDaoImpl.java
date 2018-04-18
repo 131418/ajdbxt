@@ -41,7 +41,7 @@ public class InfoDaoImpl implements InfoDao {
 
 	@Override
 	public void saveCase(ajdbxt_info caseInfo) {
-		System.out.println(caseInfo);
+		System.out.println("infoDao"+caseInfo);
 		Session session=this.getSession();
 		session.saveOrUpdate(caseInfo);
 		session.flush();
