@@ -41,10 +41,9 @@ function List_Total_User_By_Page(pageIndex) {
 					new_tr.className = "new_tr";
 					new_tr.appendChild(document.createTextNode(''));
 					table_total_user.firstElementChild.appendChild(new_tr);
+					
 					/*获取单位*/
 					document.getElementById("span_total_department").innerHTML=total_vo.caseListByPolice[num].department.department_name;
-					/*获取人员*/
-					/*document.getElementById("span_total_user").innerHTML=total_vo.caseListByPolice[num].mainPolice.police_name;*/
 					/*
 					 * 1. 所有類型
 					 */
@@ -82,6 +81,10 @@ function List_Total_User_By_Page(pageIndex) {
 					var i_pulse = document.getElementById("i_pulse");
 					i_pulse.style.display = "none";
 				}
+		
+				/*获取人员*/
+				document.getElementById("span_total_user").innerHTML=total_vo.policeName;
+			/*	document.getElementById("span_total_user").style.color="black";*/
 				/*
 				 * * 设置页数 /
 				 */
