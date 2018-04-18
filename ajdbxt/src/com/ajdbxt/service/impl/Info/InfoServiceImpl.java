@@ -344,7 +344,7 @@ public class InfoServiceImpl implements InfoService {
 		if(caseInfo.getInfo_category().equals("刑事案件")) {
 			caseField=false;
 		}
-		new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE, caseInfo.getAjdbxt_info_id(), caseField, applicationContext);
+		new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE, caseInfo.getAjdbxt_info_id(), caseField, applicationContext).start();
 		return JsonUtils.toJson(processDTO);
 	}
 
@@ -359,11 +359,8 @@ public class InfoServiceImpl implements InfoService {
 
 	@Override
 	public ProcessInfoDTO getSingleInfo(String info_id) {
-		System.out.println("进来了"+info_id);
 		ajdbxt_info info=infoDao.findCaseById(info_id);
-		System.out.println("案件信息"+info.toString());
 		ajdbxt_department department=infoDepartmentDao.findDepartmentById(info.getInfo_department());
-		System.out.println("部门信息"+department.toString());
 		ProcessInfoDTO processInfoDTO=new ProcessInfoDTO();
 		processInfoDTO.setInfo(info);
 		processInfoDTO.setDepartment(department);
