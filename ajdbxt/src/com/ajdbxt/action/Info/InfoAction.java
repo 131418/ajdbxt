@@ -3,6 +3,8 @@ package com.ajdbxt.action.Info;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts2.ServletActionContext;
 import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.DO.ajdbxt_process;
@@ -22,7 +24,9 @@ public class InfoAction extends ActionSupport {
 	public String page_CaseInfo() {
 		return "page_CaseInfo";
 	}
-	
+	public String page_CaseDetails() {
+		return "page_CaseDetails";
+	}
 	public ajdbxt_info geInfo() {
 		return info;
 	}
