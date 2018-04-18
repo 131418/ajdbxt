@@ -9,17 +9,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
-
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
-
 import java.util.Map.Entry;
 import com.ajdbxt.dao.Info.InfoDao;
 import com.ajdbxt.dao.Info.InfoDepartmentDao;
 import com.ajdbxt.dao.Info.InfoPoliceDao;
 import com.ajdbxt.dao.Process.ProcessDao;
-import com.ajdbxt.dao.Process.ProcessPoliceDao;
 import com.ajdbxt.domain.DTO.Process.ProcessDTO;
 import com.ajdbxt.domain.DTO.Process.ProcessInfoDTO;
 import com.ajdbxt.domain.VO.Info.LegalSystemAndLeadersVO;
@@ -29,7 +26,6 @@ import com.ajdbxt.domain.DO.*;
 import util.JsonUtils;
 import util.MsgSend;
 import util.SMSThread;
-import util.Tel;
 
 public class InfoServiceImpl implements InfoService {
 	private InfoDao infoDao;
@@ -358,12 +354,12 @@ public class InfoServiceImpl implements InfoService {
 	}
 
 	@Override
-	public ProcessInfoDTO getSingleInfo(String info_id) {
+	public ProcessDTO getSingleInfo(String info_id) {
 		ajdbxt_info info=infoDao.findCaseById(info_id);
 		ajdbxt_department department=infoDepartmentDao.findDepartmentById(info.getInfo_department());
-		ProcessInfoDTO processInfoDTO=new ProcessInfoDTO();
-		processInfoDTO.setInfo(info);
-		processInfoDTO.setDepartment(department);
+		ProcessDTO processDTO=new ProcessDTO();
+		processDTO.setInfo(info);
+		processDTO.setDepartment(department);
 		List<ajdbxt_police> policeList=new ArrayList<ajdbxt_police>();
 		policeList.add(infoPoliceDao.findPoliceById(info.getInfo_main_police()));
 		policeList.add(infoPoliceDao.findPoliceById(info.getInfo_assistant_police_one()));
@@ -371,8 +367,11 @@ public class InfoServiceImpl implements InfoService {
 		if(three!=null&&three.isEmpty()==false) {
 			policeList.add(infoPoliceDao.findPoliceById(three));
 		}
-		processInfoDTO.setPolice(policeList);
-		return processInfoDTO;
+		processDTO.setProcess(processDao.findProcessByCaseId(info_id).get(0));
+		processDTO.setCap(infoPoliceDao.findPoliceById(info.getInfo_department_captain()));
+		processDTO.setLeader(infoPoliceDao.findPoliceById(info.getInfo_bureau_leader()));
+		processDTO.setLegal(infoPoliceDao.findPoliceById(info.getInfo_legal_team_member()));
+		return processDTO;
 	}
 	@Override
 	public String getPolices(String info_department) {
