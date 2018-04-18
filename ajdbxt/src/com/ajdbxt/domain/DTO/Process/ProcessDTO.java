@@ -21,7 +21,14 @@ public class ProcessDTO {
 	private List<ajdbxt_police> police;
 	//办案单位
 	private ajdbxt_department department;
+	private ajdbxt_police cap;
 	
+	public ajdbxt_police getCap() {
+		return cap;
+	}
+	public void setCap(ajdbxt_police cap) {
+		this.cap = cap;
+	}
 	public ajdbxt_department getDepartment() {
 		return department;
 	}

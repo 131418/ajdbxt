@@ -13,10 +13,10 @@ public interface InfoService {
 	public String save(ajdbxt_info caseInfo);
 	public String getAllCase(Page_list_caseInfoVo infoVO);
 	public String getLegalsAndLeadersAndDepartment();
-	public void updateCase(ajdbxt_info caseInfo);
 	public void deleteCase(String caseInfo_id);
 	public String saveCase(ajdbxt_info caseInfo);
 	public ProcessInfoDTO getSingleInfo(String info_id);
 	public String getPolices(String info_department);
+	public String update(ajdbxt_info info) ;
 }
 

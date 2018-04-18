@@ -20,7 +20,7 @@
 		<property name="infoPoliceDao" ref="infoPoliceDao"></property>
 		<property name="processDao" ref="processDao"></property>
 	</bean>
-	<bean id="infoAction" class="com.ajdbxt.action.Info.InfoAction">
+	<bean id="infoAction" class="com.ajdbxt.action.Info.InfoAction" scope="prototype">
 		<property name="infoService" ref="infoService"></property>
 	</bean>
 </beans>

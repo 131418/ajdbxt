@@ -13,6 +13,7 @@ import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.VO.User.findDepartmentByPageVO;
 import com.ajdbxt.domain.VO.User.findPoliceByPageVO;
+import com.ajdbxt.domain.VO.User.policedptVO;
 import com.ajdbxt.service.User.UserService;
 
 import util.TeamUtil;
@@ -64,7 +65,8 @@ public class UserServiceImpl implements UserService {
 			ajdbxt_police.setAjdbxt_police_id(TeamUtil.getUuid());
 			ajdbxt_police.setPolice_gmt_create(TeamUtil.getStringSecond());
 			ajdbxt_police.setPolice_gmt_modify(TeamUtil.getStringSecond());
-			ajdbxt_police.setPolice_password(md5.GetMD5Code(ajdbxt_police.getPolice_password()));;
+			ajdbxt_police.setPolice_password(md5.GetMD5Code(ajdbxt_police.getPolice_password()));
+			;
 			// 返回保存结果
 			boolean result = userDao.addPolice(ajdbxt_police);
 			if (result) {
@@ -80,46 +82,49 @@ public class UserServiceImpl implements UserService {
 	public String updatePolice(ajdbxt_police ajdbxt_police) {
 		// TODO Auto-generated method stub
 		ajdbxt_police.setPolice_gmt_modify(TeamUtil.getStringSecond());
-		//ajdbxt_police.setPolice_password(md5.GetMD5Code(ajdbxt_police.getPolice_password()));
+		// ajdbxt_police.setPolice_password(md5.GetMD5Code(ajdbxt_police.getPolice_password()));
 		boolean result = userDao.updatePolice(ajdbxt_police);
 		return result ? "success" : "error";
 	}
 
 	@Override
-	public findPoliceByPageVO queryForPage(int pageSize, int currentPage,String police_name) {
+	public findPoliceByPageVO queryForPage(int pageSize, int currentPage, String police_name) {
 		// TODO Auto-generated method stub
-		/*String hql_count= "select count(*) from ajdbxt_police";
-		int count = userDao.getCount(hql_count); // 总记录数
-		int totalPage = findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数
-		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
-		int length = pageSize; // 每页记录数
-		int currentpage = findPoliceByPageVO.countCurrentPage(currentPage);*/
+		/*
+		 * String hql_count= "select count(*) from ajdbxt_police"; int count =
+		 * userDao.getCount(hql_count); // 总记录数 int totalPage =
+		 * findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数 int offset =
+		 * findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录 int length
+		 * = pageSize; // 每页记录数 int currentpage =
+		 * findPoliceByPageVO.countCurrentPage(currentPage);
+		 */
 		String hql_count;
 		String hql;
-		//String  hql="from ajdbxt_police order by police_gmt_modify desc";
-		if(police_name!=null&&!"".equals(police_name)) {
-			hql_count = "select count(*) from ajdbxt_police where police_name like '%"+police_name+"%'";
-			hql="from ajdbxt_police where police_name like '%"+police_name+"%' order by police_gmt_modify desc";
-		}
-		else {
+		// String hql="from ajdbxt_police order by police_gmt_modify desc";
+		if (police_name != null && !"".equals(police_name)) {
+			hql_count = "select count(*) from ajdbxt_police where police_name like '%" + police_name + "%'";
+			hql = "select new com.ajdbxt.domain.VO.User.policedptVO(p,d) from ajdbxt_police p,ajdbxt_department d where p.police_department = d.ajdbxt_department_id and p.police_name like '%"
+					+ police_name + "%' order by p.police_gmt_modify desc";
+		} else {
 			hql_count = "select count(*) from ajdbxt_police";
-			hql="from ajdbxt_police order by police_gmt_modify desc";
+			// hql="from ajdbxt_police order by police_gmt_modify desc";
+			hql = "select new com.ajdbxt.domain.VO.User.policedptVO(p,d) from ajdbxt_police p,ajdbxt_department d where p.police_department = d.ajdbxt_department_id order by p.police_gmt_modify desc";
 		}
 		int count = userDao.getCount(hql_count); // 总记录数
 		int totalPage = findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数
 		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
 		int length = pageSize; // 每页记录数
 		int currentpage = findPoliceByPageVO.countCurrentPage(currentPage);
-		List<ajdbxt_police> list = userDao.queryForPage(hql, offset, length); // 该分页的记录
+		List<policedptVO> list = userDao.queryForPage(hql, offset, length); // 该分页的记录
 		// 把分页信息保存到Bean中
-		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
-		findPoliceByPageVO.setPageSize(pageSize);
-		findPoliceByPageVO.setCurrentPage(currentpage);
-		findPoliceByPageVO.setAllRow(count);
-		findPoliceByPageVO.setTotalPage(totalPage);
-		findPoliceByPageVO.setList(list);
-		findPoliceByPageVO.init();
-		return findPoliceByPageVO;
+		findPoliceByPageVO ffindPoliceByPageVO = new findPoliceByPageVO();
+		ffindPoliceByPageVO.setPageSize(pageSize);
+		ffindPoliceByPageVO.setCurrentPage(currentpage);
+		ffindPoliceByPageVO.setAllRow(count);
+		ffindPoliceByPageVO.setTotalPage(totalPage);
+		ffindPoliceByPageVO.setList(list);
+		ffindPoliceByPageVO.init();
+		return ffindPoliceByPageVO;
 	}
 
 	@Override
@@ -155,13 +160,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String batchDelete(String[] ids) {
 		// TODO Auto-generated method stub
-		if(ids==null||ids.length==0) {
+		if (ids == null || ids.length == 0) {
 			return null;
 		}
 		String result = userDao.batchDelete(ids);
 		return result;
 	}
-
 
 	@Override
 	public findDepartmentByPageVO findDepartmentByPage(int pageSize, int currentPage) {
@@ -172,7 +176,8 @@ public class UserServiceImpl implements UserService {
 		int offset = findDepartmentByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
 		int length = pageSize; // 每页记录数
 		int currentpage = findDepartmentByPageVO.countCurrentPage(currentPage);
-		List<ajdbxt_department> list = userDao.findDepartmentByPage("from ajdbxt_department order by department_gmt_modify desc", offset, length); // 该分页的记录
+		List<ajdbxt_department> list = userDao
+				.findDepartmentByPage("from ajdbxt_department order by department_gmt_modify desc", offset, length); // 该分页的记录
 		// 把分页信息保存到Bean中
 		findDepartmentByPageVO findDepartmentByPageVO = new findDepartmentByPageVO();
 		findDepartmentByPageVO.setPageSize(pageSize);
@@ -194,5 +199,11 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
+	@Override
+	public policedptVO findPoliceById(String ajdbxt_police_id) {
+		// TODO Auto-generated method stub
+		policedptVO policeOne = userDao.findPoliceById(ajdbxt_police_id);
+		return policeOne;
+	}
 
 }

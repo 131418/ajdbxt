@@ -6,15 +6,21 @@ import java.lang.reflect.Field;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+
 import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.DO.ajdbxt_process;
 import com.ajdbxt.domain.DTO.Process.ProcessInfoDTO;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.service.Info.InfoService;
+import com.ajdbxt.service.Process.ProcessService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import util.JsonUtils;
+import util.MsgSend;
+import util.SMSThread;
 
 public class InfoAction extends ActionSupport {
 	private ajdbxt_info info;
@@ -165,25 +171,27 @@ public class InfoAction extends ActionSupport {
 			field.setAccessible(true);
 			try {
 				Object o =field.get(info);
-				if(o!=null) {
+				if(o!=null) {//这里应该写取消指派和更改指派的逻辑
+					Object old=field.get(o);
 					field.set(getInfo, o);
-//					switch (field.getName()) {
-//						case "process_case_goods":
-//							send_massage_type=MsgSend.CANCEL_DISPATCH;
-//							break;
-//	
-//						case "process_penalty":
-//						case ""
-//							break;
-//					}
+					switch (field.getName()) {
+						case "info_main_police":
+							
+							break;
+						case "info_assistant_police_one":
+							
+							break;
+						case "info_assistant_police_two":
+							break;
+					}
 				}
 			}catch(Exception e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		infoService.updateCase(info);
+		String Json=infoService.update(info);
 		try {
-			ServletActionContext.getResponse().getWriter().print("success");
+			ServletActionContext.getResponse().getWriter().print(Json);
 		} catch (IOException e) {
 			new RuntimeException(e);
 			System.out.println(e.getMessage());
