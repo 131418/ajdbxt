@@ -36,6 +36,9 @@ html, body, .radio, .checkbox, .button_process {
 	display: inline-block;
 	vertical-align: middle;
 }
+#process_question{
+display:none;
+}
 </style>
 </head>
 <body>
@@ -71,7 +74,6 @@ html, body, .radio, .checkbox, .button_process {
 							<td><label>案件名称</label></td>
 							<td><input name="info.info_name" disabled="disabled"
 								class="form-control" type="text"></td>
-
 							<td><label>案件类别</label></td>
 							<td><input name="info.info_category" class="form-control" disabled="disabled"
 								type="text"></td>
@@ -113,14 +115,14 @@ html, body, .radio, .checkbox, .button_process {
 							<td><input name="info.info_department_captain" disabled="disabled"
 								class="form-control" type="text"></td>
 							<td><label>值班局领导</label></td>
-							<td><input name="info.info_bureau_leader" disabled="disabled"
+							<td><input name="leader.police_name" disabled="disabled"
 								class="form-control" type="text"></td>
 
 						</tr>
 						
 						<tr>
 							<td><label>值班民警</label></td>
-							<td><input name="info.info_legal_team_member" disabled="disabled"
+							<td><input name="legal.police_name" disabled="disabled"
 								class="form-control" type="text"></td>
 						</tr>
 				</table>
@@ -142,6 +144,7 @@ html, body, .radio, .checkbox, .button_process {
 							<!-- 左边 -->
 						<div id="administrative_process_left" class="col-md-4"></div>
 							<!-- 右边 -->
+							<form action="" id="processDetails">
 							<div id="administrative_process_right" class="col-md-8">
 							<!-- 	<div id="administrative_process_right" class="col-md-12"> -->
 								<!-------------------------------------->
@@ -154,33 +157,33 @@ html, body, .radio, .checkbox, .button_process {
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">延长传唤嫌疑人：</div>
 												<div class="radio col-md-4">
-													<label style="margin: 0 10px;"> <input type="radio"
-														name="suspect_summon" id="suspect_summon_yes" value="是">
+													<label style="margin: 0 10px;"> <input type="radio" onclick=changesuspect_summon_yes(this)
+														name="ajdbxtProcess.process_lengthen_subpoena" id="suspect_summon_yes" value="是">
 														是
-													</label><label style="margin: 0 10px;"> <input type="radio"
-														name="suspect_summon" id="suspect_summon_no" value="否">
+													</label><label style="margin: 0 10px;"> <input type="radio" onclick=changesuspect_summon_no(this)
+														name="ajdbxtProcess.process_lengthen_subpoena" id="suspect_summon_no" value="否">
 														否
 													</label>
 												</div>
 												<div class="col-md-4 process_button">
 													<button type="button" class="btn btn-primary  btn-block"
-														style="width: 40%; float: right;">提交</button>
+													onclick="suspect_summon(this)"	style="width: 40%; float: right;">提交</button>
 												</div>
 											</div>
 											<!-- 询问未成年人 -->
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">询问未成年人：</div>
 												<div class="radio col-md-4">
-													<label style="margin: 0 10px;"> <input type="radio"
-														name="minors_asking" id="minors_asking_yes" value="是">
+													<label style="margin: 0 10px;"> <input type="radio" onclick=changeminors_asking_yes(this)
+														name="ajdbxtProcess.process_nonage" id="minors_asking_yes" value="是">
 														是
-													</label><label style="margin: 0 10px;"> <input type="radio"
-														name="minors_asking" id="minors_asking_no" value="否">
+													</label><label style="margin: 0 10px;"> <input type="radio" onclick=changeminors_asking_no(this)
+														name="ajdbxtProcess.process_nonage" id="minors_asking_no" value="否">
 														否
 													</label>
 												</div>
 												<div class="col-md-4 process_button">
-													<button type="button" class="btn btn-primary  btn-block"
+													<button type="button" class="btn btn-primary  btn-block" onclick="minors_asking()"
 														style="width: 40%; float: right;">提交</button>
 												</div>
 												<!-- <div class="col-md-4 process_title">提醒：通知监护人到场</div> -->
@@ -190,17 +193,17 @@ html, body, .radio, .checkbox, .button_process {
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">鉴定：</div>
 												<div class="radio col-md-4">
-													<label style="margin: 0 10px;"> <input type="radio"
-														name="identification" id="identification_yes" value="是">
+													<label style="margin: 0 10px;"> <input type="radio" onclick=changeidentification_yes(this)
+														name="ajdbxtProcess.process_authenticate" id="identification_yes" value="是">
 														是
-													</label><label style="margin: 0 10px;"> <input type="radio"
-														name="identification" id="identification_no" value="否">
+													</label><label style="margin: 0 10px;"> <input type="radio" onclick=changeidentification_no(this)
+														name="ajdbxtProcess.process_authenticate" id="identification_no" value="否">
 														否
 													</label>
 												</div>
 												<!-- <div class="col-md-4 process_title">提醒：请在4日内作出决定，5日内将鉴定意见复印件送达违法嫌疑人及被害人</div> -->
-												<div class="col-md-4 process_button">
-													<button type="button" class="btn btn-primary  btn-block"
+												<div class="col-md-4 process_button"> 
+													<button type="button" class="btn btn-primary  btn-block" onclick="identification()"
 														style="width: 40%; float: right;">提交</button>
 												</div>
 											</div>
@@ -209,17 +212,17 @@ html, body, .radio, .checkbox, .button_process {
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">涉案财物：</div>
 												<div class="radio col-md-4">
-													<label style="margin: 0 10px;"> <input type="radio"
-														name="case_property" id="case_property_yes" value="是">
+													<label style="margin: 0 10px;"> <input type="radio" onclick=changecase_property_yes(this)
+														name="ajdbxtProcess.process_case_goods" id="case_property_yes" value="是">
 														有
-													</label><label style="margin: 0 10px;"> <input type="radio"
-														name="case_property" id="case_property_no" value="否">
+													</label><label style="margin: 0 10px;"> <input type="radio" onclick=changecase_property_no(this)
+														name="ajdbxtProcess.process_case_goods" id="case_property_no" value="否">
 														无
 													</label>
 												</div>
 												<div class="col-md-4 process_button">
 													<button type="button" class="btn btn-primary  btn-block"
-														style="width: 40%; float: right;" onclick="case_propertyBtnClick(this)">提交</button>
+														style="width: 40%; float: right;" onclick="case_property()">提交</button>
 												</div>
 											</div>
 
@@ -255,18 +258,18 @@ html, body, .radio, .checkbox, .button_process {
 												<div class="process_title col-md-2">处罚:</div>
 												<div class="checkbox col-md-8" >
 													<label style="margin: 0 10px;"> <input
-														type="checkbox" name="process.process_detention" value="是"> 行政拘留
+														type="checkbox" name="process.process_detention" value="是" id="process_detention"> 行政拘留
 													</label><label style="margin: 0 10px;"> <input
 														type="checkbox" name="process.process_penalty" value=""> 罚款
 													</label>
-													 <label style="margin: 0 10px;"> <input
-														type="radio" name="punishment" value="是">强制隔离戒毒
-													</label><label style="margin: 0 0px;"> <input
-														type="radio" name="punishment" value="否"> 社区戒毒
+													 <label style="margin: 0 10px;"> <input onclick=changeprocess_treatment_category_yes(this) id="process_treatment_category_yes"
+														type="radio" name="ajdbxtProcess.process_treatment_category" value="是">强制隔离戒毒
+													</label><label style="margin: 0 0px;"> <input id="process_treatment_category_no" onclick=changeprocess_treatment_category_no(this)
+														type="radio" name="ajdbxtProcess.process_treatment_category" value="否"> 社区戒毒
 													</label>
 												</div>
 												<div class="col-md-2 process_button">
-													<button type="button" class="btn btn-primary  btn-block" 
+													<button type="button" class="btn btn-primary  btn-block" onclick="punishmentab()"
 														style="width: 90%; float: right;">提交</button>
 												</div>
 											</div>
@@ -303,17 +306,17 @@ html, body, .radio, .checkbox, .button_process {
 											<div class="summon_process col-md-12" id="hearing_applying_div">
 												<div class="process_title col-md-4">听证申请：</div>
 												<div class="radio col-md-4">
-													<label style="margin: 0 10px;"> <input type="radio"
-														name="hearing_applying" id="hearing_applying_yes" value="是">
+													<label style="margin: 0 10px;"> <input type="radio" onclick=changehearing_applying_yes(this)
+														name="ajdbxtProcess.process_apply_right" id="hearing_applying_yes" value="是">
 														是
-													</label><label style="margin: 0 10px;"> <input type="radio"
-														name="hearing_applying" id="hearing_applying_no" value="否">
+													</label><label style="margin: 0 10px;"> <input type="radio" onclick=changehearing_applying_no(this)
+														name="ajdbxtProcess.process_apply_right" id="hearing_applying_no" value="否">
 														否
 													</label>
 												</div>
 												<div class="col-md-4 process_button">
 													<button type="button" class="btn btn-primary  btn-block"
-														style="width: 40%; float: right;" onclick="hearing_applyingBtnClick(this)">提交</button>
+														style="width: 40%; float: right;" onclick="hearing_applying()">提交</button>
 												</div>
 											</div>
 											<!-- 受理听证-->
@@ -362,16 +365,16 @@ html, body, .radio, .checkbox, .button_process {
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">提出问题：</div>
 												<div class="radio col-md-4">
-													<label style="margin: 0 10px;"> <input type="radio"
-														name="problem_asking" id="problem_asking_yes" value="是">
+													<label style="margin: 0 10px;"> <input type="radio" onclick=changeproblem_asking_yes(this)
+														name="ajdbxtProcess.process_question_list" id="problem_asking_yes" value="是">
 														是
-													</label><label style="margin: 0 10px;"> <input type="radio"
-														name="problem_asking" id="problem_asking_no" value="否">
+													</label><label style="margin: 0 10px;"> <input type="radio" onclick=changeproblem_asking_no(this)
+														name="ajdbxtProcess.process_question_list" id="problem_asking_no" value="否">
 														否
 													</label>
 												</div>
 												<div class="col-md-4 process_button">
-													<button type="button" class="btn btn-primary  btn-block"
+													<button type="button" class="btn btn-primary  btn-block" onclick="problem_asking()"
 														style="width: 40%; float: right;">提交</button>
 												</div>
 											</div>
@@ -381,6 +384,7 @@ html, body, .radio, .checkbox, .button_process {
 
 								<!-------------------------------------->
 								<!-------------第五阶段   所队长 审核---------------->
+								<s:if test='#session.loginPolice.police_duty=="所长"'>
 								<div class="first_process_div col-md-12">
 									<div class="first_process">
 										<fieldset>
@@ -389,24 +393,24 @@ html, body, .radio, .checkbox, .button_process {
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">审核：</div>
 												<div class="radio col-md-4">
-													<label style="margin: 0 10px;"> <input type="radio"
-														name="case_review" id="case_review_yes" value="是"> 是
-													</label><label style="margin: 0 10px;"> <input type="radio"
-														name="case_review" id="case_review_no" value="否"> 否
+													<label style="margin: 0 10px;"> <input type="radio" onclick=changecase_review_yes(this)
+														name="ajdbxtProcess.process_captain_check" id="case_review_yes" value="是"> 是
+													</label><label style="margin: 0 10px;"> <input type="radio" onclick=changecase_review_no(this)
+														name="ajdbxtProcess.process_captain_check" id="case_review_no" value="否"> 否
 													</label>
 												</div>
 												<div class="col-md-4 process_button">
-													<button type="button" class="btn btn-primary  btn-block"
+													<button type="button" class="btn btn-primary  btn-block" onclick="case_review()"
 														style="width: 40%; float: right;">提交</button>
 												</div>
 											</div>
 										</fieldset>
 									</div>
 								</div>
-
+                                </s:if>   
 								<!-------------------------------------->
 								<!-------------第六阶段 普通警员进行问题整改---------------->
-								<div class="first_process_div col-md-12">
+								<div class="first_process_div col-md-12" id="process_question">
 									<div class="first_process">
 										<fieldset>
 											<legend>问题整改</legend>
@@ -414,16 +418,16 @@ html, body, .radio, .checkbox, .button_process {
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">问题整改：</div>
 												<div class="radio col-md-4">
-													<label style="margin: 0 10px;"> <input type="radio"
-														name="problem_rectification" id="problem_rectification_yes"
+													<label style="margin: 0 10px;"> <input type="radio" onclick=changeproblem_rectification_yes(this)
+														name="ajdbxtProcess.process_question" id="problem_rectification_yes"
 														value="是"> 是
-													</label><label style="margin: 0 10px;"> <input type="radio"
-														name="problem_rectification" id="problem_rectification_no"
+													</label><label style="margin: 0 10px;"> <input type="radio" onclick=changeproblem_rectification_no(this)
+														name="ajdbxtProcess.process_question" id="problem_rectification_no"
 														value="否"> 否
 													</label>
 												</div>
 												<div class="col-md-4 process_button">
-													<button type="button" class="btn btn-primary  btn-block"
+													<button type="button" class="btn btn-primary  btn-block" onclick="problem_rectification()"
 														style="width: 40%; float: right;">提交</button>
 												</div>
 											</div>
@@ -446,7 +450,7 @@ html, body, .radio, .checkbox, .button_process {
 														id="input_case_score" placeholder="请填写案件评分">
 												</div>
 												<div class="col-md-4 process_button">
-													<button type="button" class="btn btn-primary  btn-block"
+													<button type="button" class="btn btn-primary  btn-block" onclick="case_score()"
 														style="width: 40%; float: right;">提交</button>
 												</div>
 											</div>
@@ -464,14 +468,14 @@ html, body, .radio, .checkbox, .button_process {
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">结案：</div>
 												<div class="radio col-md-4">
-													<label style="margin: 0 10px;"> <input type="radio"
-														name="case_ending" id="case_ending_yes" value="是"> 是
-													</label><label style="margin: 0 10px;"> <input type="radio"
-														name="case_ending" id="case_ending_no" value="否"> 否
+													<label style="margin: 0 10px;"> <input type="radio" onclick=changecase_ending_yes(this)
+														name="ajdbxtProcess.process_case_end" id="case_ending_yes" value="是"> 是
+													</label><label style="margin: 0 10px;"> <input type="radio" onclick=changecase_ending_no(this)
+														name="ajdbxtProcess.process_case_end" id="case_ending_no" value="否"> 否
 													</label>
 												</div>
 												<div class="col-md-4 process_button">
-													<button type="button" class="btn btn-primary  btn-block"
+													<button type="button" class="btn btn-primary  btn-block" onclick="case_ending()"
 														style="width: 40%; float: right;">提交</button>
 												</div>
 											</div>
@@ -500,6 +504,7 @@ html, body, .radio, .checkbox, .button_process {
 								</div>
 								
 							</div>
+							</form>
 							<!-- administrative_process_right  -->
 						</div>
 						<!-- panel-body -->
@@ -509,7 +514,8 @@ html, body, .radio, .checkbox, .button_process {
 			</div>
 		</div>
 	</div>
-
+<%-- 	<script type="text/javascript" --%>
+<%--  		src="<%=basePath%>js/Process/processDetails.js"></script>  --%>
 <%-- 	<script type="text/javascript" --%>
 <%-- 		src="<%=basePath%>js/Process/administrativeProcess.js"></script> --%>
 <!-- ------------------------------------------------------------------------------------->
@@ -576,7 +582,7 @@ html, body, .radio, .checkbox, .button_process {
 <!-- 					<i class="fa fa-pencil"></i> 提交 -->
 <!-- 				</button> -->
 <!-- </div> -->
-<!-- <!-- --------------------------------------------------------------------------------------------------> -->
+<!-- <!-- --------------------------------------------------------------------------------------------------> 
 <!-- 				<div class="panel-body staff_body"> -->
 <!-- 				<form id="processDetails" enctype="multipart/form-data" -->
 <!-- 					accept-charset="utf-8"> -->
@@ -620,8 +626,8 @@ html, body, .radio, .checkbox, .button_process {
 
 	<script type="text/javascript"
 		src="<%=basePath%>js/Info/CaseDetails.js"></script>
-	<script type="text/javascript"
-		src="<%=basePath%>js/Process/processDetails.js"></script>
+<%-- 	<script type="text/javascript" --%>
+<%-- 		src="<%=basePath%>js/Process/processDetails.js"></script> --%>
 	<script type="text/javascript">
 		$.datetimepicker.setLocale('ch');
 		$('.staff_joinPartyTime').datetimepicker({

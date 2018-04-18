@@ -486,7 +486,7 @@ var modifi_delete = function() {
 																	// data_list=Case_data.Caselist;
 																	for (var len = 0; len < Case_data.length; len++) {
 																		option += '<option';
-																		if (xhr_data.police[0].police_name == Case_data[len].police_name) {
+																		if (xhr_data.info.info_main_police == Case_data[len].ajdbxt_police_id) {
 																			option += ' selected';
 																		}
 																		option += ' value="'
@@ -524,7 +524,7 @@ var modifi_delete = function() {
 															// data_list=Case_data.Caselist;
 															for (var len = 0; len < Case_data.length; len++) {
 																option += '<option';
-																if (xhr_data.police[1].police_name == Case_data[len].police_name) {
+																if (xhr_data.info.info_assistant_police_one == Case_data[len].ajdbxt_police_id) {
 																	option += ' selected';
 																}
 																option += ' value="'
@@ -562,7 +562,7 @@ var modifi_delete = function() {
 															// data_list=Case_data.Caselist;
 															for (var len = 0; len < Case_data.length; len++) {
 																option += '<option';
-																if (xhr_data.police[2].police_name == Case_data[len].police_name) {
+																if (xhr_data.info.info_assistant_police_two == Case_data[len].ajdbxt_police_id) {
 																	option += ' selected';
 																}
 																option += ' value="'
