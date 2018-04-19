@@ -155,7 +155,7 @@ $(function() {
 					function() {
 						$
 								.post(
-										'/ajdbxt/info/Info_save',
+										'/ajdbxt/info/Info_saveCase',
 										$('#breakCase_input form').serialize(),
 										function(xhr) {
 											if (xhr == 'json') {
@@ -195,7 +195,7 @@ function get_ListBreakecaseInformationByPageAndSearch(data) {
 							str += '<tr>';
 							str += '<td>' + (len + 1) + '</td>';// 序号
 							str += '<td>'
-									+ data_list[len].info.info_name
+									+data_list[len].info.info_name
 									+ '</td>';// 案件名称
 							str += '<td>'
 									+ data_list[len].info.info_category
@@ -434,8 +434,8 @@ var modifi_delete = function() {
 											var option = '';
 											//var data_list=Case_data.Caselist;
 											for (var len = 0; len < Case_data.length; len++) {
-												option += '<option ';
-//												if (xhr_data.info.info_main_police == data_list[len].police[0].ajdbxt_police_id) {
+												option += '<option';
+//												if (xhr_data.info.info_main_police == Case_data[len].ajdbxt_police_id) {
 //													option += 'selected';
 //												}
 												option += ' value="' + Case_data[len].ajdbxt_police_id + '">' + Case_data[len].police_name	 + '</option>';}
@@ -638,10 +638,20 @@ function toPage(object) {
 	get_ListBreakecaseInformationByPageAndSearch(query_data);
 }
 $("select#info_department").change(function(){
-   alert("aa");
-   $.post('/ajdbxt/info/Info_save',$('#breakCase_input form').serialize(),function(data) {
-	// alert(data.legals[1].police_name);
-   },'json')
+   $.post('/ajdbxt/info/Info_save',$('#breakCase_input form').serialize(),function(Case_data) {
+		//alert(Case_data.police[0].police_name);
+		//alert($('#info.info_main_police').val(Case_data.police[0].police_name));
+	   var option='';
+	  option += '<option value="'
+			+ Case_data.police[0].ajdbxt_police_id + '">'
+			+ Case_data.police[0].police_name + '</option>';
+	  $('select[name="info.info_main_police"]').html(option).selectpicker('refresh').selectpicker('val',Case_data.police[0].ajdbxt_police_id);
+	   var option1='';
+	   option1 += '<option value="'
+			+ Case_data.police[1].ajdbxt_police_id + '">'
+			+ Case_data.police[1].police_name + '</option>';
+	   $('select[name="info.info_assistant_police_one"]').html(option1).selectpicker('refresh').selectpicker('val',Case_data.police[1].ajdbxt_police_id);
+	},'json')
 			
 });
 //隐藏和显示协办民警2
@@ -649,7 +659,15 @@ $("#police_two_td").hide();
 $("#police_two_tdd").hide();
 $("img#add_police_two").click(function(){
 	   $("#police_two_td").show(0,function(){
-		   //alert("l");
+		   $.post('/ajdbxt/info/Info_save',$('#breakCase_input form').serialize(),function(Case_data) {
+				
+			   var option='';
+			  option += '<option value="'
+					+ Case_data.police[2].ajdbxt_police_id + '">'
+					+ Case_data.police[2].police_name + '</option>';
+			  $('select[name="info.info_assistant_police_two"]').html(option).selectpicker('refresh').selectpicker('val',Case_data.police[2].ajdbxt_police_id);
+			  
+			},'json')
 	   });
 	   $("#police_two_tdd").show();
 	   $("#add_img").hide();

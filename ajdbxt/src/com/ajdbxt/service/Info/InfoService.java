@@ -10,7 +10,7 @@ public interface InfoService {
 	 * @return
 	 */
 	public String twoceRank(ajdbxt_info caseInfo);
-	public void save(ajdbxt_info caseInfo);
+	public String save(ajdbxt_info caseInfo);
 	public String getAllCase(Page_list_caseInfoVo infoVO);
 	public String getLegalsAndLeadersAndDepartment();
 	public void updateCase(ajdbxt_info caseInfo);

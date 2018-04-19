@@ -1,5 +1,8 @@
 package com.ajdbxt.dao.impl.Process;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,6 +11,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import com.ajdbxt.domain.DO.ajdbxt_process;
+
+import util.TeamUtil;
 
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -77,10 +82,26 @@ public class ProcessDaoImpl implements ProcessDao {
 
 	@Override
 	public void saveProcessByCaseId(String case_id) {
-		ajdbxt_process process=new ajdbxt_process();
-		process.setAjdbxt_process_id(UUID.randomUUID().toString());
-		process.setProcess_case_id(case_id);
-		saveProcess(process);
+		if(findProcessByCaseId(case_id).size()<=0) {		
+			ajdbxt_process process=new ajdbxt_process();
+			process.setAjdbxt_process_id(UUID.randomUUID().toString());
+			process.setProcess_gmt_create(TeamUtil.getStringSecond());
+			process.setProcess_gmt_modify(TeamUtil.getStringSecond());
+			Class clazz=process.getClass();
+			Field[] fields=clazz.getDeclaredFields();
+			for(Field field:fields) {
+				field.setAccessible(true);
+				try {
+					if(field.get(process)==null||field.get(process).equals("")) {
+						field.set(process, "否");
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			process.setProcess_case_id(case_id);
+			saveProcess(process);
+		}
 	}
 
 	@Override
@@ -105,4 +126,3 @@ public class ProcessDaoImpl implements ProcessDao {
 	}
 	
 }
-
