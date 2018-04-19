@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+@SuppressWarnings("serial")
 public class UserAction extends ActionSupport {
 
 	private UserService userService;

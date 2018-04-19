@@ -25,6 +25,7 @@
 	href="<%=basePath%>css/navbar/font-awesome.min.css">
 <link rel="stylesheet" href="<%=basePath%>css/navbar/style.css">
 <link rel="stylesheet" href="<%=basePath%>css/table.css">
+<link rel="stylesheet" href="<%=basePath%>css/login.css">
 <!--------------------------------------------------------------------------------->
 <link rel="stylesheet" href="<%=basePath%>css/toastr.css" />
 <script type="text/javascript" src="<%=basePath%>js/toastr.js"></script>
@@ -35,38 +36,20 @@
 <!--------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------->
-<title>案件督办系统</title>      
+<title>登录</title>
 </head>
-<body background="<%=basePath%>img/Use_login.png"
-	style="background-position: center center; background-repeat: no-repeat;">
-	<input type="text" class="form-control" id="userNumber"
-		style="width: 298px; height: 46px; margin-left: 743px; margin-top: 235px;">
-	<input type="password" class="form-control" id="password"
-		style="width: 298px; height: 46px; margin-left: 743px; margin-top: 18px;">
-	<button id="button_login"
-		style="border: 0px; background-color: #0B1D29; margin-left: 739px; margin-top: 31px;"
-		onclick="login()">
-		<img src="<%=basePath%>img/login_button.png">
-	</button>
-
-	<%-- <div class="panel" style="width: 550px; margin: 100px auto;">
-		<div class="panel-heading">
-			<div>
-				<img src="<%=basePath%>img/logo.jpg" height="40px">
+<body>
+	<div class="bg">
+			<div class="bg_center">
+				<p>案件督办系统</p>
+				<div class="input_box"><label>帐户</label><input type="text" id="userNumber"/></div>
+				<div class="input_box"><label>密码</label><input type="password" id="password"/></div>
+				<div class="button_box">
+					<div>重置信息</div>
+					<div onclick="login()">确认登录</div>
+				</div>
 			</div>
-			<h2 style="text-align: center;">案件督办系统</h2>
-		</div>
-		<div class="panel-body" style="margin: 0 0 20px 0;">
-			<div class="form-group">
-				<input type="email" class="form-control" id="login_username" placeholder="用户名">
-			</div>
-			<div class="form-group">
-				<input type="password" class="form-control" id="login_password" placeholder="密码">
-			</div>
-			<br>
-			<button id="button_login" class="btn btn-primary  btn-block" onclick="login()">登录</button>
-		</div>
-	</div> --%>
+	</div>
 </body>
 
 </html>

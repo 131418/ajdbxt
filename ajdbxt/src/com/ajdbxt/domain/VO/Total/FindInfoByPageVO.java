@@ -2,7 +2,7 @@ package com.ajdbxt.domain.VO.Total;
 
 import java.util.List;
 
-import com.ajdbxt.domain.DTO.Total.StatisticEachPoliceCaseNumDTO;
+
 
 public class FindInfoByPageVO {
 	
