@@ -1,6 +1,4 @@
 package com.ajdbxt.service.Total;
-
-import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
 import com.ajdbxt.domain.VO.Total.page_listPoliceCaseNumByPageAndSearchVO;
 
