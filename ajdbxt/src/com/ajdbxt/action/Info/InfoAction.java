@@ -192,7 +192,7 @@ public class InfoAction extends ActionSupport {
 		}
 		String Json=infoService.update(info);
 		try {
-			//ServletActionContext.getResponse().getWriter().print(Json);
+			ServletActionContext.getResponse().getWriter().print(Json);
 			ServletActionContext.getResponse().getWriter().print("success");
 		} catch (IOException e) {
 			new RuntimeException(e);
