@@ -368,6 +368,7 @@ public class InfoServiceImpl implements InfoService {
 		if(three!=null&&three.isEmpty()==false) {
 			policeList.add(infoPoliceDao.findPoliceById(three));
 		}
+		processDTO.setPolice(policeList);
 		processDTO.setProcess(processDao.findProcessByCaseId(info_id).get(0));
 		processDTO.setCap(infoPoliceDao.findPoliceById(info.getInfo_department_captain()));
 		processDTO.setLeader(infoPoliceDao.findPoliceById(info.getInfo_bureau_leader()));
