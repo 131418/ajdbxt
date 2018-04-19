@@ -12,7 +12,17 @@
 
 <title>统计</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+#table_total tbody tr {
+	text-align: center;
+}
+
+#page_flip span a:hover, #select_start_time, #select_stop_time {
+	cursor: pointer;
+}
+</style>
 </head>
+
 <body>
 
 	<s:action name="User_navbar" namespace="/user" executeResult="true" />
@@ -35,30 +45,35 @@
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">按日期筛选：</span>
 									<input id="select_start_time" class="form-control mydate"
 										style="width: 150px; float: left; text-align: center;"
-										type="text">
+										type="text" placeholder="起始时间"
+										onchange="List_Total_By_Page(1)" value="2018-01-01" />
 									<%--  --%>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">至</span>
 									<!--  -->
 									<input id="select_stop_time" class="form-control mydate"
 										style="width: 150px; float: left; margin: 0 0 0 20px; text-align: center;"
-										type="text">
+										type="text" placeholder="结束时间"
+										onchange="List_Total_By_Page(1)" />
 									<%--  --%>
 								</div>
 								<!-- 检索 -->
 								<div class="input-group" style="width: 300px; float: right;">
-									<input id="input_DNASearchText" class="form-control"
-										oninput="List_DNA_By_PageAndSearch(1)" type="text"> <span
-										class="input-group-addon"> <i class="fa fa-search"></i>
+									<input id="input_Total_PoliceSearchText" class="form-control"
+										oninput="List_Total_By_Page(1)" type="text" placeholder="搜索人员" />
+									<span class="input-group-addon" style="border-radius: unset;">
+										<i class="fa fa-search"></i>
 									</span>
 								</div>
 							</div>
 
-							<table id="table_total" class="table table-hover table-bordered"
+							<table id="table_total" class="table table-hover "
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
-										<th><select id="case_department" class="form-control">
+										<th><select id="select_case_department"
+											style="width: 70%; margin: 0 auto;" class="form-control"
+											onchange="List_Total_By_Page(1)">
 										</select></th>
 										<th>人员</th>
 										<th>行政案件</th>
@@ -102,12 +117,50 @@
 	<script type="text/javascript" src="<%=basePath%>js/icheck.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/Input_Select.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/laydate/laydate.js"></script>
-	<script src="/laydate/laydate.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>js/Total/ajdbxtTotal.js"></script>
+
 	<script type="text/javascript">
+		$(function() {
+			$
+					.post(
+							'/ajdbxt/user/User_findDepartmentByPage',
+							function(Department_data) {
+								// 所有案件循环
+								var option = '';
+								for (var len = 0; len < Department_data.list.length; len++) {
+									option += '<option ';
+									option += ' value="'
+											+ Department_data.list[len].ajdbxt_department_id
+											+ '">'
+											+ Department_data.list[len].department_name
+											+ '</option>';
+								}
+								$('#select_case_department').html(
+										'<option selected="selected" value="">所有单位</option>'
+												+ option);
+							}, 'json');
+		});
+	</script>
+	<script type="text/javascript">
+		var select_start_time = document.getElementById("select_start_time");
+		var select_stop_time = document.getElementById("select_stop_time");
+		var str = '';
+		var now_date = new Date();
+		var now_date_year = now_date.getFullYear();
+		str += now_date_year;
+		var now_date_month = now_date.getMonth() + 1;
+		str += "-" + now_date_month;
+		var now_date_date = now_date.getDate();
+		str += "-" + now_date_date;
+		console.log("str:" + str);
+		/* select_start_time.value=str; */
+		select_stop_time.value = str;
+		console.log("select_start_time1:" + select_start_time.value);
+		console.log("select_stop_time1:" + select_stop_time.value);
 		List_Total_By_Page(1);
 	</script>
+
 	<script type="text/javascript">
 		$.datetimepicker.setLocale('ch');
 		$('.mydate').datetimepicker({

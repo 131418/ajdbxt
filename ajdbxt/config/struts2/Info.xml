@@ -9,6 +9,8 @@
 			method="{1}">
 			<result name="page_CaseInfo">/WEB-INF/view/info/CaseInfoInput.jsp
 			</result>
+			<result name="page_CaseDetails">/WEB-INF/view/info/CaseDetails.jsp
+			</result>
 		</action>
 	</package> 
 

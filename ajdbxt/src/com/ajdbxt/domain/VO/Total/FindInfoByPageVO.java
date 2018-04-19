@@ -1,9 +1,6 @@
 package com.ajdbxt.domain.VO.Total;
 
 import java.util.List;
-
-import com.ajdbxt.domain.DTO.Total.StatisticEachPoliceCaseNumDTO;
-
 public class FindInfoByPageVO {
 	
 	private List list;//要返回的某一页的记录列表

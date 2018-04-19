@@ -332,6 +332,7 @@ tfoot tr td a:hover {
 											class="form-control selectpicker" data-live-search="true"
 											name="info.info_bureau_leader" onclick="leader()"
 											title="请选择"></select></td>
+											<input type="hidden" name="info.ajdbxt_info_id">
 									</tr>
 								</tbody>
 							</table>
@@ -378,5 +379,6 @@ tfoot tr td a:hover {
 		}); 
  	</script> 
 </body>
+>>>>>>> origin/XZT
 
 </html>
