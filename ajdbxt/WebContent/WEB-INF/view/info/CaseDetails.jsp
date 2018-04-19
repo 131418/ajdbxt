@@ -36,9 +36,6 @@ html, body, .radio, .checkbox, .button_process {
 	display: inline-block;
 	vertical-align: middle;
 }
-#process_question{
-display:none;
-}
 </style>
 </head>
 <body>
@@ -260,7 +257,7 @@ display:none;
 													<label style="margin: 0 10px;"> <input
 														type="checkbox" name="process.process_detention" value="是" id="process_detention"> 行政拘留
 													</label><label style="margin: 0 10px;"> <input
-														type="checkbox" name="process.process_penalty" value=""> 罚款
+														type="checkbox" name="process.process_penalty" value="是" id="process_penalty"> 罚款
 													</label>
 													 <label style="margin: 0 10px;"> <input onclick=changeprocess_treatment_category_yes(this) id="process_treatment_category_yes"
 														type="radio" name="ajdbxtProcess.process_treatment_category" value="是">强制隔离戒毒
@@ -384,7 +381,7 @@ display:none;
 
 								<!-------------------------------------->
 								<!-------------第五阶段   所队长 审核---------------->
-								<s:if test='#session.loginPolice.police_duty=="所长"'>
+<%-- 								<s:if test='#session.loginPolice.police_duty=="所长"'> --%>
 								<div class="first_process_div col-md-12">
 									<div class="first_process">
 										<fieldset>
@@ -407,10 +404,10 @@ display:none;
 										</fieldset>
 									</div>
 								</div>
-                                </s:if>   
+<%--                                 </s:if>    --%>
 								<!-------------------------------------->
 								<!-------------第六阶段 普通警员进行问题整改---------------->
-								<div class="first_process_div col-md-12" id="process_question">
+								<div class="first_process_div col-md-12" >
 									<div class="first_process">
 										<fieldset>
 											<legend>问题整改</legend>
@@ -494,7 +491,7 @@ display:none;
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">案件上交：</div>
 												<div class="process_title col-md-4">
-													<button type="button" class="btn btn-primary  btn-block"
+													<button type="button" class="btn btn-primary  btn-block" 
 														style="float: center;">上交案件</button>
 												</div>
 
