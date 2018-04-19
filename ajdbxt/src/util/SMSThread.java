@@ -82,9 +82,9 @@ public class SMSThread extends Thread{
 		}
 		synchronized (this) {//为当前对象加锁
 			if(caseFiled) {
-				this.wait(8*60*60*1000);
+				this.wait(8*60*1000);
 			}else {
-				this.wait(12*60*60*1000);
+				this.wait(12*60*1000);
 			}
 		}
 		subpoenaASuspectTimeOut();
@@ -261,9 +261,9 @@ public class SMSThread extends Thread{
 		}
 		synchronized (this) {
 			if(caseFiled) {
-				this.wait(12*60*60*1000);
+				this.wait(12*60*1000);
 			}else {
-				this.wait(8*60*60*1000);
+				this.wait(8*60*1000);
 			}
 		}		
 		subpoenaASuspectDiedLine();
@@ -295,7 +295,7 @@ public class SMSThread extends Thread{
 				MsgSend.doSendSimple(params, tel,  MsgSend.SUBPOENA_A_SUSPECT_DIED_LINE_CAPTAIN);
 				MsgSend.doSendVoiceSimple(params, cap.getPolice_phone_number(),MsgSend.SUBPOENA_A_SUSPECT_DIED_LINE_CAPTAIN_VOICE);
 				synchronized (this) {
-					this.wait(1*60*60*1000);
+					this.wait(1*60*1000);
 				}
 			}else {
 				break;
