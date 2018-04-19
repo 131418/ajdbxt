@@ -3,7 +3,7 @@ package com.ajdbxt.domain.DO;
 public class ajdbxt_process {
 	private String ajdbxt_process_id;//流程表id
 	private String process_case_id;//案件id
-	private String process_lengthen_subpoena;//延长传唤
+	private String process_lengthen_subpoena;//是否已传唤
 	private String process_nonage;//未成年人
 	private String process_authenticate;//鉴定
 	private String process_case_goods;//涉案财物@@
@@ -11,6 +11,8 @@ public class ajdbxt_process {
 	private String process_penalty;//罚款@@
 	private String process_treatment_category;//戒毒@@
 	private String process_apply_right;//申请听证
+	private String process_goods_in_lib;//已入库
+	private String process_punish_inform;//处罚已通知
 	private String process_accpet_right;//受理听证
 	private String process_question;//问题整改
 	private String process_score;//案件分数
@@ -28,6 +30,18 @@ public class ajdbxt_process {
 	private String process_result_of_prosecution;//起诉结果 
 	private String process_search_result_one;//第一次侦查
 	private String process_search_result_two;//第二次侦查
+	public String getProcess_goods_in_lib() {
+		return process_goods_in_lib;
+	}
+	public void setProcess_goods_in_lib(String process_goods_in_lib) {
+		this.process_goods_in_lib = process_goods_in_lib;
+	}
+	public String getProcess_punish_inform() {
+		return process_punish_inform;
+	}
+	public void setProcess_punish_inform(String process_punish_inform) {
+		this.process_punish_inform = process_punish_inform;
+	}
 	public String getProcess_question_list() {
 		return process_question_list;
 	}
@@ -198,7 +212,8 @@ public class ajdbxt_process {
 				+ ", process_authenticate=" + process_authenticate + ", process_case_goods=" + process_case_goods
 				+ ", process_detention=" + process_detention + ", process_penalty=" + process_penalty
 				+ ", process_treatment_category=" + process_treatment_category + ", process_apply_right="
-				+ process_apply_right + ", process_accpet_right=" + process_accpet_right + ", process_question="
+				+ process_apply_right + ", process_goods_in_lib=" + process_goods_in_lib + ", process_punish_inform="
+				+ process_punish_inform + ", process_accpet_right=" + process_accpet_right + ", process_question="
 				+ process_question + ", process_score=" + process_score + ", process_captain_check="
 				+ process_captain_check + ", process_file_hand=" + process_file_hand + ", process_case_end="
 				+ process_case_end + ", process_gmt_create=" + process_gmt_create + ", process_gmt_modify="

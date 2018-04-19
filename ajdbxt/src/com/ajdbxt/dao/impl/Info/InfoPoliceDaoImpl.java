@@ -47,4 +47,13 @@ public class InfoPoliceDaoImpl implements InfoPoliceDao {
 		cri.add(Restrictions.eq("police_duty", "负责人"));
 		return cri.list();
 	}
+	@Override
+	public ajdbxt_police findCaptainByDepartment(String department_id) {
+		String hql="from ajdbxt_police where police_department=? and (police_duty='所长' or police_duty='大队长')";
+		Session session=sessionFactory.getCurrentSession();
+		Query query=session.createQuery(hql);
+		query.setString(0, department_id);
+		return (ajdbxt_police) query.uniqueResult();
+	}
 }
+

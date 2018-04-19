@@ -3,16 +3,25 @@ package com.ajdbxt.action.Info;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts2.ServletActionContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+
 import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.DO.ajdbxt_process;
+import com.ajdbxt.domain.DTO.Process.ProcessDTO;
 import com.ajdbxt.domain.DTO.Process.ProcessInfoDTO;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.service.Info.InfoService;
+import com.ajdbxt.service.Process.ProcessService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import util.JsonUtils;
+import util.MsgSend;
+import util.SMSThread;
 
 public class InfoAction extends ActionSupport {
 	private ajdbxt_info info;
@@ -22,7 +31,9 @@ public class InfoAction extends ActionSupport {
 	public String page_CaseInfo() {
 		return "page_CaseInfo";
 	}
-	
+	public String page_CaseDetails() {
+		return "page_CaseDetails";
+	}
 	public ajdbxt_info geInfo() {
 		return info;
 	}
@@ -84,6 +95,7 @@ public class InfoAction extends ActionSupport {
 		json=infoService.save(info);
 		try {
 			ServletActionContext.getResponse().getWriter().print(json);
+			ServletActionContext.getResponse().getWriter().print("success");
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}
@@ -124,9 +136,9 @@ public class InfoAction extends ActionSupport {
 	 * @param info.ajxdbxt_info_id
 	 */
 	public void getSingleInfo() {
-		ProcessInfoDTO processInfoDTO =infoService.getSingleInfo(info.getAjdbxt_info_id());
+		ProcessDTO processDTO =infoService.getSingleInfo(info.getAjdbxt_info_id());
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
-		String json=JsonUtils.toJson(processInfoDTO);
+		String json=JsonUtils.toJson(processDTO);
 		try {
 			ServletActionContext.getResponse().getWriter().print(json);
 		} catch (IOException e) {
@@ -152,33 +164,35 @@ public class InfoAction extends ActionSupport {
 	 * @param 修改后的info的所有
 	 */
 	public void update() {
-		ProcessInfoDTO getProcessDTO=infoService.getSingleInfo(info.getAjdbxt_info_id());
+		ProcessDTO getProcessDTO=infoService.getSingleInfo(info.getAjdbxt_info_id());
 		ajdbxt_info getInfo=getProcessDTO.getInfo();
-		int send_massage_type=0;
 		Class clazz=info.getClass();
 		Field [] f= clazz.getDeclaredFields();
 		for(Field field: f){
 			field.setAccessible(true);
 			try {
 				Object o =field.get(info);
-				if(o!=null) {
+				if(o!=null) {//这里应该写取消指派和更改指派的逻辑
+					Object old=field.get(o);
 					field.set(getInfo, o);
-//					switch (field.getName()) {
-//						case "process_case_goods":
-//							send_massage_type=MsgSend.CANCEL_DISPATCH;
-//							break;
-//	
-//						case "process_penalty":
-//						case ""
-//							break;
-//					}
+					switch (field.getName()) {
+						case "info_main_police":
+							
+							break;
+						case "info_assistant_police_one":
+							
+							break;
+						case "info_assistant_police_two":
+							break;
+					}
 				}
 			}catch(Exception e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		infoService.updateCase(info);
+		String Json=infoService.update(info);
 		try {
+			//ServletActionContext.getResponse().getWriter().print(Json);
 			ServletActionContext.getResponse().getWriter().print("success");
 		} catch (IOException e) {
 			new RuntimeException(e);

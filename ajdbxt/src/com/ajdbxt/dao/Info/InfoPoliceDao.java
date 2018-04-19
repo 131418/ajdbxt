@@ -9,5 +9,6 @@ public interface InfoPoliceDao {
 	public ajdbxt_police findPoliceById(String police_id);
 	public List<ajdbxt_police> findLegals();
 	public List<ajdbxt_police> findLeaders();
+	public ajdbxt_police findCaptainByDepartment(String department_id);
 }
 

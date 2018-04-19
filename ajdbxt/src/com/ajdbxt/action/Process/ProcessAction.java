@@ -2,9 +2,10 @@ package com.ajdbxt.action.Process;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
-
 import com.ajdbxt.domain.DO.ajdbxt_info;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.service.Process.ProcessInfoService;
@@ -80,19 +81,14 @@ public class ProcessAction  extends ActionSupport{
 		ajdbxt_police police=(ajdbxt_police)o;
 		String police_id=police.getAjdbxt_police_id();
 		String json="";
-		System.out.println(ajdbxtProcess);
 		if(ajdbxtProcess.getProcess_case_end()!=null&&ajdbxtProcess.getProcess_case_end().equals("true")==false) {
 			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id,infoVO);
-			ajdbxtProcess.setProcess_case_end(null);
 		}else if(ajdbxtProcess.getProcess_captain_check()!=null&&ajdbxtProcess.getProcess_captain_check().equals("true")==false){
 			json=processInfoService.getInfoList(ProcessInfoService.CAPTAIN_CHECK, police_id,infoVO);
-			ajdbxtProcess.setProcess_captain_check(null);
 		}else if(ajdbxtProcess.getProcess_score()!=null&&ajdbxtProcess.getProcess_score().equals("true")==false){
 			json=processInfoService.getInfoList(ProcessInfoService.PROCESS_SCORE, police_id,infoVO);
-			ajdbxtProcess.setProcess_score(null);
 		}else if(ajdbxtProcess.getProcess_question()!=null&&ajdbxtProcess.getProcess_question().equals("true")==false) {
 			json=processInfoService.getInfoList(ProcessInfoService.PROCESS_QUESTION, police_id,infoVO);
-			ajdbxtProcess.setProcess_question(null);
 		}else {
 			json=processInfoService.getInfoList(100, police_id,infoVO);
 		}
@@ -108,36 +104,60 @@ public class ProcessAction  extends ActionSupport{
 	}
 	/**
 	 * 更新流程表
-	 * @param ajdbxtProcess.*="*" 新值为：
+	 * @param 修改后的流程对象
 	 * 
 	 */
 	public void update() {
 		noLogin();
-		ajdbxt_process process=(ajdbxt_process)ActionContext.getContext().getSession().get("lookedProcess");
-		int send_massage_type=0;
+		ajdbxt_process process=processService.getSingleProcessByCaseId(ajdbxtProcess.getProcess_case_id()).getProcess();
 		Class clazz=ajdbxtProcess.getClass();
 		Field [] f= clazz.getDeclaredFields();
+		List<Integer> list=new ArrayList<>();//一些特殊的改变保存在这里
 		for(Field field: f){
-			field.setAccessible(true);
+			field.setAccessible(true);//解锁
 			try {
 				Object o =field.get(ajdbxtProcess);
-//				if(o!=null) {
-//					field.set(process, o);
-//					switch (field.getName()) {
-//						case "process_case_goods":
-//							send_massage_type=MsgSend.CANCEL_DISPATCH;
-//							break;
-//	
-//						case "process_penalty":
-//						case ""
-//							break;
-//					}
-//				}
+				if(o!=null&&(o.equals("")==false)) {
+					field.set(process, o);
+					switch (field.getName()) {
+						case "process_case_end"://案件流程结束
+							list.add(ProcessService.PROCESS_FILE_HAND);
+							break;
+						case "process_detention"://行政拘留
+							list.add(ProcessService.PROCESS_DETENTION);
+							break;
+						case "process_penalty"://罚款
+							list.add(ProcessService.PROCESS_PENALTY);
+							break;
+						case  "process_treatment_category"://戒毒
+							list.add(ProcessService.PROCESS_TREATMENT_CATEGORY);
+							break;
+						case "process_criminal_detention"://刑事拘留
+							list.add(ProcessService.PROCESS_CRIMINAL_DETENTION);
+							break;
+						case "process_arrest"://逮捕
+							list.add(ProcessService.PROCESS_ARREST);
+							break;
+						case "process_get_keep_wait_interrogate"://取保候审
+							list.add(ProcessService.PROCESS_GET_KEEP_WAIT_INTERROGATE);
+							break;
+						case "process_live_at_home_unde_surveillance"://监视居住
+							list.add(ProcessService.PROCESS_LIVE_AT_HOME_UNDE_SURVEILLANCE);
+							break;		
+					}
+				}
 			}catch(Exception e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		processService.update(process);
+		String json=processService.update(process, list);
+		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+		try {
+			ServletActionContext.getResponse().getWriter().println(json);
+		} catch (IOException e) {
+			new RuntimeException(e);
+		}
+		
 	}
 	
 	/**
@@ -147,7 +167,7 @@ public class ProcessAction  extends ActionSupport{
 	public void findSingle() {
 		noLogin();
 		String case_id=ajdbxtProcess.getProcess_case_id();
-		ajdbxt_process process=processService.getSingleProcessByCaseId(case_id);
+		ajdbxt_process process=processService.getSingleProcessByCaseId(case_id).getProcess();
 		ActionContext.getContext().getSession().put("lookedProcess", process);
 		ajdbxt_info info=processInfoService.getSingleInfo(process.getProcess_case_id());
 		ActionContext.getContext().getSession().put("lookedInfo", info);
