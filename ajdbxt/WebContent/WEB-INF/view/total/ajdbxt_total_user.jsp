@@ -36,11 +36,18 @@
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
-				<h3 class="panel-title">
-					<span id="span_total_department">单位</span>
-					<span>-</span>
-					<span id="span_total_user">人员</span>
-				</h3>
+				<div>
+					<h3 class="panel-title">
+						<span id="span_total_department">单位</span> <span>-</span> <span
+							id="span_total_user">人员</span>
+					</h3>
+				</div>
+				<div style="width: 150px; float: right; margin: 0 20px 0 0">
+					<button class="btn btn-default role_one" onclick="goBack()" style="width: 50px;height:30px">
+						<i class="icon-reply"></i> 返回
+					</button>
+
+				</div>
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
@@ -52,6 +59,7 @@
 						<!--  -->
 						<div class="panel-body">
 							<div style="height: 34px; width: 100%;">
+
 								<div>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">按日期筛选：</span>
@@ -86,7 +94,7 @@
 									<tr>
 										<th><select id="select_case_kind" class="form-control"
 											onchange="List_Total_User_By_Page(1)">
-												<option selected="selected" value="">所有单位</option>
+												<option selected="selected" value="">所有案件</option>
 												<option>行政案件</option>
 												<option>刑事案件</option>
 										</select></th>
@@ -120,6 +128,7 @@
 											id="span_totalRecords">0</span>条记录
 									</p></span>
 							</div>
+
 						</div>
 					</div>
 					<!-- END TABLE HOVER -->
@@ -157,6 +166,11 @@
 		List_Total_User_By_Page(1);
 	</script>
 
+	<script type="text/javascript">
+		function goBack() {
+			window.history.back(-1);
+		}
+	</script>
 
 	<script type="text/javascript">
 		$.datetimepicker.setLocale('ch');
