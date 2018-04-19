@@ -154,6 +154,7 @@ public class ProcessAction  extends ActionSupport{
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		try {
 			ServletActionContext.getResponse().getWriter().println(json);
+			ServletActionContext.getResponse().getWriter().println("success");
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}
