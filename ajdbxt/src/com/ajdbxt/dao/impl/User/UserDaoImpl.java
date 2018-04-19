@@ -10,12 +10,13 @@ import org.hibernate.SessionFactory;
 import com.ajdbxt.dao.User.UserDao;
 import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
+import com.ajdbxt.domain.VO.User.policedptVO;
 
 public class UserDaoImpl implements UserDao {
 
 	@Override
 	public ajdbxt_police findPolice(String police_serial_number) {
-		String hql = "from ajdbxt_police where police_serial_number = '"+ police_serial_number +"'";
+		String hql = "from ajdbxt_police where police_serial_number = '" + police_serial_number + "'";
 		Query query = getSession().createQuery(hql);
 		ajdbxt_police p = (ajdbxt_police) query.uniqueResult();
 		return p;
@@ -66,7 +67,8 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<ajdbxt_police> queryForPage(String hql, int offset, int length) {
+	public List<policedptVO> queryForPage(String hql, int offset, int length) {
+		System.out.println(hql);
 		// TODO Auto-generated method stub
 		Query q = getSession().createQuery(hql);
 		q.setFirstResult(offset);
@@ -91,10 +93,11 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public String changePassword(String ajdbxt_police_id,String newPassword) {
+	public String changePassword(String ajdbxt_police_id, String newPassword) {
 		// TODO Auto-generated method stub
 		try {
-			String hql = "update ajdbxt_police set police_password ='" + newPassword + "' where ajdbxt_police_id = '" + ajdbxt_police_id + "'";
+			String hql = "update ajdbxt_police set police_password ='" + newPassword + "' where ajdbxt_police_id = '"
+					+ ajdbxt_police_id + "'";
 			getSession().createQuery(hql).executeUpdate();
 		} catch (HibernateException e) {
 			// TODO Auto-generated catch block
@@ -108,9 +111,9 @@ public class UserDaoImpl implements UserDao {
 	public String batchDelete(String[] ids) {
 		// TODO Auto-generated method stub
 		try {
-			for(int i=0;i<ids.length;i++) {
-				//getSession().delete(ids[i]);自带方法只能引用对象
-				String hql = "delete ajdbxt_police where ajdbxt_police_id = '"+ids[i]+"'";
+			for (int i = 0; i < ids.length; i++) {
+				// getSession().delete(ids[i]);自带方法只能引用对象
+				String hql = "delete ajdbxt_police where ajdbxt_police_id = '" + ids[i] + "'";
 				getSession().createQuery(hql).executeUpdate();
 			}
 		} catch (Exception e) {
@@ -120,7 +123,6 @@ public class UserDaoImpl implements UserDao {
 		}
 		return "success";
 	}
-
 
 	@Override
 	public List<ajdbxt_department> findDepartmentByPage(String hql, int offset, int length) {
@@ -136,7 +138,7 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		try {
 			getSession().saveOrUpdate(ajdbxt_department);
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -145,13 +147,14 @@ public class UserDaoImpl implements UserDao {
 		return "success";
 	}
 
-/*	@Override
-	public List<ajdbxt_police> fuzzySearch(String hql,int offset,int length) {
+	@Override
+	public policedptVO findPoliceById(String ajdbxt_police_id) {
 		// TODO Auto-generated method stub
-		Query q = getSession().createQuery(hql);
-		q.setFirstResult(offset);
-		q.setMaxResults(length);
-		return q.list();
+		String hql = "select new com.ajdbxt.domain.VO.User.policedptVO(p,d) from ajdbxt_police p,ajdbxt_department d where p.police_department = d.ajdbxt_department_id and p.ajdbxt_police_id =  '" +ajdbxt_police_id+ "' order by p.police_gmt_modify desc ";
+		Query query = getSession().createQuery(hql);
+		policedptVO policeOne = (policedptVO) query.uniqueResult();
+		return policeOne;
 	}
-*/
+
+	
 }

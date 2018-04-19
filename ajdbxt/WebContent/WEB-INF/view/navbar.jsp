@@ -45,6 +45,8 @@
 <script type="text/javascript"
 	src="<%=basePath%>js/User/updatePassword.js"></script>
 <script type="text/javascript" src="<%=basePath%>js/User/judgePower.js"></script>
+<link rel="stylesheet" href="<%=basePath%>css/jquery.datetimepicker.css" />
+<script type="text/javascript" src="<%=basePath%>js/jquery.datetimepicker.full.js"></script>
 <!--------------------------------------------------------------------------------->
 <!--------------------------------------------------------------------------------->
 <!---页面公用------------------------------------------------------------------------------>
@@ -72,19 +74,20 @@
 					href="<%=basePath%>user/User_index"> <span>首页</span>
 				</a></li>
 				<!--  -->
-				<li class="leader_control dropdown" style="float: left;"><a
-					href="#" class="dropdown-toggle" data-toggle="dropdown"> <span>案件</span>
-						<i class="icon-submenu lnr lnr-chevron-down"></i>
+				<li class="dropdown" style="float: left;"><a
+					href="<%=basePath%>info/Info_page_CaseInfo"> <span>案件</span>
+						
 				</a>
-					<ul class="dropdown-menu">
-						<li><a href="#">录入案件</a></li>
-						<li><a href="#">案件列表</a></li>
-					</ul></li>
+					</li>
 				<!--  -->
-				<li class="dropdown" style="float: left;"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown"> <span>办案流程</span>
-						<!-- <i class="icon-submenu lnr lnr-chevron-down"></i> -->
-				</a></li>
+
+<%-- 				<li class="dropdown" style="float: left;"><a href="<%=basePath%>process/Process_page_process" --%>
+<%-- 					> <span>办案流程</span> --%>
+
+<!-- 						<i class="icon-submenu lnr lnr-chevron-down"></i> -->
+<!-- 				</a></li> --%> -->
+<%-- 				<li class="dropdown" style="float: left;"><a href="<%=basePath%>process/page_list_CaseProcessProcessAction"> <span>办案流程</span> --%>
+
 
 				<li class="dropdown" style="float: left;"><a href="<%=basePath%>total/Total_page_listPoliceCaseStatistics" > <span>统计</span>
 						<!-- <i class="icon-submenu lnr lnr-chevron-down"></i> -->
@@ -125,46 +128,7 @@
 		</div>
 		</nav>
 		<!-------------------------------------------------修改密码---------------------------------------------------------------  -->
-		<div class="modal fade" id="updatePassword" tabindex="-1"
-			role="dialog" aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-						<h4 class="modal-title">修改用户</h4>
-					</div>
-					<div class="modal-body">
-						<div id="passwordLoadingDiv"
-							style="width: 319px; margin: 0 auto; display: none;">
-							<img alt="" src="<%=basePath%>img/loading.gif">
-						</div>
-						<div id="passwordContent">
-							<!-- <label>原始密码：</label> <input id="oldPassword" type="password"
-								class="form-control" placeholder="请输入旧密码"> --> <label>新密码：</label>
-							<input id="newPassword" type="password" class="form-control"
-								placeholder="请输入新密码"> <label>确认密码：</label> <input
-								id="newPasswordAgain" type="password" class="form-control"
-								placeholder="确认密码">
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button onclick="showPwContent()" type="button"
-							class="btn btn-default" data-dismiss="modal">关闭</button>
-						<button id="updatePwBtn" onclick="updatePassword()" type="button"
-							class="btn btn-primary">修改</button>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal-dialog -->
-		</div>
 </body>
-<script type="text/javascript">
-	getUserSessionForAjax();
-</script>
 <style>
 #wrapper nav>div>ul>li>a {
 	color: white;
