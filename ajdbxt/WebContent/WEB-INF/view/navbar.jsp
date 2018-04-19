@@ -89,7 +89,7 @@
 <%-- 				<li class="dropdown" style="float: left;"><a href="<%=basePath%>process/page_list_CaseProcessProcessAction"> <span>办案流程</span> --%>
 
 
-				<li class="dropdown" style="float: left;"><a href="<%=basePath%>total/Total_firstPage" > <span>统计</span>
+				<li class="dropdown" style="float: left;"><a href="<%=basePath%>total/Total_page_listPoliceCaseStatistics" > <span>统计</span>
 						<!-- <i class="icon-submenu lnr lnr-chevron-down"></i> -->
 				</a>
 					<ul class="dropdown-menu">

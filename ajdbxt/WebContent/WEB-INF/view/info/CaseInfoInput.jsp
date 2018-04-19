@@ -379,5 +379,6 @@ tfoot tr td a:hover {
 		}); 
  	</script> 
 </body>
+>>>>>>> origin/XZT
 
 </html>

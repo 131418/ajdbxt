@@ -19,4 +19,3 @@ public interface InfoService {
 	public String getPolices(String info_department);
 	public String update(ajdbxt_info info) ;
 }
-

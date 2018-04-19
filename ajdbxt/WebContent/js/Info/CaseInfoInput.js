@@ -875,3 +875,4 @@ $("img#add_police_two")
 					$("#add_img").hide();
 					// alert("bbcb");
 				});
+

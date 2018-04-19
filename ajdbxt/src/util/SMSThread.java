@@ -307,4 +307,5 @@ public class SMSThread extends Thread{
 		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
 		return processDTO;
 	}
+
 }
