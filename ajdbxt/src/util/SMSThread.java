@@ -1,6 +1,8 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import org.springframework.context.ApplicationContext;
 import com.ajdbxt.domain.DO.ajdbxt_police;
@@ -28,6 +30,7 @@ public class SMSThread extends Thread{
 	
 	public void run() {
 		try {
+			isWorking();//休息时间不干活谢谢
 			switch (tpl_id) {
 			case MsgSend.SUBPOENA_A_SUSPECT_VOICE://传唤嫌疑人
 				subpoenaASuspect();
@@ -68,6 +71,7 @@ public class SMSThread extends Thread{
 	private void subpoenaASuspect() throws InterruptedException {
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
+		
 		if(process.getProcess_lengthen_subpoena()==null||process.getProcess_lengthen_subpoena().isEmpty()) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
 			for(ajdbxt_police police:policeList) {
@@ -95,7 +99,7 @@ public class SMSThread extends Thread{
 	private void punishFine() {
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
-		if(process.getProcess_lengthen_subpoena()==null||process.getProcess_punish_inform().isEmpty()) {
+		if(process.getProcess_punish_inform()==null||process.getProcess_punish_inform().isEmpty()) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
 			for(ajdbxt_police police:policeList) {
 				String name=police.getPolice_name();
@@ -114,7 +118,7 @@ public class SMSThread extends Thread{
 	private void casePageHandIn() {
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
-		if(process.getProcess_lengthen_subpoena()==null||process.getProcess_file_hand().isEmpty()) {
+		if(process.getProcess_file_hand()==null||process.getProcess_file_hand().isEmpty()) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
 			for(ajdbxt_police police:policeList) {
 				String name=police.getPolice_name();
@@ -133,7 +137,7 @@ public class SMSThread extends Thread{
 	private void communityAbandonDrug() {
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
-		if(process.getProcess_lengthen_subpoena()==null||process.getProcess_treatment_category().isEmpty()) {
+		if(process.getProcess_treatment_category()==null||process.getProcess_treatment_category().isEmpty()) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
 			for(ajdbxt_police police:policeList) {
 				String name=police.getPolice_name();
@@ -152,7 +156,7 @@ public class SMSThread extends Thread{
 	private void getKeepWaitExamine() {
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
-		if(process.getProcess_lengthen_subpoena()==null||process.getProcess_get_keep_wait_interrogate().isEmpty()) {
+		if(process.getProcess_get_keep_wait_interrogate()==null||process.getProcess_get_keep_wait_interrogate().isEmpty()) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
 			for(ajdbxt_police police:policeList) {
 				String name=police.getPolice_name();
@@ -171,7 +175,7 @@ public class SMSThread extends Thread{
 	private void mandatoryAbandonDrug() {
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
-		if(process.getProcess_lengthen_subpoena()==null||process.getProcess_treatment_category().isEmpty()) {
+		if(process.getProcess_treatment_category()==null||process.getProcess_treatment_category().isEmpty()) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
 			for(ajdbxt_police police:policeList) {
 				String name=police.getPolice_name();
@@ -190,7 +194,7 @@ public class SMSThread extends Thread{
 	private void monitoringLive() {
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
-		if(process.getProcess_lengthen_subpoena()==null||process.getProcess_live_at_home_unde_surveillance().isEmpty()) {
+		if(process.getProcess_live_at_home_unde_surveillance()==null||process.getProcess_live_at_home_unde_surveillance().isEmpty()) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
 			for(ajdbxt_police police:policeList) {
 				String name=police.getPolice_name();
@@ -209,7 +213,7 @@ public class SMSThread extends Thread{
 	private void penaltyAndDetention() {
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
-		if(process.getProcess_lengthen_subpoena()==null||process.getProcess_punish_inform().isEmpty()) {
+		if(process.getProcess_punish_inform()==null||process.getProcess_punish_inform().isEmpty()) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
 			for(ajdbxt_police police:policeList) {
 				String name=police.getPolice_name();
@@ -228,7 +232,7 @@ public class SMSThread extends Thread{
 	private void punishDetention() {
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
-		if(process.getProcess_lengthen_subpoena()==null||process.getProcess_punish_inform().isEmpty()) {
+		if(process.getProcess_punish_inform()==null||process.getProcess_punish_inform().isEmpty()) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
 			for(ajdbxt_police police:policeList) {
 				String name=police.getPolice_name();
@@ -276,6 +280,8 @@ public class SMSThread extends Thread{
 			int died_line=4;
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process =processDTO.getProcess();
+			ProcessService processService=applicationCotext.getBean(ProcessService.class);
+//			process.setProcess_lengthen_subpoena("是");//要不要自动延长传唤
 			if(process.getProcess_lengthen_subpoena()==null||process.getProcess_lengthen_subpoena().isEmpty()) {
 				List<ajdbxt_police> policeList=processDTO.getPolice();
 				for(ajdbxt_police police:policeList) {
@@ -306,6 +312,20 @@ public class SMSThread extends Thread{
 		ProcessService processService=applicationCotext.getBean(ProcessService.class);
 		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);
 		return processDTO;
+	}
+	private void isWorking() throws InterruptedException {
+		int nowHour=Calendar.getInstance().get(Calendar.HOUR_OF_DAY);//得到当前的小时
+		if(nowHour>22||nowHour<8) {
+			int hour=0;
+			if(nowHour>10) {
+				hour=nowHour-22;
+			}else {
+				hour=8-nowHour;
+			}
+			synchronized (this) {
+				this.wait(hour*60*60*1000);
+			}
+		}
 	}
 
 }
