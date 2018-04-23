@@ -89,7 +89,7 @@ public class JunitTest {
 
 	@Test
 	public void Test_queryForPageByDepartment() {
-		findPoliceByPageVO currentpage = userService.queryForPageByDepartment(10, 1, "法制大队");
+		findPoliceByPageVO currentpage = userService.queryForPageByDepartment(10, 1, "67ed5ab3-d773-4ac1-981b-2839ed0cec5c");
 		System.out.println(new Gson().toJson(currentpage));
 	}
 
@@ -108,7 +108,7 @@ public class JunitTest {
 
 	@Test
 	public void Test_addDept() {
-		ajdbxt_department ajdbxt_department = new ajdbxt_department(null, "白源", null, null);
+		ajdbxt_department ajdbxt_department = new ajdbxt_department(null, "测试组", null, null);
 		System.out.println(userService.addDepartment(ajdbxt_department));
 	}
 
@@ -128,6 +128,13 @@ public class JunitTest {
 	public void testFindPoliceById() {
 		policedptVO policeOne = userService.findPoliceById("129fb032-7286-48c7-8b7d-1bf710c9b598");
 		System.out.println(new Gson().toJson(policeOne));
+	}
+	@Test
+	public void addPolice() {
+		// ajdbxtPoliceId,policeSerialNumber,policePassword,policeName,policeDepartment,policeDuty,policePhoneNumber,policeGmtCreat,policeGmtModify
+				ajdbxt_police ajdbxt_police = new ajdbxt_police(null, "100007", "111111", "李世远", "4e0d2651-da70-4b6b-938a-451eb063d5e7", "组员", "15270634643",null, null, "2");
+				System.out.println(userService.addPolice(ajdbxt_police));
+				// System.out.println("000000000000"+ajdbxt_police+"0000000000000000000");
 	}
 
 }

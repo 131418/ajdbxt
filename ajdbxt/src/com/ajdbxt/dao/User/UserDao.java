@@ -21,7 +21,7 @@ public interface UserDao {
 	//总记录条数
 	public int getCount(String hql);
 
-	List<ajdbxt_police> queryForPageByDepartment(String hql, int offset, int length);
+	List<policedptVO> queryForPageByDepartment(String hql, int offset, int length);
 
 	String changePassword(String ajdbxt_police_id,String newPassword);
 

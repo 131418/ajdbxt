@@ -130,14 +130,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public findPoliceByPageVO queryForPageByDepartment(int pageSize, int currentPage, String department) {
 		// TODO Auto-generated method stub
-		String hql = "select count(*) from ajdbxt_police where police_department ='" + department + "'";
-		int count = userDao.getCount(hql); // 总记录数
+		String hql_count = "select count(*) from ajdbxt_police where police_department ='" + department + "'";
+		String hql = "select new com.ajdbxt.domain.VO.User.policedptVO(p,d) from ajdbxt_police p,ajdbxt_department d where p.police_department = d.ajdbxt_department_id and p.police_department = '" + department + "'";
+		int count = userDao.getCount(hql_count); // 总记录数
 		int totalPage = findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数
 		int offset = findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录
 		int length = pageSize; // 每页记录数
 		int currentpage = findPoliceByPageVO.countCurrentPage(currentPage);
-		List<ajdbxt_police> list = userDao.queryForPageByDepartment(
-				"from ajdbxt_police where police_department ='" + department + "'", offset, length); // 该分页的记录
+		List<policedptVO> list = userDao.queryForPageByDepartment(hql, offset, length); // 该分页的记录
 		// 把分页信息保存到Bean中
 		findPoliceByPageVO findPoliceByPageVO = new findPoliceByPageVO();
 		findPoliceByPageVO.setPageSize(pageSize);
