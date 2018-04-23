@@ -84,7 +84,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<ajdbxt_police> queryForPageByDepartment(String hql, int offset, int length) {
+	public List<policedptVO> queryForPageByDepartment(String hql, int offset, int length) {
 		// TODO Auto-generated method stub
 		Query q = getSession().createQuery(hql);
 		q.setFirstResult(offset);

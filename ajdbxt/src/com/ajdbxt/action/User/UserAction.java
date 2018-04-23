@@ -135,6 +135,7 @@ public class UserAction extends ActionSupport {
 	// 登出
 	public String loginout() {
 		ActionContext.getContext().getSession().remove("loginPolice");
+		//ActionContext.getContext().getSession().clear();
 		return "login";//回到登录界面
 	}
 	//获取权限
@@ -239,8 +240,8 @@ public class UserAction extends ActionSupport {
 			response.setContentType("text/html;charset=utf-8");
 			ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
 			String department = loginPolice.getPolice_department();
-			this.findPoliceByPageVO = userService.queryForPageByDepartment(10, currentPage, department);
-			response.getWriter().write(new Gson().toJson(this.findPoliceByPageVO));
+			findPoliceByPageVO findByDpt = userService.queryForPageByDepartment(10, currentPage, department);
+			response.getWriter().write(new Gson().toJson(findByDpt));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
