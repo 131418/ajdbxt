@@ -9,10 +9,10 @@
 	</bean>
 
 	<bean id="statisticService" class="com.ajdbxt.service.impl.Total.StatisticServiceImpl">
-		<property name="statisticsDao" ref="statisticsDao"></property>
+		<property name="statisticDao" ref="statisticDao"></property>
 	</bean>
 
-	<bean id="statisticsDao" class="com.ajdbxt.dao.impl.Total.StatisticsDaoImpl">
+	<bean id="statisticDao" class="com.ajdbxt.dao.impl.Total.StatisticDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	

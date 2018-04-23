@@ -89,7 +89,7 @@
 <%-- 				<li class="dropdown" style="float: left;"><a href="<%=basePath%>process/page_list_CaseProcessProcessAction"> <span>办案流程</span> --%>
 
 
-				<li class="dropdown" style="float: left;"><a href="<%=basePath%>total/Total_firstPage" > <span>统计</span>
+				<li class="dropdown" style="float: left;"><a href="<%=basePath%>total/Total_page_listPoliceCaseStatistics" > <span>统计</span>
 						<!-- <i class="icon-submenu lnr lnr-chevron-down"></i> -->
 				</a>
 					<ul class="dropdown-menu">
@@ -106,7 +106,7 @@
 				<!--  -->
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown"> <i class="fa fa-user-circle"></i> <span
-						id="USER_NAME">李丁胜</span> <i
+						id="USER_NAME"><s:property value="#session.loginPolice.police_name"/></span> <i
 						class="icon-submenu lnr lnr-chevron-down"></i>
 				</a>
 					<ul class="dropdown-menu">

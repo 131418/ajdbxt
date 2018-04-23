@@ -33,7 +33,7 @@
 		<property name="processPoliceDao" ref="processPoliceDao"></property>
 		<property name="processDepartmentDao" ref="processDepartmentDao"></property>
 	</bean>
-	<bean id="processAction" class="com.ajdbxt.action.Process.ProcessAction">
+	<bean id="processAction" class="com.ajdbxt.action.Process.ProcessAction" scope="prototype">
 		<property name="processService" ref="processService"></property>
 		<property name="processInfoService" ref="processInfoService"></property>
 	</bean>

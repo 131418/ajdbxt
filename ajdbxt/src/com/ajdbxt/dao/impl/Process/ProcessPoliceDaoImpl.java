@@ -1,6 +1,7 @@
 package com.ajdbxt.dao.impl.Process;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -21,5 +22,6 @@ public class ProcessPoliceDaoImpl implements ProcessPoliceDao {
 		cri.add(Restrictions.eq("ajdbxt_police_id", police_id));
 		return (ajdbxt_police) cri.uniqueResult();
 	}
+
 
 }
