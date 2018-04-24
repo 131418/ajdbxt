@@ -156,5 +156,14 @@ public class UserDaoImpl implements UserDao {
 		return policeOne;
 	}
 
+	@Override
+	public String findDptByid(String department) {
+		// TODO Auto-generated method stub
+		String hql = "select department_name from ajdbxt_department where ajdbxt_department_id = '"+department+"'";
+		Query query = getSession().createQuery(hql);
+		String dpt = (String)query.uniqueResult();
+		return dpt;
+	}
+
 	
 }
