@@ -90,8 +90,17 @@ public class JunitTest {
 
 	@Test
 	public void Test_queryForPageByDepartment() {
-		findPoliceByPageVO currentpage = userService.queryForPageByDepartment(10, 1, "67ed5ab3-d773-4ac1-981b-2839ed0cec5c");
-		System.out.println(new Gson().toJson(currentpage));
+		findPoliceByPageVO currentpage = userService.queryForPageByDepartment(10, 1, "67ed5ab3-d773-4ac1-981b-2839ed0cec5c","嘟嘟嘟");
+		ajdbxt_police aj0 = null;
+		policedptVO aj = null;
+		for (Object ob : currentpage.getList()) {
+			aj = (policedptVO) ob;
+			aj0 = aj.getAjdbxt_police();
+			aj0.setPolice_name(aj0.getPolice_name().replaceAll("嘟嘟嘟", "<span style='color:red;'>嘟嘟嘟</span>"));
+		}
+
+		String redWord = new Gson().toJson(currentpage);
+		System.out.println(new Gson().toJson(redWord));
 	}
 
 	@Test
@@ -136,6 +145,11 @@ public class JunitTest {
 				ajdbxt_police ajdbxt_police = new ajdbxt_police(null, "100007", "111111", "李世远", "4e0d2651-da70-4b6b-938a-451eb063d5e7", "组员", "15270634643",null, null, "2");
 				System.out.println(userService.addPolice(ajdbxt_police));
 				// System.out.println("000000000000"+ajdbxt_police+"0000000000000000000");
+	}
+	@Test
+	public void findDpt() {
+		String dpt = userService.findDptByid("1716af6c-d530-4dce-9adc-21bfd0273f8e");
+		System.out.println(dpt);
 	}
 
 }
