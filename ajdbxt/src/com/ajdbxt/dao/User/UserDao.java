@@ -9,7 +9,7 @@ import com.ajdbxt.domain.VO.User.policedptVO;
 
 public interface UserDao {
 
-	ajdbxt_police findPolice(String police_serial_number);
+	policedptVO findPolice(String police_serial_number);
 
 	boolean addPolice(ajdbxt_police ajdbxt_police);
 

@@ -35,13 +35,13 @@ public class UserServiceImpl implements UserService {
 	public Object login(String police_serial_number, String police_password) {
 
 		// 用传过来的用户名密码查询，将得到的结果放到ajdbxt_user
-		ajdbxt_police ajdbxt_police = userDao.findPolice(police_serial_number);
+		policedptVO ajdbxt_police = userDao.findPolice(police_serial_number);
 		// 比对是否存在该用户，如果不存在则ajdbxt_user为空
 		if (null == ajdbxt_police) {
 			return null;
 		} else {
 			// 将穿过来的密码进行加密，与ajdbxt_user里面的密码进行比对
-			if (!md5.GetMD5Code(police_password).equals(ajdbxt_police.getPolice_password())) {
+			if (!md5.GetMD5Code(police_password).equals(ajdbxt_police.getAjdbxt_police().getPolice_password())) {
 				return null;
 			} else {
 				return ajdbxt_police;
