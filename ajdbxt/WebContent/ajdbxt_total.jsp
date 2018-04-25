@@ -70,11 +70,11 @@
 									<%--  --%>
 								</div>
 								<!--按类型统计  -->
-								<div style="width: 260px; float: right;">
+								<div style="width: 117px; float: right;">
+									<!-- <button class="btn btn-default role_one"
+										onclick="createPolice()">按人员统计</button> -->
 									<button class="btn btn-default role_one"
-										onclick="createPolice()">按人员统计</button>
-									<button class="btn btn-default role_one"
-										onclick="createPolice()">按单位统计</button>
+									onclick="ByDepartment()">按单位统计</button>
 								</div>
 							</div>
 
@@ -90,15 +90,14 @@
 										</select></th>	
 										<th rowspan="2" colspan="2">人员</th>									
 										<th colspan="2">主办案件</th>
-										<th colspan="2">协办案件</th>
-										
+										<th colspan="2">协办案件</th>								
 										<th rowspan="2" colspan="2">平均分</th>
 									</tr>
 									<tr>
-										<th><button>行政案件</button></th>
-										<th><button>刑事案件</button></th>
-										<th><button>行政案件</button></th>
-										<th><button>刑事案件</button></th>
+										<th><input type="button" id="MainadminCase" onclick="List_Total_By_Page(1)" value="主办行政案件" /></th>
+										<th><input type="button" id="MaincriminalCase" onclick="List_Total_By_Page(1)" value="主办刑事案件" /></th>
+										<th><input type="button" id="InsisadminCase" onclick="List_Total_By_Page(1)" value="协办行政案件" /></th>
+										<th><input type="button" id="InsiscriminalCase" onclick="List_Total_By_Page(1)" value="协办刑事案件" /></th>
 									</tr>									
 								</tbody>
 							</table>
@@ -137,8 +136,8 @@
 		<script type="text/javascript" src="<%=basePath%>js/Input_Select.js"></script>
 		<script type="text/javascript"
 			src="<%=basePath%>js/laydate/laydate.js"></script>
-		<%-- <script type="text/javascript"
-		src="<%=basePath%>js/Total/ajdbxtTotal.js"></script> --%>
+		<script type="text/javascript"
+		src="<%=basePath%>js/Total/ajdbxtTotal.js"></script>
 
 		<script type="text/javascript">
 			$(function() {
@@ -202,6 +201,12 @@
 				minDate : '1900/01/01', // 设置最小日期
 				maxDate : '2100/01/01', // 设置最大日期
 			});
+		</script>
+		<!-- 路径跳转 -->
+		<script type="text/javascript">
+			function ByDepartment(){
+				window.location.href="";
+			}
 		</script>
 </body>
 </html>

@@ -31,12 +31,11 @@
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
-				<h3 class="panel-title">统计</h3>
+				<h3 class="panel-title"><span>统计</span><span>-</span><span>按单位统计</span></h3>
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
 					<div class="panel">
-
 						<!--  -->
 						<div class="panel-body">
 							<div style="height: 34px; margin: 0 0 20px 0; width: 100%;">
@@ -46,7 +45,7 @@
 									<input id="select_start_time" class="form-control mydate"
 										style="width: 150px; float: left; text-align: center;"
 										type="text" placeholder="起始时间"
-										onchange="List_Total_By_Page(1)" value="2018-01-01" />
+										onchange="List_Total_By_Department()" value="2018-01-01" />
 									<%--  --%>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">至</span>
@@ -54,30 +53,29 @@
 									<input id="select_stop_time" class="form-control mydate"
 										style="width: 150px; float: left; margin: 0 0 0 20px; text-align: center;"
 										type="text" placeholder="结束时间"
-										onchange="List_Total_By_Page(1)" />
+										onchange="List_Total_By_Department()" />
 									<%--  --%>
 								</div>
-								<!-- 检索 -->
-								<div class="input-group" style="width: 300px; float: right;">
-									<input id="input_Total_PoliceSearchText" class="form-control"
-										oninput="List_Total_By_Page(1)" type="text" placeholder="搜索人员" />
-									<span class="input-group-addon" style="border-radius: unset;">
-										<i class="fa fa-search"></i>
-									</span>
+								<%-- <!--按类型统计  -->
+								<div style="width: 300px; float: right;">
+									<button class="btn btn-default role_one"
+										onclick="createPolice()">按行政案件统计</button>
+									<button class="btn btn-default role_one"
+										onclick="createPolice()">按刑事案件统计</button>
 								</div>
+								 --%>
 							</div>
-
+							<!--  -->
 							<table id="table_total" class="table table-hover "
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
 										<th>序号</th>
 										<th>办案单位</th>										
-										<th>行政案件数</th>
-										<th>刑事案件数</th>
-										<th>平均分</th>
-										<th>总分</th>
+										<th><input type="button" id="adminCase" onclick="List_Total_By_Department()" value="行政案件" /></th>
+										<th><input type="button" id="criminalCase" onclick="List_Total_By_Department()" value="刑事案件" /></th>
 										<th>总案件数</th>
+										<th><input type="button" id="average" onclick="List_Total_By_Department()" value="平均分"></input></th>
 									</tr>
 								</tbody>
 							</table>
@@ -86,25 +84,7 @@
 							<div id="i_pulse" style="text-align: center;">
 								<i class="fa fa-spinner fa-pulse fa-3x"></i>
 							</div>
-							<!--翻页  -->
-							<div id="page_flip"
-								style="margin: 0 auto; width: 400px; text-align: center;">
-								<span> <a onclick="flip(1)"><i
-										class="fa fa-angle-double-left">首页</i> </a> &nbsp&nbsp <a
-									onclick="flip(2)"><i class="fa fa-angle-left"></i>上一页 </a>
-									&nbsp&nbsp <a onclick="flip(3)">下一页<i
-										class="fa fa-angle-right"></i>
-								</a> &nbsp&nbsp <a onclick="flip(4)">尾页<i
-										class="fa fa-angle-double-right"></i>
-								</a> <br />
-									<p class='info' style="margin-top: 5px;">
-										第<span id="span_pageIndex">1</span>页&nbsp&nbsp共 <span
-											id="span_totalPages">1</span>页&nbsp&nbsp共 <span
-											id="span_totalRecords">0</span>条记录
-									</p></span>
-							</div>
-
-						</div>
+							
 					</div>
 					<!-- END TABLE HOVER -->
 				</div>
@@ -134,7 +114,7 @@
 		select_stop_time.value = str;
 		console.log("select_start_time1:" + select_start_time.value);
 		console.log("select_stop_time1:" + select_stop_time.value);
-		List_Total_By_Page(1);
+		List_Total_By_Department();
 	</script>
 
 	<script type="text/javascript">

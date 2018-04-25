@@ -36,7 +36,6 @@
 			<div class="panel-body">
 				<div class="col-md-12">
 					<div class="panel">
-
 						<!--  -->
 						<div class="panel-body">
 							<div style="height: 34px; margin: 0 0 20px 0; width: 100%;">
@@ -46,7 +45,7 @@
 									<input id="select_start_time" class="form-control mydate"
 										style="width: 150px; float: left; text-align: center;"
 										type="text" placeholder="起始时间"
-										onchange="List_Total_By_Page(1)" value="2018-01-01" />
+										onchange="List_Total_By_Department()" value="2018-01-01" />
 									<%--  --%>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">至</span>
@@ -54,7 +53,7 @@
 									<input id="select_stop_time" class="form-control mydate"
 										style="width: 150px; float: left; margin: 0 0 0 20px; text-align: center;"
 										type="text" placeholder="结束时间"
-										onchange="List_Total_By_Page(1)" />
+										onchange="List_Total_By_Department()" />
 									<%--  --%>
 								</div>
 								<%-- <!--按类型统计  -->
@@ -73,10 +72,10 @@
 									<tr>
 										<th>序号</th>
 										<th>办案单位</th>										
-										<th><button>行政案件</button></th>
-										<th><button>刑事案件</button></th>
+										<th><input type="button" id="adminCase" onclick="List_Total_By_Department()" value="行政案件" /></th>
+										<th><input type="button" id="criminalCase" onclick="List_Total_By_Department()" value="刑事案件" /></th>
 										<th>总案件数</th>
-										<th>平均分</th>	
+										<th><input type="button" id="average" onclick="List_Total_By_Department()" value="平均分"></input></th>
 									</tr>
 								</tbody>
 							</table>
@@ -115,7 +114,7 @@
 		select_stop_time.value = str;
 		console.log("select_start_time1:" + select_start_time.value);
 		console.log("select_stop_time1:" + select_stop_time.value);
-		List_Total_By_Page(1);
+		List_Total_By_Department();
 	</script>
 
 	<script type="text/javascript">

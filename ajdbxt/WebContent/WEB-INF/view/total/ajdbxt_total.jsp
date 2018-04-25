@@ -13,8 +13,10 @@
 <title>统计</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
+
 #table_total tbody tr {
 	text-align: center;
+	margin: 0 auto;
 }
 
 #page_flip span a:hover, #select_start_time, #select_stop_time {
@@ -31,7 +33,17 @@
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
-				<h3 class="panel-title">统计</h3>
+				<h3 class="panel-title">
+					<span>统计</span><span>-</span><span>按人员统计</span>
+					<!-- 检索 -->
+					<div class="input-group" style="width: 300px; float: right;">
+						<input id="input_Total_PoliceSearchText" class="form-control"
+							oninput="List_Total_By_Page(1)" type="text" placeholder="搜索人员" />
+						<span class="input-group-addon" style="border-radius: unset;">
+							<i class="fa fa-search"></i>
+						</span>
+					</div>
+				</h3>
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
@@ -57,29 +69,36 @@
 										onchange="List_Total_By_Page(1)" />
 									<%--  --%>
 								</div>
-								<!-- 检索 -->
-								<div class="input-group" style="width: 300px; float: right;">
-									<input id="input_Total_PoliceSearchText" class="form-control"
-										oninput="List_Total_By_Page(1)" type="text" placeholder="搜索人员" />
-									<span class="input-group-addon" style="border-radius: unset;">
-										<i class="fa fa-search"></i>
-									</span>
+								<!--按类型统计  -->
+								<div style="width: 117px; float: right;">
+									<!-- <button class="btn btn-default role_one"
+										onclick="createPolice()">按人员统计</button> -->
+									<button class="btn btn-default role_one"
+									onclick="ByDepartment()">按单位统计</button>
 								</div>
 							</div>
 
-							<table id="table_total" class="table table-hover "
+							<table id="table_total" class="table table-bordered"
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
-										<th><select id="select_case_department"
-											style="width: 70%; margin: 0 auto;" class="form-control"
+										<th rowspan="2" colspan="2">序号</th>
+										<th rowspan="2" colspan="2"><select
+											id="select_case_department"
+											style="width: 80%; margin: 0 auto;" class="form-control"
 											onchange="List_Total_By_Page(1)">
-										</select></th>
-										<th>人员</th>
-										<th>行政案件</th>
-										<th>刑事案件</th>
-
+										</select></th>	
+										<th rowspan="2" colspan="2">人员</th>									
+										<th colspan="2">主办案件</th>
+										<th colspan="2">协办案件</th>								
+										<th rowspan="2" colspan="2">平均分</th>
 									</tr>
+									<tr>
+										<th><input type="button" id="MainadminCase" onclick="List_Total_By_Page(1)" value="主办行政案件" /></th>
+										<th><input type="button" id="MaincriminalCase" onclick="List_Total_By_Page(1)" value="主办刑事案件" /></th>
+										<th><input type="button" id="InsisadminCase" onclick="List_Total_By_Page(1)" value="协办行政案件" /></th>
+										<th><input type="button" id="InsiscriminalCase" onclick="List_Total_By_Page(1)" value="协办刑事案件" /></th>
+									</tr>									
 								</tbody>
 							</table>
 
@@ -103,84 +122,91 @@
 											id="span_totalPages">1</span>页&nbsp&nbsp共 <span
 											id="span_totalRecords">0</span>条记录
 									</p></span>
-							</div>
+							</div>							
 
 						</div>
+						<!-- END TABLE HOVER -->
 					</div>
-					<!-- END TABLE HOVER -->
-				</div>
 
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<script type="text/javascript" src="<%=basePath%>js/icheck.js"></script>
-	<script type="text/javascript" src="<%=basePath%>js/Input_Select.js"></script>
-	<script type="text/javascript" src="<%=basePath%>js/laydate/laydate.js"></script>
-	<script type="text/javascript"
+		<script type="text/javascript" src="<%=basePath%>js/icheck.js"></script>
+		<script type="text/javascript" src="<%=basePath%>js/Input_Select.js"></script>
+		<script type="text/javascript"
+			src="<%=basePath%>js/laydate/laydate.js"></script>
+		<script type="text/javascript"
 		src="<%=basePath%>js/Total/ajdbxtTotal.js"></script>
 
-	<script type="text/javascript">
-		$(function() {
-			$
-					.post(
-							'/ajdbxt/user/User_findDepartmentByPage',
-							function(Department_data) {
-								// 所有案件循环
-								var option = '';
-								for (var len = 0; len < Department_data.list.length; len++) {
-									option += '<option ';
+		<script type="text/javascript">
+			$(function() {
+				$
+						.post(
+								'/ajdbxt/user/User_findDepartmentByPage',
+								function(Department_data) {
+									// 所有案件循环
+									var option = '';
+									for (var len = 0; len < Department_data.list.length; len++) {
+										option += '<option ';
 									option += ' value="'
 											+ Department_data.list[len].ajdbxt_department_id
 											+ '">'
-											+ Department_data.list[len].department_name
-											+ '</option>';
-								}
-								$('#select_case_department').html(
-										'<option selected="selected" value="">所有单位</option>'
-												+ option);
-							}, 'json');
-		});
-	</script>
-	<script type="text/javascript">
-		var select_start_time = document.getElementById("select_start_time");
-		var select_stop_time = document.getElementById("select_stop_time");
-		var str = '';
-		var now_date = new Date();
-		var now_date_year = now_date.getFullYear();
-		str += now_date_year;
-		var now_date_month = now_date.getMonth() + 1;
-		str += "-" + now_date_month;
-		var now_date_date = now_date.getDate();
-		str += "-" + now_date_date;
-		console.log("str:" + str);
-		/* select_start_time.value=str; */
-		select_stop_time.value = str;
-		console.log("select_start_time1:" + select_start_time.value);
-		console.log("select_stop_time1:" + select_stop_time.value);
-		List_Total_By_Page(1);
-	</script>
+												+ Department_data.list[len].department_name
+												+ '</option>';
+									}
+									$('#select_case_department').html(
+											'<option selected="selected" value="">所有单位</option>'
+													+ option);
+								}, 'json');
+			});
+		</script>
+		<script type="text/javascript">
+			var select_start_time = document
+					.getElementById("select_start_time");
+			var select_stop_time = document.getElementById("select_stop_time");
+			var str = '';
+			var now_date = new Date();
+			var now_date_year = now_date.getFullYear();
+			str += now_date_year;
+			var now_date_month = now_date.getMonth() + 1;
+			str += "-" + now_date_month;
+			var now_date_date = now_date.getDate();
+			str += "-" + now_date_date;
+			console.log("str:" + str);
+			/* select_start_time.value=str; */
+			select_stop_time.value = str;
+			console.log("select_start_time1:" + select_start_time.value);
+			console.log("select_stop_time1:" + select_stop_time.value);
+			List_Total_By_Page(1);
+		</script>
 
-	<script type="text/javascript">
-		$.datetimepicker.setLocale('ch');
-		$('.mydate').datetimepicker({
-			yearStart : 1900, // 设置最小年份
-			yearEnd : 2100, // 设置最大年份
-			yearOffset : 0, // 年偏差
-			timepicker : false, // 关闭时间选项
-			format : 'Y-m-d', // 格式化日期年-月-日
-			minDate : '1900/01/01', // 设置最小日期
-			maxDate : '2100/01/01', // 设置最大日期
-		});
-		$('.mydate_minute').datetimepicker({
-			yearStart : 1900, // 设置最小年份
-			yearEnd : 2100, // 设置最大年份
-			yearOffset : 0, // 年偏差
-			timepicker : true, // 关闭时间选项
-			format : 'Y-m-d H:i', // 格式化日期年-月-日
-			minDate : '1900/01/01', // 设置最小日期
-			maxDate : '2100/01/01', // 设置最大日期
-		});
-	</script>
+		<script type="text/javascript">
+			$.datetimepicker.setLocale('ch');
+			$('.mydate').datetimepicker({
+				yearStart : 1900, // 设置最小年份
+				yearEnd : 2100, // 设置最大年份
+				yearOffset : 0, // 年偏差
+				timepicker : false, // 关闭时间选项
+				format : 'Y-m-d', // 格式化日期年-月-日
+				minDate : '1900/01/01', // 设置最小日期
+				maxDate : '2100/01/01', // 设置最大日期
+			});
+			$('.mydate_minute').datetimepicker({
+				yearStart : 1900, // 设置最小年份
+				yearEnd : 2100, // 设置最大年份
+				yearOffset : 0, // 年偏差
+				timepicker : true, // 关闭时间选项
+				format : 'Y-m-d H:i', // 格式化日期年-月-日
+				minDate : '1900/01/01', // 设置最小日期
+				maxDate : '2100/01/01', // 设置最大日期
+			});
+		</script>
+		<!-- 路径跳转 -->
+		<script type="text/javascript">
+			function ByDepartment(){
+				window.location.href="";
+			}
+		</script>
 </body>
 </html>
