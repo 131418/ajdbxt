@@ -20,7 +20,7 @@ public interface UserService {
 	
 	public findPoliceByPageVO queryForPage(int pageSize, int currentPage,String police_name);
 
-	public findPoliceByPageVO queryForPageByDepartment(int pageSize, int currentPage, String department);
+	public findPoliceByPageVO queryForPageByDepartment(int pageSize, int currentPage, String department,String police_name);
 
 	public String changePassword(String ajdbxt_police_id, String newPassword);
 
@@ -31,6 +31,8 @@ public interface UserService {
 	public findDepartmentByPageVO findDepartmentByPage(int pageSize, int currentPage);
 
 	public policedptVO findPoliceById(String ajdbxt_police_id);
+
+	public String findDptByid(String department);
 
 	//public findPoliceByPageVO fuzzySearch(int pageSize, int currentPage,String police_name);
 	

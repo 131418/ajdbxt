@@ -135,6 +135,7 @@ public class UserAction extends ActionSupport {
 	// 登出
 	public String loginout() {
 		ActionContext.getContext().getSession().remove("loginPolice");
+		//ActionContext.getContext().getSession().clear();
 		return "login";//回到登录界面
 	}
 	//获取权限
@@ -142,7 +143,7 @@ public class UserAction extends ActionSupport {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
 			response.setContentType("text/html;charset=utf-8");
-			ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+			policedptVO loginPolice = (policedptVO) ActionContext.getContext().getSession().get("loginPolice");
 			response.getWriter().write(new Gson().toJson(loginPolice));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -239,8 +240,20 @@ public class UserAction extends ActionSupport {
 			response.setContentType("text/html;charset=utf-8");
 			ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
 			String department = loginPolice.getPolice_department();
-			this.findPoliceByPageVO = userService.queryForPageByDepartment(10, currentPage, department);
-			response.getWriter().write(new Gson().toJson(this.findPoliceByPageVO));
+			String policeName = this.findPoliceByPageVO.getPolice_name();
+			findPoliceByPageVO findByDpt = userService.queryForPageByDepartment(10, currentPage, department, policeName);
+			if(policeName!=null&&!"".equals(policeName)) {
+				ajdbxt_police aj0 =null;
+				policedptVO aj =null;
+				for(Object ob : findByDpt.getList()) {
+					aj=(policedptVO) ob;
+					aj0 = aj.getAjdbxt_police();
+					aj0.setPolice_name(aj0.getPolice_name().replaceAll(policeName, "<span style='color:red;'>"+policeName+"</span>"));
+				}
+			}
+			String  redWord = new Gson().toJson(findByDpt);
+			//把搜索关键字转换成红色
+			response.getWriter().write(redWord);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -299,6 +312,21 @@ public class UserAction extends ActionSupport {
 			response.setContentType("text/html;charset=utf-8");
 			policedptVO policeOne = userService.findPoliceById(ajdbxt_police.getAjdbxt_police_id());
 			response.getWriter().write(new Gson().toJson(policeOne));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	//通过id查找部门
+	public void findDptByid() {
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+			String department = loginPolice.getPolice_department();
+			String dpt = userService.findDptByid(department);
+			response.getWriter().write(dpt);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
