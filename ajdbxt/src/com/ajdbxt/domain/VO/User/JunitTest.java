@@ -78,7 +78,7 @@ public class JunitTest {
 	@Test
 	public void Test_login() {
 		Object loginPolice = userService.login("040827", "111111");
-		System.out.println(loginPolice);
+		System.out.println(new Gson().toJson(loginPolice));
 		String result = null;
 		if (loginPolice != null) {
 			result = "success";

@@ -15,10 +15,10 @@ import com.ajdbxt.domain.VO.User.policedptVO;
 public class UserDaoImpl implements UserDao {
 
 	@Override
-	public ajdbxt_police findPolice(String police_serial_number) {
-		String hql = "from ajdbxt_police where police_serial_number = '" + police_serial_number + "'";
+	public policedptVO findPolice(String police_serial_number) {
+		String hql = "select new com.ajdbxt.domain.VO.User.policedptVO(p,d) from ajdbxt_police p,ajdbxt_department d where p.police_department = d.ajdbxt_department_id and p.police_serial_number = '" + police_serial_number + "'";
 		Query query = getSession().createQuery(hql);
-		ajdbxt_police p = (ajdbxt_police) query.uniqueResult();
+		policedptVO p = (policedptVO) query.uniqueResult();
 		return p;
 	}
 
