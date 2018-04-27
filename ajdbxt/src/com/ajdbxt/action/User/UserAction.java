@@ -143,7 +143,7 @@ public class UserAction extends ActionSupport {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
 			response.setContentType("text/html;charset=utf-8");
-			ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+			policedptVO loginPolice = (policedptVO) ActionContext.getContext().getSession().get("loginPolice");
 			response.getWriter().write(new Gson().toJson(loginPolice));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
