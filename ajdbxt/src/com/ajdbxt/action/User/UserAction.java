@@ -160,8 +160,8 @@ public class UserAction extends ActionSupport {
 	public void changePassword() {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=utf-8");
-		ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
-		String result = userService.changePassword(loginPolice.getAjdbxt_police_id(),ajdbxt_police.getPolice_password());
+		policedptVO loginPolice = (policedptVO) ActionContext.getContext().getSession().get("loginPolice");
+		String result = userService.changePassword(loginPolice.getAjdbxt_police().getAjdbxt_police_id(),ajdbxt_police.getPolice_password());
 		try {
 			response.getWriter().write(result);
 		} catch (IOException e) {
@@ -238,8 +238,8 @@ public class UserAction extends ActionSupport {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
 			response.setContentType("text/html;charset=utf-8");
-			ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
-			String department = loginPolice.getPolice_department();
+			policedptVO loginPolice = (policedptVO) ActionContext.getContext().getSession().get("loginPolice");
+			String department = loginPolice.getAjdbxt_police().getPolice_department();
 			String policeName = this.findPoliceByPageVO.getPolice_name();
 			findPoliceByPageVO findByDpt = userService.queryForPageByDepartment(10, currentPage, department, policeName);
 			if(policeName!=null&&!"".equals(policeName)) {
