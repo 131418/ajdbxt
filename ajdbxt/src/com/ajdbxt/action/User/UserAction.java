@@ -87,7 +87,7 @@ public class UserAction extends ActionSupport {
 	
 
 	public String indexPage() {
-		ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+		policedptVO loginPolice = (policedptVO) ActionContext.getContext().getSession().get("loginPolice");
 		if (null == loginPolice) {
 			return "login";//回到登录界面
 		}
@@ -105,7 +105,31 @@ public class UserAction extends ActionSupport {
 	public String navbar() {
 		return "navbar";
 	}
-
+	//移动端页面跳转
+	public String mobile_index() {
+		policedptVO loginPolice = (policedptVO) ActionContext.getContext().getSession().get("loginPolice");
+		if (null == loginPolice) {
+			return "login";//回到登录界面
+		}
+		return "mobile_index";
+	}
+	
+	public String mobile_index_details() {
+		return "mobile_index_details";
+	}
+	
+	public String mobile_police_one() {
+		return "mobile_police_one";
+	}
+	
+	public String mobile_police_two() {
+		return "mobile_police_two";
+	}
+	
+	public String mobile_police_three() {
+		return "mobile_police_three";
+	}
+	
 	public void login() {
 		try {
 			// 获得返回的判断结果
