@@ -17,6 +17,8 @@ import com.ajdbxt.domain.DO.ajdbxt_process;
 import com.ajdbxt.domain.DTO.Process.ProcessDTO;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.domain.VO.Process.showProcessVO;
+import com.ajdbxt.domain.VO.User.policedptVO;
+
 import util.*;
 
 public class ProcessAction  extends ActionSupport{
@@ -78,8 +80,8 @@ public class ProcessAction  extends ActionSupport{
 	public void getInfo() {
 		noLogin();
 		Object o =ActionContext.getContext().getSession().get("loginPolice");//得到该警察
-		ajdbxt_police police=(ajdbxt_police)o;
-		String police_id=police.getAjdbxt_police_id();
+		policedptVO police=(policedptVO)o;
+		String police_id=police.getAjdbxt_police().getAjdbxt_police_id();
 		String json="";
 		if(ajdbxtProcess.getProcess_case_end()!=null&&ajdbxtProcess.getProcess_case_end().equals("true")==false) {
 			json=processInfoService.getInfoList(ProcessInfoService.CASE_END, police_id,infoVO);

@@ -135,7 +135,7 @@ public class InfoServiceImpl implements InfoService {
 		Comparator<Map.Entry<ajdbxt_police, Integer>> sort=new Comparator<Map.Entry<ajdbxt_police,Integer>>() {//map排序器降
 			@Override
 			public int compare(Entry<ajdbxt_police, Integer> o1, Entry<ajdbxt_police, Integer> o2) {
-				return o2.getValue()-o1.getValue();
+				return o1.getValue().compareTo(o2.getValue());
 			}
 		};
 		List<Map.Entry<ajdbxt_police, Integer>> capList=new ArrayList<Map.Entry<ajdbxt_police,Integer>>(capM.entrySet());
@@ -214,7 +214,7 @@ public class InfoServiceImpl implements InfoService {
 		Comparator<Map.Entry<ajdbxt_police, Integer>> sort=new Comparator<Map.Entry<ajdbxt_police,Integer>>() {//map排序器降
 			@Override
 			public int compare(Entry<ajdbxt_police, Integer> o1, Entry<ajdbxt_police, Integer> o2) {
-				return o2.getValue()-o1.getValue();
+				return o1.getValue().compareTo(o2.getValue());
 			}
 		};
 		List<Map.Entry<ajdbxt_police, Integer>> capList=new ArrayList<Map.Entry<ajdbxt_police,Integer>>(capM.entrySet());
