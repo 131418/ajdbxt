@@ -1,37 +1,46 @@
-var police_vo = null;   
-// 列表显示 
+var police_vo = null; // 接收后台传过来的数据
+var login_police_deparment = null;// 当前登录角色所在单位名字
+var login_police_deparment_id = null;// 当前登录角色所在单位id
+var police_power_options = null;// 当前登录角色可选权限
+var power_one_two = '<option value="1">单位内浏览</option><option value="2">单位内管理</option>';// 角色1和2可选权限
+// 角色3可选权限
+var power_three = '<option value="1">单位内浏览</option><option value="2">单位内管理</option><option value="3">所有单位内管理</option>';
+// 列表显示
 function List_Police_By_Page(pageIndex) {
-
 	// --------------------
 	// ------判断角色-------
 	var xmlHttpRequest = new XMLHttpRequest();
 	xmlHttpRequest.open("POST", "/ajdbxt/user/User_getPower");
 	xmlHttpRequest.send(null);
 	xmlHttpRequest.onreadystatechange = function() {
-		if (xmlHttpRequest.readyState == 4
-				&& xmlHttpRequest.status == 200) {
+		if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
 			var loginRole = JSON.parse(xmlHttpRequest.responseText);
-			console.log("loginRole.police_power:"+loginRole.police_power);
-			if (loginRole.police_power == "1") {
-				var role_one = document
-						.getElementsByClassName("role_one");
+			console.log("loginRole.ajdbxt_police.police_power:"
+					+ loginRole.ajdbxt_police.police_power);
+			login_police_deparment = loginRole.ajdbxt_department.department_name;// 当前登录角色所在单位名字赋值
+			login_police_deparment_id = loginRole.ajdbxt_department.ajdbxt_department_id;// 当前登录角色所在单位名字赋值
+			console.log("login_police_deparment:" + login_police_deparment);
+			console.log("login_police_deparment_id:" + login_police_deparment_id);
+			if (loginRole.ajdbxt_police.police_power == "1") {
+				var role_one = document.getElementsByClassName("role_one");
 				for (var i = 0; i < role_one.length; i++) {
 					role_one[i].onclick = function() {
 						toastr.error("抱歉，您没有权限！");
 					};
 				}
-				open_url="/ajdbxt/user/User_queryForPageByDepartment";
-			}else if(loginRole.police_power == "2"){
-				open_url="/ajdbxt/user/User_queryForPageByDepartment";
-			}else{
-				open_url="/ajdbxt/user/User_queryForPage";
+				police_power_options = power_one_two;// 角色1可选权限赋值
+				open_url = "/ajdbxt/user/User_queryForPageByDepartment";
+			} else if (loginRole.ajdbxt_police.police_power == "2") {
+				police_power_options = power_one_two;// 角色2可选权限赋值
+				open_url = "/ajdbxt/user/User_queryForPageByDepartment";
+			} else {
+				police_power_options = power_three;// 角色3可选权限赋值
+				open_url = "/ajdbxt/user/User_queryForPage";
 			}
-			
-			
 
 			var input_PoliceSearchText = document
 					.getElementById("input_PoliceSearchText").value;
-			console.log("input_PoliceSearchText:"+input_PoliceSearchText);
+			console.log("input_PoliceSearchText:" + input_PoliceSearchText);
 			var formData = new FormData();
 			var xhr = false;
 			xhr = new XMLHttpRequest();
@@ -42,10 +51,11 @@ function List_Police_By_Page(pageIndex) {
 						/*
 						 * 
 						 */
-						
+
 						var new_tr = null;
 						var new_td = null;
-						var table_police = document.getElementById("table_police");
+						var table_police = document
+								.getElementById("table_police");
 
 						/*
 						 * 移出除标题以外的所有行
@@ -112,9 +122,9 @@ function List_Police_By_Page(pageIndex) {
 							new_tr.appendChild(new_td);
 							if (police_vo.list[num].ajdbxt_police.police_power == "1") {
 								new_td.innerHTML = "单位内浏览";
-							} else if(police_vo.list[num].ajdbxt_police.police_power == "2") {
+							} else if (police_vo.list[num].ajdbxt_police.police_power == "2") {
 								new_td.innerHTML = "单位内管理";
-							}else{
+							} else {
 								new_td.innerHTML = "所有单位内管理";
 							}
 
@@ -155,13 +165,15 @@ function List_Police_By_Page(pageIndex) {
 						// --------------------
 						// ------判断角色-------
 						var xmlHttpRequest = new XMLHttpRequest();
-						xmlHttpRequest.open("POST", "/ajdbxt/user/User_getPower");
+						xmlHttpRequest.open("POST",
+								"/ajdbxt/user/User_getPower");
 						xmlHttpRequest.send(null);
 						xmlHttpRequest.onreadystatechange = function() {
 							if (xmlHttpRequest.readyState == 4
 									&& xmlHttpRequest.status == 200) {
-								var loginRole = JSON.parse(xmlHttpRequest.responseText);
-								if (loginRole.police_power == "1") {
+								var loginRole = JSON
+										.parse(xmlHttpRequest.responseText);
+								if (loginRole.ajdbxt_police.police_power == "1") {
 									var role_one = document
 											.getElementsByClassName("role_one");
 									for (var i = 0; i < role_one.length; i++) {
@@ -192,17 +204,15 @@ function List_Police_By_Page(pageIndex) {
 			}
 			console.log("pageIndex:" + pageIndex);
 			formData.append("findPoliceByPageVO.currentPage", pageIndex);
-			formData.append("findPoliceByPageVO.police_name", input_PoliceSearchText);
+			formData.append("findPoliceByPageVO.police_name",
+					input_PoliceSearchText);
 			xhr.open("POST", open_url);
 			xhr.send(formData);
 
-			
-			
 		}
 
-	}//onreadystatechange
-	
-	
+	}// onreadystatechange
+
 }
 // --------------------------------------
 // --------新增人员---------
@@ -217,15 +227,11 @@ function createPolice() {
 						+ '<tr><td>密码:</td><td><input type="text" id="input_police_password" class="form-control" /></td></tr>'
 						+ '<tr><td>姓名:</td><td><input type="text" id="input_police_name" class="form-control" /></td></tr>'
 						+ '<tr><td>单位:</td><td><select id="input_police_department" class="form-control" >'
-						+ '<option  selected="selected" value="">请选择</option>'
-						+ '<option  value="侦查大队">侦查大队</option>'
 						+ '</select></td></tr>'
 						+ '<tr><td>职务:</td><td><input type="text" id="input_police_duty" class="form-control" /></td></tr>'
 						+ '<tr><td>权限:</td><td><select id="input_police_power" class="form-control" >'
 						+ '<option selected="selected" value="">请选择</option>'
-						+ '<option value="1">单位内浏览</option>'
-						+ '<option value="2">单位内管理</option>'
-						+ '<option value="3">所有单位内管理</option>'
+						+ police_power_options
 						+ '</select></td></tr>'
 						+ '<tr><td>手机号码:</td><td><input type="text" id="input_police_phone_number" class="form-control" /></td></tr>'
 						+ '</tbody></table>',
@@ -338,25 +344,49 @@ function createPolice() {
 					}
 				},
 				onContentReady : function() {
+					var xmlHttpRequest = new XMLHttpRequest();
+					xmlHttpRequest.open("POST", "/ajdbxt/user/User_getPower");
+					xmlHttpRequest.send(null);
+					xmlHttpRequest.onreadystatechange = function() {
+						if (xmlHttpRequest.readyState == 4
+								&& xmlHttpRequest.status == 200) {
+							var loginRole = JSON
+									.parse(xmlHttpRequest.responseText);
+							var option = '';
+							if (loginRole.ajdbxt_police.police_power == "3") {
+								$
+										.post(
+												'/ajdbxt/user/User_findDepartmentByPage',
+												function(Department_data) {
+													// 所有案件循环
+													
+													for (var len = 0; len < Department_data.list.length; len++) {
+														option += '<option ';
+														option += ' value="'
+																+ Department_data.list[len].ajdbxt_department_id
+																+ '">'
+																+ Department_data.list[len].department_name
+																+ '</option>';
+													}
+													$(
+															'#input_police_department')
+															.html(
+																	'<option selected="selected" value="">请选择</option>'
+																			+ option);
+												}, 'json');
 
-					$
-							.post(
-									'/ajdbxt/user/User_findDepartmentByPage',
-									function(Department_data) {
-										// 所有案件循环
-										var option = '';
-										for (var len = 0; len < Department_data.list.length; len++) {
-											option += '<option ';
-											option += ' value="'
-													+ Department_data.list[len].ajdbxt_department_id
-													+ '">'
-													+ Department_data.list[len].department_name
-													+ '</option>';
-										}
-										$('#input_police_department').html(
-												'<option selected="selected" value="">请选择</option>'
-														+ option);
-									}, 'json');
+							} else {
+								option += '<option value="'
+									+ login_police_deparment_id
+									+ '">'
+									+ login_police_deparment
+									+ '</option>';
+								$('#input_police_department').html(
+										option);
+							}
+						}
+
+					}
 
 				}
 
@@ -435,10 +465,7 @@ function updatePolice(button) {
 						+ '</select></td></tr>'
 						+ '<tr><td>职务:</td><td><input type="text" id="input_police_duty" class="form-control" /></td></tr>'
 						+ '<tr><td>权限:</td><td><select id="input_police_power" class="form-control" >'
-						+ '<option selected="selected" value="">请选择</option>'
-						+ '<option value="1">单位内浏览</option>'
-						+ '<option value="2">单位内管理</option>'
-						+ '<option value="3">所有单位内管理</option>'
+						+ police_power_options
 						+ '</select></td></tr>'
 						+ '<tr><td>手机号码:</td><td><input type="text" id="input_police_phone_number" class="form-control" /></td></tr>'
 						+ '</tbody></table>',
@@ -449,7 +476,7 @@ function updatePolice(button) {
 						// 警号
 						var input_police_serial_number = document
 								.getElementById("input_police_serial_number").value;
-						
+
 						if (input_police_serial_number == "") {
 							toastr.error("警号不能为空！");
 							return false;
@@ -548,7 +575,6 @@ function updatePolice(button) {
 				onContentReady : function() {
 					var update_police_vo = null;
 					var button_id = button.id;
-					console.log("button_id:" + button_id);
 					var formData = new FormData();
 					var update_xhr = new XMLHttpRequest();
 					formData
@@ -558,89 +584,106 @@ function updatePolice(button) {
 					update_xhr.onreadystatechange = function() {
 						if (update_xhr.readyState == 4) {
 							if (update_xhr.status == 200) {
-								update_police_vo = JSON.parse(update_xhr.responseText);
-								console.log("xhr.readyState:"+update_xhr.readyState);
-								console.log("xhr.status:"+update_xhr.status);
-									var ajdbxt_police_id = update_police_vo.ajdbxt_police.ajdbxt_police_id;
-									console.log("ajdbxt_police_id:"+ajdbxt_police_id);
-									if (ajdbxt_police_id == button_id) {
-										console.log("ajdbxt_police_id == button_id:"+ ajdbxt_police_id == button_id);
+								update_police_vo = JSON
+										.parse(update_xhr.responseText);
+								console.log("xhr.readyState:"
+										+ update_xhr.readyState);
+								console.log("xhr.status:" + update_xhr.status);
+								var ajdbxt_police_id = update_police_vo.ajdbxt_police.ajdbxt_police_id;
+								console.log("ajdbxt_police_id:"
+										+ ajdbxt_police_id);
+								if (ajdbxt_police_id == button_id) {
+									console
+											.log("ajdbxt_police_id == button_id:"
+													+ ajdbxt_police_id == button_id);
 
-										// Id
-										var input_ajdbxt_police_id = document
-												.getElementById("input_ajdbxt_police_id");
-										input_ajdbxt_police_id.value = ajdbxt_police_id;
+									// Id
+									var input_ajdbxt_police_id = document
+											.getElementById("input_ajdbxt_police_id");
+									input_ajdbxt_police_id.value = ajdbxt_police_id;
 
-										// 警号
-										var input_police_serial_number = document
-												.getElementById("input_police_serial_number");
-										input_police_serial_number.value = update_police_vo.ajdbxt_police.police_serial_number;
-										// 密码
-										var input_police_password = document
-												.getElementById("input_police_password");
-										input_police_password.value = update_police_vo.ajdbxt_police.police_password;
-										console.log("input_police_password:"+input_police_password.value );
+									// 警号
+									var input_police_serial_number = document
+											.getElementById("input_police_serial_number");
+									input_police_serial_number.value = update_police_vo.ajdbxt_police.police_serial_number;
+									// 密码
+									var input_police_password = document
+											.getElementById("input_police_password");
+									input_police_password.value = update_police_vo.ajdbxt_police.police_password;
+									console.log("input_police_password:"
+											+ input_police_password.value);
 
-										// 姓名
-										var input_police_name = document
-												.getElementById("input_police_name");
-										input_police_name.value = update_police_vo.ajdbxt_police.police_name;
+									// 姓名
+									var input_police_name = document
+											.getElementById("input_police_name");
+									input_police_name.value = update_police_vo.ajdbxt_police.police_name;
 
-										// 单位
-										/*
-										 * var input_police_department =
-										 * document
-										 * .getElementById("input_police_department");
-										 * input_police_department.value =
-										 * police_vo.list[num].police_department;
-										 */
-										var deparment = update_police_vo.ajdbxt_department.ajdbxt_department_id;
-										
-										$
-												.post(
-														'/ajdbxt/user/User_findDepartmentByPage',
-														function(
-																Department_data) {
-															// 所有案件循环
-															var option = '';
-															for (var len = 0; len < Department_data.list.length; len++) {
-																/*
-																console.log("deparment:"+update_police_vo.ajdbxt_department.department_name+"："+deparment);
-																console.log("Department_data.list[len].department_name:"+Department_data.list[len].department_name+"："+Department_data.list[len].ajdbxt_department_id);
-																console.log(Department_data.list[len].ajdbxt_department_id == deparment);
-																*/
-																
-																option += '<option ';
-																if (Department_data.list[len].ajdbxt_department_id == deparment) {
-																	option += 'selected';
-																}
-																option += ' value="'
-																		+ Department_data.list[len].ajdbxt_department_id
-																		+ '">'
-																		+ Department_data.list[len].department_name
-																		+ '</option>';
-															}
-															$(
-																	'#input_police_department')
-																	.html(
-																			'<option selected="selected" value="">请选择</option>'
-																					+ option);
-														}, 'json');
+									// 单位
+									var xmlHttpRequest = new XMLHttpRequest();
+									xmlHttpRequest.open("POST", "/ajdbxt/user/User_getPower");
+									xmlHttpRequest.send(null);
+									xmlHttpRequest.onreadystatechange = function() {
+										if (xmlHttpRequest.readyState == 4
+												&& xmlHttpRequest.status == 200) {
+											var loginRole = JSON
+													.parse(xmlHttpRequest.responseText);
+											var option = '';
+											if (loginRole.ajdbxt_police.police_power == "3") {
+												var deparment = update_police_vo.ajdbxt_department.ajdbxt_department_id;
+												$
+														.post(
+																'/ajdbxt/user/User_findDepartmentByPage',
+																function(Department_data) {
+																	// 所有案件循环
+																	for (var len = 0; len < Department_data.list.length; len++) {
+																		option += '<option ';
+																		if (Department_data.list[len].ajdbxt_department_id == deparment) {
+																			option += 'selected';
+																		}
+																		option += ' value="'
+																				+ Department_data.list[len].ajdbxt_department_id
+																				+ '">'
+																				+ Department_data.list[len].department_name
+																				+ '</option>';
+																	}
+																	$(
+																			'#input_police_department')
+																			.html(option);
+																}, 'json');
 
-										// 职务
-										var input_police_duty = document
-												.getElementById("input_police_duty");
-										input_police_duty.value = update_police_vo.ajdbxt_police.police_duty;
 
-										// 角色
-										var input_police_power = document
-												.getElementById("input_police_power");
-										input_police_power.value = update_police_vo.ajdbxt_police.police_power;
+											} else {
+												option += '<option value="'
+													+ login_police_deparment_id
+													+ '">'
+													+ login_police_deparment
+													+ '</option>';
+												$('#input_police_department').html(
+														option);
+											}
+										}
 
-										// 手机号码
-										var input_police_phone_number = document
-												.getElementById("input_police_phone_number");
-										input_police_phone_number.value = update_police_vo.ajdbxt_police.police_phone_number;
+									}
+
+									
+									
+									
+									
+								
+									// 职务
+									var input_police_duty = document
+											.getElementById("input_police_duty");
+									input_police_duty.value = update_police_vo.ajdbxt_police.police_duty;
+
+									// 角色
+									var input_police_power = document
+											.getElementById("input_police_power");
+									input_police_power.value = update_police_vo.ajdbxt_police.police_power;
+
+									// 手机号码
+									var input_police_phone_number = document
+											.getElementById("input_police_phone_number");
+									input_police_phone_number.value = update_police_vo.ajdbxt_police.police_phone_number;
 								}
 							}
 						}

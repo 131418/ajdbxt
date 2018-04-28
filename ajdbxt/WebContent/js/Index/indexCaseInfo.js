@@ -6,8 +6,8 @@ window.onload = function() {
 	xmlHttpRequest.onreadystatechange = function() {
 		if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
 			var loginRole = JSON.parse(xmlHttpRequest.responseText);
-			console.log("权限:"+loginRole.police_power);
-			if (loginRole.police_power == "1（浏览）" || loginRole.police_power == "1") {
+			console.log("权限:"+loginRole.ajdbxt_police.police_power);
+			if (loginRole.ajdbxt_police.police_power == "1") {
 				$("#type_chose").html('<option  value="正在参与的案件">正在参与的案件</option>');
 				}
 			}
