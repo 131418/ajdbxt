@@ -65,14 +65,21 @@ function List_Index_CaseInfo_By_Page(pageIndex) {
 
 				var str_page_row=null;
 				if (index_case_info_vo.totalPages > 0) {
-					str_page_row='<li class="mui-disabled"><span onclick="flip(2)"> &laquo; </span></li>';//上一页
-					str_page_row+='<li class="mui-active"><a onclick="flip(1)">1</a></li>';
-					for (var pageCount = 1; pageCount < index_case_info_vo.totalPages; pageCount++) {
-						str_page_row+='<li class="mui-active"><a href="#">'+pageCount+'</a></li>';
+					str_page_row='<li class="mui-disabled"><span onclick="flip(2)"> &laquo; </span>';//上一页
+					str_page_row += '<span><select class="mui-select" id="select_page" style="padding:0 15px;margin-bottom:0px;">'
+					for (var pageCount = 1; pageCount <= index_case_info_vo.totalPages; pageCount++) {
+						str_page_row += '<option';
+						if(pageCount==index_case_info_vo.currPage){
+							str_page_row += ' selected="selected" ';
+						}
+						str_page_row += '><a>'+pageCount +' </a></option>';
 					}
+					str_page_row += '</select></span>';
 					str_page_row+='<li class="mui-disabled"><a onclick="flip(3)">&raquo;</a></li>';//下一页
 					$("#ul_page_count").html(str_page_row);
-				
+					document.getElementById("select_page").onchange=function(){
+						List_Police_By_Page(this.value);
+					};
 				
 				/*
 				 * 移出除标题以外的所有行
@@ -117,7 +124,7 @@ function List_Index_CaseInfo_By_Page(pageIndex) {
 					new_a = document.createElement("a");
 					new_a.innerHTML = index_case_info_vo.Caselist[num].info.info_name;
 					new_a.className = "mui-navigate-right a_to_details";
-					/*new_a.href = "/ajdbxt/user/User_index_details";*/
+					/*new_a.href = "/ajdbxt/user/User_mobile_index_details";*/
 					new_span2.appendChild(new_a);
 					new_span3=document.createElement("span");
 					if(index_case_info_vo.Caselist[num].info.info_category=="行政案件"){
@@ -156,12 +163,12 @@ function List_Index_CaseInfo_By_Page(pageIndex) {
 				//给每个案件链接绑定一个click方法
 				$(".a_to_details").bind("click", function(a) {
 					mui.openWindow({
-						  url: "/ajdbxt/user/User_index_details",
+						  url: "/ajdbxt/user/User_mobile_index_details",
 						});
 				})
 				
 				}else{
-					$("#ul_case_info").html('<div style="text-align:center;color:red;font-size:20px;margin:10px 0;">无案件信息</div>');
+					$("#ul_case_info").html('<li class="mui-table-view-cell mui-collapse new_li" style="text-align:center;color:red;font-size:20px;margin:10px 0;">无案件信息</li>');
 				}
 				console.log("index_case_info_vo.currPage:"
 						+ index_case_info_vo.currPage);

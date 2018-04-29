@@ -77,14 +77,10 @@
 		<!--------------------------------->
 		<!--底部导航-->
 		<nav class="mui-bar mui-bar-tab">
-			<a class="mui-tab-item mui-active">
-				<span class="mui-icon mui-icon-home"></span>
-				<span class="mui-tab-label">首页</span>
-			</a>
-			<a class="mui-tab-item">
-				<span class="mui-icon mui-icon-person"></span>
-				<span class="mui-tab-label">人员</span>
-			</a>
+				<a class="mui-tab-item " onclick="window.location.href='<%=basePath%>user/User_mobile_index'" href="<%=basePath%>user/User_mobile_index"> <span
+			class="mui-icon mui-icon-home"></span> <span class="mui-tab-label">首页</span>
+		</a> <a class="mui-tab-item" onclick="window.location.href='<%=basePath%>user/User_mobile_police_one'" href='<%=basePath%>user/User_mobile_police_one'> <span class="mui-icon mui-icon-person"></span>
+			<span class="mui-tab-label" >人员</span>
 			<a class="mui-tab-item">
 				<span class="mui-icon mui-icon-email"></span>
 				<span class="mui-tab-label">统计</span>

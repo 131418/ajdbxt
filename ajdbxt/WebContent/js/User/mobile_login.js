@@ -28,7 +28,7 @@ function login() {
 			console.log(xhr.responseText);
 			if (result == "success") {
 				/*toastr.success("登录成功！");*/
-				window.location = "/ajdbxt/user/User_index";
+				window.location = "/ajdbxt/user/User_mobile_index";
 			} else {
 				mui.toast("用户名或密码错误！");
 			}

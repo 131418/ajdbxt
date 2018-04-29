@@ -79,20 +79,20 @@
 				<li class="mui-table-view-cell"><span
 						class="mui-icon mui-icon-paperplane"></span> <span
 						class="case_info_title"> <a class="a_case_type" > 正在参与的案件 </a>
-					</span> <span class="mui-badge mui-badge-green zzcyaj_current_type_counts">33</span></li>
+					</span> <span class="mui-badge mui-badge-green">33</span></li>
 					
 					<li class="mui-table-view-cell"><span
 						class="mui-icon mui-icon-paperclip"></span> <span
 						class="case_info_title"> <a class="a_case_type"  > 待核对案件 </a>
-					</span> <span class="mui-badge mui-badge-blue dhdaj_current_type_counts">33</span></li>
+					</span> <span class="mui-badge mui-badge-blue">33</span></li>
 					<li class="mui-table-view-cell"><span
 						class="mui-icon mui-icon-closeempty"></span> <span
 						class="case_info_title"> <a class="a_case_type"  > 等待提交问题清单的案件 </a>
-					</span> <span class="mui-badge mui-badge-warning dtjwtaj_current_type_counts">33</span></li>
+					</span> <span class="mui-badge mui-badge-warning">33</span></li>
 					<li class="mui-table-view-cell"><span
 						class="mui-icon mui-icon-checkmarkempty"></span> <span
 						class="case_info_title"> <a class="a_case_type"  > 等待评分的案件 </a>
-					</span> <span class="mui-badge mui-badge-royal dpfaj_current_type_counts">33</span></li>
+					</span> <span class="mui-badge mui-badge-royal">33</span></li>
 				</ul>
 			</div>
 		</div>
@@ -102,9 +102,9 @@
 	<!--------------------------------->
 	<!--底部导航-->
 	<nav class="mui-bar mui-bar-tab">
-		<a class="mui-tab-item " onclick="window.location.href='<%=basePath%>user/User_index'" href="<%=basePath%>user/User_index"> <span
+				<a class="mui-tab-item " onclick="window.location.href='<%=basePath%>user/User_mobile_index'" href="<%=basePath%>user/User_mobile_index"> <span
 			class="mui-icon mui-icon-home"></span> <span class="mui-tab-label">首页</span>
-		</a> <a class="mui-tab-item" onclick="window.location.href='<%=basePath%>user/User_userPage'" href='<%=basePath%>user/User_userPage'> <span class="mui-icon mui-icon-person"></span>
+		</a> <a class="mui-tab-item" onclick="window.location.href='<%=basePath%>user/User_mobile_police_one'" href='<%=basePath%>user/User_mobile_police_one'> <span class="mui-icon mui-icon-person"></span>
 			<span class="mui-tab-label" >人员</span>
 		</a> <a class="mui-tab-item" onclick="window.location.href='<%=basePath%>total/Total_page_listPoliceCaseStatistics'" href="<%=basePath%>total/Total_page_listPoliceCaseStatistics"> <span class="mui-icon mui-icon-email"></span>
 			<span class="mui-tab-label">统计</span>
@@ -117,7 +117,7 @@
 
 	<!--------------------------------->
 	<!--主体部分-->
-	<div class="mui-content" style="padding: 0; margin: 0 0 50px 0;">
+	<div class="mui-content" style="padding: 0; margin: 60px 0 70px 0;">
 		<!--卡片视图-->
 		<div class="mui-card">
 			<!--页眉，放置标题-->

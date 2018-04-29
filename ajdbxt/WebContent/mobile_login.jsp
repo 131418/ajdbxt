@@ -51,15 +51,15 @@
 		<div class="mui-content">
 			<form class="mui-input-group center">
 				<div class="mui-input-row">
-					<label> <span class="mui-icon mui-icon-person"></span></label>
+					<label> <span class="mui-icon mui-icon-person" style="line-height:18px;"></span></label>
 					<input type="text" class="mui-input-clear" id="userNumber" placeholder="用户名" width="80%">
 				</div>
 				<div class="mui-input-row">
-					<label><span class="mui-icon mui-icon-locked"></span></label>
+					<label><span class="mui-icon mui-icon-locked"  style="line-height:18px;"></span></label>
 					<input type="password" class="mui-input-password" id="password" placeholder="密码">
 				</div>
 				<div class="mui-button-row"  >
-					<button type="button" class="mui-btn mui-btn-primary" onclick="login()">确认登录</button>
+					<button type="button" style="width:100%;" class="mui-btn mui-btn-primary" onclick="login()">确认登录</button>
 				</div>
 			</form>
 			
