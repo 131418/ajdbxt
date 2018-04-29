@@ -2,9 +2,9 @@ package com.ajdbxt.domain.VO.Total;
 
 import java.util.List;
 
-import com.ajdbxt.domain.DTO.Total.StatisticPoliceCaseNumDTO;
+import com.ajdbxt.domain.DTO.Total.StatisticDepartmentCaseNumDTO;
 
-public class page_listPoliceCaseNumByPageAndSearchVO {
+public class DepartmentStatisticVo {
 			//当前页
 			private int currePage = 1;
 		    //总记录数
@@ -21,12 +21,10 @@ public class page_listPoliceCaseNumByPageAndSearchVO {
 			private String start_time = "";
 			// 结束时间
 			private String stop_time = "";
-			//办案部门id
-			private String department;
-			//查找民警
-			private String searchPolice;
+			//排序方式
+			private String orderString;
 			
-			private List<StatisticPoliceCaseNumDTO> statisticPoliceCaseNumDTO;
+			private List<StatisticDepartmentCaseNumDTO> statisticPoliceCaseNumDTO;
 
 			public int getCurrePage() {
 				return currePage;
@@ -91,32 +89,24 @@ public class page_listPoliceCaseNumByPageAndSearchVO {
 			public void setStop_time(String stop_time) {
 				this.stop_time = stop_time;
 			}
-
-			public String getDepartment() {
-				return department;
-			}
-
-			public void setDepartment(String department) {
-				this.department = department;
-			}
 			
 
-			public List<StatisticPoliceCaseNumDTO> getStatisticPoliceCaseNumDTO() {
+			public List<StatisticDepartmentCaseNumDTO> getStatisticPoliceCaseNumDTO() {
 				return statisticPoliceCaseNumDTO;
 			}
 
-			public void setStatisticPoliceCaseNumDTO(List<StatisticPoliceCaseNumDTO> statisticPoliceCaseNumDTO) {
+			public void setStatisticPoliceCaseNumDTO(List<StatisticDepartmentCaseNumDTO> statisticPoliceCaseNumDTO) {
 				this.statisticPoliceCaseNumDTO = statisticPoliceCaseNumDTO;
 			}
 
-			public String getSearchPolice() {
-				return searchPolice;
+			public String getOrderString() {
+				return orderString;
 			}
 
-			public void setSearchPolice(String searchPolice) {
-				this.searchPolice = searchPolice;
+			public void setOrderString(String orderString) {
+				this.orderString = orderString;
 			}
-			
+
 			
 			
 }
