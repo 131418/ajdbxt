@@ -33,33 +33,37 @@ public class MsgSend {
 	public static final String POlICE_OFFICE="安源公安分局";
 	
 	//語音模板
-	public static final String SUBPOENA_A_SUSPECT_DIED_LINE_VOICE="_，传唤_案件嫌疑人时间不足_小时，请尽快传唤嫌疑人。";
-	public static final String SUBPOENA_A_SUSPECT_TIME_OUT_VOICE="_，你未在8小时内传唤_案件嫌疑人，请办理延长传唤手续.";
-	public static final String SUBPOENA_A_SUSPECT_DIED_LINE_CAPTAIN_VOICE="_所队长，_案件嫌疑人还未传唤，请督促办案民警处理。";
-	public static final String COMMUNITY_ABANDON_DRUG_VOICE="_，请24小时内通知_案件嫌疑人家属、戒毒人员户籍所在社区或现住地社区";
-	public static final String PUNISH_FINE_VOICE="_，请通知_案件嫌疑人15日内到银行缴纳罚款";
-	public static final String CASE_PAGE_HAND_IN_VOICE="_，请在7天内把_案件案卷上交法制大队";
-	public static final String SUBPOENA_A_SUSPECT_VOICE="_，请在8小时内传唤_案件嫌疑人。";
-	public static final String MANDATORY_ABANDON_DRUG_VOICE="_，请24小时内通知_案件嫌疑人家属";
-	public static final String PENALTY_AND_DETENTION_VOICE="_，请24小时内通知_案件嫌疑人家属，并通知嫌疑人15日内到银行缴纳罚款";
-	public static final String PUNISH_DETENTION_VOICE="_，_案件嫌疑人被行政拘留，请24小时内通知其家属。";
-	public static final String SUE_RESULT_CATCH_POLICE_VOICE="_，检察院对_案件嫌疑人作出逮捕决定，请24小时内执行逮捕，并在逮捕后24小时内通知家属";
-	public static final String MONITORING_LIVE_VOICE="_案件嫌疑人被强制监视居住6个月";
-	public static final String GET_KEEP_WAIT_EXAMINE_VOICE="_，对_案取保候审人进行侦查";
-	//短信模板
-	public static final int SUBPOENA_A_SUSPECT_DIED_LINE=108845;
-	public static final int SUBPOENA_A_SUSPECT_TIME_OUT=108077;
-	public static final int SUBPOENA_A_SUSPECT_DIED_LINE_CAPTAIN=108846;
-	public static final int COMMUNITY_ABANDON_DRUG=108851;
-	public static final int PUNISH_FINE=108847;
-	public static final int CASE_PAGE_HAND_IN=108852;
-	public static final int SUBPOENA_A_SUSPECT=108844;
-	public static final int MANDATORY_ABANDON_DRUG=108850;
-	public static final int PENALTY_AND_DETENTION=108849;
-	public static final int PUNISH_DETENTION=108848;
-	public static final int SUE_RESULT_CATCH_POLICE=108853;
-	public static final int MONITORING_LIVE=108854;
-	public static final int GET_KEEP_WAIT_EXAMINE=108855;
+	public static final String SUBPOENA_A_SUSPECT_VOICE="发生一起_案件需尽快办理";
+	public static final String SUBPOENA_A_SUSPECT_TIME_OUT_VOICE="_案件传唤超8小时办理延长传唤手续";
+	public static final String CASE_ROLLBACK_VOICE="_案件及时审核是否打回";
+	public static final String CASE_ROLLBACK_UPDATE_VOICE="_案件打回及时修改";
+	public static final String CASE_ROLLBACK_OVER_VOICE="_案件打回修改完毕尽快办理";
+	public static final String QUESTION_UP_VOICE="_案件问题反馈完成尽快办理";
+	public static final String QUESTION_UP_CHECK_VOICE="_等待审核，法制大队提出_个问题，整改了_个问题";
+	public static final String QUESTION_UP_LEADER_VOICE="_案件，法制大队提出_个问题，整改了_个问题";
+	public static final String CASE_GOODS_LIB_VOICE="尽快把_案件涉案财物入库";
+	public static final String CASE_GOODS_LIB_CHECK_VOICE="督促办案人员把_案件涉案财物入库";
+	public static final String CASE_GOODS_LIB_OUT_VOICE="_案件涉案财物未按规定入库";
+	public static final String CASE_FILE_UP_VOICE="_案件案卷上交法制大队";
+	public static final String CASE_FILE_UP_CHECK_VOICE="_案件案卷上交法制大队";
+	public static final String CASE_FILE_UP_OUT_VOICE="_案件案卷未按规定上交";
+	public static final String CASE_END_VOICE="_案件已抓捕_小时还未结案";
+	//d短信模板
+	public static final int SUBPOENA_A_SUSPECT=114978;
+	public static final int SUBPOENA_A_SUSPECT_TIME_OUT=114979;
+	public static final int CASE_ROLLBACK=114980;
+	public static final int CASE_ROLLBACK_UPDATE=114981;
+	public static final int CASE_ROLLBACK_OVER=114982;
+	public static final int QUESTION_UP=114983;
+	public static final int QUESTION_UP_CHECK=114984;
+	public static final int QUESTION_UP_LEADER=114985;
+	public static final int CASE_GOODS_LIB=114987;
+	public static final int CASE_GOODS_LIB_CHECK=114988;
+	public static final int CASE_GOODS_LIB_OUT=114990;
+	public static final int CASE_FILE_UP=114991;
+	public static final int CASE_FILE_UP_CHECK=114992;
+	public static final int CASE_FILE_UP_OUT=114993;
+	public static final int CASE_END=114994;
 	
 	/**
 	 * 测试方法
@@ -77,7 +81,7 @@ public class MsgSend {
 		}
 		
 		String [] params= {"李木木","王五抢劫案"};
-		String s=doSendVoiceSimple(params, "15270634643",PUNISH_DETENTION_VOICE);
+		String s=doSendVoiceSimple(params, "15270634643",CASE_END_VOICE);
 		System.out.println(s);
 	}
 	

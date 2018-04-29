@@ -122,30 +122,7 @@ public class ProcessAction  extends ActionSupport{
 				if(o!=null&&(o.equals("")==false)) {
 					field.set(process, o);
 					switch (field.getName()) {
-						case "process_case_end"://案件流程结束
-							list.add(ProcessService.PROCESS_FILE_HAND);
-							break;
-						case "process_detention"://行政拘留
-							list.add(ProcessService.PROCESS_DETENTION);
-							break;
-						case "process_penalty"://罚款
-							list.add(ProcessService.PROCESS_PENALTY);
-							break;
-						case  "process_treatment_category"://戒毒
-							list.add(ProcessService.PROCESS_TREATMENT_CATEGORY);
-							break;
-						case "process_criminal_detention"://刑事拘留
-							list.add(ProcessService.PROCESS_CRIMINAL_DETENTION);
-							break;
-						case "process_arrest"://逮捕
-							list.add(ProcessService.PROCESS_ARREST);
-							break;
-						case "process_get_keep_wait_interrogate"://取保候审
-							list.add(ProcessService.PROCESS_GET_KEEP_WAIT_INTERROGATE);
-							break;
-						case "process_live_at_home_unde_surveillance"://监视居住
-							list.add(ProcessService.PROCESS_LIVE_AT_HOME_UNDE_SURVEILLANCE);
-							break;		
+						
 					}
 				}
 			}catch(Exception e) {

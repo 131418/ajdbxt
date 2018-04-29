@@ -74,7 +74,6 @@ public class InfoServiceImpl implements InfoService {
 	
 	@Override
 	public String saveCase(ajdbxt_info caseInfo) {
-
 		oneceRank(caseInfo);//下面要得到警察写逻辑
 		//哲理要写排班逻辑
 		ProcessDTO processDTO=new ProcessDTO();//回传dto而不是Info
@@ -85,6 +84,7 @@ public class InfoServiceImpl implements InfoService {
 		processDTO.setPolice(polices);
 		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
 		processDTO.setCap(infoPoliceDao.findCaptainByDepartment(caseInfo.getInfo_department()));
+		processDTO.setTeam_legal(infoPoliceDao.findLegalByDepartment(caseInfo.getInfo_department()));
 		return JsonUtils.toJson(processDTO);
 	}
 	private void oneceRank(ajdbxt_info caseInfo) {//排班主协办人员
