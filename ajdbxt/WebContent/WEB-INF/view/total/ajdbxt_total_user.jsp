@@ -92,6 +92,7 @@
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
+										<!-- <th>序号</th> -->
 										<th><select id="select_case_kind" class="form-control"
 											onchange="List_Total_User_By_Page(1)">
 												<option selected="selected" value="">所有案件</option>
