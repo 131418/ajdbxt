@@ -341,7 +341,7 @@ public class InfoServiceImpl implements InfoService {
 		if(caseInfo.getInfo_category().equals("刑事案件")) {
 			caseField=false;
 		}
-		new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE, caseInfo.getAjdbxt_info_id(), caseField, applicationContext).start();
+		new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE, caseInfo.getAjdbxt_info_id(), caseField, applicationContext,null).start();
 		return JsonUtils.toJson(processDTO);
 	}
 
@@ -406,7 +406,7 @@ public class InfoServiceImpl implements InfoService {
 		if(info.getInfo_category().equals("行政案件")) {
 			caseFiled=true;
 		}
-		new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext).start();//通知
+		new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext,null).start();//人员变动带来的流程变动不好处理
 		return JsonUtils.toJson(processDTO);
 	}
 	
