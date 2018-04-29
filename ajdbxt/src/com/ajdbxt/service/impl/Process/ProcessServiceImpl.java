@@ -100,7 +100,7 @@ public class ProcessServiceImpl implements ProcessService {
 		return processDTO;
 	}
 	@Override
-	public String update(ajdbxt_process process, List<Integer> list) {
+	public String update(ajdbxt_process process, int changeType ,String fieldName) {
 		ProcessDTO processDTO=new ProcessDTO();
 		processDTO.setProcess(process);
 		ajdbxt_info info=processInfoDao.findInfoById(process.getProcess_case_id());
@@ -111,13 +111,20 @@ public class ProcessServiceImpl implements ProcessService {
 			caseFiled=true;
 		}
 		ApplicationContext applicationContext=(ApplicationContext) ServletActionContext.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-		for(int send_massage_type:list) {
-			switch (send_massage_type) {
-			
-			}
-		}
-		
-		
+		switch (changeType) {
+		case case_end:
+			new SMSThread(MsgSend.CASE_END_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext, fieldName).start();
+			break;
+		case punish:
+			new SMSThread(MsgSend.CASE_GOODS_LIB_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext, fieldName).start();
+			break;
+		case question:
+			new SMSThread(MsgSend.QUESTION_UP_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext, fieldName).start();
+			break;
+		case rollback:
+			new SMSThread(MsgSend.CASE_FILE_UP_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext, fieldName).start();
+			break;		
+		}		
 		return JsonUtils.toJson(processDTO);
 	}
 	

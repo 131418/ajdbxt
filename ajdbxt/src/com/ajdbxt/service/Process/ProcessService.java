@@ -7,6 +7,10 @@ import com.ajdbxt.domain.DTO.Process.ProcessDTO;
 import com.ajdbxt.domain.VO.Process.showProcessVO;
 
 public interface ProcessService {
+	public static int rollback=1;
+	public static int question =2;
+	public static int case_end =3;
+	public static int punish=4;
 	
 	public ProcessDTO getSingleProcessByCaseId(String case_id);
 	/**
@@ -15,7 +19,7 @@ public interface ProcessService {
 	 * @param list 
 	 * @return 更改后的json
 	 */
-	public String update(ajdbxt_process process,List<Integer> list);
+	public String update(ajdbxt_process process,int changeType,String fielName);
 	public showProcessVO getSomeProcessByShowProcessVO(showProcessVO processVO);
 }
 

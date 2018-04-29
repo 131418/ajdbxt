@@ -114,7 +114,9 @@ public class ProcessAction  extends ActionSupport{
 		ajdbxt_process process=processService.getSingleProcessByCaseId(ajdbxtProcess.getProcess_case_id()).getProcess();
 		Class clazz=ajdbxtProcess.getClass();
 		Field [] f= clazz.getDeclaredFields();
-		List<Integer> list=new ArrayList<>();//一些特殊的改变保存在这里
+		String json="";
+		String fieldName="";
+		int changeType=-1;
 		for(Field field: f){
 			field.setAccessible(true);//解锁
 			try {
@@ -122,14 +124,32 @@ public class ProcessAction  extends ActionSupport{
 				if(o!=null&&(o.equals("")==false)) {
 					field.set(process, o);
 					switch (field.getName()) {
-						
+					case "process_question_list":
+						changeType=ProcessService.question;
+						break;
+					case "process_case_goods":
+					case "process_apply_right":
+						fieldName=field.getName();
+						changeType=ProcessService.rollback;
+						break;
+					case "process_case_end":
+						changeType=ProcessService.case_end;
+						break;
+						//以下为行政处罚
+					case "process_administrativ_warning":
+					case "process_detention":
+					case "process_community_abandon_drug":
+					case "process_mandatory_abandon_drug":
+					case "process_penalty":
+						changeType=ProcessService.punish;
+						break;
 					}
 				}
 			}catch(Exception e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		String json=processService.update(process, list);
+		json=processService.update(process, changeType, fieldName);
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		try {
 			ServletActionContext.getResponse().getWriter().println(json);
