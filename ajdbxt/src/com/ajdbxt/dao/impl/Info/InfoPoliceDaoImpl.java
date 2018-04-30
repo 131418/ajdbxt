@@ -58,7 +58,7 @@ public class InfoPoliceDaoImpl implements InfoPoliceDao {
 
 	@Override
 	public ajdbxt_police findLegalByDepartment(String department_id) {
-		String hql="from ajdbxt_police where police_department=? and (police_duty='法制员' or police_duty like '%法制员%')";
+		String hql="from ajdbxt_police where police_department=? and police_legaler='1'";
 		Session session=sessionFactory.getCurrentSession();
 		Query query=session.createQuery(hql);
 		query.setString(0, department_id);
