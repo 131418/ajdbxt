@@ -122,16 +122,8 @@ public class UserAction extends ActionSupport {
 		return "mobile_police_one";
 	}
 	
-	public String mobile_police_two() {
-		return "mobile_police_two";
-	}
-	
-	public String mobile_police_three() {
-		return "mobile_police_three";
-	}
-	
-	public String mobile_police_delete() {
-		return "mobile_police_delete";
+	public String mobile_police_add() {
+		return "mobile_police_add";
 	}
 	
 	public String mobile_police_update() {
