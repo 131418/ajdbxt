@@ -106,7 +106,7 @@
 				<!--  -->
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown"> <i class="fa fa-user-circle"></i> <span
-						id="USER_NAME"><s:property value="#session.loginPolice.police_name"/></span> <i
+						id="USER_NAME"><s:property value="#session.loginPolice.ajdbxt_police.police_name"/></span> <i
 						class="icon-submenu lnr lnr-chevron-down"></i>
 				</a>
 					<ul class="dropdown-menu">

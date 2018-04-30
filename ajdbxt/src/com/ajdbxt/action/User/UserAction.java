@@ -87,7 +87,7 @@ public class UserAction extends ActionSupport {
 	
 
 	public String indexPage() {
-		ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
+		policedptVO loginPolice = (policedptVO) ActionContext.getContext().getSession().get("loginPolice");
 		if (null == loginPolice) {
 			return "login";//回到登录界面
 		}
@@ -105,7 +105,31 @@ public class UserAction extends ActionSupport {
 	public String navbar() {
 		return "navbar";
 	}
-
+	//移动端页面跳转
+	public String mobile_index() {
+		policedptVO loginPolice = (policedptVO) ActionContext.getContext().getSession().get("loginPolice");
+		if (null == loginPolice) {
+			return "login";//回到登录界面
+		}
+		return "mobile_index";
+	}
+	
+	public String mobile_index_details() {
+		return "mobile_index_details";
+	}
+	
+	public String mobile_police_one() {
+		return "mobile_police_one";
+	}
+	
+	public String mobile_police_two() {
+		return "mobile_police_two";
+	}
+	
+	public String mobile_police_three() {
+		return "mobile_police_three";
+	}
+	
 	public void login() {
 		try {
 			// 获得返回的判断结果
@@ -160,8 +184,8 @@ public class UserAction extends ActionSupport {
 	public void changePassword() {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=utf-8");
-		ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
-		String result = userService.changePassword(loginPolice.getAjdbxt_police_id(),ajdbxt_police.getPolice_password());
+		policedptVO loginPolice = (policedptVO) ActionContext.getContext().getSession().get("loginPolice");
+		String result = userService.changePassword(loginPolice.getAjdbxt_police().getAjdbxt_police_id(),ajdbxt_police.getPolice_password());
 		try {
 			response.getWriter().write(result);
 		} catch (IOException e) {
@@ -238,8 +262,8 @@ public class UserAction extends ActionSupport {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
 			response.setContentType("text/html;charset=utf-8");
-			ajdbxt_police loginPolice = (ajdbxt_police) ActionContext.getContext().getSession().get("loginPolice");
-			String department = loginPolice.getPolice_department();
+			policedptVO loginPolice = (policedptVO) ActionContext.getContext().getSession().get("loginPolice");
+			String department = loginPolice.getAjdbxt_police().getPolice_department();
 			String policeName = this.findPoliceByPageVO.getPolice_name();
 			findPoliceByPageVO findByDpt = userService.queryForPageByDepartment(10, currentPage, department, policeName);
 			if(policeName!=null&&!"".equals(policeName)) {
