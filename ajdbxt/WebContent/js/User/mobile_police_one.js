@@ -54,6 +54,7 @@ function List_Police_By_Page(pageIndex) {
 						var new_span2 = null;// 警员名
 						var new_span3 = null;// 单位名
 						var new_a = null;// 案件名链接
+						var input_name=null;
 						
 						// -----折叠信息-----
 						var new_div = null;
@@ -172,6 +173,7 @@ function List_Police_By_Page(pageIndex) {
 								 */
 								new_span2 = document.createElement("span");
 								new_span2.innerHTML = police_vo.list[num].ajdbxt_police.police_name;
+								input_name=new_span2.innerText;
 								new_a.appendChild(new_span2);
 								/*
 								 * 3.单位名
@@ -220,7 +222,8 @@ function List_Police_By_Page(pageIndex) {
 								new_label_xm.style.padding = "11px 0px";
 								new_input_xm = document.createElement("input");
 								new_input_xm.className = "mui-input-clear  mui-h5";
-								new_input_xm.value = police_vo.list[num].ajdbxt_police.police_name;
+							/*	new_input_xm.value = police_vo.list[num].ajdbxt_police.police_name;*/
+								new_input_xm.value =input_name;
 								new_input_xm.type = "text";
 								new_input_xm.disabled = "disabled";
 								// new_input_xm.style.textAlign="center";
