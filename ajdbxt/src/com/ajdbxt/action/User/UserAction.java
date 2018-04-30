@@ -170,6 +170,7 @@ public class UserAction extends ActionSupport {
 		//ActionContext.getContext().getSession().clear();
 		return "login";//回到登录界面
 	}
+	
 	//获取权限
 	public void getPower() {
 		try {

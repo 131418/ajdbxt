@@ -17,7 +17,7 @@
 			<result name="mobile_index">/WEB-INF/view/mobile_index.jsp</result>
 			<result name="mobile_index_details">/WEB-INF/view/mobile_index_details.jsp</result>
 			<result name="mobile_police_one">/WEB-INF/view/user/mobile_police_one.jsp</result>
-			<result name="mobile_police_delete">/WEB-INF/view/user/mobile_police_delete.jsp</result>
+			<result name="mobile_police_add">/WEB-INF/view/user/mobile_police_add.jsp</result>
 			<result name="mobile_police_update">/WEB-INF/view/user/mobile_police_update.jsp</result>
 		</action>
 	</package>
