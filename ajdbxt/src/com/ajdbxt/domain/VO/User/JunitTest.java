@@ -142,7 +142,7 @@ public class JunitTest {
 	@Test
 	public void addPolice() {
 		// ajdbxtPoliceId,policeSerialNumber,policePassword,policeName,policeDepartment,policeDuty,policePhoneNumber,policeGmtCreat,policeGmtModify
-				ajdbxt_police ajdbxt_police = new ajdbxt_police(null, "100007", "111111", "李世远", "4e0d2651-da70-4b6b-938a-451eb063d5e7", "组员", "15270634643",null, null, "2");
+				ajdbxt_police ajdbxt_police = new ajdbxt_police(null, "100007", "111111", "李世远", "4e0d2651-da70-4b6b-938a-451eb063d5e7","", "组员", "15270634643",null, null, "2");
 				System.out.println(userService.addPolice(ajdbxt_police));
 				// System.out.println("000000000000"+ajdbxt_police+"0000000000000000000");
 	}

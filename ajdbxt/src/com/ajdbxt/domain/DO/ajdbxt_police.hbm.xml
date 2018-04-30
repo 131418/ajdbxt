@@ -20,6 +20,9 @@
         <property name="police_department" type="java.lang.String">
             <column name="POLICE_DEPARTMENT" />
         </property>
+        <property name="police_legaler" type="java.lang.String">
+            <column name="POLICE_LEGALER" />
+        </property>
         <property name="police_duty" type="java.lang.String">
             <column name="POLICE_DUTY" />
         </property>

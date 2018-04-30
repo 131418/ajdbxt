@@ -130,6 +130,14 @@ public class UserAction extends ActionSupport {
 		return "mobile_police_three";
 	}
 	
+	public String mobile_police_delete() {
+		return "mobile_police_delete";
+	}
+	
+	public String mobile_police_update() {
+		return "mobile_police_update";
+	}
+	
 	public void login() {
 		try {
 			// 获得返回的判断结果
