@@ -1,13 +1,14 @@
 var police_vo = null;
-
 var login_police_deparment = null;// 当前登录角色所在单位名字
 var login_police_deparment_id = null;// 当前登录角色所在单位id
 var police_power_options = null;// 当前登录角色可选权限
 var power_one_two = '<option value="1">单位内浏览</option><option value="2">单位内管理</option>';// 角色1和2可选权限
 // 角色3可选权限
 var power_three = '<option value="1">单位内浏览</option><option value="2">单位内管理</option><option value="3">所有单位内管理</option>';
+//-------------------------
 // 列表显示
 function List_Police_By_Page(pageIndex) {
+
 	var xmlHttpRequest = new XMLHttpRequest();
 	xmlHttpRequest.open("POST", "/ajdbxt/user/User_getPower");
 	xmlHttpRequest.send(null);
@@ -53,6 +54,7 @@ function List_Police_By_Page(pageIndex) {
 						var new_span2 = null;// 警员名
 						var new_span3 = null;// 单位名
 						var new_a = null;// 案件名链接
+						
 						// -----折叠信息-----
 						var new_div = null;
 						var new_form = null;// 折叠信息表单
@@ -81,6 +83,10 @@ function List_Police_By_Page(pageIndex) {
 						var new_input_row_sjh = null;
 						var new_label_sjh = null;
 						var new_input_sjh = null;
+						//按钮
+						var new_row_button=null;
+						var new_btn_xg=null;//修改按钮
+						var new_btn_sc=null;//删除按钮
 
 						var ul_police_list = document
 								.getElementById("ul_police_list");
@@ -313,11 +319,32 @@ function List_Police_By_Page(pageIndex) {
 								new_input_row_sjh.appendChild(new_input_sjh);
 								new_form.appendChild(new_input_row_sjh);
 
+								
+								//7按钮
+								if(loginRole.ajdbxt_police.police_power=="2"||loginRole.ajdbxt_police.police_power=="3"){
+									new_row_button=document.createElement("div");
+									new_row_button.className = "mui-input-row";
+									new_btn_xg=document.createElement("button");
+									new_btn_xg.className = "mui-btn mui-btn-yellow btn_xg";
+									new_btn_xg.innerHTML="修改";
+									new_btn_xg.style.marginLeft="5px";
+									new_btn_xg.style.width="60px";
+									new_btn_sc=document.createElement("button");
+									new_btn_sc.className = "mui-btn mui-btn-red btn_sc";
+									new_btn_sc.innerHTML="删除";
+									new_btn_sc.style.marginLeft="5px";
+									new_btn_sc.style.width="60px";
+									new_row_button.appendChild(new_btn_sc);
+									new_row_button.appendChild(new_btn_xg);
+									new_form.appendChild(new_row_button);
+									
+								}
+
 								new_div.appendChild(new_form);
 								new_li.appendChild(new_div);
-
+								
 							}
-
+							
 						} else {
 							$("#ul_police_list")
 									.html(
@@ -329,7 +356,7 @@ function List_Police_By_Page(pageIndex) {
 								+ police_vo.totalPage);
 						console.log("police_vo.countRecords:"
 								+ police_vo.allRow);
-
+						
 					} else {
 						toastr.error(xhr.status);
 					}
@@ -338,7 +365,7 @@ function List_Police_By_Page(pageIndex) {
 			if (pageIndex == null || pageIndex.preventDefault) {
 				pageIndex = 1;
 			}
-
+			
 			console.log("pageIndex:" + pageIndex);
 			formData.append("findPoliceByPageVO.currentPage", pageIndex);
 			formData.append("findPoliceByPageVO.police_name",
@@ -348,6 +375,24 @@ function List_Police_By_Page(pageIndex) {
 		}
 	}
 }
+
+
+//-----------------------------
+//--------修改人员--------------
+/*$(".btn_xg").bind("click",updatePolice());*/
+
+//-----------------------------
+//--------删除人员--------------
+//删除按钮绑定事件
+/*$(".btn_sc").bind("click",deletePolice());
+function deletePolice() {
+	alert("1");
+	mui.confirm("确认删除？","",["确认删除","取消"],function(){
+		mui.toast("1");
+	},"div")
+	
+
+}*/
 
 /*
  * 判断页数
