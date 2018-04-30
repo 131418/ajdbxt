@@ -98,7 +98,7 @@ public class InfoServiceImpl implements InfoService {
 		List<ajdbxt_police> nom=new ArrayList();
 		//得到所队长id方便分配
 		for(ajdbxt_police police : polices) {
-			if(police.getPolice_duty().equals("所长")||police.getPolice_duty().equals("大队长")) {
+			if(police.getPolice_duty().equals("所队长")) {
 				chief=police;
 				polices.remove(police);//取得后移除，因为不在考虑范围
 				break;
@@ -115,12 +115,13 @@ public class InfoServiceImpl implements InfoService {
 				countNom+=temp;
 				nom.add(police);
 				nomM.put(police, temp);
-			}else if(police.getPolice_duty().contains("副队长")||police.getPolice_duty().contains("副所长")){
+			}else if(police.getPolice_duty().contains("副所队长")){
 				countCap+=temp;
 				cap.add(police);
 				capM.put(police, temp);
 			}
 		}
+		System.out.println(cap.size());
 		//如副所队长没执勤过
 		if(countCap==0) {
 			ajdbxt_police police=cap.get(new Random().nextInt(cap.size()));
@@ -203,7 +204,7 @@ public class InfoServiceImpl implements InfoService {
 				countNom+=temp;
 				nom.add(police);
 				nomM.put(police, temp);
-			}else if((police.getPolice_duty().contains("副队长")||police.getPolice_duty().contains("副所长"))
+			}else if(police.getPolice_duty().contains("副所队长")
 					&&(police.getAjdbxt_police_id().equals(caseInfo.getInfo_main_police())==false)
 						&&(police.getAjdbxt_police_id().equals(caseInfo.getInfo_assistant_police_one())==false)){
 				countCap+=temp;
@@ -303,15 +304,14 @@ public class InfoServiceImpl implements InfoService {
 		int l=policeList.size();
 		for(int index=0;index<l;index++) {
 			ajdbxt_police police=policeList.get(index);
-			if(police.getPolice_duty().contains("所长")||police.getPolice_duty().contains("队长")) {
+			if(police.getPolice_duty().contains("所队长")) {
 				ajdbxt_police pT=policeList.get(0);
 				policeList.set(0, police);
 				policeList.set(index, pT);
 				break;
-			}else if((police.getPolice_duty().contains("副所长")||police.getPolice_duty().contains("副队长"))) {
+			}else if(police.getPolice_duty().contains("副所队长")) {
 				ajdbxt_police pT=policeList.get(0);
-				if((pT.getPolice_duty().contains("所长")||pT.getPolice_duty().contains("队长")==false)
-						&&((pT.getPolice_duty().contains("所长")||pT.getPolice_duty().contains("队长"))==false)) {
+				if(pT.getPolice_duty().equals("所队长")) {
 					policeList.set(0, police);
 					policeList.set(index, pT);
 					break;
