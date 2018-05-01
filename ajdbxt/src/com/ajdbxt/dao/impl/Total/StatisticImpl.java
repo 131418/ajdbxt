@@ -58,7 +58,6 @@ public class StatisticImpl implements Statistic {
 		i=(Long) query.uniqueResult();
 		return i.intValue();
 	}
-
 		//得到对应的民警
 		@Override
 		public List<ajdbxt_police> getPolice(DepartmentStatisticVo listPoliceCaseByPageAndSearchVO) {
