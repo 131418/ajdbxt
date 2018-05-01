@@ -2,6 +2,7 @@ var police_vo = null; // 接收后台传过来的数据
 var login_police_deparment = null;// 当前登录角色所在单位名字
 var login_police_deparment_id = null;// 当前登录角色所在单位id
 var police_power_options = null;// 当前登录角色可选权限
+var open_url=null;//人员查询列表路径
 var power_one_two = '<option value="1">单位内浏览</option><option value="2">单位内管理</option>';// 角色1和2可选权限
 // 角色3可选权限
 var power_three = '<option value="1">单位内浏览</option><option value="2">单位内管理</option><option value="3">所有单位内管理</option>';
@@ -117,14 +118,14 @@ function List_Police_By_Page(pageIndex) {
 							new_td.innerHTML = police_vo.list[num].ajdbxt_police.police_duty;
 							/*
 							 * 法制
-							 */
+							 
 							new_td = document.createElement("td");
 							new_tr.appendChild(new_td);
 							if (police_vo.list[num].ajdbxt_police.police_legaler == "1") {
 								new_td.innerHTML = "是";
 							}  else {
 								new_td.innerHTML = "否";
-							}
+							}*/
 							
 							/*
 							 * 5. 权限
