@@ -130,6 +130,10 @@ public class UserAction extends ActionSupport {
 		return "mobile_police_update";
 	}
 	
+	public String mobile_police_setting() {
+		return "mobile_police_setting";
+	}
+	
 	public void login() {
 		try {
 			// 获得返回的判断结果
