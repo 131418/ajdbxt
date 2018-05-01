@@ -266,7 +266,7 @@ public class UserAction extends ActionSupport {
 			policedptVO loginPolice = (policedptVO) ActionContext.getContext().getSession().get("loginPolice");
 			String department = loginPolice.getAjdbxt_police().getPolice_department();
 			String policeName = this.findPoliceByPageVO.getPolice_name();
-			findPoliceByPageVO findByDpt = userService.queryForPageByDepartment(10, currentPage, department, policeName);
+			findPoliceByPageVO findByDpt = userService.queryForPageByDepartment(10, this.findPoliceByPageVO.getCurrentPage(), department, policeName);
 			if(policeName!=null&&!"".equals(policeName)) {
 				ajdbxt_police aj0 =null;
 				policedptVO aj =null;
