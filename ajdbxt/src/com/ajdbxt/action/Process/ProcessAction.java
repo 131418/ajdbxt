@@ -115,21 +115,18 @@ public class ProcessAction  extends ActionSupport{
 		Class clazz=ajdbxtProcess.getClass();
 		Field [] f= clazz.getDeclaredFields();
 		String json="";
-		String fieldName="";
 		int changeType=-1;
 		for(Field field: f){
 			field.setAccessible(true);//解锁
 			try {
 				Object o =field.get(ajdbxtProcess);
-				if(o!=null&&(o.equals("")==false)) {
+				if(o!=null&&(o.equals(field.get(process))==false)) {
 					field.set(process, o);
 					switch (field.getName()) {
-					case "process_question_list":
+					case "process_question":
 						changeType=ProcessService.question;
 						break;
-					case "process_case_goods":
 					case "process_apply_right":
-						fieldName=field.getName();
 						changeType=ProcessService.rollback;
 						break;
 					case "process_case_end":
@@ -149,7 +146,7 @@ public class ProcessAction  extends ActionSupport{
 				System.out.println(e.getMessage());
 			}
 		}
-		json=processService.update(process, changeType, fieldName);
+		json=processService.update(process, changeType);
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		try {
 			ServletActionContext.getResponse().getWriter().println(json);

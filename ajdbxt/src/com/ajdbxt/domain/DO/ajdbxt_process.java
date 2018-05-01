@@ -19,17 +19,11 @@ public class ajdbxt_process {
 	private String process_gmt_create;//流程创建
 	private String process_gmt_modify;//流程修改时间
 	private Integer process_question_list;//提出问题数量
-	private String process_subpoena;//是否传讯
-	private String process_criminal_detention;//是否刑事拘留
-	private String process_arrest;//是否逮捕
-	private String process_get_keep_wait_interrogate;//是否取保候审
-	private String process_live_at_home_unde_surveillance;//是否监视居住
 	/*
 	 * 起诉结果：第一次补查，检察院撤回案件，撤案，审判
 	 * 第一次补查结果：第一次补查，检察院撤回案件，撤案，审判
 	 * 第二次补查结果：检察院撤回案件，撤案，审判
-	 */
-	private String process_result_of_prosecution;//起诉结果 
+	 */ 
 	private String process_search_result_one;//第一次补查结果
 	private String process_search_result_two;//第二次补查结果
 	private String process_is_rollback;//是否打回
@@ -37,6 +31,9 @@ public class ajdbxt_process {
 	private String process_community_abandon_drug;//社区戒毒
 	private String process_mandatory_abandon_drug;//强制隔离戒毒
 	private String process_lengthen_criminal_detention;//是否延长刑事拘留
+	private String process_force_measure_one;//强制措施1
+	private String process_force_measure_two;//强制措施2
+	private String process_force_measure_three;//强制措施3
 	
 	public String getAjdbxt_process_id() {
 		return ajdbxt_process_id;
@@ -182,54 +179,6 @@ public class ajdbxt_process {
 		this.process_question_list = process_question_list;
 	}
 
-	public String getProcess_subpoena() {
-		return process_subpoena;
-	}
-
-	public void setProcess_subpoena(String process_subpoena) {
-		this.process_subpoena = process_subpoena;
-	}
-
-	public String getProcess_criminal_detention() {
-		return process_criminal_detention;
-	}
-
-	public void setProcess_criminal_detention(String process_criminal_detention) {
-		this.process_criminal_detention = process_criminal_detention;
-	}
-
-	public String getProcess_arrest() {
-		return process_arrest;
-	}
-
-	public void setProcess_arrest(String process_arrest) {
-		this.process_arrest = process_arrest;
-	}
-
-	public String getProcess_get_keep_wait_interrogate() {
-		return process_get_keep_wait_interrogate;
-	}
-
-	public void setProcess_get_keep_wait_interrogate(String process_get_keep_wait_interrogate) {
-		this.process_get_keep_wait_interrogate = process_get_keep_wait_interrogate;
-	}
-
-	public String getProcess_live_at_home_unde_surveillance() {
-		return process_live_at_home_unde_surveillance;
-	}
-
-	public void setProcess_live_at_home_unde_surveillance(String process_live_at_home_unde_surveillance) {
-		this.process_live_at_home_unde_surveillance = process_live_at_home_unde_surveillance;
-	}
-
-	public String getProcess_result_of_prosecution() {
-		return process_result_of_prosecution;
-	}
-
-	public void setProcess_result_of_prosecution(String process_result_of_prosecution) {
-		this.process_result_of_prosecution = process_result_of_prosecution;
-	}
-
 	public String getProcess_search_result_one() {
 		return process_search_result_one;
 	}
@@ -286,6 +235,30 @@ public class ajdbxt_process {
 		this.process_lengthen_criminal_detention = process_lengthen_criminal_detention;
 	}
 
+	public String getProcess_force_measure_one() {
+		return process_force_measure_one;
+	}
+
+	public void setProcess_force_measure_one(String process_force_measure_one) {
+		this.process_force_measure_one = process_force_measure_one;
+	}
+
+	public String getProcess_force_measure_two() {
+		return process_force_measure_two;
+	}
+
+	public void setProcess_force_measure_two(String process_force_measure_two) {
+		this.process_force_measure_two = process_force_measure_two;
+	}
+
+	public String getProcess_force_measure_three() {
+		return process_force_measure_three;
+	}
+
+	public void setProcess_force_measure_three(String process_force_measure_three) {
+		this.process_force_measure_three = process_force_measure_three;
+	}
+
 	@Override
 	public String toString() {
 		return "ajdbxt_process [ajdbxt_process_id=" + ajdbxt_process_id + ", process_case_id=" + process_case_id
@@ -297,15 +270,14 @@ public class ajdbxt_process {
 				+ ", process_captain_check=" + process_captain_check + ", process_file_hand=" + process_file_hand
 				+ ", process_case_end=" + process_case_end + ", process_gmt_create=" + process_gmt_create
 				+ ", process_gmt_modify=" + process_gmt_modify + ", process_question_list=" + process_question_list
-				+ ", process_subpoena=" + process_subpoena + ", process_criminal_detention="
-				+ process_criminal_detention + ", process_arrest=" + process_arrest
-				+ ", process_get_keep_wait_interrogate=" + process_get_keep_wait_interrogate
-				+ ", process_live_at_home_unde_surveillance=" + process_live_at_home_unde_surveillance
-				+ ", process_result_of_prosecution=" + process_result_of_prosecution + ", process_search_result_one="
-				+ process_search_result_one + ", process_search_result_two=" + process_search_result_two
-				+ ", process_is_rollback=" + process_is_rollback + ", process_administrativ_warning="
-				+ process_administrativ_warning + ", process_community_abandon_drug=" + process_community_abandon_drug
+				+ ", process_search_result_one=" + process_search_result_one + ", process_search_result_two="
+				+ process_search_result_two + ", process_is_rollback=" + process_is_rollback
+				+ ", process_administrativ_warning=" + process_administrativ_warning
+				+ ", process_community_abandon_drug=" + process_community_abandon_drug
 				+ ", process_mandatory_abandon_drug=" + process_mandatory_abandon_drug
-				+ ", process_lengthen_criminal_detention=" + process_lengthen_criminal_detention + "]";
+				+ ", process_lengthen_criminal_detention=" + process_lengthen_criminal_detention
+				+ ", process_force_measure_one=" + process_force_measure_one + ", process_force_measure_two="
+				+ process_force_measure_two + ", process_force_measure_three=" + process_force_measure_three + "]";
 	}
+	
 }

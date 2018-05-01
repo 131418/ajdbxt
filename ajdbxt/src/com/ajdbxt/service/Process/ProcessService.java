@@ -19,7 +19,7 @@ public interface ProcessService {
 	 * @param list 
 	 * @return 更改后的json
 	 */
-	public String update(ajdbxt_process process,int changeType,String fielName);
+	public String update(ajdbxt_process process,int changeType);
 	public showProcessVO getSomeProcessByShowProcessVO(showProcessVO processVO);
 }
 

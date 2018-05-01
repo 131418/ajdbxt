@@ -1,6 +1,5 @@
 package util;
 
-import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import com.ajdbxt.service.Process.ProcessService;
 public class SMSThread extends Thread{
 	private String tpl_id;
 	private String CASE_ID;
-	private String fieldName;
 	private boolean caseFiled;
 	private ApplicationContext applicationCotext; 
 	/**
@@ -25,12 +23,11 @@ public class SMSThread extends Thread{
 	 * @param caseFiled 案件实现（true为行政案件，false为刑事案件）
 	 * @param processService 流程业务
 	 */
-	public SMSThread( String tpl_id,String CASE_ID,boolean caseFiled,ApplicationContext applicationContext,String fieldName) {
+	public SMSThread( String tpl_id,String CASE_ID,boolean caseFiled,ApplicationContext applicationContext) {
 		this.tpl_id = tpl_id;
 		this.CASE_ID=CASE_ID;
 		this.caseFiled=caseFiled;
 		this.applicationCotext=applicationContext;
-		this.fieldName=fieldName;
 	}
 	
 	public void run() {
@@ -42,7 +39,7 @@ public class SMSThread extends Thread{
 				checkCaseEnd();
 				break;	
 			case MsgSend.CASE_ROLLBACK_VOICE://回退
-				rollBack(fieldName);
+				rollBack();
 				break;
 			case MsgSend.QUESTION_UP_VOICE:
 				questionChange();
@@ -96,9 +93,9 @@ public class SMSThread extends Thread{
 				}
 			}
 			if(caseFiled) {
-				waitTime(hour);//定时一小时
+				waitTime(hour);
 			}else {
-				waitTime(hour);//定时一小时
+				waitTime(hour);
 			}
 			subpoenaASuspectTimeOut();
 		}
@@ -130,25 +127,21 @@ public class SMSThread extends Thread{
 	/*
 	 * 回退
 	 */
-	private void rollBack(String fieldName) throws 
-		InterruptedException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
+	private void rollBack() throws InterruptedException{
 		for(int index=0;index<16;index++) {
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process =processDTO.getProcess();
 			if(process.getProcess_is_rollback()==null||process.getProcess_is_rollback().isEmpty()) {
-				List<ajdbxt_police> policeList=processDTO.getPolice();
-				for(ajdbxt_police police:policeList) {
-					String name=police.getPolice_name();
-					String num=police.getPolice_phone_number();
-					String [] params= {name,processDTO.getInfo().getInfo_name()};
-					List<String> tel=new ArrayList<>();
-					tel.add(num);
-					MsgSend.doSendSimple(params, tel, MsgSend.CASE_ROLLBACK);
-					MsgSend.doSendVoiceSimple(params, num, MsgSend.CASE_ROLLBACK_VOICE);
-				}
+				ajdbxt_police police=processDTO.getLegal();
+				String num=police.getPolice_phone_number();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.CASE_ROLLBACK);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.CASE_ROLLBACK_VOICE);
 				wait(1);
 			}else if(process.getProcess_is_rollback().equals("是")){
-				rollBackUpdate(fieldName);
+				rollBackUpdate();
 				break;
 			}else {
 				break;
@@ -158,27 +151,24 @@ public class SMSThread extends Thread{
 	/*
 	 * 回退提醒修改
 	 */
-	private void rollBackUpdate(String fieldName) throws 
-		InterruptedException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		ProcessDTO pDTO=getProcessDTO();
-		ajdbxt_process p =pDTO.getProcess();
-		Field f=p.getClass().getField(fieldName);
-		f.setAccessible(true);
-		Object oldValue=f.get(p);//反射取值
+	private void rollBackUpdate() throws InterruptedException {
 		for(int index=0;index<16;index++) {
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process =processDTO.getProcess();
-			if(f.get(process).equals(oldValue)) {//如果值未变化
-				ajdbxt_police police=processDTO.getLegal();
-				String num=police.getPolice_phone_number();
-				String [] params= {processDTO.getInfo().getInfo_name()};
-				List<String> tel=new ArrayList<>();
-				tel.add(num);
-				MsgSend.doSendSimple(params, tel, MsgSend.CASE_ROLLBACK_UPDATE);
-				MsgSend.doSendVoiceSimple(params, num, MsgSend.CASE_ROLLBACK_UPDATE_VOICE);
+			if(process.getProcess_is_rollback().equals("是")) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				for(ajdbxt_police police:policeList) {
+					String name=police.getPolice_name();
+					String num=police.getPolice_phone_number();
+					String [] params= {name,processDTO.getInfo().getInfo_name()};
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.CASE_ROLLBACK_UPDATE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CASE_ROLLBACK_UPDATE_VOICE);
+				}
 				wait(1);
 			}else {
-				rollBackOver(fieldName);
+				rollBackOver();
 				break;
 			}
 		}
@@ -186,18 +176,18 @@ public class SMSThread extends Thread{
 	/*
 	 * 回退修改完成
 	 */
-	private void rollBackOver(String fieldName) throws InterruptedException {
+	private void rollBackOver() throws InterruptedException {
 		for(int index=0;index<16;index++) {
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process =processDTO.getProcess();
-			if(process.getProcess_question_list()==null) {
+			if(process.getProcess_question()==null) {
 				ajdbxt_police police=processDTO.getLegal();
 				String num=police.getPolice_phone_number();
 				String [] params= {processDTO.getInfo().getInfo_name()};
 				List<String> tel=new ArrayList<>();
 				tel.add(num);
-				MsgSend.doSendSimple(params, tel, MsgSend.SUBPOENA_A_SUSPECT_TIME_OUT);
-				MsgSend.doSendVoiceSimple(params, num, MsgSend.SUBPOENA_A_SUSPECT_TIME_OUT_VOICE);
+				MsgSend.doSendSimple(params, tel, MsgSend.CASE_ROLLBACK_OVER);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.CASE_ROLLBACK_OVER_VOICE);
 				wait(1);
 			}else {
 				break;
@@ -211,16 +201,7 @@ public class SMSThread extends Thread{
 		for(int index=0;index<16;index++) {
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process =processDTO.getProcess();
-			if(process.getProcess_question()==null||process.getProcess_question()==0) {//如果整改数量为空,或整改数量为0
-				ajdbxt_police police=processDTO.getLegal();
-				String num=police.getPolice_phone_number();
-				String [] params= {processDTO.getInfo().getInfo_name()};
-				List<String> tel=new ArrayList<>();
-				tel.add(num);
-				MsgSend.doSendSimple(params, tel, MsgSend.QUESTION_UP);
-				MsgSend.doSendVoiceSimple(params, num, MsgSend.QUESTION_UP_VOICE);
-				wait(4);
-			}else {
+			if(process.getProcess_question()!=null) {//如果整改数量为空
 				List<String> tel=new ArrayList<>();
 				String [] params= {processDTO.getInfo().getInfo_name(),process.getProcess_question_list().toString(),process.getProcess_question().toString()};
 				tel.add(processDTO.getLeader().getPolice_phone_number());
@@ -231,6 +212,8 @@ public class SMSThread extends Thread{
 				MsgSend.doSendSimple(params, tel, MsgSend.QUESTION_UP_CHECK);
 				MsgSend.doSendVoiceSimple(params, processDTO.getLeader().getPolice_phone_number(), MsgSend.QUESTION_UP_CHECK_VOICE);
 				break;
+			}else {
+				waitTime(4);
 			}
 		}
 	}
