@@ -10,7 +10,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>手机端—人员列表</title>
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <link href="<%=basePath%>css/mui.min.css" rel="stylesheet" />
@@ -28,9 +28,12 @@ h1, a {
 </head>
 
 <body>
+	<!-- 添加人员 -->
+			<div class="mui-icon mui-icon-plusempty" id="div_police_add" style="position: fixed;top: 10px;right: 90px; font-weight:bold;color: #eee;z-index: 9999999;" onclick="window.location.href='<%=basePath%>user/User_mobile_police_add'"></div>
 	<header class="mui-bar mui-bar-nav index_nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title" style="color: white;">人员信息</h1>
+	
 	</header>
 	<div class="mui-content" >
 		<%-- <!-- 搜索框 -->
@@ -42,7 +45,8 @@ h1, a {
 				</div>
 				--%>
 		
-		<div class="mui-card" style="margin-bottom: 70px">
+		<!-- <div class="mui-card" style="margin-bottom: 70px"> -->
+		<div class="mui-card" style="margin:0 0 50px 0">
 			<!--页眉，放置标题-->
 			<div class="mui-card-header" style="padding:0px;">
 				<%-- <!-- 搜索框 -->
@@ -67,6 +71,7 @@ h1, a {
 				<ul class="mui-pagination" id="ul_page_count">
 				</ul>
 			</div>
+			
 		</div>
 
 	</div>
@@ -95,7 +100,7 @@ h1, a {
 	<script src="<%=basePath%>js/mui.min.js"></script>
 	<script type="text/javascript">
 		mui.init();
-		List_Police_By_Page(1);
+	
 	</script>
 </body>
 

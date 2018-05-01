@@ -10,7 +10,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>移动端-首页</title>
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <link href="<%=basePath%>css/mui.min.css" rel="stylesheet" />
@@ -26,7 +26,6 @@
 }
 
 .index_nav_img {
-	width: 12%;
 	margin: 0px 15px 0 10px;
 }
 
@@ -55,7 +54,7 @@
 	<!--头部-->
 	<header class="mui-bar mui-bar-nav index_nav">
 		<div class="index_nav_img">
-			<img src="<%=basePath%>img/police.png" height="40px;" />
+			<img src="<%=basePath%>img/police.png" height="35px;" style="margin-top:5px;" />
 		</div>
 		<div class="index_nav_police">
 			<div class="index_nav_police_name"></div>
@@ -117,9 +116,9 @@
 
 	<!--------------------------------->
 	<!--主体部分-->
-	<div class="mui-content" style="padding: 0; margin: 60px 0 70px 0;">
+	<div class="mui-content" >
 		<!--卡片视图-->
-		<div class="mui-card">
+		<div class="mui-card" style="margin: 0;">
 			<!--页眉，放置标题-->
 			<div class="mui-card-header" id="case_info_type">正在参与的案件</div>
 			<!--内容区-->
