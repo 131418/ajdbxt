@@ -131,6 +131,10 @@ public class UserAction extends ActionSupport {
 		return "mobile_police_update";
 	}
 	
+	public String mobile_police_setting() {
+		return "mobile_police_setting";
+	}
+	
 	public void login() {
 		try {
 			// 获得返回的判断结果
@@ -267,7 +271,7 @@ public class UserAction extends ActionSupport {
 			policedptVO loginPolice = (policedptVO) ActionContext.getContext().getSession().get("loginPolice");
 			String department = loginPolice.getAjdbxt_police().getPolice_department();
 			String policeName = this.findPoliceByPageVO.getPolice_name();
-			findPoliceByPageVO findByDpt = userService.queryForPageByDepartment(10, currentPage, department, policeName);
+			findPoliceByPageVO findByDpt = userService.queryForPageByDepartment(10, this.findPoliceByPageVO.getCurrentPage(), department, policeName);
 			if(policeName!=null&&!"".equals(policeName)) {
 				ajdbxt_police aj0 =null;
 				policedptVO aj =null;
