@@ -34,7 +34,7 @@ public class ajdbxt_process {
 	private String process_force_measure_one;//强制措施1
 	private String process_force_measure_two;//强制措施2
 	private String process_force_measure_three;//强制措施3
-	
+	private String process_result_of_prosecution;//起诉结果
 	public String getAjdbxt_process_id() {
 		return ajdbxt_process_id;
 	}
@@ -259,6 +259,14 @@ public class ajdbxt_process {
 		this.process_force_measure_three = process_force_measure_three;
 	}
 
+	public String getProcess_result_of_prosecution() {
+		return process_result_of_prosecution;
+	}
+
+	public void setProcess_result_of_prosecution(String process_result_of_prosecution) {
+		this.process_result_of_prosecution = process_result_of_prosecution;
+	}
+
 	@Override
 	public String toString() {
 		return "ajdbxt_process [ajdbxt_process_id=" + ajdbxt_process_id + ", process_case_id=" + process_case_id
@@ -277,7 +285,10 @@ public class ajdbxt_process {
 				+ ", process_mandatory_abandon_drug=" + process_mandatory_abandon_drug
 				+ ", process_lengthen_criminal_detention=" + process_lengthen_criminal_detention
 				+ ", process_force_measure_one=" + process_force_measure_one + ", process_force_measure_two="
-				+ process_force_measure_two + ", process_force_measure_three=" + process_force_measure_three + "]";
+				+ process_force_measure_two + ", process_force_measure_three=" + process_force_measure_three
+				+ ", process_result_of_prosecution=" + process_result_of_prosecution + "]";
 	}
+
+	
 	
 }

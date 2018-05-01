@@ -344,6 +344,53 @@ public class SMSThread extends Thread{
 			
 		}).start();;
 	}
+	/*
+	 * 拿回案卷
+	 */
+	private void fileBack() {
+		for(;true;) {
+			ProcessDTO processDTO=getProcessDTO();
+			ajdbxt_process process=processDTO.getProcess();
+			if(process.getProcess_file_hand().equals("是")) {
+				if(process.getProcess_lengthen_criminal_detention().equals("7")) {//延长七天
+					
+				}else if(process.getProcess_lengthen_criminal_detention().equals("30")) {//延长30天
+					
+				}
+			}
+		}
+	}
+	/*
+	 * 强制措施
+	 */
+	private void forceMeasure() {
+		for(;true;) {
+			ProcessDTO processDTO=getProcessDTO();
+			ajdbxt_process process=processDTO.getProcess();
+			if(process.getProcess_force_measure_one().equals("拘留")) {
+				
+			}
+		}
+	}
+	/*
+	 * 起诉结果和补查结果
+	 */
+	private void result() {
+		for(;true;) {
+			ProcessDTO processDTO=getProcessDTO();
+			ajdbxt_process process=processDTO.getProcess();
+			if(process.getProcess_result_of_prosecution().equals("结案")) {
+				
+			}
+			if(process.getProcess_search_result_one().equals("结案")) {
+				
+			}
+			if(process.getProcess_search_result_two().equals("结案")) {
+				
+			}
+		}
+	}
+	
 	private ProcessDTO getProcessDTO() {
 		ProcessService processService=applicationCotext.getBean(ProcessService.class);
 		ProcessDTO processDTO=processService.getSingleProcessByCaseId(CASE_ID);

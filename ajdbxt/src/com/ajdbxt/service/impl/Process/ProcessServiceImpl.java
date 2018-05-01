@@ -112,19 +112,25 @@ public class ProcessServiceImpl implements ProcessService {
 		}
 		ApplicationContext applicationContext=(ApplicationContext) ServletActionContext.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
 		switch (changeType) {
-		case case_end:
+		case case_end://结案通知上交案卷
 			new SMSThread(MsgSend.CASE_END_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext).start();
 			break;
-		case punish:
+		case punish://处罚通知涉案财物入库
 			new SMSThread(MsgSend.CASE_GOODS_LIB_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext).start();
 			break;
-		case question:
+		case question://问题整改结束提醒处罚
 			new SMSThread(MsgSend.QUESTION_UP_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext).start();
 			break;
-		case rollback:
+		case rollback://打回完成通知提出问题
 			new SMSThread(MsgSend.CASE_FILE_UP_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext).start();
-			break;		
-		}		
+			break;	
+		case result://起诉结果
+			break;
+		case forceMeasure://强制措施，如果为拘留通知上交案卷
+			break;
+		case fileBack://延长期限通知拿回案卷
+			break;
+		}	
 		return JsonUtils.toJson(processDTO);
 	}
 	

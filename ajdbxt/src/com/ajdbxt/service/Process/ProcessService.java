@@ -11,6 +11,9 @@ public interface ProcessService {
 	public static int question =2;
 	public static int case_end =3;
 	public static int punish=4;
+	public static int forceMeasure=5;
+	public static int result=6;
+	public static int fileBack=7;
 	
 	public ProcessDTO getSingleProcessByCaseId(String case_id);
 	/**
