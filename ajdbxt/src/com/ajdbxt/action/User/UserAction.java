@@ -17,8 +17,12 @@ import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
+
 @SuppressWarnings("serial")
 public class UserAction extends ActionSupport {
+	
+	private String police_id;
 
 	private UserService userService;
 
@@ -33,6 +37,17 @@ public class UserAction extends ActionSupport {
 	private findDepartmentByPageVO findDepartmentByPageVO;
 	
 	private String ids[];
+	
+
+	public String getPolice_id() {
+		return police_id;
+	}
+
+
+	public void setPolice_id(String police_id) {
+		this.police_id = police_id;
+	}
+
 	
 	public void setUserService(UserService userService) {
 		this.userService = userService;
@@ -127,6 +142,15 @@ public class UserAction extends ActionSupport {
 	}
 
 	public String mobile_police_update() {
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			policedptVO policeById = userService.findPoliceById(police_id);
+			response.getWriter().write(new Gson().toJson(policeById));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "mobile_police_update";
 	}
 	
