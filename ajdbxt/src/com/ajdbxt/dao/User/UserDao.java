@@ -9,7 +9,7 @@ import com.ajdbxt.domain.VO.User.policedptVO;
 
 public interface UserDao {
 
-	ajdbxt_police findPolice(String police_serial_number);
+	policedptVO findPolice(String police_serial_number);
 
 	boolean addPolice(ajdbxt_police ajdbxt_police);
 
@@ -21,7 +21,7 @@ public interface UserDao {
 	//总记录条数
 	public int getCount(String hql);
 
-	List<ajdbxt_police> queryForPageByDepartment(String hql, int offset, int length);
+	List<policedptVO> queryForPageByDepartment(String hql, int offset, int length);
 
 	String changePassword(String ajdbxt_police_id,String newPassword);
 
@@ -32,6 +32,8 @@ public interface UserDao {
 	List<ajdbxt_department> findDepartmentByPage(String hql, int offset, int length);
 
 	policedptVO findPoliceById(String ajdbxt_police_id);
+
+	String findDptByid(String department);
 
 
 	//public List<ajdbxt_police> fuzzySearch(String hql,int offset,int length);

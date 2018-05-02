@@ -24,18 +24,26 @@ public class ProcessDTO {
 	private ajdbxt_police cap;
 	private ajdbxt_police legal;
 	private ajdbxt_police leader;
-	public ajdbxt_police getLegal() {
-		return legal;
-	}
-	public void setLegal(ajdbxt_police legal) {
-		this.legal = legal;
-	}
+	private ajdbxt_police team_legal;
 	public ajdbxt_police getLeader() {
 		return leader;
 	}
 	public void setLeader(ajdbxt_police leader) {
 		this.leader = leader;
 	}
+	public ajdbxt_police getTeam_legal() {
+		return team_legal;
+	}
+	public void setTeam_legal(ajdbxt_police team_legal) {
+		this.team_legal = team_legal;
+	}
+	public ajdbxt_police getLegal() {
+		return legal;
+	}
+	public void setLegal(ajdbxt_police legal) {
+		this.legal = legal;
+	}
+	
 	public ajdbxt_police getCap() {
 		return cap;
 	}
@@ -66,6 +74,6 @@ public class ProcessDTO {
 	public void setInfo(ajdbxt_info info) {
 		this.info = info;
 	}
-
+	
 }
 

@@ -74,7 +74,6 @@ public class InfoServiceImpl implements InfoService {
 	
 	@Override
 	public String saveCase(ajdbxt_info caseInfo) {
-
 		oneceRank(caseInfo);//下面要得到警察写逻辑
 		//哲理要写排班逻辑
 		ProcessDTO processDTO=new ProcessDTO();//回传dto而不是Info
@@ -85,6 +84,7 @@ public class InfoServiceImpl implements InfoService {
 		processDTO.setPolice(polices);
 		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
 		processDTO.setCap(infoPoliceDao.findCaptainByDepartment(caseInfo.getInfo_department()));
+		processDTO.setTeam_legal(infoPoliceDao.findLegalByDepartment(caseInfo.getInfo_department()));
 		return JsonUtils.toJson(processDTO);
 	}
 	private void oneceRank(ajdbxt_info caseInfo) {//排班主协办人员
@@ -98,7 +98,7 @@ public class InfoServiceImpl implements InfoService {
 		List<ajdbxt_police> nom=new ArrayList();
 		//得到所队长id方便分配
 		for(ajdbxt_police police : polices) {
-			if(police.getPolice_duty().equals("所长")||police.getPolice_duty().equals("大队长")) {
+			if(police.getPolice_duty().equals("所队长")) {
 				chief=police;
 				polices.remove(police);//取得后移除，因为不在考虑范围
 				break;
@@ -115,12 +115,13 @@ public class InfoServiceImpl implements InfoService {
 				countNom+=temp;
 				nom.add(police);
 				nomM.put(police, temp);
-			}else if(police.getPolice_duty().contains("副队长")||police.getPolice_duty().contains("副所长")){
+			}else if(police.getPolice_duty().contains("副所队长")){
 				countCap+=temp;
 				cap.add(police);
 				capM.put(police, temp);
 			}
 		}
+		System.out.println(cap.size());
 		//如副所队长没执勤过
 		if(countCap==0) {
 			ajdbxt_police police=cap.get(new Random().nextInt(cap.size()));
@@ -135,7 +136,7 @@ public class InfoServiceImpl implements InfoService {
 		Comparator<Map.Entry<ajdbxt_police, Integer>> sort=new Comparator<Map.Entry<ajdbxt_police,Integer>>() {//map排序器降
 			@Override
 			public int compare(Entry<ajdbxt_police, Integer> o1, Entry<ajdbxt_police, Integer> o2) {
-				return o2.getValue()-o1.getValue();
+				return o1.getValue().compareTo(o2.getValue());
 			}
 		};
 		List<Map.Entry<ajdbxt_police, Integer>> capList=new ArrayList<Map.Entry<ajdbxt_police,Integer>>(capM.entrySet());
@@ -203,7 +204,7 @@ public class InfoServiceImpl implements InfoService {
 				countNom+=temp;
 				nom.add(police);
 				nomM.put(police, temp);
-			}else if((police.getPolice_duty().contains("副队长")||police.getPolice_duty().contains("副所长"))
+			}else if(police.getPolice_duty().contains("副所队长")
 					&&(police.getAjdbxt_police_id().equals(caseInfo.getInfo_main_police())==false)
 						&&(police.getAjdbxt_police_id().equals(caseInfo.getInfo_assistant_police_one())==false)){
 				countCap+=temp;
@@ -214,7 +215,7 @@ public class InfoServiceImpl implements InfoService {
 		Comparator<Map.Entry<ajdbxt_police, Integer>> sort=new Comparator<Map.Entry<ajdbxt_police,Integer>>() {//map排序器降
 			@Override
 			public int compare(Entry<ajdbxt_police, Integer> o1, Entry<ajdbxt_police, Integer> o2) {
-				return o2.getValue()-o1.getValue();
+				return o1.getValue().compareTo(o2.getValue());
 			}
 		};
 		List<Map.Entry<ajdbxt_police, Integer>> capList=new ArrayList<Map.Entry<ajdbxt_police,Integer>>(capM.entrySet());
@@ -303,15 +304,14 @@ public class InfoServiceImpl implements InfoService {
 		int l=policeList.size();
 		for(int index=0;index<l;index++) {
 			ajdbxt_police police=policeList.get(index);
-			if(police.getPolice_duty().contains("所长")||police.getPolice_duty().contains("队长")) {
+			if(police.getPolice_duty().contains("所队长")) {
 				ajdbxt_police pT=policeList.get(0);
 				policeList.set(0, police);
 				policeList.set(index, pT);
 				break;
-			}else if((police.getPolice_duty().contains("副所长")||police.getPolice_duty().contains("副队长"))) {
+			}else if(police.getPolice_duty().contains("副所队长")) {
 				ajdbxt_police pT=policeList.get(0);
-				if((pT.getPolice_duty().contains("所长")||pT.getPolice_duty().contains("队长")==false)
-						&&((pT.getPolice_duty().contains("所长")||pT.getPolice_duty().contains("队长"))==false)) {
+				if(pT.getPolice_duty().equals("所队长")) {
 					policeList.set(0, police);
 					policeList.set(index, pT);
 					break;
@@ -370,6 +370,7 @@ public class InfoServiceImpl implements InfoService {
 		}
 		processDTO.setPolice(policeList);
 		processDTO.setProcess(processDao.findProcessByCaseId(info_id).get(0));
+		processDTO.setTeam_legal(infoPoliceDao.findPoliceById(info.getInfo_department_legal_member()));
 		processDTO.setCap(infoPoliceDao.findPoliceById(info.getInfo_department_captain()));
 		processDTO.setLeader(infoPoliceDao.findPoliceById(info.getInfo_bureau_leader()));
 		processDTO.setLegal(infoPoliceDao.findPoliceById(info.getInfo_legal_team_member()));
@@ -406,7 +407,7 @@ public class InfoServiceImpl implements InfoService {
 		if(info.getInfo_category().equals("行政案件")) {
 			caseFiled=true;
 		}
-		new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext).start();//通知
+		new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext).start();//人员变动带来的流程变动不好处理
 		return JsonUtils.toJson(processDTO);
 	}
 	

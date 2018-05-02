@@ -61,6 +61,7 @@ public class ProcessDaoImpl implements ProcessDao {
 
 	@Override
 	public void updateProcess(ajdbxt_process process) {
+		process.setProcess_gmt_modify(util.Time.getStringSecond());
 		Session session=sessionFactory.getCurrentSession();
 		session.saveOrUpdate(process);
 		session.flush();
@@ -68,6 +69,8 @@ public class ProcessDaoImpl implements ProcessDao {
 
 	@Override
 	public void saveProcess(ajdbxt_process process) {
+		process.setProcess_gmt_create(util.Time.getStringSecond());
+		process.setProcess_gmt_modify(util.Time.getStringSecond());
 		Session session=sessionFactory.getCurrentSession();
 		session.saveOrUpdate(process);
 		session.flush();
