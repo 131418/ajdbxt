@@ -37,7 +37,7 @@ function List_Total_By_Department(){
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].length;
+				new_td.innerHTML =(num+1);
 				
 				/*
 				 * 2.办案单位

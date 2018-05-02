@@ -47,7 +47,7 @@ function List_Total_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total.statisticPoliceCaseNumDTO[num].adminCase;
+					new_td.innerHTML = (num+1);
 
 					/*
 					 * 1. 办案单位
@@ -68,13 +68,13 @@ function List_Total_By_Page(pageIndex) {
 					 * 2. 人员
 					 */
 					new_td = document.createElement("td");
-					new_a = document.createElement("a");
+					/*new_a = document.createElement("a");
 					new_a.href = "/ajdbxt/total/Total_page_listPoliceCase?police_id="
 							+ td_ajdbxt_police_id;
-					new_td.appendChild(new_a);
+					new_td.appendChild(new_a);*/
 					new_tr.appendChild(new_td);
 					new_a.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].police.police_name;
-					new_a.style.cursor = "pointer";
+					/*new_a.style.cursor = "pointer";*/
 
 					/*
 					 * 3. 主办行政案件数
@@ -123,22 +123,22 @@ function List_Total_By_Page(pageIndex) {
 		}
 	}
 	var formData = new FormData();
-	formData.append("listPoliceCaseByPageAndSearchVO.currePage", pageIndex);
-	formData.append("listPoliceCaseByPageAndSearchVO.searchPolice",
+	formData.append("PoliceCaseStatisticVo.currePage", pageIndex);
+	formData.append("PoliceCaseStatisticVo.searchPolice",
 			input_Total_PoliceSearchText);
-	formData.append("listPoliceCaseByPageAndSearchVO.department",
+	formData.append("PoliceCaseStatisticVo.department",
 			select_case_department);
-	formData.append("listPoliceCaseByPageAndSearchVO.start_time",
+	formData.append("PoliceCaseStatisticVo.start_time",
 			select_start_time.value);
-	formData.append("listPoliceCaseByPageAndSearchVO.stop_time",
+	formData.append("PoliceCaseStatisticVo.stop_time",
 			select_stop_time.value);
-	formData.append("listPoliceCaseByPageAndSearchVO.MainadminCase",
+	formData.append("PoliceCaseStatisticVo.MainadminCase",
 			MainadminCase);
-	formData.append("listPoliceCaseByPageAndSearchVO.MaincriminalCase",
+	formData.append("PoliceCaseStatisticVo.MaincriminalCase",
 			MaincriminalCase);
-	formData.append("listPoliceCaseByPageAndSearchVO.InsisadminCase",
+	formData.append("PoliceCaseStatisticVo.InsisadminCase",
 			InsisadminCase);
-	formData.append("listPoliceCaseByPageAndSearchVO.InsiscriminalCase",
+	formData.append("PoliceCaseStatisticVo.InsiscriminalCase",
 			InsiscriminalCase);
 	xhr.open("POST", "/ajdbxt/total/Total_getListPoiceCaseStatistic", true);
 	xhr.send(formData);

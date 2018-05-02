@@ -61,7 +61,7 @@
 									<!-- <button class="btn btn-default role_one"
 										onclick="createPolice()">按人员统计</button> -->
 									<button class="btn btn-default role_one"
-									onclick="ByUserTotal()">按人员统计</button>
+									onclick="javascript:location.href='/ajdbxt/total/Total_page_listPoliceCase'">按人员统计</button>
 									
 								</div>
 							</div>
@@ -138,11 +138,5 @@
 			maxDate : '2100/01/01', // 设置最大日期
 		});
 	</script>
-	<!-- 路径跳转 -->
-		<script type="text/javascript">
-			function ByUserTotal() {
-				window.location.href="ajdbxt_total.jsp?backurl="+window.location.href; 
-			}
-		</script>
 </body>
 </html>
