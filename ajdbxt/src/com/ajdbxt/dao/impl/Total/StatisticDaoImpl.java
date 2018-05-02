@@ -91,13 +91,15 @@ public class StatisticDaoImpl implements StatisticDao {
 	@Override
 	public List<ajdbxt_police> findAllPolice(PoliceCaseStatisticVo policeCaseStatisticVo) {
 		Session session=getSession();
+		List<ajdbxt_police> lisePolice=new ArrayList<ajdbxt_police>();
 		System.out.println(policeCaseStatisticVo.getDepartment()+"----------------");
-		String hql="select pro.* from ajdbxt_police pro,ajdbxt_department de where pro.police_department = de.ajdbxt_department_id ";
+		String hql="from ajdbxt_police where 1=1";
 		if(policeCaseStatisticVo.getDepartment()!=null && policeCaseStatisticVo.getDepartment().length()>0) {
-			hql+="and de.department_name ='"+policeCaseStatisticVo.getDepartment()+"'";
+			hql+="and police_department ='"+policeCaseStatisticVo.getDepartment()+"'";
 		}
 		Query query=session.createQuery(hql);
-		List<ajdbxt_police> lisePolice=query.list();
+		System.out.println(hql);
+		lisePolice=query.list();
 		session.clear();
 		return lisePolice;
 	}
@@ -109,7 +111,7 @@ public class StatisticDaoImpl implements StatisticDao {
 		Session session=getSession();
 		String start_time = "";
 		String stop_time = "";
-		int i;
+		Long i;
 		String hql="select count(*) from ajdbxt_info where info_category='"+category+"' and info_main_police='"+policeId+"'";
 		if(policeCaseStatisticVo.getStart_time()!=null && policeCaseStatisticVo.getStart_time().length()>0) {
 			start_time=policeCaseStatisticVo.getStart_time();
@@ -119,9 +121,9 @@ public class StatisticDaoImpl implements StatisticDao {
 		}
 			hql+=" and info_gmt_ceate between str_to_date('"+start_time+"', '%Y-%m-%d') and str_to_date('"+stop_time+"', '%Y-%m-%d')";
 		Query query=session.createQuery(hql);
-		i=(int) query.uniqueResult();
+		i=(Long) query.uniqueResult();
 		session.clear();
-		return i;
+		return i.intValue();
 	}
 	
 	/*得到警员所有主办案件的总分
@@ -153,7 +155,7 @@ public class StatisticDaoImpl implements StatisticDao {
 		Session session=getSession();
 		String start_time = "";
 		String stop_time = "";
-		int i;
+		Long i;
 		String hql="select count(*) from ajdbxt_info where info_category='"+category+"' and "
 				+ "(info_assistant_police_two = '"+policeId+"'" + "OR info_assistant_police_one='"+policeId+"')";
 		if(policeCaseStatisticVo.getStart_time()!=null && policeCaseStatisticVo.getStart_time().length()>0) {
@@ -164,19 +166,19 @@ public class StatisticDaoImpl implements StatisticDao {
 		}
 			hql+=" and info_gmt_ceate between str_to_date('"+start_time+"', '%Y-%m-%d') and str_to_date('"+stop_time+"', '%Y-%m-%d')";
 		Query query=session.createQuery(hql);
-		i=(int) query.uniqueResult();
+		i=(Long) query.uniqueResult();
 		session.clear();
-		return i;
+		return i.intValue();
 	}
 
 	@Override
 	public ajdbxt_department findPoliceDepartment(String departmentId) {
 		Session session=getSession();
-		String hql="select ajdbxt_department.department_name from ajdbxt_department where ajdbxt_department.ajdbxt_department_id='"+departmentId+"'";
-		Query query=session.createQuery(hql);
 		ajdbxt_department department=new ajdbxt_department();
-		department=(ajdbxt_department) query.uniqueResult();
-		session.close();
+		String hql="from ajdbxt_department where ajdbxt_department_id='"+departmentId+"'";
+		Query query=session.createQuery(hql);
+		department=(ajdbxt_department)query.uniqueResult();
+		session.clear();
 		return department;
 	}
 	

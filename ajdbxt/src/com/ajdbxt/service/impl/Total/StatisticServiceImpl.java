@@ -45,16 +45,16 @@ public class StatisticServiceImpl implements StatisticService {
 			}
 			listDepartmentCaseDto.add(statisticDepartmentCaseNumDTO);
 		}
-		
+		departmentStatisticVo.setStatisticPoliceCaseNumDTO(listDepartmentCaseDto);
 		//排序
-		/*if(departmentStatisticVo.getOrderString().trim()==null || departmentStatisticVo.getOrderString().trim().equals("平均分")) {
+		if(departmentStatisticVo.getOrderString().trim()==null || departmentStatisticVo.getOrderString().trim().equals("平均分")) {
 			Collections.sort(listDepartmentCaseDto, new Comparator<StatisticDepartmentCaseNumDTO>() {
 
 				@Override
 				public int compare(StatisticDepartmentCaseNumDTO o1, StatisticDepartmentCaseNumDTO o2) {
-					if(o1.getAverageScore()>o2.getAverageScore()) {
+					if(Double.parseDouble(o1.getAverageScore())>Double.parseDouble(o2.getAverageScore())) {
 						return -1;
-					}else if(o1.getAverageScore()<o2.getAverageScore()) {
+					}else if(Double.parseDouble(o1.getAverageScore())<Double.parseDouble(o2.getAverageScore())) {
 						return 1;
 					}else {
 						return 0;
@@ -93,10 +93,10 @@ public class StatisticServiceImpl implements StatisticService {
 				}
 				
 			});
-		}*/
+		}
 		
 		//分页
-		List<StatisticDepartmentCaseNumDTO> newListDepartmentCaseDto=new ArrayList<StatisticDepartmentCaseNumDTO>();
+		/*List<StatisticDepartmentCaseNumDTO> newListDepartmentCaseDto=new ArrayList<StatisticDepartmentCaseNumDTO>();
 		for(int i=(departmentStatisticVo.getCurrePage()-1)*departmentStatisticVo.getPageSize();
 				i<departmentStatisticVo.getCurrePage()*departmentStatisticVo.getPageSize();i++) {
 			if(i<listDepartmentCaseDto.size()) {
@@ -121,7 +121,7 @@ public class StatisticServiceImpl implements StatisticService {
 			 departmentStatisticVo.setHasNextPage(false);
 		 }else {
 			 departmentStatisticVo.setHasNextPage(true);
-		 }
+		 }*/
 		return departmentStatisticVo;
 	}
 

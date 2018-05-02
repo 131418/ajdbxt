@@ -75,7 +75,7 @@
 										<th><input type="button" id="adminCase" onclick="List_Total_By_Department()" value="行政案件" /></th>
 										<th><input type="button" id="criminalCase" onclick="List_Total_By_Department()" value="刑事案件" /></th>
 										<th>总案件数</th>
-										<th><input type="button" id="average" onclick="List_Total_By_Department()" value="平均分"></input></th>
+										<th><input type="button"  id="average" onclick="List_Total_By_Department()" value="平均分"></input></th>
 									</tr>
 								</tbody>
 							</table>

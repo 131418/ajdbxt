@@ -89,8 +89,8 @@ function List_Total_By_Department(){
 	formData.append("departmentStatisticVo.start_time",select_start_time);
 	formData.append("departmentStatisticVo.stop_time",select_stop_time);
 	/*formData.append("adminCase",adminCase);
-	formData.append("criminalCase",criminalCase);
-	formData.append("average",average);*/
+	formData.append("criminalCase",criminalCase);*/
+	formData.append("departmentStatisticVo.orderString",average);
 	xhr.send(formData);
 }
 
