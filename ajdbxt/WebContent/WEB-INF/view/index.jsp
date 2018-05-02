@@ -45,17 +45,17 @@
 										style="width: 220px; float: left;"
 										class="form-control" onchange="List_Index_CaseInfo_By_Page(1)">
 										<!-- <option selected="selected" value="">请选择</option> -->
-										<option   value="正在参与的案件"
+										<option  
 											selected="selected">正在参与的案件</option>
-										<option   value="待核对案件">待核对案件</option>
-										<option   value="等待提交问题清单的案件">等待提交问题清单的案件</option>
-										<option   value="等待评分的案件">等待评分的案件</option>
+										<option>待核对案件</option>
+										<option>等待提交问题清单的案件</option>
+										<option>等待评分的案件</option>
 
 									</select>
 								</div>
 							</div>
 
-							<table id="table_case_info" class="table table-hover table-bordered"
+							<table id="table_case_info" class="table table-hover"
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>

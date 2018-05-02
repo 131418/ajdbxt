@@ -58,7 +58,7 @@
 
 							</div>
 
-							<table id="table_police" class="table table-hover table-bordered"
+							<table id="table_police" class="table table-hover "
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>

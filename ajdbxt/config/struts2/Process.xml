@@ -3,15 +3,15 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-	<!-- <package name="User" namespace="/user" extends="struts-default">
-		<action name="User_*" class="com.ajdbxt.action.User.UserAction"
-			method="{1}">
-			<result name="index">/WEB-INF/view/index.jsp
-			</result>
-			<result name="navbar">/WEB-INF/view/navbar.jsp
-			</result>
-			<result name="SUCCESS">/success.jsp</result>
-			<result name="FALSE">false.jsp</result>
+	<package name="test" extends="struts-default" namespace="/process">
+		<action name="*ProcessAction" class="processAction" method="{1}">
+			<!-- <result name="success">/processTest.jsp</result>
+			<result name="false">/somethingBad.jsp</result> -->
+
+			
+			<result name="page_list_CaseProcess">/WEB-INF/view/process/CaseProcess.jsp</result>
+			<result name="page_CaseProcessInfo">/WEB-INF/view/process/CaseProcessInfo.jsp</result>
+
 		</action>
-	</package> -->
+	</package>
 </struts>

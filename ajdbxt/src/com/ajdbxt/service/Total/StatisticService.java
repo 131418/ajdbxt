@@ -1,14 +1,13 @@
 package com.ajdbxt.service.Total;
 
-import com.ajdbxt.domain.DO.ajdbxt_police;
-import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
-import com.ajdbxt.domain.VO.Total.page_listPoliceCaseNumByPageAndSearchVO;
+import com.ajdbxt.domain.VO.Total.DepartmentStatisticVo;
+import com.ajdbxt.domain.VO.Total.PoliceCaseStatisticVo;
 
 public interface StatisticService {
+	//得到办案部门案件列表
+	public DepartmentStatisticVo statisticDepartmentCase(DepartmentStatisticVo departmentStatisticVo);
 	
-	//返回统计案件VO
-	public page_listPoliceCaseNumByPageAndSearchVO getlistPoliceCaseByPageAndSearchVO(page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseNumByPageAndSearchVO);
-	
-	//警员案件
-	public page_eachPoliceCaseVO getPoliceCaseBYpageAndSearch(page_eachPoliceCaseVO listEachPoliceCaseVO);
+	//警员
+	public PoliceCaseStatisticVo statisticPoliceCase(PoliceCaseStatisticVo policeCaseStatisticVo);
+
 }

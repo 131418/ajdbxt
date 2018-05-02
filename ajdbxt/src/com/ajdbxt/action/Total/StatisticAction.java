@@ -9,9 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 
 import com.ajdbxt.domain.DTO.Total.StatisticCaseByPoliceDTO;
-import com.ajdbxt.domain.DTO.Total.StatisticPoliceCaseNumDTO;
+import com.ajdbxt.domain.DTO.Total.StatisticDepartmentCaseNumDTO;
+import com.ajdbxt.domain.DTO.Total.StatisticPoliceCaseDto;
 import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
-import com.ajdbxt.domain.VO.Total.page_listPoliceCaseNumByPageAndSearchVO;
+import com.ajdbxt.domain.VO.Total.DepartmentStatisticVo;
+import com.ajdbxt.domain.VO.Total.PoliceCaseStatisticVo;
+import com.ajdbxt.service.Total.Statistic;
 import com.ajdbxt.service.Total.StatisticService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,84 +25,96 @@ public class StatisticAction extends ActionSupport {
 	/**
 	 * 
 	 */
-	private page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseByPageAndSearchVO;
-	private page_eachPoliceCaseVO listEachPoliceCaseVO;
 	private StatisticService statisticService;
-	private StatisticPoliceCaseNumDTO statisticPoliceCaseNumDTO;
-	private StatisticCaseByPoliceDTO statisticCaseByPoliceDTO;
+	private StatisticDepartmentCaseNumDTO statisticDepartmentCaseNumDTO;
+	private StatisticPoliceCaseDto statisticPoliceCaseDto;
 	private HttpServletRequest http_request;
+	private DepartmentStatisticVo departmentStatisticVo;
+	private PoliceCaseStatisticVo policeCaseStatisticVo;
+	
 
 	/*
-	 * 警员案件数量统计页面
+	 * 部门案件统计页面
 	 */
-	public String page_listPoliceCaseStatistics() {
+	public String page_listDepartmentCaseStatistics() {
 
-		return "page_listPoliceCaseStatistics";
+		return "page_listDepartmentCaseStatistics";
 	}
 
 	/*
-	 * 警员案件列表
+	 * 警员案件统计列表
 	 */
 	public String page_listPoliceCase() {
-		http_request=ServletActionContext.getRequest();
-		System.out.println(http_request.getParameter("police_id"));
-		ActionContext.getContext().getValueStack().set("police_id", http_request.getParameter("police_id"));
-		return "page_listPoliceCase";
+		
+		return "page_listPoliceCaseStatistic";
 		
 	}
 
 	/*
-	 * 统计警员案件数量列表
+	 * 部门统计列表
 	 */
-	public void getListPoliceCaseStatistics() throws IOException {
+	public void getListDeparmentCaseStatistics() throws IOException {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化数据
 		Gson gson = gsonBuilder.create();
 		HttpServletResponse http_response;
-		listPoliceCaseByPageAndSearchVO = statisticService
-				.getlistPoliceCaseByPageAndSearchVO(listPoliceCaseByPageAndSearchVO);
+		departmentStatisticVo = statisticService.statisticDepartmentCase(departmentStatisticVo);
 		http_response = ServletActionContext.getResponse();
 		http_response.setContentType("text/html;charset=utf-8");
-		System.out.println(gson.toJson(listPoliceCaseByPageAndSearchVO));
+		System.out.println(gson.toJson(departmentStatisticVo));
 		PrintWriter pw = http_response.getWriter();
-		pw.write(gson.toJson(listPoliceCaseByPageAndSearchVO));
+		pw.write(gson.toJson(departmentStatisticVo));
 		pw.flush();
 		pw.close();
 	}
 
 	/*
-	 * 警员案件列表
+	 * 警员案件统计列表
 	 */
-	public void getListPoiceCase() throws IOException {
+	public void getListPoiceCaseStatistic() throws IOException {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setPrettyPrinting();// 格式化数据
 		Gson gson = gsonBuilder.create();
 		HttpServletResponse http_response;
 		http_response = ServletActionContext.getResponse();
-		listEachPoliceCaseVO = statisticService.getPoliceCaseBYpageAndSearch(listEachPoliceCaseVO);
+		policeCaseStatisticVo = statisticService.statisticPoliceCase(policeCaseStatisticVo);
 		http_response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = http_response.getWriter();
-		System.out.println(gson.toJson(listEachPoliceCaseVO));
-		pw.write(gson.toJson(listEachPoliceCaseVO));
+		System.out.println(gson.toJson(policeCaseStatisticVo));
+		pw.write(gson.toJson(policeCaseStatisticVo));
 		pw.flush();
 		pw.close();
 	}
-
-	public page_listPoliceCaseNumByPageAndSearchVO getListPoliceCaseByPageAndSearchVO() {
-		return listPoliceCaseByPageAndSearchVO;
+	public HttpServletRequest getHttp_request() {
+		return http_request;
 	}
 
-	public void setListPoliceCaseByPageAndSearchVO(
-			page_listPoliceCaseNumByPageAndSearchVO listPoliceCaseByPageAndSearchVO) {
-		this.listPoliceCaseByPageAndSearchVO = listPoliceCaseByPageAndSearchVO;
+	public void setHttp_request(HttpServletRequest http_request) {
+		this.http_request = http_request;
 	}
 
-	public page_eachPoliceCaseVO getListEachPoliceCaseVO() {
-		return listEachPoliceCaseVO;
+	public DepartmentStatisticVo getDepartmentStatisticVo() {
+		return departmentStatisticVo;
 	}
 
-	public void setListEachPoliceCaseVO(page_eachPoliceCaseVO listEachPoliceCaseVO) {
-		this.listEachPoliceCaseVO = listEachPoliceCaseVO;
+	public void setDepartmentStatisticVo(DepartmentStatisticVo departmentStatisticVo) {
+		this.departmentStatisticVo = departmentStatisticVo;
+	}
+
+	public PoliceCaseStatisticVo getPoliceCaseStatisticVo() {
+		return policeCaseStatisticVo;
+	}
+
+	public void setPoliceCaseStatisticVo(PoliceCaseStatisticVo policeCaseStatisticVo) {
+		this.policeCaseStatisticVo = policeCaseStatisticVo;
+	}
+
+	public StatisticPoliceCaseDto getStatisticPoliceCaseDto() {
+		return statisticPoliceCaseDto;
+	}
+
+	public void setStatisticPoliceCaseDto(StatisticPoliceCaseDto statisticPoliceCaseDto) {
+		this.statisticPoliceCaseDto = statisticPoliceCaseDto;
 	}
 
 	public StatisticService getStatisticService() {
@@ -110,28 +125,12 @@ public class StatisticAction extends ActionSupport {
 		this.statisticService = statisticService;
 	}
 
-	public StatisticPoliceCaseNumDTO getStatisticPoliceCaseNumDTO() {
-		return statisticPoliceCaseNumDTO;
+	public StatisticDepartmentCaseNumDTO getStatisticDepartmentCaseNumDTO() {
+		return statisticDepartmentCaseNumDTO;
 	}
 
-	public void setStatisticPoliceCaseNumDTO(StatisticPoliceCaseNumDTO statisticPoliceCaseNumDTO) {
-		this.statisticPoliceCaseNumDTO = statisticPoliceCaseNumDTO;
-	}
-
-	public StatisticCaseByPoliceDTO getStatisticCaseByPoliceDTO() {
-		return statisticCaseByPoliceDTO;
-	}
-
-	public void setStatisticCaseByPoliceDTO(StatisticCaseByPoliceDTO statisticCaseByPoliceDTO) {
-		this.statisticCaseByPoliceDTO = statisticCaseByPoliceDTO;
-	}
-
-	public HttpServletRequest getHttp_request() {
-		return http_request;
-	}
-
-	public void setHttp_request(HttpServletRequest http_request) {
-		this.http_request = http_request;
+	public void setStatisticDepartmentCaseNumDTO(StatisticDepartmentCaseNumDTO statisticDepartmentCaseNumDTO) {
+		this.statisticDepartmentCaseNumDTO = statisticDepartmentCaseNumDTO;
 	}
 
 }
