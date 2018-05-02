@@ -32,7 +32,7 @@ public class SMSThread extends Thread{
 	
 	public void run() {
 		try {
-			isWorking();//休息时间不干活谢谢
+			//isWorking();//休息时间不干活谢谢
 			switch (tpl_id) {
 			case MsgSend.SUBPOENA_A_SUSPECT_VOICE://传唤嫌疑人
 				subpoenaASuspect();

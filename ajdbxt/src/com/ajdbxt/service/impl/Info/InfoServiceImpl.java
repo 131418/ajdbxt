@@ -370,6 +370,7 @@ public class InfoServiceImpl implements InfoService {
 		}
 		processDTO.setPolice(policeList);
 		processDTO.setProcess(processDao.findProcessByCaseId(info_id).get(0));
+		processDTO.setTeam_legal(infoPoliceDao.findPoliceById(info.getInfo_department_legal_member()));
 		processDTO.setCap(infoPoliceDao.findPoliceById(info.getInfo_department_captain()));
 		processDTO.setLeader(infoPoliceDao.findPoliceById(info.getInfo_bureau_leader()));
 		processDTO.setLegal(infoPoliceDao.findPoliceById(info.getInfo_legal_team_member()));
