@@ -140,7 +140,7 @@ function List_Total_By_Page(pageIndex) {
 			InsisadminCase);
 	formData.append("listPoliceCaseByPageAndSearchVO.InsiscriminalCase",
 			InsiscriminalCase);
-	xhr.open("POST", "/ajdbxt/total/Total_getListPoliceCaseStatistics", true);
+	xhr.open("POST", "/ajdbxt/total/Total_getListPoiceCaseStatistic", true);
 	xhr.send(formData);
 }
 /*
