@@ -69,6 +69,7 @@
 										<i class="fa fa-search"></i>
 									</span>
 								</div>
+
 							</div>
 
 							<table id="table_total" class="table table-bordered"
@@ -198,6 +199,12 @@
 				minDate : '1900/01/01', // 设置最小日期
 				maxDate : '2100/01/01', // 设置最大日期
 			});
+		</script>
+		<!-- 路径跳转 -->
+		<script type="text/javascript">
+			function ByDepartment() {
+				window.location.href = "";
+			}
 		</script>
 </body>
 </html>
