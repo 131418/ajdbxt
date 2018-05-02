@@ -56,14 +56,14 @@
 										onchange="List_Total_By_Department()" />
 									<%--  --%>
 								</div>
-								<%-- <!--按类型统计  -->
-								<div style="width: 300px; float: right;">
+								<!--按类型统计  -->
+								<div style="width: 160px; float: right;">
+									<!-- <button class="btn btn-default role_one"
+										onclick="createPolice()">按人员统计</button> -->
 									<button class="btn btn-default role_one"
-										onclick="createPolice()">按行政案件统计</button>
-									<button class="btn btn-default role_one"
-										onclick="createPolice()">按刑事案件统计</button>
+									onclick="ByUserTotal()">按人员统计</button>
+									
 								</div>
-								 --%>
 							</div>
 							<!--  -->
 							<table id="table_total" class="table table-hover "
@@ -138,5 +138,11 @@
 			maxDate : '2100/01/01', // 设置最大日期
 		});
 	</script>
+	<!-- 路径跳转 -->
+		<script type="text/javascript">
+			function ByUserTotal() {
+				window.location.href="ajdbxt_total.jsp?backurl="+window.location.href; 
+			}
+		</script>
 </body>
 </html>

@@ -13,7 +13,6 @@
 <title>统计</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <style type="text/css">
-
 #table_total tbody tr {
 	text-align: center;
 	margin: 0 auto;
@@ -35,14 +34,7 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					<span>统计</span><span>-</span><span>按人员统计</span>
-					<!-- 检索 -->
-					<div class="input-group" style="width: 300px; float: right;">
-						<input id="input_Total_PoliceSearchText" class="form-control"
-							oninput="List_Total_By_Page(1)" type="text" placeholder="搜索人员" />
-						<span class="input-group-addon" style="border-radius: unset;">
-							<i class="fa fa-search"></i>
-						</span>
-					</div>
+
 				</h3>
 			</div>
 			<div class="panel-body">
@@ -69,12 +61,13 @@
 										onchange="List_Total_By_Page(1)" />
 									<%--  --%>
 								</div>
-								<!--按类型统计  -->
-								<div style="width: 117px; float: right;">
-									<!-- <button class="btn btn-default role_one"
-										onclick="createPolice()">按人员统计</button> -->
-									<button class="btn btn-default role_one"
-									onclick="ByDepartment()">按单位统计</button>
+								<!-- 检索 -->
+								<div class="input-group" style="width: 300px; float: right;">
+									<input id="input_Total_PoliceSearchText" class="form-control"
+										oninput="List_Total_By_Page(1)" type="text" placeholder="搜索人员" />
+									<span class="input-group-addon" style="border-radius: unset;">
+										<i class="fa fa-search"></i>
+									</span>
 								</div>
 							</div>
 
@@ -87,18 +80,22 @@
 											id="select_case_department"
 											style="width: 80%; margin: 0 auto;" class="form-control"
 											onchange="List_Total_By_Page(1)">
-										</select></th>	
-										<th rowspan="2" colspan="2">人员</th>									
+										</select></th>
+										<th rowspan="2" colspan="2">人员</th>
 										<th colspan="2">主办案件</th>
-										<th colspan="2">协办案件</th>								
+										<th colspan="2">协办案件</th>
 										<th rowspan="2" colspan="2">平均分</th>
 									</tr>
 									<tr>
-										<th><input type="button" id="MainadminCase" onclick="List_Total_By_Page(1)" value="主办行政案件" /></th>
-										<th><input type="button" id="MaincriminalCase" onclick="List_Total_By_Page(1)" value="主办刑事案件" /></th>
-										<th><input type="button" id="InsisadminCase" onclick="List_Total_By_Page(1)" value="协办行政案件" /></th>
-										<th><input type="button" id="InsiscriminalCase" onclick="List_Total_By_Page(1)" value="协办刑事案件" /></th>
-									</tr>									
+										<th><input type="button" id="MainadminCase"
+											onclick="List_Total_By_Page(1)" value="主办行政案件" /></th>
+										<th><input type="button" id="MaincriminalCase"
+											onclick="List_Total_By_Page(1)" value="主办刑事案件" /></th>
+										<th><input type="button" id="InsisadminCase"
+											onclick="List_Total_By_Page(1)" value="协办行政案件" /></th>
+										<th><input type="button" id="InsiscriminalCase"
+											onclick="List_Total_By_Page(1)" value="协办刑事案件" /></th>
+									</tr>
 								</tbody>
 							</table>
 
@@ -122,7 +119,7 @@
 											id="span_totalPages">1</span>页&nbsp&nbsp共 <span
 											id="span_totalRecords">0</span>条记录
 									</p></span>
-							</div>							
+							</div>
 
 						</div>
 						<!-- END TABLE HOVER -->
@@ -137,7 +134,7 @@
 		<script type="text/javascript"
 			src="<%=basePath%>js/laydate/laydate.js"></script>
 		<script type="text/javascript"
-		src="<%=basePath%>js/Total/ajdbxtTotal.js"></script>
+			src="<%=basePath%>js/Total/ajdbxtTotal.js"></script>
 
 		<script type="text/javascript">
 			$(function() {
@@ -201,12 +198,6 @@
 				minDate : '1900/01/01', // 设置最小日期
 				maxDate : '2100/01/01', // 设置最大日期
 			});
-		</script>
-		<!-- 路径跳转 -->
-		<script type="text/javascript">
-			function ByDepartment(){
-				window.location.href="";
-			}
 		</script>
 </body>
 </html>
