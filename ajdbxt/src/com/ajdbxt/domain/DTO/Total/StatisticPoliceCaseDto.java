@@ -1,10 +1,14 @@
 package com.ajdbxt.domain.DTO.Total;
 
+import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 
 public class StatisticPoliceCaseDto {
 	//警员
 	private ajdbxt_police police;
+	
+	//办案单位
+	private ajdbxt_department department;
 	//行政主办案件
 	private int adminMianCase;
 	//行政协办案件
@@ -51,6 +55,12 @@ public class StatisticPoliceCaseDto {
 	}
 	public void setScore_mian(double score_mian) {
 		this.score_mian = score_mian;
+	}
+	public ajdbxt_department getDepartment() {
+		return department;
+	}
+	public void setDepartment(ajdbxt_department department) {
+		this.department = department;
 	}
 
 }

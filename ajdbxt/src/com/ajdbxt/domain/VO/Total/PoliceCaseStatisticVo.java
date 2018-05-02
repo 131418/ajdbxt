@@ -23,7 +23,7 @@ public class PoliceCaseStatisticVo {
 		// 结束时间
 		private String stop_time = "";
 		
-		//警员名
+		//搜索警员
 		private String policeName;
 		
 		//部门

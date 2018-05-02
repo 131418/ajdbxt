@@ -23,14 +23,14 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class StatisticAction extends ActionSupport {
 	/**
-	 * 
 	 */
 	private StatisticService statisticService;
-	private StatisticDepartmentCaseNumDTO statisticPoliceCaseNumDTO;
+	private StatisticDepartmentCaseNumDTO statisticDepartmentCaseNumDTO;
+	private StatisticPoliceCaseDto statisticPoliceCaseDto;
 	private HttpServletRequest http_request;
 	private DepartmentStatisticVo departmentStatisticVo;
 	private PoliceCaseStatisticVo policeCaseStatisticVo;
-	private StatisticPoliceCaseDto statisticPoliceCaseDto;
+	
 
 	/*
 	 * 部门案件统计页面
@@ -84,15 +84,6 @@ public class StatisticAction extends ActionSupport {
 		pw.flush();
 		pw.close();
 	}
-
-	public StatisticDepartmentCaseNumDTO getStatisticPoliceCaseNumDTO() {
-		return statisticPoliceCaseNumDTO;
-	}
-
-	public void setStatisticPoliceCaseNumDTO(StatisticDepartmentCaseNumDTO statisticPoliceCaseNumDTO) {
-		this.statisticPoliceCaseNumDTO = statisticPoliceCaseNumDTO;
-	}
-
 	public HttpServletRequest getHttp_request() {
 		return http_request;
 	}
@@ -131,6 +122,14 @@ public class StatisticAction extends ActionSupport {
 
 	public void setStatisticService(StatisticService statisticService) {
 		this.statisticService = statisticService;
+	}
+
+	public StatisticDepartmentCaseNumDTO getStatisticDepartmentCaseNumDTO() {
+		return statisticDepartmentCaseNumDTO;
+	}
+
+	public void setStatisticDepartmentCaseNumDTO(StatisticDepartmentCaseNumDTO statisticDepartmentCaseNumDTO) {
+		this.statisticDepartmentCaseNumDTO = statisticDepartmentCaseNumDTO;
 	}
 
 }

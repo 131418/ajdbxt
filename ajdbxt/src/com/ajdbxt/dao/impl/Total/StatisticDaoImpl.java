@@ -163,6 +163,17 @@ public class StatisticDaoImpl implements StatisticDao {
 		session.clear();
 		return i;
 	}
+
+	@Override
+	public ajdbxt_department findPoliceDepartment(String departmentId) {
+		Session session=getSession();
+		String hql="select ajdbxt_department.department_name from ajdbxt_department where ajdbxt_department.ajdbxt_department_id='"+departmentId+"'";
+		Query query=session.createQuery(hql);
+		ajdbxt_department department=new ajdbxt_department();
+		department=(ajdbxt_department) query.uniqueResult();
+		session.close();
+		return department;
+	}
 	
 
 }
