@@ -47,10 +47,101 @@ function get_processDetails_Ajax(url, info_id) {
 				} else
 					obj.val(v);
 			});
+		//单选框     //嫌疑人
+			if(case1.process_lengthen_subpoena!=null && case1.process_lengthen_subpoena.length>0){
+				if($('#suspect_summon_yes').val()==case1.process_lengthen_subpoena){
+					$('#suspect_summon_yes').attr("checked","checked");
+					$("#suspect_summon_no").prop("disabled", true);
+				}else{
+					$('#suspect_summon_no').attr("checked","checked");
+					$("#suspect_summon_yes").prop("disabled", true);
+				}
+			}    //未成年
+			if(case1.process_nonage!=null && case1.process_nonage.length>0){
+				if($('#minors_asking_yes').val()==case1.process_nonage){
+					$('#minors_asking_yes').attr("checked","checked");
+					$("#minors_asking_no").prop("disabled", true);
+				}else{
+					$('#minors_asking_no').attr("checked","checked");
+					$("#minors_asking_yes").prop("disabled", true);
+				}
+			}  //鉴定
+			if(case1.process_authenticate!=null && case1.process_authenticate.length>0){
+				if($('#identification_yes').val()==case1.process_authenticate){
+					$('#identification_yes').attr("checked","checked");
+					$("#identification_no").prop("disabled", true);
+				}else{
+					$('#identification_no').attr("checked","checked");
+					$("#identification_yes").prop("disabled", true);
+				}
+			}//涉案财物
+			if(case1.process_case_goods!=null && case1.process_case_goods.length>0){
+				if($('#case_property_yes').val()==case1.process_case_goods){
+					$('#case_property_yes').attr("checked","checked");
+					$("#case_property_no").prop("disabled", true);
+				}else{
+					$('#case_property_no').attr("checked","checked");
+					$("#case_property_yes").prop("disabled", true);
+				}
+			} //戒毒
+			if(case1.process_treatment_category!=null && case1.process_treatment_category.length>0){
+				if($('#process_treatment_category_yes').val()==case1.process_treatment_category){
+					$('#process_treatment_category_yes').attr("checked","checked");
+					$("#process_treatment_category_no").prop("disabled", true);
+				}else{
+					$('#process_treatment_category_no').attr("checked","checked");
+					$("#process_treatment_category_yes").prop("disabled", true);
+				}
+			}//听证
+			if(case1.process_apply_right!=null && case1.process_apply_right.length>0){
+				if($('#hearing_applying_yes').val()==case1.process_apply_right){
+					$('#hearing_applying_yes').attr("checked","checked");
+					$("#hearing_applying_no").prop("disabled", true);
+				}else{
+					$('#hearing_applying_no').attr("checked","checked");
+					$("#hearing_applying_yes").prop("disabled", true);
+				}
+			}//提出问题
+			if(case1.process_question_list!=null && case1.process_question_list.length>0){
+				if($('#problem_asking_yes').val()==case1.process_question_list){
+					$('#problem_asking_yes').attr("checked","checked");
+					$("#problem_asking_no").prop("disabled", true);
+				}else{
+					$('#problem_asking_no').attr("checked","checked");
+					$("#problem_asking_yes").prop("disabled", true);
+				}
+			}//审核
+			if(case1.process_captain_check!=null && case1.process_captain_check.length>0){
+				if($('#case_review_yes').val()==case1.process_captain_check){
+					$('#case_review_yes').attr("checked","checked");
+					$("#case_review_no").prop("disabled", true);
+				}else{
+					$('#case_review_no').attr("checked","checked");
+					$("#case_review_yes").prop("disabled", true);
+				}
+			}//问题整改
+			if(case1.process_question!=null && case1.process_question.length>0){
+				if($('#problem_rectification_yes').val()==case1.process_question){
+					$('#problem_rectification_yes').attr("checked","checked");
+					$("#problem_rectification_no").prop("disabled", true);
+				}else{
+					$('#problem_rectification_no').attr("checked","checked");
+					$("#problem_rectification_yes").prop("disabled", true);
+				}
+			}//结案
+			if(case1.process_case_end!=null && case1.process_case_end.length>0){
+				if($('#case_ending_yes').val()==case1.process_case_end){
+					$('#case_ending_yes').attr("checked","checked");
+					$("#case_ending_no").prop("disabled", true);
+				}else{
+					$('#case_ending_no').attr("checked","checked");
+					$("#case_ending_yes").prop("disabled", true);
+				}
+			}
 			// 单选框
-			$.each(case1, function(k, v) {
+			//$.each(case1, function(k, v) {
 				// 嫌疑人延长（单选框）
-				if (k == "process_lengthen_subpoena") {
+	/*			if (k == "process_lengthen_subpoena") {
 					if (v != null && v.length>0) {
 						if ($('input[type="radio"]').eq(0).val() == v) {
 							$('input[type="radio"]').eq(0).attr("checked",
@@ -67,7 +158,8 @@ function get_processDetails_Ajax(url, info_id) {
 						$('input[type="radio"]').eq(1).attr("checked",
 								false);
 					}
-				} else if (k == "process_nonage") {
+				} else */
+				/*	if (k == "process_nonage") {
 					if (v != null && v.length>0) {
 					if ($('input[type="radio"]').eq(2).val() == v) {
 						$('input[type="radio"]').eq(2).attr("checked",
@@ -82,141 +174,173 @@ function get_processDetails_Ajax(url, info_id) {
 					$('input[type="radio"]').eq(3).attr("checked",
 					false);
 				}
-				} else if (k == "process_authenticate") {
-					if (v != null && v.length>0) {
-					if ($('input[type="radio"]').eq(4).val() == v) {
-						$('input[type="radio"]').eq(4).attr("checked",
-								"checked");
-					} else {
-						$('input[type="radio"]').eq(5).attr("checked",
-								"checked");
-					}
-				}else{
-					$('input[type="radio"]').eq(4).attr("checked",
-					false);
-					$('input[type="radio"]').eq(5).attr("checked",
-					false);
-				}
-				}// 涉案财物
-				else if (k == "process_case_goods") {
-					if (v != null && v.length>0) {
-					if ($('input[type="radio"]').eq(6).val() == v
-							&& $('input[type="radio"]').eq(6).val() != "") {
-						$('input[type="radio"]').eq(6).attr("checked",
-								"checked");
-					} else {
-						$('input[type="radio"]').eq(7).attr("checked",
-								"checked");
-					}
-				}else{
-					$('input[type="radio"]').eq(6).attr("checked",
-					false);
-					$('input[type="radio"]').eq(7).attr("checked",
-					false);
-				}
-				} else if (k == "process_treatment_category") {
-					if (v != null && v.length>0) {
-					if ($('input[type="radio"]').eq(8).val() == v) {
-						$('input[type="radio"]').eq(8).attr("checked",
-								"checked");
-					} else {
-						$('input[type="radio"]').eq(9).attr("checked",
-								"checked");
-					}
-				}else{
-					$('input[type="radio"]').eq(8).attr("checked",
-					false);
-					$('input[type="radio"]').eq(9).attr("checked",
-					false);
-				}
-				}// 听证
-				else if (k == "process_apply_right") {
-					if (v != null && v.length>0) {
-					if ($('input[type="radio"]').eq(10).val() == v) {
-						$('input[type="radio"]').eq(10).attr("checked",
-								"checked");
-					} else {
-						$('input[type="radio"]').eq(11).attr("checked",
-								"checked");
-					}
-				}else{
-					$('input[type="radio"]').eq(10).attr("checked",
-					false);
-					$('input[type="radio"]').eq(11).attr("checked",
-					false);
-				}
-				}// 提出问题
-				else if (k == "process_question_list") {
-					if (v != null && v.length>0) {
-					if ($('input[type="radio"]').eq(12).val() == v) {
-						$('input[type="radio"]').eq(12).attr("checked",
-								"checked");
-						// $("#process_question").show();
-					} else {
-						$('input[type="radio"]').eq(13).attr("checked",
-								"checked");
-					}
-				}else{
-					$('input[type="radio"]').eq(12).attr("checked",
-					false);
-					$('input[type="radio"]').eq(13).attr("checked",
-					false);
-				}
-				}// 审核
-				else if (k == "process_captain_check") {
-					if (v != null && v.length>0) {
-					if ($('input[type="radio"]').eq(14).val() == v) {
-						$('input[type="radio"]').eq(14).attr("checked",
-								"checked");
-					} else {
-						$('input[type="radio"]').eq(15).attr("checked",
-								"checked");
-					}
-				}else{
-					$('input[type="radio"]').eq(14).attr("checked",
-					false);
-					$('input[type="radio"]').eq(15).attr("checked",
-					false);
-				}
-				}// 问题整改
-				else if (k == "process_question") {
-					if (v != null && v.length>0) {
-					if ($('input[type="radio"]').eq(16).val() == v) {
-						$('input[type="radio"]').eq(16).attr("checked",
-								"checked");
-					} else {
-						$('input[type="radio"]').eq(17).attr("checked",
-								"checked");
-					}
-				}else{
-					$('input[type="radio"]').eq(16).attr("checked",
-					false);
-					$('input[type="radio"]').eq(17).attr("checked",
-					false);
-				}
-				}// 结案
-				else if (k == "process_case_end") {
-					if (v != null && v.length>0) {
-					if ($('input[type="radio"]').eq(18).val() == v) {
-						$('input[type="radio"]').eq(18).attr("checked",
-								"checked");
-					} else {
-						$('input[type="radio"]').eq(19).attr("checked",
-								"checked");
-					}
-				}else{
-					$('input[type="radio"]').eq(18).attr("checked",
-					false);
-					$('input[type="radio"]').eq(19).attr("checked",
-					false);
-				}
-				}
-			});
+				} else */
+//					if (k == "process_authenticate") {
+//					if (v != null && v.length>0) {
+//					if ($('input[type="radio"]').eq(4).val() == v) {
+//						$('input[type="radio"]').eq(4).attr("checked",
+//								"checked");
+//					} else {
+//						$('input[type="radio"]').eq(5).attr("checked",
+//								"checked");
+//					}
+//				}else{
+//					$('input[type="radio"]').eq(4).attr("checked",
+//					false);
+//					$('input[type="radio"]').eq(5).attr("checked",
+//					false);
+//				}
+//				}// 涉案财物
+//				else if (k == "process_case_goods") {
+//					if (v != null && v.length>0) {
+//					if ($('input[type="radio"]').eq(6).val() == v
+//							&& $('input[type="radio"]').eq(6).val() != "") {
+//						$('input[type="radio"]').eq(6).attr("checked",
+//								"checked");
+//					} else {
+//						$('input[type="radio"]').eq(7).attr("checked",
+//								"checked");
+//					}
+//				}else{
+//					$('input[type="radio"]').eq(6).attr("checked",
+//					false);
+//					$('input[type="radio"]').eq(7).attr("checked",
+//					false);
+//				}
+//				} else if (k == "process_treatment_category") {
+//					if (v != null && v.length>0) {
+//					if ($('input[type="radio"]').eq(8).val() == v) {
+//						$('input[type="radio"]').eq(8).attr("checked",
+//								"checked");
+//					} else {
+//						$('input[type="radio"]').eq(9).attr("checked",
+//								"checked");
+//					}
+//				}else{
+//					$('input[type="radio"]').eq(8).attr("checked",
+//					false);
+//					$('input[type="radio"]').eq(9).attr("checked",
+//					false);
+//				}
+//				}// 听证
+//				else if (k == "process_apply_right") {
+//					if (v != null && v.length>0) {
+//					if ($('input[type="radio"]').eq(10).val() == v) {
+//						$('input[type="radio"]').eq(10).attr("checked",
+//								"checked");
+//					} else {
+//						$('input[type="radio"]').eq(11).attr("checked",
+//								"checked");
+//					}
+//				}else{
+//					$('input[type="radio"]').eq(10).attr("checked",
+//					false);
+//					$('input[type="radio"]').eq(11).attr("checked",
+//					false);
+//				}
+//				}// 提出问题
+//				else if (k == "process_question_list") {
+//					if (v != null && v.length>0) {
+//					if ($('input[type="radio"]').eq(12).val() == v) {
+//						$('input[type="radio"]').eq(12).attr("checked",
+//								"checked");
+//						// $("#process_question").show();
+//					} else {
+//						$('input[type="radio"]').eq(13).attr("checked",
+//								"checked");
+//					}
+//				}else{
+//					$('input[type="radio"]').eq(12).attr("checked",
+//					false);
+//					$('input[type="radio"]').eq(13).attr("checked",
+//					false);
+//				}
+//				}// 审核
+//				else if (k == "process_captain_check") {
+//					if (v != null && v.length>0) {
+//					if ($('input[type="radio"]').eq(14).val() == v) {
+//						$('input[type="radio"]').eq(14).attr("checked",
+//								"checked");
+//					} else {
+//						$('input[type="radio"]').eq(15).attr("checked",
+//								"checked");
+//					}
+//				}else{
+//					$('input[type="radio"]').eq(14).attr("checked",
+//					false);
+//					$('input[type="radio"]').eq(15).attr("checked",
+//					false);
+//				}
+//				}// 问题整改
+//				else if (k == "process_question") {
+//					if (v != null && v.length>0) {
+//					if ($('input[type="radio"]').eq(16).val() == v) {
+//						$('input[type="radio"]').eq(16).attr("checked",
+//								"checked");
+//					} else {
+//						$('input[type="radio"]').eq(17).attr("checked",
+//								"checked");
+//					}
+//				}else{
+//					$('input[type="radio"]').eq(16).attr("checked",
+//					false);
+//					$('input[type="radio"]').eq(17).attr("checked",
+//					false);
+//				}
+//				}// 结案
+//				else if (k == "process_case_end") {
+//					if (v != null && v.length>0) {
+//					if ($('input[type="radio"]').eq(18).val() == v) {
+//						$('input[type="radio"]').eq(18).attr("checked",
+//								"checked");
+//					} else {
+//						$('input[type="radio"]').eq(19).attr("checked",
+//								"checked");
+//					}
+//				}else{
+//					$('input[type="radio"]').eq(18).attr("checked",
+//					false);
+//					$('input[type="radio"]').eq(19).attr("checked",
+//					false);
+//				}
+//				}
+//			});
+			  management(case1);
 		}
+		
 	}
-
 	xmlhttp.open("post", url, true);
 	xmlhttp.send();
+}
+function management(case1){
+	console.log("aaa"+case1.process_captain_check);
+//	if(case1.process_case_end=='是'){
+//		$('#process_file_hand').show();
+//	}else  {
+//		$('#process_file_hand').hide();
+//	}
+//	if(case1.process_question!=null){
+//		$('#case_score').show();
+//		$('#process_case_end').show();
+//	}else{
+//		$('#case_score').hide();
+//		$('#process_case_end').hide();
+//	}
+//	if(case1.process_case_goods=='是'){
+//		$('#punishmentab').show();
+//	}else{
+//		$('#punishmentab').hide();
+//	}
+	if(case1.process_case_goods=='是'){
+		$('#sheancaiwu').show();
+	}else{
+		$('#sheancaiwu').hide();
+	}
+//	if(case1.process_question_list!=""){
+//		$('#but_process_question').show();
+//	}else{
+//		$('#but_process_question').hide();
+//	}
 }
 function get_staffDetails_Ajax(url, info_id) {
 	var xmlhttp;
@@ -260,11 +384,25 @@ function get_staffDetails_Ajax(url, info_id) {
 			$.each(staff_info.police[2], function(key, value) {
 				$('input[name="police[2].' + key + '"]').val(value);
 			});
+			info_category(staff_info);
 		}
 	}
 
 	xmlhttp.open("post", url, true);
 	xmlhttp.send();
+}
+function info_category(staff_info){
+	var case1=staff_info.info;
+	if(case1.info_category=='行政案件'){
+		$("#xingzheng_case").show();
+	}else {
+		$("#xingzheng_case").hide();
+	}
+	if(case1.info_category=='刑事案件'){
+		$("#xingshi_case").show();
+	}else{
+		$("#xingshi_case").hide();
+	}
 }
 // 改变性别方法
 //function changeSex_man(even) {
@@ -388,6 +526,7 @@ function loadcaseDetail_minors_asking() {
 			var result = xmlhttp.responseText;
 			if (isContains(result,'success')) {
 				toastr.success('编辑成功！');
+				//location.reload(true);    
 			} else {
 				toastr.error('编辑失败！');
 			}
@@ -564,16 +703,16 @@ function loadcaseDetail_hearing_applying() {
 	xmlhttp.send(formData);
 }
 //改变是否提出问题
-function changeproblem_asking_yes(even) {
-	var sex = document.getElementById("problem_asking_yes");
-	sex.value = even.value;
-	return sex.value;
-}
-function changeproblem_asking_no(even) {
-	var sex = document.getElementById("problem_asking_no");
-	sex.value = even.value;
-	return sex.value;
-}
+//function changeproblem_asking_yes(even) {
+//	var sex = document.getElementById("problem_asking_yes");
+//	sex.value = even.value;
+//	return sex.value;
+//}
+//function changeproblem_asking_no(even) {
+//	var sex = document.getElementById("problem_asking_no");
+//	sex.value = even.value;
+//	return sex.value;
+//}
 
 // CaseDetails.jsp中的是否提出问题提交
 function problem_asking() {
@@ -600,14 +739,17 @@ function loadcaseDetail_problem_asking() {
 	} else {
 		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
 	}
-	var processDetails = document.getElementById("processDetails");
+	//var processDetails = document.getElementById("processDetails");
+	var process_question_list=document.getElementById("process_question_list").value;
 	var formData = new FormData(processDetails);
+	formData.append("ajdbxtProcess.process_question_list", process_question_list);
 	xmlhttp.onreadystatechange = function() {
 		console.log("c2");
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			var result = xmlhttp.responseText;
 			if (isContains(result,'success')) {
 				toastr.success('编辑成功！');
+				//location.reload(true);
 			} else {
 				toastr.error('编辑失败！');
 			}
@@ -674,16 +816,16 @@ function loadcaseDetail_case_review() {
 	xmlhttp.send(formData);
 }
 //改变是否问题整改
-function changeproblem_rectification_yes(even) {
-	var sex = document.getElementById("problem_rectification_yes");
-	sex.value = even.value;
-	return sex.value;
-}
-function changeproblem_rectification_no(even) {
-	var sex = document.getElementById("problem_rectification_no");
-	sex.value = even.value;
-	return sex.value;
-}
+//function changeproblem_rectification_yes(even) {
+//	var sex = document.getElementById("problem_rectification_yes");
+//	sex.value = even.value;
+//	return sex.value;
+//}
+//function changeproblem_rectification_no(even) {
+//	var sex = document.getElementById("problem_rectification_no");
+//	sex.value = even.value;
+//	return sex.value;
+//}
 
 // CaseDetails.jsp中的是否问题整改提交
 function problem_rectification() {
@@ -710,14 +852,17 @@ function loadcaseDetail_problem_rectification() {
 	} else {
 		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
 	}
-	var processDetails = document.getElementById("processDetails");
+	//var processDetails = document.getElementById("processDetails");
+	var process_question = document.getElementById("process_question").value;
 	var formData = new FormData(processDetails);
+	formData.append("ajdbxtProcess.process_question", process_question);
 	xmlhttp.onreadystatechange = function() {
 		console.log("c2");
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			var result = xmlhttp.responseText;
 			if (isContains(result,'success')) {
 				toastr.success('编辑成功！');
+				//location.reload(true);
 			} else {
 				toastr.error('编辑失败！');
 			}
@@ -868,7 +1013,7 @@ function case_score() {
 		}
 	});
 }
-// 处罚按钮
+// 评分按钮
 function loadcaseDetail_case_score() {
 	console.log("b2");
 	if (window.XMLHttpRequest) {
@@ -880,6 +1025,47 @@ function loadcaseDetail_case_score() {
 	var case_score= document.getElementById("input_case_score").value;
 	var formData = new FormData(processDetails);
 	formData.append("ajdbxtProcess.process_score", case_score);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+function process_file_hand(){
+	$.confirm({
+		title : '上交!',
+		content : '确定上交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					loadcaseDetail_process_file_hand();
+				}
+			}
+		}
+	});
+}
+function loadcaseDetail_process_file_hand(){
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("processDetails");
+	var formData = new FormData(processDetails);
 	xmlhttp.onreadystatechange = function() {
 		console.log("c2");
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
