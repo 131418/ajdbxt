@@ -61,7 +61,7 @@
 									<!-- <button class="btn btn-default role_one"
 										onclick="createPolice()">按人员统计</button> -->
 									<button class="btn btn-default role_one"
-									onclick="ByUserTotal()">按人员统计</button>
+									onclick="Javascript:location.href='/ajdbxt/total/Total_page_listPoliceCase'">按人员统计</button>
 									
 								</div>
 							</div>
@@ -141,7 +141,8 @@
 	<!-- 路径跳转 -->
 		<script type="text/javascript">
 			function ByUserTotal() {
-				window.location.href="ajdbxt_total.jsp?backurl="+window.location.href; 
+				/* window.location.href="ajdbxt_total.jsp";  */
+				 window.navigate("ajdbxt_total.jsp");
 			}
 		</script>
 </body>

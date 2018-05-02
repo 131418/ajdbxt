@@ -26,7 +26,7 @@ function List_Total_By_Department(){
 			/*
 			 * 将数据库的数据取出来放到表格里
 			 */
-			for(var num=0;num<total_vo.statisticPoliceCaseNumDTO.length;num++){
+			for(var num=0;num<total_vo.statisticPoliceCaseDto.length;num++){
 				new_tr=document.createElement("tr");
 				new_tr.ClassName="new_tr";
 				new_tr.appendChild(document.createTextNode(''));
@@ -37,41 +37,41 @@ function List_Total_By_Department(){
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].length;
+				new_td.innerHTML = (total_vo.statisticPoliceCaseDto[num].index)+1;
 				
 				/*
 				 * 2.办案单位
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].department.department_name;
+				new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].department.department_name;
 				
 				/*
 				 * 3.行政案件
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].adminCase;
+				new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].adminCase;
 				
 				/*
 				 * 4.刑事案件
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].criminalCase;
+				new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].criminalCase;
 				/*
 				 * 5.总案件数
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].totalCase;
+				new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].totalCase;
 				
 				/*
 				 * 6.平均分
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].averageScore;
+				new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].averageScore;
 				/*
 				 * 加载图标
 				 */
@@ -88,9 +88,9 @@ function List_Total_By_Department(){
 	var formData=new FormData();
 	formData.append("departmentStatisticVo.start_time",select_start_time);
 	formData.append("departmentStatisticVo.stop_time",select_stop_time);
-	/*formData.append("adminCase",adminCase);
-	formData.append("criminalCase",criminalCase);
-	formData.append("average",average);*/
+	formData.append("departmentStatisticVo.orderString",adminCase);
+	formData.append("departmentStatisticVo.orderString",criminalCase);
+	formData.append("departmentStatisticVo.orderString",average);
 	xhr.send(formData);
 }
 

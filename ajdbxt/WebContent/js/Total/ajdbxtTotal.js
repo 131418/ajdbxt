@@ -36,7 +36,7 @@ function List_Total_By_Page(pageIndex) {
 				/*
 				 * 将数据库的数据取出来放到表格里
 				 */
-				for (var num = 0; num < total_vo.statisticPoliceCaseNumDTO.length; num++) {
+				for (var num = 0; num < total_vo.statisticPoliceCaseDto.length; num++) {
 					new_tr = document.createElement("tr");
 					new_tr.className = "new_tr";
 					new_tr.appendChild(document.createTextNode(''));
@@ -47,65 +47,69 @@ function List_Total_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total.statisticPoliceCaseNumDTO[num].adminCase;
+					new_td.innerHTML = (total_vo.statisticPoliceCaseDto[num].index)+1;
 
 					/*
 					 * 1. 办案单位
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].department.department_name;
-
-					/*
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].department.department_name;
+/*
+					
 					 * 人员id
-					 */
+					 
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					var td_ajdbxt_police_id = total_vo.statisticPoliceCaseNumDTO[num].police.ajdbxt_police_id
+					var td_ajdbxt_police_id = total_vo.statisticPoliceCaseDto[num].police.ajdbxt_police_id
 					new_td.innerHTML = td_ajdbxt_police_id;
-					new_td.style.display = "none";
+					new_td.style.display = "none";*/
 					/*
 					 * 2. 人员
 					 */
 					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].police.police_name;
+					
+					/*new_td = document.createElement("td");
 					new_a = document.createElement("a");
 					new_a.href = "/ajdbxt/total/Total_page_listPoliceCase?police_id="
 							+ td_ajdbxt_police_id;
 					new_td.appendChild(new_a);
 					new_tr.appendChild(new_td);
-					new_a.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].police.police_name;
+					new_a.innerHTML = total_vo.statisticPoliceCaseDto[num].police.police_name;
 					new_a.style.cursor = "pointer";
-
+*/
 					/*
 					 * 3. 主办行政案件数
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].adminCase;
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].adminMianCase;
 					/*
 					 * 4. 主办刑事案件数
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].criminalCase;
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].crimalMainCase;
 					/*
 					 * 5. 协办行政案件数
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].adminCase;
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].adminAsistCase;
 					/*
 					 * 6. 协办刑事案件数
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].criminalCase;
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].crimalAsistCase;
 					/*
 					 * 平均分
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].criminalCase
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].score_mian
 
 					/* 加载图标 */
 					var i_pulse = document.getElementById("i_pulse");
@@ -123,22 +127,22 @@ function List_Total_By_Page(pageIndex) {
 		}
 	}
 	var formData = new FormData();
-	formData.append("listPoliceCaseByPageAndSearchVO.currePage", pageIndex);
-	formData.append("listPoliceCaseByPageAndSearchVO.searchPolice",
+	formData.append("policeCaseStatisticVo.currePage", pageIndex);
+	formData.append("policeCaseStatisticVo.policeName",
 			input_Total_PoliceSearchText);
-	formData.append("listPoliceCaseByPageAndSearchVO.department",
+	formData.append("policeCaseStatisticVo.department",
 			select_case_department);
-	formData.append("listPoliceCaseByPageAndSearchVO.start_time",
+	formData.append("policeCaseStatisticVo.start_time",
 			select_start_time.value);
-	formData.append("listPoliceCaseByPageAndSearchVO.stop_time",
+	formData.append("policeCaseStatisticVo.stop_time",
 			select_stop_time.value);
-	formData.append("listPoliceCaseByPageAndSearchVO.MainadminCase",
+	formData.append("policeCaseStatisticVo.orderString",
 			MainadminCase);
-	formData.append("listPoliceCaseByPageAndSearchVO.MaincriminalCase",
+	formData.append("policeCaseStatisticVo.orderString",
 			MaincriminalCase);
-	formData.append("listPoliceCaseByPageAndSearchVO.InsisadminCase",
+	formData.append("policeCaseStatisticVo.orderString",
 			InsisadminCase);
-	formData.append("listPoliceCaseByPageAndSearchVO.InsiscriminalCase",
+	formData.append("policeCaseStatisticVo.orderString",
 			InsiscriminalCase);
 	xhr.open("POST", "/ajdbxt/total/Total_getListPoiceCaseStatistic", true);
 	xhr.send(formData);
