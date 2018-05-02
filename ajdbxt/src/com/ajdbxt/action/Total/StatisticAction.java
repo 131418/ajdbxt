@@ -23,7 +23,6 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class StatisticAction extends ActionSupport {
 	/**
-	 * 
 	 */
 	private StatisticService statisticService;
 	private StatisticDepartmentCaseNumDTO statisticDepartmentCaseNumDTO;
