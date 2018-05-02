@@ -3,24 +3,18 @@ package com.ajdbxt.domain.DTO.Total;
 import com.ajdbxt.domain.DO.ajdbxt_department;
 import com.ajdbxt.domain.DO.ajdbxt_police;
 
-public class StatisticPoliceCaseNumDTO {
-	//民警对象
-	private ajdbxt_police  police;
-	
+public class StatisticDepartmentCaseNumDTO {
 	//办案单位
 	private  ajdbxt_department department;
-	
 	//行政案件
 	private int adminCase;
 	//刑事案件
 	private int criminalCase;
+	//平均分
+	private double averageScore;
+	//总案件数
+	private int totalCase;
 	
-	public ajdbxt_police getPolice() {
-		return police;
-	}
-	public void setPolice(ajdbxt_police police) {
-		this.police = police;
-	}
 	public int getAdminCase() {
 		return adminCase;
 	}
@@ -38,5 +32,17 @@ public class StatisticPoliceCaseNumDTO {
 	}
 	public void setDepartment(ajdbxt_department department) {
 		this.department = department;
+	}
+	public double getAverageScore() {
+		return averageScore;
+	}
+	public void setAverageScore(double averageScore) {
+		this.averageScore = averageScore;
+	}
+	public int getTotalCase() {
+		return totalCase;
+	}
+	public void setTotalCase(int totalCase) {
+		this.totalCase = totalCase;
 	}
 }
