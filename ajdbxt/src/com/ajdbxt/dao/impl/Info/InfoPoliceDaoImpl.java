@@ -44,7 +44,7 @@ public class InfoPoliceDaoImpl implements InfoPoliceDao {
 	public List<ajdbxt_police> findLeaders() {
 		Session session=sessionFactory.getCurrentSession();
 		Criteria cri=session.createCriteria(ajdbxt_police.class);
-		cri.add(Restrictions.eq("police_duty", "负责人"));
+		cri.add(Restrictions.eq("police_duty", "副局长"));
 		return cri.list();
 	}
 	@Override
