@@ -125,6 +125,7 @@ public class UserAction extends ActionSupport {
 	public String mobile_police_add() {
 		return "mobile_police_add";
 	}
+
 	public String mobile_police_update() {
 		return "mobile_police_update";
 	}

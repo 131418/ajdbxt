@@ -41,36 +41,35 @@
 				<form class="mui-input-group mui-h5">
 					<div class="mui-input-row">
 						<label>警号</label> <input type="text" class="mui-input-clear "
-							id="input_police_serial_number">
+							id="update_input_police_serial_number">
 					</div>
 					<div class="mui-input-row">
 						<label>密码</label> <input type="text" class="mui-input-clear"
-							id="input_police_password">
+							id="update_input_police_password">
 					</div>
 					<div class="mui-input-row">
 						<label>姓名</label> <input type="text" class="mui-input-clear"
-							id="input_police_name">
+							id="update_input_police_name">
 					</div>
 					<div class="mui-input-row">
 						<label>单位</label> <select class="mui-select"
-							id="input_police_department">
-							<option>1</option>
+							id="update_input_police_department">
 						</select>
 					</div>
 					<div class="mui-input-row">
 						<label>职务</label> <input type="text" class="mui-input-clear"
-							id="input_police_duty">
+							id="update_input_police_duty">
 					</div>
 					<div class="mui-input-row">
 						<label>法制员</label> <select class="mui-select"
-							id="input_police_legaler">
+							id="iupdate_nput_police_legaler">
 							<option selected="selected" value="">请选择</option>
 							<option value="1">是</option>
 							<option value="2">否</option>
 						</select>
 					</div>
 					<div class="mui-input-row">
-						<label>权限</label> <select id="input_police_power">
+						<label>权限</label> <select id="update_input_police_power">
 							<!-- <option value="1">单位内浏览</option>
 							<option value="2">单位内管理</option>
 							<option value="3">所有单位内管理</option> -->
@@ -78,7 +77,7 @@
 					</div>
 					<div class="mui-input-row">
 						<label>电话</label> <input type="text" class="mui-input-clear"
-							id="input_police_phone_number">
+							id="update_input_police_phone_number">
 					</div>
 				</form>
 			</div>
@@ -114,6 +113,123 @@
 	<script src="<%=basePath%>js/mui.min.js"></script>
 	<script type="text/javascript">
 		mui.init();
+		//修改初始化
+		/* var update_police_vo = null;
+		var button_id = button.id;
+		var formData = new FormData();
+		var update_xhr = new XMLHttpRequest();
+		formData.append("ajdbxt_police.ajdbxt_police_id", button_id);
+		update_xhr.open("POST", "/ajdbxt/user/User_findPoliceById");
+		update_xhr.send(formData);
+		update_xhr.onreadystatechange = function() {
+			if (update_xhr.readyState == 4) {
+				if (update_xhr.status == 200) {
+					update_police_vo = JSON
+							.parse(update_xhr.responseText);
+					console.log("xhr.readyState:"
+							+ update_xhr.readyState);
+					console.log("xhr.status:" + update_xhr.status);
+					var ajdbxt_police_id = update_police_vo.ajdbxt_police.ajdbxt_police_id;
+					console.log("ajdbxt_police_id:"
+							+ ajdbxt_police_id);
+					if (ajdbxt_police_id == button_id) {
+						console
+								.log("ajdbxt_police_id == button_id:"
+										+ ajdbxt_police_id == button_id);
+
+						// Id
+						var update_input_ajdbxt_police_id = document
+								.getElementById("update_input_ajdbxt_police_id");
+						update_input_ajdbxt_police_id.value = ajdbxt_police_id;
+
+						// 警号
+						var update_input_police_serial_number = document
+								.getElementById("update_input_police_serial_number");
+						update_input_police_serial_number.value = update_police_vo.ajdbxt_police.police_serial_number;
+						// 密码
+						var update_input_police_password = document
+								.getElementById("update_input_police_password");
+						update_input_police_password.value = update_police_vo.ajdbxt_police.police_password;
+						console.log("update_input_police_password:"
+								+ update_input_police_password.value);
+
+						// 姓名
+						var update_input_police_name = document
+								.getElementById("update_input_police_name");
+						update_input_police_name.value = update_police_vo.ajdbxt_police.police_name;
+
+						// 单位
+						var xmlHttpRequest = new XMLHttpRequest();
+						xmlHttpRequest.open("POST",
+								"/ajdbxt/user/User_getPower");
+						xmlHttpRequest.send(null);
+						xmlHttpRequest.onreadystatechange = function() {
+							if (xmlHttpRequest.readyState == 4
+									&& xmlHttpRequest.status == 200) {
+								var loginRole = JSON
+										.parse(xmlHttpRequest.responseText);
+								var option = '';
+								if (loginRole.ajdbxt_police.police_power == "3") {
+									var deparment = update_police_vo.ajdbxt_department.ajdbxt_department_id;
+									$
+											.post(
+													'/ajdbxt/user/User_findDepartmentByPage',
+													function(
+															Department_data) {
+														// 所有案件循环
+														for (var len = 0; len < Department_data.list.length; len++) {
+															option += '<option ';
+															if (Department_data.list[len].ajdbxt_department_id == deparment) {
+																option += 'selected';
+															}
+															option += ' value="'
+																	+ Department_data.list[len].ajdbxt_department_id
+																	+ '">'
+																	+ Department_data.list[len].department_name
+																	+ '</option>';
+														}
+														$(
+																'#input_police_department')
+																.html(
+																		option);
+													}, 'json');
+
+								} else {
+									option += '<option value="'
+											+ login_police_deparment_id
+											+ '">'
+											+ login_police_deparment
+											+ '</option>';
+									$('#input_police_department')
+											.html(option);
+								}
+							}
+
+						}
+
+						// 职务
+						var update_input_police_duty = document
+								.getElementById("update_input_police_duty");
+						update_input_police_duty.value = update_police_vo.ajdbxt_police.police_duty;
+						// 职务
+						var update_input_police_legaler = document
+								.getElementById("update_input_police_legaler");
+						update_input_police_legaler.value = update_police_vo.ajdbxt_police.police_legaler;
+
+						// 角色
+						var update_input_police_power = document
+								.getElementById("update_input_police_power");
+						update_input_police_power.value = update_police_vo.ajdbxt_police.police_power;
+
+						// 手机号码
+						var update_input_police_phone_number = document
+								.getElementById("update_input_police_phone_number");
+						update_input_police_phone_number.value = update_police_vo.ajdbxt_police.police_phone_number;
+					}
+				}
+			}
+
+		} */
 	</script>
 </body>
 

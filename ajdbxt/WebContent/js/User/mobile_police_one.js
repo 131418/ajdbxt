@@ -67,8 +67,7 @@ window.onload = function() {
 // -------------------------
 // 列表显示
 function List_Police_By_Page(pageIndex) {
-	var input_PoliceSearchText = document
-			.getElementById("input_PoliceSearchText").value;
+	var input_PoliceSearchText = document.getElementById("input_PoliceSearchText").value;
 	console.log("input_PoliceSearchText:" + input_PoliceSearchText);
 	var formData = new FormData();
 	var xhr = false;
@@ -134,7 +133,7 @@ function List_Police_By_Page(pageIndex) {
 				var str_page_row = null;
 				console.log("police_vo.allRow:" + police_vo.allRow);
 				if (police_vo.allRow > 0) {
-					
+
 					/*
 					 * 移出除标题以外的所有行
 					 */
@@ -309,16 +308,61 @@ function List_Police_By_Page(pageIndex) {
 							new_btn_xg.innerHTML = "修改";
 							new_btn_xg.style.marginLeft = "5px";
 							new_btn_xg.style.width = "60px";
+							new_btn_xg.onclick = function() {
+								window.location.href = "/ajdbxt/user/User_mobile_police_update";
+								return false;
+							}
 							new_btn_sc = document.createElement("button");
 							new_btn_sc.className = "mui-btn mui-btn-red btn_sc";
+							new_btn_sc.id = police_vo.list[num].ajdbxt_police.ajdbxt_police_id;
 							new_btn_sc.innerHTML = "删除";
 							new_btn_sc.style.margin = "0 30px 0 5px";
 							new_btn_sc.style.width = "60px";
+							// 删除按钮点击事件
+							new_btn_sc.onclick = function() {
+								var btn_id = this.id
+								var btnArray = [ '是', '否' ];
+								mui
+										.confirm(
+												'确定删除？',
+												'提示',
+												btnArray,
+												function(e) {
+													if (e.index == 0) {
+														var formData = new FormData();
+														formData.append("ids",
+																btn_id);
+														var xhr = new XMLHttpRequest();
+														xhr
+																.open("POST",
+																		"/ajdbxt/user/User_batchDelete");
+														xhr.send(formData);
+														xhr.onreadystatechange = function() {
+															if (xhr.readyState == 4
+																	&& xhr.status == 200) {
+																if (xhr.responseText == "success") {
+																	mui
+																			.toast("删除成功");
+																	List_Police_By_Page(1);
+																} else {
+																	mui
+																			.toast("删除失败");
+																}
+															} else {
+																mui
+																		.toast(xhr.status);
+															}
+														}
+
+													}
+												});
+								return false;
+							}// ---end 删除
 							new_row_button.appendChild(new_btn_sc);
 							new_row_button.appendChild(new_btn_xg);
 							new_form.appendChild(new_row_button);
 
-						}//-----按钮
+						}// -----按钮
 						$("label").css("padding", "11px 0px");
 						$("label").css("text-align", "center");
 						$("input").css("padding", "0 30px");
@@ -326,7 +370,7 @@ function List_Police_By_Page(pageIndex) {
 						new_div.appendChild(new_form);
 						new_li.appendChild(new_div);
 
-					}//---for循环
+					}// ---for循环
 
 				}/*-----if (police_vo.allRow > 0)*/
 				else {
@@ -355,11 +399,11 @@ function List_Police_By_Page(pageIndex) {
 				document.getElementById("select_page").onchange = function() {
 					List_Police_By_Page(this.value);
 					console.log(this.value);
-				};//---- 翻页
+				};// ---- 翻页
 
 			}
 		}
-	}//---onreadystatechange
+	}// ---onreadystatechange
 	if (pageIndex == null || pageIndex.preventDefault) {
 		pageIndex = 1;
 	}
@@ -433,7 +477,6 @@ function createPolice() {
 	}
 
 	var formData = new FormData();
-
 	var xhr = false;
 	xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
@@ -482,18 +525,24 @@ function createPolice() {
 }
 // -----------------------------
 // --------修改人员--------------
-$(".btn_xg").bind("click", function() {
+/*$(".btn_xg").bind("click", function() {
 	window.location.href = "/ajdbxt/user/User_mobile_police_update";
 });
-
+*/
 // -----------------------------
 // --------删除人员--------------
 // 删除按钮绑定事件
-$(".btn_sc").bind("click", deletePolice());
-function deletePolice() {
-
-}
-
+/*
+ * $(".new_btn_sc").bind("click",function(){ var btn_id=this.id
+ * console.log("btn_id:"+btn_id); var btnArray = [ '是', '否' ];
+ * mui.confirm('确定删除？', '提示', btnArray, function(e) { if (e.index == 0) { var
+ * formData = new FormData(); formData.append("ids",btn_id); var xhr=new
+ * XMLHttpRequest(); xhr.open("POST", "/ajdbxt/user/User_batchDelete");
+ * xhr.send(formData); xhr.onreadystatechange=function(){ if (xhr.readyState ==
+ * 4 && xhr.status == 200) { if (xhr.responseText == "success") {
+ * mui.toast("删除成功"); List_Police_By_Page(1); } else { mui.toast("删除失败"); } }
+ * else { mui.toast(xhr.status); } } } }); return false; })
+ */
 /*
  * 判断页数
  */
