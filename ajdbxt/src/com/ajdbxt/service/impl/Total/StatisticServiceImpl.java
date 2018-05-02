@@ -136,6 +136,7 @@ public class StatisticServiceImpl implements StatisticService {
 		for(int i=0;i<listPolice.size();i++) {
 			StatisticPoliceCaseDto statisticCaseByPoliceDTO=new StatisticPoliceCaseDto();
 			statisticCaseByPoliceDTO.setPolice(listPolice.get(i));
+			statisticCaseByPoliceDTO.setDepartment(statisticDao.findPoliceDepartment(listPolice.get(i).getPolice_department()));
 			//行政主办案件数
 			int adminMianCaseNum=statisticDao.findPoliceMainCaseNum(policeCaseStatisticVo, listPolice.get(i).getAjdbxt_police_id(), "行政案件");
 			//刑事主办案件数

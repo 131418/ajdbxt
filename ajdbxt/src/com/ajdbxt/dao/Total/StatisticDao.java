@@ -29,5 +29,8 @@ public interface StatisticDao {
 	//得到警员所有主办的案件案件的分数
 	public double findTotalScoreByPolice(PoliceCaseStatisticVo policeCaseStatisticVo,String policeId);
 	
+	//得到警员单位
+	public ajdbxt_department findPoliceDepartment(String departmentId);
+	
 
 }

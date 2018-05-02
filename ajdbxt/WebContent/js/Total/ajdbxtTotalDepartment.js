@@ -37,40 +37,41 @@ function List_Total_By_Department(){
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				/*new_tr.innerHTML=total_vo.*/
+				new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].length;
 				
 				/*
 				 * 2.办案单位
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
+				new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].department.department_name;
 				
 				/*
 				 * 3.行政案件
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				/*new_tr.innerHTML=total_vo.*/
+				new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].adminCase;
 				
 				/*
 				 * 4.刑事案件
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				
+				new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].criminalCase;
 				/*
 				 * 5.总案件数
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				/*new_tr.innerHTML=total_vo.*/
+				new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].totalCase;
 				
 				/*
 				 * 6.平均分
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				
+				new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].averageScore;
 				/*
 				 * 加载图标
 				 */
@@ -83,13 +84,13 @@ function List_Total_By_Department(){
 		}
 		}
 	}
-	xhr.open("POST","",true);
+	xhr.open("POST","/ajdbxt/total/Total_getListDeparmentCaseStatistics",true);
 	var formData=new FormData();
-	formData.append("select_start_time",select_start_time);
-	formData.append("select_stop_time",select_stop_time);
-	formData.append("adminCase",adminCase);
+	formData.append("departmentStatisticVo.start_time",select_start_time);
+	formData.append("departmentStatisticVo.stop_time",select_stop_time);
+	/*formData.append("adminCase",adminCase);
 	formData.append("criminalCase",criminalCase);
-	formData.append("average",average);
+	formData.append("average",average);*/
 	xhr.send(formData);
 }
 

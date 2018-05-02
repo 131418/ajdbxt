@@ -56,14 +56,13 @@
 										onchange="List_Total_By_Department()" />
 									<%--  --%>
 								</div>
-								<%-- <!--按类型统计  -->
-								<div style="width: 300px; float: right;">
+								<!--按类型统计  -->
+								<div style="width: 160px; float: right;">
+									<!-- <button class="btn btn-default role_one"
+										onclick="createPolice()">按人员统计</button> -->
 									<button class="btn btn-default role_one"
-										onclick="createPolice()">按行政案件统计</button>
-									<button class="btn btn-default role_one"
-										onclick="createPolice()">按刑事案件统计</button>
+									onclick="ByDepartment()">按人员统计</button>
 								</div>
-								 --%>
 							</div>
 							<!--  -->
 							<table id="table_total" class="table table-hover "
