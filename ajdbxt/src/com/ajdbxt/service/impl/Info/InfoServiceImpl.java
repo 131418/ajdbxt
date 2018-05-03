@@ -84,7 +84,6 @@ public class InfoServiceImpl implements InfoService {
 		processDTO.setPolice(polices);
 		processDTO.setDepartment(infoDepartmentDao.findDepartmentById(caseInfo.getInfo_department()));
 		processDTO.setCap(infoPoliceDao.findCaptainByDepartment(caseInfo.getInfo_department()));
-		processDTO.setTeam_legal(infoPoliceDao.findLegalByDepartment(caseInfo.getInfo_department()));
 		return JsonUtils.toJson(processDTO);
 	}
 	private void oneceRank(ajdbxt_info caseInfo) {//排班主协办人员
@@ -348,6 +347,7 @@ public class InfoServiceImpl implements InfoService {
 	@Override
 	public String getLegalsAndLeadersAndDepartment() {
 		LegalSystemAndLeadersVO lalVO=new LegalSystemAndLeadersVO();
+		lalVO.setTeamLegals(infoPoliceDao.findLegalOfDepartment());
 		lalVO.setLegals(infoPoliceDao.findLegals());
 		lalVO.setLeaders(infoPoliceDao.findLeaders());
 		lalVO.setDepartments(infoDepartmentDao.findAllDepartment());

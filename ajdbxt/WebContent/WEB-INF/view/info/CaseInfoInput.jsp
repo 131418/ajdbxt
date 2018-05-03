@@ -287,7 +287,7 @@ tfoot tr td a:hover {
 									<tr>
 									<td>抓获时间</td>
 										<td><input style="witdh: 70%;"
-											class="form-control mydate"
+											class="form-control mydate_minute"
 											name="info.info_catch_time" type="text"></td>
 										
 										<td>主办民警<i class="fa fa-spinner fa-pulse load_remind"></td>
@@ -371,7 +371,8 @@ tfoot tr td a:hover {
  		$('.mydate_minute').datetimepicker({ 
  			yearStart : 1990, // 设置最小年份 
  			yearEnd : 2050, // 设置最大年份
- 			yearOffset : 0, // 年偏差 
+ 			yearOffset : 0, // 年偏差
+ 			step: 1,
 		timepicker : true, // 关闭时间选项 
  			format : 'Y-m-d H:i', // 格式化日期年-月-日 
  			minDate : '1990/01/01', // 设置最小日期 
