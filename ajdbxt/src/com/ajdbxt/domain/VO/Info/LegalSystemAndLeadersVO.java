@@ -8,14 +8,15 @@ import com.ajdbxt.domain.DO.ajdbxt_police;
 public class LegalSystemAndLeadersVO {
 	private List<ajdbxt_police> legals;
 	private List<ajdbxt_police> leaders;
-	private List<ajdbxt_police> teamLegals;
+	private List<ajdbxt_police> legalers;
 	private List<ajdbxt_department> departments;
 	
-	public List<ajdbxt_police> getTeamLegals() {
-		return teamLegals;
+	
+	public List<ajdbxt_police> getLegalers() {
+		return legalers;
 	}
-	public void setTeamLegals(List<ajdbxt_police> teamLegals) {
-		this.teamLegals = teamLegals;
+	public void setLegalers(List<ajdbxt_police> legalers) {
+		this.legalers = legalers;
 	}
 	public List<ajdbxt_department> getDepartments() {
 		return departments;
