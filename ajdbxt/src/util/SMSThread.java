@@ -201,7 +201,7 @@ public class SMSThread extends Thread{
 		for(int index=0;index<16;index++) {
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process =processDTO.getProcess();
-			if(process.getProcess_question()!=null) {//如果整改数量为空
+			if(process.getProcess_question()!=null) {//如果整改数量不为空
 				List<String> tel=new ArrayList<>();
 				String [] params= {processDTO.getInfo().getInfo_name(),process.getProcess_question_list().toString(),process.getProcess_question().toString()};
 				tel.add(processDTO.getLeader().getPolice_phone_number());

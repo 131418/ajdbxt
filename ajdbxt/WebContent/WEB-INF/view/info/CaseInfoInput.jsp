@@ -380,7 +380,8 @@ tfoot tr td a:hover {
  		$('.mydate_minute').datetimepicker({ 
  			yearStart : 1990, // 设置最小年份 
  			yearEnd : 2050, // 设置最大年份
- 			yearOffset : 0, // 年偏差 
+ 			yearOffset : 0, // 年偏差
+ 			step: 1,
 		timepicker : true, // 关闭时间选项 
  			format : 'Y-m-d H:i', // 格式化日期年-月-日 
  			step: 1,

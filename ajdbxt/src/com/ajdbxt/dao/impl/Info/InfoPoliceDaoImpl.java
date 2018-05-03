@@ -57,12 +57,11 @@ public class InfoPoliceDaoImpl implements InfoPoliceDao {
 	}
 
 	@Override
-	public ajdbxt_police findLegalByDepartment(String department_id) {
-		String hql="from ajdbxt_police where police_department=? and police_legaler='1'";
+	public List<ajdbxt_police> findLegalOfDepartment() {
+		String hql="from ajdbxt_police where police_legaler='1'";
 		Session session=sessionFactory.getCurrentSession();
 		Query query=session.createQuery(hql);
-		query.setString(0, department_id);
-		return (ajdbxt_police) query.uniqueResult();
+		return query.list();
 	}
 }
 
