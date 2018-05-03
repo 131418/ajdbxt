@@ -48,7 +48,7 @@ $(function() {
 				var this_modal = $(this);
 
 				$.post('/ajdbxt/info/Info_lal', function(Case_data) {
-					// 所有案件循环
+					//所有法制大队民警
 					var option = '';
 					var data_list = Case_data.legals;
 					for (var len = 0; len < data_list.length; len++) {
@@ -56,7 +56,7 @@ $(function() {
 								+ data_list[len].ajdbxt_police_id + '">'
 								+ data_list[len].police_name + '</option>';
 					}
-
+					
 					this_modal.find(
 							'select[name="info.info_legal_team_member"]').html(
 							option).selectpicker('refresh');
@@ -72,7 +72,7 @@ $(function() {
 				var this_modal = $(this);
 
 				$.post('/ajdbxt/info/Info_lal', function(Case_data) {
-					// 所有案件循环
+					//所有局领导
 					var option = '';
 					var data_list = Case_data.leaders;
 					for (var len = 0; len < data_list.length; len++) {
@@ -80,7 +80,7 @@ $(function() {
 								+ data_list[len].ajdbxt_police_id + '">'
 								+ data_list[len].police_name + '</option>';
 					}
-
+					
 					this_modal.find('select[name="info.info_bureau_leader"]')
 							.html(option).selectpicker('refresh');
 					// 除去加载提示
@@ -95,7 +95,7 @@ $(function() {
 				var this_modal = $(this);
 
 				$.post('/ajdbxt/info/Info_lal', function(Case_data) {
-					// 所有案件循环
+					//所有办案单位
 					var option = '';
 					var data_list = Case_data.departments;
 					for (var len = 0; len < data_list.length; len++) {
@@ -103,7 +103,7 @@ $(function() {
 								+ data_list[len].ajdbxt_department_id + '">'
 								+ data_list[len].department_name + '</option>';
 					}
-
+					
 					this_modal.find('select[name="info.info_department"]')
 							.html(option).selectpicker('refresh');
 					// 除去加载提示
@@ -111,7 +111,32 @@ $(function() {
 				}, 'json');
 
 			})
+	$('#breakCase_input').on(
+			'show.bs.modal',
 
+			function() {
+				var this_modal = $(this);
+
+				$.post('/ajdbxt/info/Info_lal', function(Case_data) {
+					//所有法制员
+					var option = '';
+					var data_list = Case_data.legalers;
+					for (var len = 0; len < data_list.length; len++) {
+						option += '<option value="'
+								+ data_list[len].ajdbxt_police_id + '">'
+								+ data_list[len].police_name + '</option>';
+					}
+					
+					this_modal.find('select[name="info.info_department_legal_member"]')
+							.html(option).selectpicker('refresh');
+					// 除去加载提示
+					this_modal.find('.load_remind').remove();
+				}, 'json');
+
+			})
+			
+
+	//这个方法没用
 	$('.to_quert').click(function() {
 		var arr = $('#query_infomantion_inmodal').serializeArray();
 		$.each(arr, function(key, value) {
@@ -132,6 +157,8 @@ $(function() {
 		// .val());
 		get_ListBreakecaseInformationByPageAndSearch(query_data);
 	});
+	
+	//无用
 	$('.empty_quert').click(function() {
 		for ( var i in query_data) {
 			query_data[i] = "";

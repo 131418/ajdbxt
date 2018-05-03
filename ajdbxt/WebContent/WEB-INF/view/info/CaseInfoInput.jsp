@@ -268,6 +268,8 @@ tfoot tr td a:hover {
 										<%-- <td><select style="witdh: 100%;" class="form-control"
 											data-live-search="true" name="breakCase.breakcase_type" id="breakcase_type"><option>新添案件</option>
 												<option>已有案件</option></select></td> --%>
+									</tr>
+									<tr>
 										<td>案件类别</td>
 										<td><select style="witdh: 100%;" class="form-control"
 											name="info.info_category">
@@ -278,7 +280,7 @@ tfoot tr td a:hover {
 									
 									<tr>
 										<td>办案单位<i class="fa fa-spinner fa-pulse load_remind"></td>
-										<td colspan="3"><select style="witdh: 100%;"
+										<td colspan="2"><select style="witdh: 100%;"
 											class="form-control selectpicker" data-live-search="true"
 											name="info.info_department" id="info_department"
 											title="请选择"></select></td>
@@ -290,7 +292,9 @@ tfoot tr td a:hover {
 											class="form-control mydate_minute"
 											name="info.info_catch_time" type="text"></td>
 										
-										<td>主办民警<i class="fa fa-spinner fa-pulse load_remind"></td>
+									</tr>
+									<tr>
+									<td>主办民警<i class="fa fa-spinner fa-pulse load_remind"></td>
 										<td ><select style="witdh: 100%;"
 											class="form-control selectpicker" data-live-search="true"
 											name="info.info_main_police" id="info.info_main_police"
@@ -311,24 +315,28 @@ tfoot tr td a:hover {
 											></select></td>
 									</tr>
 									<tr>
-										<td>所（队）法制员</td>
-										<td><input style="witdh: 70%;" class="form-control"
-											name="info.info_department_legal_member" type="text"></td>
-										<td>所（队）长</td>
+										<td>所（队）法制员<i class="fa fa-spinner fa-pulse load_remind"></td>
+										<td colspan="1"><select style="witdh: 100%;"
+											class="form-control selectpicker" data-live-search="true"
+											name="info.info_department_legal_member"<%--  onclick="legal()" --%>
+											title="请选择"></select></td>
+									</tr>
+									<tr>
+									<td>所（队）长</td>
 										<td><input style="witdh: 70%;" class="form-control"
 											name="info.info_department_captain" type="text"></td>
 									</tr>
 									
 									<tr>
 										<td>法制大队值班民警<i class="fa fa-spinner fa-pulse load_remind"></td>
-										<td colspan="3"><select style="witdh: 100%;"
+										<td colspan="1"><select style="witdh: 100%;"
 											class="form-control selectpicker" data-live-search="true"
 											name="info.info_legal_team_member" onclick="legal()"
 											title="请选择"></select></td>
 									</tr>
 									<tr>
 										<td>值班局领导<i class="fa fa-spinner fa-pulse load_remind"></td>
-										<td colspan="3"><select style="witdh: 100%;"
+										<td colspan="1"><select style="witdh: 100%;"
 											class="form-control selectpicker" data-live-search="true"
 											name="info.info_bureau_leader" onclick="leader()"
 											title="请选择"></select></td>
@@ -375,6 +383,7 @@ tfoot tr td a:hover {
  			step: 1,
 		timepicker : true, // 关闭时间选项 
  			format : 'Y-m-d H:i', // 格式化日期年-月-日 
+ 			step: 1,
  			minDate : '1990/01/01', // 设置最小日期 
  			maxDate : '2030/01/01', // 设置最大日期
 		}); 
