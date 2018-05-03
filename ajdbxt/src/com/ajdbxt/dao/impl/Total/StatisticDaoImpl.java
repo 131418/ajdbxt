@@ -86,8 +86,7 @@ public class StatisticDaoImpl implements StatisticDao {
 		return totalScore;
 	}
 	/*
-	 * param:部门
-	 * 所有警员*/
+	 * 得到警员*/
 	@Override
 	public List<ajdbxt_police> findAllPolice(PoliceCaseStatisticVo policeCaseStatisticVo) {
 		Session session=getSession();
@@ -97,10 +96,23 @@ public class StatisticDaoImpl implements StatisticDao {
 		if(policeCaseStatisticVo.getDepartment()!=null && policeCaseStatisticVo.getDepartment().length()>0) {
 			hql+="and police_department ='"+policeCaseStatisticVo.getDepartment()+"'";
 		}
+		if(policeCaseStatisticVo.getSearchPolice()!=null && policeCaseStatisticVo.getSearchPolice().trim().length()>0) {
+			String policeName ="%" + policeCaseStatisticVo.getSearchPolice().trim()+ "%";
+			hql+=" and police_name like'"+policeName+"'";
+			
+		}
 		Query query=session.createQuery(hql);
 		System.out.println(hql);
 		lisePolice=query.list();
 		session.clear();
+		
+		//变红
+		for(ajdbxt_police police:lisePolice) {
+			if(policeCaseStatisticVo.getSearchPolice() !=null && policeCaseStatisticVo.getSearchPolice().trim().length()>0) {
+				police.setPolice_name(police.getPolice_name().replaceAll(policeCaseStatisticVo.getSearchPolice().trim(), 
+					"<span style='color: #ff5063;'>" + policeCaseStatisticVo.getSearchPolice().trim() + "</span>"));
+			}
+		}
 		return lisePolice;
 	}
 	
@@ -135,7 +147,7 @@ public class StatisticDaoImpl implements StatisticDao {
 		String start_time = "";
 		String stop_time = "";
 		double sumScore;
-		String hql="select IFNULL(SUM(pro.process_score), 0) from ajdbxt_process pro,ajdbxt_info info where pro.process_case_id = info.ajdbxt_info_id "
+		String hql="select IFNULL(AVG(pro.process_score), 0) from ajdbxt_process pro,ajdbxt_info info where pro.process_case_id = info.ajdbxt_info_id "
 				+ "AND  info.info_main_police = '"+policeId+"'";
 		if(policeCaseStatisticVo.getStart_time() !=null && policeCaseStatisticVo.getStart_time().length()>0) {
 			start_time=policeCaseStatisticVo.getStart_time();
