@@ -159,6 +159,7 @@ public class StatisticServiceImpl implements StatisticService {
 				break;
 			}
 		}
+		policeCaseStatisticVo.setStatisticPoliceCaseDto(newStatisticPoliceCaseDto);
 		
 		int i= statisticCaseByPoliceList.size();
 		policeCaseStatisticVo.setTotalRecords(i);
@@ -173,6 +174,7 @@ public class StatisticServiceImpl implements StatisticService {
 		 }else {
 			 policeCaseStatisticVo.setHasNextPage(true);
 		 }
+		 
 		return policeCaseStatisticVo;
 	}
 	
