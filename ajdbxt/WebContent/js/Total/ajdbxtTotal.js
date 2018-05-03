@@ -1,8 +1,18 @@
 var xhr;
 var total_vo = null;
+var btn_value=null;
+
+$(".input_button").bind("click",function(){
+	btn_value=this.value;
+	/*alert(btn_value);*/
+	List_Total_By_Page(btn_value,1);
+	$(".input_date").bind("change",function(){
+		List_Total_By_Page(btn_value,1);
+	});
+});
+
 
 function List_Total_By_Page(e,pageIndex) {
-	alert(e);
 	var select_start_time = document.getElementById("select_start_time");
 	var select_stop_time = document.getElementById("select_stop_time");
 	var input_Total_PoliceSearchText = document
