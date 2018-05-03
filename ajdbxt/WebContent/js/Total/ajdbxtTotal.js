@@ -28,7 +28,7 @@ function List_Total_By_Page(pageIndex) {
 				 * 移出除标题以外的所有行
 				 */
 				/*
-				 * var old_tr = document.getElementsByClassName("new_tr"); var
+				 * var old_tr = document.getElementsByClassName("new_tr"); 
 				 * long = old_tr.length; for (var i = 0; i < long; i++) {
 				 * old_tr[0].parentNode.removeChild(old_tr[0]); //
 				 * table_total.firstElementChild.removeChild(old_tr[0]); }
