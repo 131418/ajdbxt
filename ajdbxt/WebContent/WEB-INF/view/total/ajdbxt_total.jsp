@@ -88,17 +88,17 @@
 										<th colspan="2">主办案件</th>
 										<th colspan="2">协办案件</th>
 										<th rowspan="2" colspan="2"><input type="button"
-											id="averageScore" onclick="List_Total_By_Page(1)" value="平均分" /></th>
+											id="averageScore" onclick="List_Total_By_Page(this.value,1)" value="平均分" /></th>
 									</tr>
 									<tr>
 										<th><input type="button" id="MainadminCase"
-											onclick="List_Total_By_Page(1)" value="主办行政案件" /></th>
+											onclick="List_Total_By_Page(this.value,1)" value="主办行政案件" /></th>
 										<th><input type="button" id="MaincriminalCase"
-											onclick="List_Total_By_Page(1)" value="主办刑事案件" /></th>
+											onclick="List_Total_By_Page(this.value,1)" value="主办刑事案件" /></th>
 										<th><input type="button" id="InsisadminCase"
-											onclick="List_Total_By_Page(1)" value="协办行政案件" /></th>
+											onclick="List_Total_By_Page(this.value,1)" value="协办行政案件" /></th>
 										<th><input type="button" id="InsiscriminalCase"
-											onclick="List_Total_By_Page(1)" value="协办刑事案件" /></th>
+											onclick="List_Total_By_Page(this.value,1)" value="协办刑事案件" /></th>
 									</tr>
 								</tbody>
 							</table>
@@ -179,7 +179,8 @@
 			select_stop_time.value = str;
 			console.log("select_start_time1:" + select_start_time.value);
 			console.log("select_stop_time1:" + select_stop_time.value);
-			List_Total_By_Page(1);
+			var averageScore=document.getElementById("averageScore").value;
+			List_Total_By_Page(averageScore,1);
 		</script>
 
 		<script type="text/javascript">

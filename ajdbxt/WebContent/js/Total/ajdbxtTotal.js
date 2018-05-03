@@ -1,7 +1,8 @@
 var xhr;
 var total_vo = null;
 
-function List_Total_By_Page(pageIndex) {
+function List_Total_By_Page(e,pageIndex) {
+	alert(e);
 	var select_start_time = document.getElementById("select_start_time");
 	var select_stop_time = document.getElementById("select_stop_time");
 	var input_Total_PoliceSearchText = document
@@ -130,12 +131,7 @@ function List_Total_By_Page(pageIndex) {
 	formData.append("policeCaseStatisticVo.department", select_case_department);
 	formData.append("policeCaseStatisticVo.start_time", select_start_time.value);
 	formData.append("policeCaseStatisticVo.stop_time", select_stop_time.value);
-	formData.append("policeCaseStatisticVo.orderString", MainadminCase);
-	formData.append("policeCaseStatisticVo.orderString", MaincriminalCase);
-	formData.append("policeCaseStatisticVo.orderString", InsisadminCase);
-	formData.append("policeCaseStatisticVo.orderString",
-			InsiscriminalCase);
-	formData.append("policeCaseStatisticVo.orderString",averageScore);
+	formData.append("policeCaseStatisticVo.orderString",e);
 	
 	xhr.open("POST", "/ajdbxt/total/Total_getListPoiceCaseStatistic", true);
 	xhr.send(formData);
