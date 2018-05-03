@@ -35,15 +35,15 @@
 				<h3 class="panel-title">
 					<span>统计</span><span>-</span><span>按人员统计</span>
 				</h3>
-				<!-- <button onclick="javascript:history.go(-1)" type="button"
-					class="btn btn-default button button_return ">
-					<i class="fa fa-reply"></i> 返回列表
-				</button> -->
+
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
 					<div class="panel">
-
+							<button onclick="javascript:history.go(-1)" type="button"
+								class="btn btn-default button button_return ">
+								<i class="fa fa-reply"></i> 返回
+							</button>					
 						<!--  -->
 						<div class="panel-body">
 							<div style="height: 34px; margin: 0 0 20px 0; width: 100%;">

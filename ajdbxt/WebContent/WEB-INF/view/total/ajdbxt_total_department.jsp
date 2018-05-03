@@ -31,7 +31,9 @@
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
-				<h3 class="panel-title"><span>统计</span><span>-</span><span>按单位统计</span></h3>
+				<h3 class="panel-title">
+					<span>统计</span><span>-</span><span>按单位统计</span>
+				</h3>
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
@@ -61,8 +63,8 @@
 									<!-- <button class="btn btn-default role_one"
 										onclick="createPolice()">按人员统计</button> -->
 									<button class="btn btn-default role_one"
-									onclick="javascript:location.href='/ajdbxt/total/Total_page_listPoliceCase'">按人员统计</button>
-									
+										onclick="javascript:location.href='/ajdbxt/total/Total_page_listPoliceCase'">按人员统计</button>
+
 								</div>
 							</div>
 							<!--  -->
@@ -71,11 +73,14 @@
 								<tbody>
 									<tr>
 										<th>序号</th>
-										<th>办案单位</th>										
-										<th><input type="button" id="adminCase" onclick="List_Total_By_Department()" value="行政案件" /></th>
-										<th><input type="button" id="criminalCase" onclick="List_Total_By_Department()" value="刑事案件" /></th>
+										<th>办案单位</th>
+										<th><input type="button" id="adminCase"
+											onclick="List_Total_By_Department(this.value,1)" value="行政案件" /></th>
+										<th><input type="button" id="criminalCase"
+											onclick="List_Total_By_Department(this.value,1)" value="刑事案件" /></th>
 										<th>总案件数</th>
-										<th><input type="button"  id="averageScore" onclick="List_Total_By_Department()" value="平均分" /></th>
+										<th><input type="button" id="averageScore"
+											onclick="List_Total_By_Department(this.value,1)" value="平均分" /></th>
 									</tr>
 								</tbody>
 							</table>
@@ -84,7 +89,25 @@
 							<div id="i_pulse" style="text-align: center;">
 								<i class="fa fa-spinner fa-pulse fa-3x"></i>
 							</div>
-							
+							<!--翻页  -->
+							<div id="page_flip"
+								style="margin: 0 auto; width: 400px; text-align: center;">
+								<span> <a onclick="flip(1)"><i
+										class="fa fa-angle-double-left">首页</i> </a> &nbsp&nbsp <a
+									onclick="flip(2)"><i class="fa fa-angle-left"></i>上一页 </a>
+									&nbsp&nbsp <a onclick="flip(3)">下一页<i
+										class="fa fa-angle-right"></i>
+								</a> &nbsp&nbsp <a onclick="flip(4)">尾页<i
+										class="fa fa-angle-double-right"></i>
+								</a> <br />
+									<p class='info' style="margin-top: 5px;">
+										第<span id="span_pageIndex">1</span>页&nbsp&nbsp共 <span
+											id="span_totalPages">1</span>页&nbsp&nbsp共 <span
+											id="span_totalRecords">0</span>条记录
+									</p></span>
+							</div>
+
+						</div>
 					</div>
 					<!-- END TABLE HOVER -->
 				</div>
@@ -114,7 +137,8 @@
 		select_stop_time.value = str;
 		console.log("select_start_time1:" + select_start_time.value);
 		console.log("select_stop_time1:" + select_stop_time.value);
-		List_Total_By_Department();
+		var averageScore=document.getElementById("averageScore").value;
+		List_Total_By_Department(averageScore,1);
 	</script>
 
 	<script type="text/javascript">
