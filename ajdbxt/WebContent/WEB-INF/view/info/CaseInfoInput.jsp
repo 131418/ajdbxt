@@ -280,7 +280,7 @@ tfoot tr td a:hover {
 									
 									<tr>
 										<td>办案单位<i class="fa fa-spinner fa-pulse load_remind"></td>
-										<td colspan="2"><select style="witdh: 100%;"
+										<td colspan="1"><select style="witdh: 100%;"
 											class="form-control selectpicker" data-live-search="true"
 											name="info.info_department" id="info_department"
 											title="请选择"></select></td>
@@ -297,7 +297,7 @@ tfoot tr td a:hover {
 									<td>主办民警<i class="fa fa-spinner fa-pulse load_remind"></td>
 										<td ><select style="witdh: 100%;"
 											class="form-control selectpicker" data-live-search="true"
-											name="info.info_main_police" id="info.info_main_police"
+											name="info.info_main_police" id="info_main_police"
 											></select></td>
 									</tr>
 									
@@ -305,9 +305,8 @@ tfoot tr td a:hover {
 										<td>协办民警1<i class="fa fa-spinner fa-pulse load_remind"></td>
 										<td ><select style="witdh: 100%;"
 											class="form-control selectpicker" data-live-search="true"
-											name="info.info_assistant_police_one" 
-											></select></td>
-											<td id="add_img"><img alt="" src="<%=basePath%>img/addition_fill.png" id="add_police_two"></td>
+											name="info.info_assistant_police_one"></select></td>
+										<td id="add_img"><img alt="" src="<%=basePath%>img/addition_fill.png" id="add_police_two"></td>
 										<td id="police_two_td">协办民警2<i class="fa fa-spinner fa-pulse load_remind"></td>
 										<td id="police_two_tdd"><select style="witdh: 100%;"
 											class="form-control selectpicker" data-live-search="true"
@@ -323,7 +322,9 @@ tfoot tr td a:hover {
 									</tr>
 									<tr>
 									<td>所（队）长</td>
-										<td><input style="witdh: 70%;" class="form-control"
+										<td><input style="witdh: 70%;" class="form-control" id="info_department_captain_name"
+											name="police.police_name" type="text"></td>
+										<td hidden="true"><input style="witdh: 70%;" class="form-control" id="info_department_captain_id"
 											name="info.info_department_captain" type="text"></td>
 									</tr>
 									

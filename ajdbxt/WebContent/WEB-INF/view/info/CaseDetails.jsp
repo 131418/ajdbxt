@@ -540,7 +540,7 @@ html, body, .radio, .checkbox, .button_process {
 		</div>
 	</div>
 <!-- -------------------------------------------刑事案件----------------------------------------- -->
-<div style="margin: 80px 0 0 0; float: left; width: 100%;" id="xingshi_case">
+<div style="margin: 80px 0 0 0; float: left; width: 100%;" id="xingshi_case" id="xingshi_case">
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
