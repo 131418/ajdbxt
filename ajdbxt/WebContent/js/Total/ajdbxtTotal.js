@@ -12,6 +12,7 @@ function List_Total_By_Page(pageIndex) {
 	var MaincriminalCase = document.getElementById("MaincriminalCase").value;
 	var InsisadminCase = document.getElementById("InsisadminCase").value;
 	var InsiscriminalCase = document.getElementById("InsiscriminalCase").value;
+	var averageScore=document.getElementById("averageScore").value;
 
 	getXMLHttp();
 	xhr.onreadystatechange = function() {
@@ -27,12 +28,12 @@ function List_Total_By_Page(pageIndex) {
 				/*
 				 * 移出除标题以外的所有行
 				 */
-				/*
-				 * var old_tr = document.getElementsByClassName("new_tr"); 
-				 * long = old_tr.length; for (var i = 0; i < long; i++) {
-				 * old_tr[0].parentNode.removeChild(old_tr[0]); //
-				 * table_total.firstElementChild.removeChild(old_tr[0]); }
-				 */
+				var old_tr = document.getElementsByClassName("new_tr");
+				var long = old_tr.length;
+				for (var i = 0; i < long; i++) {
+					old_tr[0].parentNode.removeChild(old_tr[0]);
+					// table_total_user.firstElementChild.removeChild(old_tr[0]);
+				}			
 				/*
 				 * 将数据库的数据取出来放到表格里
 				 */
@@ -72,7 +73,8 @@ function List_Total_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].police.police_name;new_td.colSpan = '2';
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].police.police_name;
+					new_td.colSpan = '2';
 					/* new_a.style.cursor = "pointer"; */
 
 					/*
@@ -100,7 +102,7 @@ function List_Total_By_Page(pageIndex) {
 					new_tr.appendChild(new_td);
 					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].crimalAsistCase;
 					/*
-					 * 平均分
+					 * 7.平均分
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
@@ -109,7 +111,7 @@ function List_Total_By_Page(pageIndex) {
 					/* 加载图标 */
 					var i_pulse = document.getElementById("i_pulse");
 					i_pulse.style.display = "none";
-				}  
+				}
 				/*
 				 * * 设置页数 /
 				 */
@@ -126,14 +128,15 @@ function List_Total_By_Page(pageIndex) {
 	formData.append("policeCaseStatisticVo.searchPolice",
 			input_Total_PoliceSearchText);
 	formData.append("policeCaseStatisticVo.department", select_case_department);
-	formData
-			.append("policeCaseStatisticVo.start_time", select_start_time.value);
+	formData.append("policeCaseStatisticVo.start_time", select_start_time.value);
 	formData.append("policeCaseStatisticVo.stop_time", select_stop_time.value);
-	formData.append("policeCaseStatisticVo.MainadminCase", MainadminCase);
-	formData.append("policeCaseStatisticVo.MaincriminalCase", MaincriminalCase);
-	formData.append("policeCaseStatisticVo.InsisadminCase", InsisadminCase);
-	formData.append("policeCaseStatisticVo.InsiscriminalCase",
+	formData.append("policeCaseStatisticVo.orderString", MainadminCase);
+	formData.append("policeCaseStatisticVo.orderString", MaincriminalCase);
+	formData.append("policeCaseStatisticVo.orderString", InsisadminCase);
+	formData.append("policeCaseStatisticVo.orderString",
 			InsiscriminalCase);
+	formData.append("policeCaseStatisticVo.orderString",averageScore);
+	
 	xhr.open("POST", "/ajdbxt/total/Total_getListPoiceCaseStatistic", true);
 	xhr.send(formData);
 }

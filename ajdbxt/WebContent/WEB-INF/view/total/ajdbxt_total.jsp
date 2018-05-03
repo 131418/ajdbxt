@@ -84,7 +84,8 @@
 										<th rowspan="2" colspan="2">人员</th>
 										<th colspan="2">主办案件</th>
 										<th colspan="2">协办案件</th>
-										<th rowspan="2" colspan="2">平均分</th>
+										<th rowspan="2" colspan="2"><input type="button" id="averageScore"
+											onclick="List_Total_By_Page(1)" value="平均分" /></th>
 									</tr>
 									<tr>
 										<th><input type="button" id="MainadminCase"

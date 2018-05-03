@@ -5,24 +5,30 @@ var xhr;
 var total_vo = null;
 
 function List_Total_By_Department(){
-	getXMLHttp();
-	
+	getXMLHttp();	
 	var select_start_time=document.getElementById("select_start_time").value;
 	var select_stop_time=document.getElementById("select_stop_time").value;
 	var adminCase=document.getElementById("adminCase").value;
 	var criminalCase=document.getElementById("criminalCase").value;
-	var average=document.getElementById("average").value;
+	var averageScore=document.getElementById("averageScore").value;
 	
 	xhr.onreadystatechange=function(){
 		if (xhr.readyState == 4) {
 			if (xhr.status == 200) {
-
 			total_vo=JSON.parse(xhr.responseText);
 			var new_tr=null;
 			var new_td=null;
 			var table_total=document.getElementById("table_total");
 			
-			
+			/*
+			 * 移出除标题以外的所有行
+			 */
+			var old_tr = document.getElementsByClassName("new_tr");
+			var long = old_tr.length;
+			for (var i = 0; i < long; i++) {
+				old_tr[0].parentNode.removeChild(old_tr[0]);
+				// table_total_user.firstElementChild.removeChild(old_tr[0]);
+			}			
 			/*
 			 * 将数据库的数据取出来放到表格里
 			 */
@@ -88,9 +94,9 @@ function List_Total_By_Department(){
 	var formData=new FormData();
 	formData.append("departmentStatisticVo.start_time",select_start_time);
 	formData.append("departmentStatisticVo.stop_time",select_stop_time);
-	/*formData.append("adminCase",adminCase);
-	formData.append("criminalCase",criminalCase);*/
-	formData.append("departmentStatisticVo.orderString",average);
+	formData.append("departmentStatisticVo.orderString",averageScore);
+	formData.append("departmentStatisticVo.orderString",adminCase);
+	formData.append("departmentStatisticVo.orderString",criminalCase);
 	xhr.send(formData);
 }
 
