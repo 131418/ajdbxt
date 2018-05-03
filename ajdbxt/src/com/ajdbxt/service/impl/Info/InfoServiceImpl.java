@@ -347,7 +347,7 @@ public class InfoServiceImpl implements InfoService {
 	@Override
 	public String getLegalsAndLeadersAndDepartment() {
 		LegalSystemAndLeadersVO lalVO=new LegalSystemAndLeadersVO();
-		lalVO.setTeamLegals(infoPoliceDao.findLegalOfDepartment());
+		lalVO.setLegalers(infoPoliceDao.findLegalOfDepartment());
 		lalVO.setLegals(infoPoliceDao.findLegals());
 		lalVO.setLeaders(infoPoliceDao.findLeaders());
 		lalVO.setDepartments(infoDepartmentDao.findAllDepartment());
