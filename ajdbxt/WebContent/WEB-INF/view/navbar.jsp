@@ -128,6 +128,31 @@
 		</div>
 		</nav>
 		<!-------------------------------------------------修改密码---------------------------------------------------------------  -->
+			<div class="modal fade" id="updatePassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title">修改用户</h4>
+			      </div>
+			      <div class="modal-body">
+			      	 	<div id="passwordLoadingDiv" style="width: 319px; margin: 0 auto; display: none;">
+							<img alt="" src="<%=basePath %>img/loading.gif">
+						</div>
+			      		<div id="passwordContent">		      			
+				      		<label>新密码：</label>
+				      		<input id="newPassword" type="password" class="form-control" placeholder="请输入新密码">
+				      		<label>再次输入：</label>
+				      		<input id="newPasswordAgain" type="password" class="form-control" placeholder="再次输入新密码">
+			      		</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button onclick="showPwContent()" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			        <button id="updatePwBtn" onclick="updatePassword()" type="button" class="btn btn-primary">修改</button>
+			      </div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div>
 </body>
 <style>
 #wrapper nav>div>ul>li>a {

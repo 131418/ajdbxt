@@ -24,7 +24,7 @@ public class PoliceCaseStatisticVo {
 		private String stop_time = "";
 		
 		//搜索警员
-		private String policeName;
+		private String searchPolice;
 		
 		//部门
 		private String department;
@@ -98,14 +98,6 @@ public class PoliceCaseStatisticVo {
 			this.stop_time = stop_time;
 		}
 
-		public String getPoliceName() {
-			return policeName;
-		}
-
-		public void setPoliceName(String policeName) {
-			this.policeName = policeName;
-		}
-
 		public String getDepartment() {
 			return department;
 		}
@@ -128,6 +120,14 @@ public class PoliceCaseStatisticVo {
 
 		public void setStatisticPoliceCaseDto(List<StatisticPoliceCaseDto> statisticPoliceCaseDto) {
 			this.statisticPoliceCaseDto = statisticPoliceCaseDto;
+		}
+
+		public String getSearchPolice() {
+			return searchPolice;
+		}
+
+		public void setSearchPolice(String searchPolice) {
+			this.searchPolice = searchPolice;
 		}
 
 }

@@ -118,7 +118,7 @@ public class StatisticImpl implements Statistic {
 		query.setFirstResult((eachPoliceCaseVO.getCurrePage() - 1) * eachPoliceCaseVO.getPageSize());
 		query.setMaxResults(eachPoliceCaseVO.getPageSize());
 		List<Object> list=query.list();
-		for(int i=0;i<list.size();i++) {
+		/*for(int i=0;i<list.size();i++) {
 			StatisticCaseByPoliceDTO statisticCaseByPoliceDTO=new StatisticCaseByPoliceDTO();
 			Object[] obj = (Object[])list.get(i);
 		    System.out.println("----"+obj.length);
@@ -140,7 +140,7 @@ public class StatisticImpl implements Statistic {
 	 		mainPolice.setPolice_name(obj[3].toString());
 	 		insisPoliceOne.setPolice_name(obj[4].toString());
 	 		if(obj[5]==null) {
-	 			insisPoliceTwo.setPolice_name(" ");
+	 			insisPoliceTwo.setPolice_name();
 	 		}else {
 	 			insisPoliceTwo.setPolice_name(obj[5].toString());
 	 		}
@@ -161,7 +161,7 @@ public class StatisticImpl implements Statistic {
 		}
 		System.out.println(query.list().size());
 		System.out.println("listPoliceCase"+listPoliceCase.size());
-		session.clear();
+		session.clear();*/
 		return listPoliceCase;
 	}
 

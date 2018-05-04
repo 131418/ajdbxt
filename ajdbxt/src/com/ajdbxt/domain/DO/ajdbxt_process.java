@@ -15,7 +15,7 @@ public class ajdbxt_process {
 	private String process_punish_inform;//处罚已通知
 	private String process_accpet_right;//受理听证
 	private String process_question;//问题整改
-	private String process_score;//案件分数
+	private double process_score;//案件分数
 	private String process_captain_check;//队长审核
 	private String process_file_hand;//案卷上交
 	private String process_case_end;//案件结
@@ -30,73 +30,6 @@ public class ajdbxt_process {
 	private String process_result_of_prosecution;//起诉结果 
 	private String process_search_result_one;//第一次侦查
 	private String process_search_result_two;//第二次侦查
-	public String getProcess_goods_in_lib() {
-		return process_goods_in_lib;
-	}
-	public void setProcess_goods_in_lib(String process_goods_in_lib) {
-		this.process_goods_in_lib = process_goods_in_lib;
-	}
-	public String getProcess_punish_inform() {
-		return process_punish_inform;
-	}
-	public void setProcess_punish_inform(String process_punish_inform) {
-		this.process_punish_inform = process_punish_inform;
-	}
-	public String getProcess_question_list() {
-		return process_question_list;
-	}
-	public void setProcess_question_list(String process_question_list) {
-		this.process_question_list = process_question_list;
-	}
-	public String getProcess_subpoena() {
-		return process_subpoena;
-	}
-	public void setProcess_subpoena(String process_subpoena) {
-		this.process_subpoena = process_subpoena;
-	}
-	public String getProcess_criminal_detention() {
-		return process_criminal_detention;
-	}
-	public void setProcess_criminal_detention(String process_criminal_detention) {
-		this.process_criminal_detention = process_criminal_detention;
-	}
-	public String getProcess_arrest() {
-		return process_arrest;
-	}
-	public void setProcess_arrest(String process_arrest) {
-		this.process_arrest = process_arrest;
-	}
-	public String getProcess_get_keep_wait_interrogate() {
-		return process_get_keep_wait_interrogate;
-	}
-	public void setProcess_get_keep_wait_interrogate(String process_get_keep_wait_interrogate) {
-		this.process_get_keep_wait_interrogate = process_get_keep_wait_interrogate;
-	}
-	public String getProcess_live_at_home_unde_surveillance() {
-		return process_live_at_home_unde_surveillance;
-	}
-	public void setProcess_live_at_home_unde_surveillance(String process_live_at_home_unde_surveillance) {
-		this.process_live_at_home_unde_surveillance = process_live_at_home_unde_surveillance;
-	}
-	public String getProcess_result_of_prosecution() {
-		return process_result_of_prosecution;
-	}
-	public void setProcess_result_of_prosecution(String process_result_of_prosecution) {
-		this.process_result_of_prosecution = process_result_of_prosecution;
-	}
-	public String getProcess_search_result_one() {
-		return process_search_result_one;
-	}
-	public void setProcess_search_result_one(String process_search_result_one) {
-		this.process_search_result_one = process_search_result_one;
-	}
-	public String getProcess_search_result_two() {
-		return process_search_result_two;
-	}
-	public void setProcess_search_result_two(String process_search_result_two) {
-		this.process_search_result_two = process_search_result_two;
-	}
-	
 	public String getAjdbxt_process_id() {
 		return ajdbxt_process_id;
 	}
@@ -157,6 +90,18 @@ public class ajdbxt_process {
 	public void setProcess_apply_right(String process_apply_right) {
 		this.process_apply_right = process_apply_right;
 	}
+	public String getProcess_goods_in_lib() {
+		return process_goods_in_lib;
+	}
+	public void setProcess_goods_in_lib(String process_goods_in_lib) {
+		this.process_goods_in_lib = process_goods_in_lib;
+	}
+	public String getProcess_punish_inform() {
+		return process_punish_inform;
+	}
+	public void setProcess_punish_inform(String process_punish_inform) {
+		this.process_punish_inform = process_punish_inform;
+	}
 	public String getProcess_accpet_right() {
 		return process_accpet_right;
 	}
@@ -169,10 +114,10 @@ public class ajdbxt_process {
 	public void setProcess_question(String process_question) {
 		this.process_question = process_question;
 	}
-	public String getProcess_score() {
+	public double getProcess_score() {
 		return process_score;
 	}
-	public void setProcess_score(String process_score) {
+	public void setProcess_score(double process_score) {
 		this.process_score = process_score;
 	}
 	public String getProcess_captain_check() {
@@ -204,6 +149,60 @@ public class ajdbxt_process {
 	}
 	public void setProcess_gmt_modify(String process_gmt_modify) {
 		this.process_gmt_modify = process_gmt_modify;
+	}
+	public String getProcess_question_list() {
+		return process_question_list;
+	}
+	public void setProcess_question_list(String process_question_list) {
+		this.process_question_list = process_question_list;
+	}
+	public String getProcess_subpoena() {
+		return process_subpoena;
+	}
+	public void setProcess_subpoena(String process_subpoena) {
+		this.process_subpoena = process_subpoena;
+	}
+	public String getProcess_criminal_detention() {
+		return process_criminal_detention;
+	}
+	public void setProcess_criminal_detention(String process_criminal_detention) {
+		this.process_criminal_detention = process_criminal_detention;
+	}
+	public String getProcess_arrest() {
+		return process_arrest;
+	}
+	public void setProcess_arrest(String process_arrest) {
+		this.process_arrest = process_arrest;
+	}
+	public String getProcess_get_keep_wait_interrogate() {
+		return process_get_keep_wait_interrogate;
+	}
+	public void setProcess_get_keep_wait_interrogate(String process_get_keep_wait_interrogate) {
+		this.process_get_keep_wait_interrogate = process_get_keep_wait_interrogate;
+	}
+	public String getProcess_live_at_home_unde_surveillance() {
+		return process_live_at_home_unde_surveillance;
+	}
+	public void setProcess_live_at_home_unde_surveillance(String process_live_at_home_unde_surveillance) {
+		this.process_live_at_home_unde_surveillance = process_live_at_home_unde_surveillance;
+	}
+	public String getProcess_result_of_prosecution() {
+		return process_result_of_prosecution;
+	}
+	public void setProcess_result_of_prosecution(String process_result_of_prosecution) {
+		this.process_result_of_prosecution = process_result_of_prosecution;
+	}
+	public String getProcess_search_result_one() {
+		return process_search_result_one;
+	}
+	public void setProcess_search_result_one(String process_search_result_one) {
+		this.process_search_result_one = process_search_result_one;
+	}
+	public String getProcess_search_result_two() {
+		return process_search_result_two;
+	}
+	public void setProcess_search_result_two(String process_search_result_two) {
+		this.process_search_result_two = process_search_result_two;
 	}
 	@Override
 	public String toString() {

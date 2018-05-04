@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2018??4??17?? ????8:48:48 by Hibernate Tools 3.5.0.Final -->
+<!-- Generated 2018-5-2 16:36:53 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="com.ajdbxt.domain.DO.ajdbxt_process" table="AJDBXT_PROCESS">
         <id name="ajdbxt_process_id" type="java.lang.String">
@@ -47,7 +47,7 @@
         <property name="process_question" type="java.lang.String">
             <column name="PROCESS_QUESTION" />
         </property>
-        <property name="process_score" type="java.lang.String">
+        <property name="process_score" type="double">
             <column name="PROCESS_SCORE" />
         </property>
         <property name="process_captain_check" type="java.lang.String">
