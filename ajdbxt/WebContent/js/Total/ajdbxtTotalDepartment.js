@@ -3,9 +3,17 @@
  */
 var xhr;
 var total_vo = null;
+var btn_value=null;
+$(".input_button").bind("click",function(){
+	btn_value=this.value;
+	/*alert(btn_value);*/
+	List_Total_By_Department(btn_value,1);
+	$(".input_date").bind("change",function(){
+		List_Total_By_Department(btn_value,1);
+	});
+});
 
 function List_Total_By_Department(e,pageIndex){
-	alert(e);
 	getXMLHttp();	
 	var select_start_time=document.getElementById("select_start_time").value;
 	var select_stop_time=document.getElementById("select_stop_time").value;
@@ -44,9 +52,7 @@ function List_Total_By_Department(e,pageIndex){
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-
 				new_td.innerHTML =(num+1);
-	
 				/*
 				 * 2.办案单位
 				 */
@@ -140,7 +146,6 @@ function flip(flipPage) {
 
 		break;
 	}
-
 	}
 }
 

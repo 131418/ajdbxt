@@ -40,35 +40,35 @@
 			<div class="panel-body">
 				<div class="col-md-12">
 					<div class="panel">
-							<button onclick="javascript:history.go(-1)" type="button"
-								class="btn btn-default button button_return ">
-								<i class="fa fa-reply"></i> 返回
-							</button>					
+						<button onclick="javascript:history.go(-1)" type="button"
+							class="btn btn-default button button_return ">
+							<i class="fa fa-reply"></i> 返回
+						</button>
 						<!--  -->
 						<div class="panel-body">
 							<div style="height: 34px; margin: 0 0 20px 0; width: 100%;">
 								<div>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">按日期筛选：</span>
-									<input id="select_start_time" class="form-control mydate"
+									<input id="select_start_time"
+										class="form-control mydate input_date"
 										style="width: 150px; float: left; text-align: center;"
-										type="text" placeholder="起始时间"
-										onchange="List_Total_By_Page(1)" value="2018-01-01" />
+										type="text" placeholder="起始时间" value="2018-01-01" />
 									<%--  --%>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">至</span>
 									<!--  -->
-									<input id="select_stop_time" class="form-control mydate"
+									<input id="select_stop_time"
+										class="form-control mydate input_date"
 										style="width: 150px; float: left; margin: 0 0 0 20px; text-align: center;"
-										type="text" placeholder="结束时间"
-										onchange="List_Total_By_Page(1)" />
+										type="text" placeholder="结束时间" />
 									<%--  --%>
 								</div>
 								<!-- 检索 -->
 								<div class="input-group" style="width: 300px; float: right;">
 									<input id="input_Total_PoliceSearchText" class="form-control"
-										oninput="List_Total_By_Page(1)" type="text" placeholder="搜索人员" />
-									<span class="input-group-addon" style="border-radius: unset;">
+										type="text" placeholder="搜索人员" /> <span
+										class="input-group-addon" style="border-radius: unset;">
 										<i class="fa fa-search"></i>
 									</span>
 								</div>
@@ -81,24 +81,23 @@
 										<th rowspan="2" colspan="2">序号</th>
 										<th rowspan="2" colspan="2"><select
 											id="select_case_department"
-											style="width: 80%; margin: 0 auto;" class="form-control"
-											onchange="List_Total_By_Page(1)">
+											style="width: 80%; margin: 0 auto;" class="form-control">
 										</select></th>
 										<th rowspan="2" colspan="2">人员</th>
 										<th colspan="2">主办案件</th>
 										<th colspan="2">协办案件</th>
 										<th rowspan="2" colspan="2"><input type="button"
-											id="averageScore" onclick="List_Total_By_Page(1)" value="平均分" /></th>
+											class="input_button" id="averageScore" value="平均分" /></th>
 									</tr>
 									<tr>
 										<th><input type="button" id="MainadminCase"
-											onclick="List_Total_By_Page(1)" value="主办行政案件" /></th>
+											class="input_button" value="主办行政案件" /></th>
 										<th><input type="button" id="MaincriminalCase"
-											onclick="List_Total_By_Page(1)" value="主办刑事案件" /></th>
+											class="input_button" value="主办刑事案件" /></th>
 										<th><input type="button" id="InsisadminCase"
-											onclick="List_Total_By_Page(1)" value="协办行政案件" /></th>
+											class="input_button" value="协办行政案件" /></th>
 										<th><input type="button" id="InsiscriminalCase"
-											onclick="List_Total_By_Page(1)" value="协办刑事案件" /></th>
+											class="input_button" value="协办刑事案件" /></th>
 									</tr>
 								</tbody>
 							</table>
@@ -108,7 +107,7 @@
 								<i class="fa fa-spinner fa-pulse fa-3x"></i>
 							</div>
 							<!--翻页  -->
-							<div id="page_flip"
+							<div id="page_flip "
 								style="margin: 0 auto; width: 400px; text-align: center;">
 								<span> <a onclick="flip(1)"><i
 										class="fa fa-angle-double-left">首页</i> </a> &nbsp&nbsp <a
@@ -179,7 +178,17 @@
 			select_stop_time.value = str;
 			console.log("select_start_time1:" + select_start_time.value);
 			console.log("select_stop_time1:" + select_stop_time.value);
-			List_Total_By_Page(1);
+			var averageScore = document.getElementById("averageScore").value;
+			List_Total_By_Page(averageScore, 1);
+			$(".input_date").bind("change", function() {
+				List_Total_By_Page(averageScore, 1);
+			});
+			$("#input_Total_PoliceSearchText").bind("input", function() {
+				List_Total_By_Page(averageScore, 1);
+			});
+			$("#select_case_department").bind("input",function(){
+				List_Total_By_Page(averageScore,1);
+			});
 		</script>
 
 		<script type="text/javascript">

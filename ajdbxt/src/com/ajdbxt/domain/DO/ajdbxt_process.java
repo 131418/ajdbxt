@@ -289,6 +289,5 @@ public class ajdbxt_process {
 				+ ", process_result_of_prosecution=" + process_result_of_prosecution + "]";
 	}
 
-	
-	
 }
+

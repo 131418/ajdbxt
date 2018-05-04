@@ -44,18 +44,16 @@
 								<div>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">按日期筛选：</span>
-									<input id="select_start_time" class="form-control mydate"
+									<input id="select_start_time" class="form-control mydate input_date"
 										style="width: 150px; float: left; text-align: center;"
-										type="text" placeholder="起始时间"
-										onchange="List_Total_By_Department()" value="2018-01-01" />
+										type="text" placeholder="起始时间" value="2018-01-01" />
 									<%--  --%>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">至</span>
 									<!--  -->
-									<input id="select_stop_time" class="form-control mydate"
+									<input id="select_stop_time" class="form-control mydate input_date"
 										style="width: 150px; float: left; margin: 0 0 0 20px; text-align: center;"
-										type="text" placeholder="结束时间"
-										onchange="List_Total_By_Department()" />
+										type="text" placeholder="结束时间"	/>
 									<%--  --%>
 								</div>
 								<!--按类型统计  -->
@@ -63,7 +61,8 @@
 									<!-- <button class="btn btn-default role_one"
 										onclick="createPolice()">按人员统计</button> -->
 									<button class="btn btn-default role_one"
-										onclick="javascript:location.href='/ajdbxt/total/Total_page_listPoliceCase'">按人员统计</button>					</div>
+										onclick="window.location.href='/ajdbxt/total/Total_page_listPoliceCase'">按人员统计</button>
+								</div>
 							</div>
 							<!--  -->
 							<table id="table_total" class="table table-hover "
@@ -72,13 +71,10 @@
 									<tr>
 										<th>序号</th>
 										<th>办案单位</th>
-										<th><input type="button" id="adminCase"
-											onclick="List_Total_By_Department(this.value,1)" value="行政案件" /></th>
-										<th><input type="button" id="criminalCase"
-											onclick="List_Total_By_Department(this.value,1)" value="刑事案件" /></th>
+										<th><input type="button" id="adminCase" class="input_button"											 value="行政案件" /></th>
+										<th><input type="button" id="criminalCase" class="input_button"											value="刑事案件" /></th>
 										<th>总案件数</th>
-										<th><input type="button" id="averageScore"
-											onclick="List_Total_By_Department(this.value,1)" value="平均分" /></th>
+										<th><input type="button" id="averageScore" class="input_button"											 value="平均分" /></th>
 									</tr>
 								</tbody>
 							</table>
@@ -89,7 +85,7 @@
 							</div>
 							<!--翻页  -->
 							<div id="page_flip"
-								style="margin: 0 auto; width: 400px; text-align: center;">
+								style="margin: 0 auto; width: 400px; text-align: center; display:none;">
 								<span> <a onclick="flip(1)"><i
 										class="fa fa-angle-double-left">首页</i> </a> &nbsp&nbsp <a
 									onclick="flip(2)"><i class="fa fa-angle-left"></i>上一页 </a>
@@ -137,6 +133,9 @@
 		console.log("select_stop_time1:" + select_stop_time.value);
 		var averageScore=document.getElementById("averageScore").value;
 		List_Total_By_Department(averageScore,1);
+		$(".input_date").bind("change", function() {
+			List_Total_By_Department(averageScore, 1);
+		});
 	</script>
 
 	<script type="text/javascript">
@@ -160,8 +159,6 @@
 			maxDate : '2100/01/01', // 设置最大日期
 		});
 	</script>
-<<<<<<< HEAD
-=======
 	<!-- 路径跳转 -->
 		<script type="text/javascript">
 			function ByUserTotal() {
@@ -169,6 +166,5 @@
 				 window.navigate("ajdbxt_total.jsp");
 			}
 		</script>
->>>>>>> LYQ
 </body>
 </html>

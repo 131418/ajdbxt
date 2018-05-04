@@ -1,7 +1,21 @@
 var xhr;
 var total_vo = null;
+var btn_value=null;
 
-function List_Total_By_Page(pageIndex) {
+$(".input_button").bind("click",function(){
+	btn_value=this.value;
+	/*alert(btn_value);*/
+	List_Total_By_Page(btn_value,1);
+	$(".input_date").bind("change",function(){
+		List_Total_By_Page(btn_value,1);
+	});
+	$("#select_case_department").bind("input",function(){
+		List_Total_By_Page(btn_value,1);
+	});
+});
+
+
+function List_Total_By_Page(e,pageIndex) {
 	var select_start_time = document.getElementById("select_start_time");
 	var select_stop_time = document.getElementById("select_stop_time");
 	var input_Total_PoliceSearchText = document
@@ -48,7 +62,6 @@ function List_Total_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-
 					new_td.innerHTML = (num + 1);
 					new_td.colSpan = '2';
 
@@ -75,7 +88,6 @@ function List_Total_By_Page(pageIndex) {
 					 * 2. 人员
 					 */
 					new_td = document.createElement("td");
-
 					new_tr.appendChild(new_td);
 					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].police.police_name;
 					new_td.colSpan = '2';
@@ -110,10 +122,7 @@ function List_Total_By_Page(pageIndex) {
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-
 					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].score_mian;
-
-
 
 					/* 加载图标 */
 					var i_pulse = document.getElementById("i_pulse");
@@ -132,18 +141,12 @@ function List_Total_By_Page(pageIndex) {
 	}
 	var formData = new FormData();
 	formData.append("policeCaseStatisticVo.currePage", pageIndex);
-
 	formData.append("policeCaseStatisticVo.searchPolice",
 			input_Total_PoliceSearchText);
 	formData.append("policeCaseStatisticVo.department", select_case_department);
 	formData.append("policeCaseStatisticVo.start_time", select_start_time.value);
 	formData.append("policeCaseStatisticVo.stop_time", select_stop_time.value);
-	formData.append("policeCaseStatisticVo.orderString", MainadminCase);
-	formData.append("policeCaseStatisticVo.orderString", MaincriminalCase);
-	formData.append("policeCaseStatisticVo.orderString", InsisadminCase);
-	formData.append("policeCaseStatisticVo.orderString",
-			InsiscriminalCase);
-	formData.append("policeCaseStatisticVo.orderString",averageScore);
+	formData.append("policeCaseStatisticVo.orderString",e);
 	
 	xhr.open("POST", "/ajdbxt/total/Total_getListPoiceCaseStatistic", true);
 	xhr.send(formData);
