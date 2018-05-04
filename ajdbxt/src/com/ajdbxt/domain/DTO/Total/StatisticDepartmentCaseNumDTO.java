@@ -11,7 +11,7 @@ public class StatisticDepartmentCaseNumDTO {
 	//刑事案件
 	private int criminalCase;
 	//平均分
-	private double averageScore;
+	private String averageScore;
 	//总案件数
 	private int totalCase;
 	
@@ -33,16 +33,16 @@ public class StatisticDepartmentCaseNumDTO {
 	public void setDepartment(ajdbxt_department department) {
 		this.department = department;
 	}
-	public double getAverageScore() {
-		return averageScore;
-	}
-	public void setAverageScore(double averageScore) {
-		this.averageScore = averageScore;
-	}
 	public int getTotalCase() {
 		return totalCase;
 	}
 	public void setTotalCase(int totalCase) {
 		this.totalCase = totalCase;
+	}
+	public String getAverageScore() {
+		return averageScore;
+	}
+	public void setAverageScore(String averageScore) {
+		this.averageScore = averageScore;
 	}
 }

@@ -9,11 +9,37 @@ public class ajdbxt_police {
 	private String police_password;
 	private String police_name;
 	private String police_department;
+	private String police_legaler;
 	private String police_duty;
 	private String police_phone_number;
 	private String police_gmt_create;
 	private String police_gmt_modify;
 	private String police_power;
+	public ajdbxt_police() {
+		super();
+	}
+	public ajdbxt_police(String police_serial_number, String police_password) {
+		super();
+		this.police_serial_number = police_serial_number;
+		this.police_password = police_password;
+	}
+	
+	public ajdbxt_police(String ajdbxt_police_id, String police_serial_number, String police_password,
+			String police_name, String police_department, String police_legaler, String police_duty,
+			String police_phone_number, String police_gmt_create, String police_gmt_modify, String police_power) {
+		super();
+		this.ajdbxt_police_id = ajdbxt_police_id;
+		this.police_serial_number = police_serial_number;
+		this.police_password = police_password;
+		this.police_name = police_name;
+		this.police_department = police_department;
+		this.police_legaler = police_legaler;
+		this.police_duty = police_duty;
+		this.police_phone_number = police_phone_number;
+		this.police_gmt_create = police_gmt_create;
+		this.police_gmt_modify = police_gmt_modify;
+		this.police_power = police_power;
+	}
 	public String getAjdbxt_police_id() {
 		return ajdbxt_police_id;
 	}
@@ -43,6 +69,12 @@ public class ajdbxt_police {
 	}
 	public void setPolice_department(String police_department) {
 		this.police_department = police_department;
+	}
+	public String getPolice_legaler() {
+		return police_legaler;
+	}
+	public void setPolice_legaler(String police_legaler) {
+		this.police_legaler = police_legaler;
 	}
 	public String getPolice_duty() {
 		return police_duty;
@@ -74,13 +106,14 @@ public class ajdbxt_police {
 	public void setPolice_power(String police_power) {
 		this.police_power = police_power;
 	}
+	
 	@Override
 	public String toString() {
 		return "ajdbxt_police [ajdbxt_police_id=" + ajdbxt_police_id + ", police_serial_number=" + police_serial_number
 				+ ", police_password=" + police_password + ", police_name=" + police_name + ", police_department="
-				+ police_department + ", police_duty=" + police_duty + ", police_phone_number=" + police_phone_number
-				+ ", police_gmt_create=" + police_gmt_create + ", police_gmt_modify=" + police_gmt_modify
-				+ ", police_power=" + police_power + "]";
+				+ police_department + ", police_legaler=" + police_legaler + ", police_duty=" + police_duty
+				+ ", police_phone_number=" + police_phone_number + ", police_gmt_create=" + police_gmt_create
+				+ ", police_gmt_modify=" + police_gmt_modify + ", police_power=" + police_power + "]";
 	}
 
 	

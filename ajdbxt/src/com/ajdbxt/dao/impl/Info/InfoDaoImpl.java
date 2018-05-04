@@ -27,6 +27,7 @@ public class InfoDaoImpl implements InfoDao {
 
 	@Override
 	public void updateCase(ajdbxt_info caseInfo) {
+		caseInfo.setInfo_gmt_modify(util.Time.getStringSecond());
 		Session session=this.getSession();
 		session.saveOrUpdate(caseInfo);
 		session.flush();
@@ -41,7 +42,6 @@ public class InfoDaoImpl implements InfoDao {
 
 	@Override
 	public void saveCase(ajdbxt_info caseInfo) {
-		System.out.println("infoDao"+caseInfo);
 		Session session=this.getSession();
 		session.saveOrUpdate(caseInfo);
 		session.flush();

@@ -34,13 +34,16 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					<span>统计</span><span>-</span><span>按人员统计</span>
-
 				</h3>
+
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
 					<div class="panel">
-
+							<button onclick="javascript:history.go(-1)" type="button"
+								class="btn btn-default button button_return ">
+								<i class="fa fa-reply"></i> 返回
+							</button>					
 						<!--  -->
 						<div class="panel-body">
 							<div style="height: 34px; margin: 0 0 20px 0; width: 100%;">
@@ -84,7 +87,8 @@
 										<th rowspan="2" colspan="2">人员</th>
 										<th colspan="2">主办案件</th>
 										<th colspan="2">协办案件</th>
-										<th rowspan="2" colspan="2">平均分</th>
+										<th rowspan="2" colspan="2"><input type="button"
+											id="averageScore" onclick="List_Total_By_Page(1)" value="平均分" /></th>
 									</tr>
 									<tr>
 										<th><input type="button" id="MainadminCase"

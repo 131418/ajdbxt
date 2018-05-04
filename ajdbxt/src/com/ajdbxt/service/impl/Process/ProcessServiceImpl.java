@@ -85,16 +85,22 @@ public class ProcessServiceImpl implements ProcessService {
 				&&!info.getInfo_assistant_police_two().equals("否")) {
 			policeList.add(processPoliceDao.findPoliceById(info.getInfo_assistant_police_two()));
 		}
+		ajdbxt_police teamLegal=processPoliceDao.findPoliceById(info.getInfo_department_legal_member());
+		ajdbxt_police legal=processPoliceDao.findPoliceById(info.getInfo_legal_team_member());
+		ajdbxt_police leader=processPoliceDao.findPoliceById(info.getInfo_bureau_leader());
 		ajdbxt_police cap=processPoliceDao.findPoliceById(info.getInfo_department_captain());
 		processDTO.setCap(cap);
 		processDTO.setDepartment(department);
 		processDTO.setInfo(info);
+		processDTO.setLeader(leader);
+		processDTO.setTeam_legal(teamLegal);
+		processDTO.setLegal(legal);
 		processDTO.setPolice(policeList);
 		processDTO.setProcess(process);
 		return processDTO;
 	}
 	@Override
-	public String update(ajdbxt_process process, List<Integer> list) {
+	public String update(ajdbxt_process process, int changeType) {
 		ProcessDTO processDTO=new ProcessDTO();
 		processDTO.setProcess(process);
 		ajdbxt_info info=processInfoDao.findInfoById(process.getProcess_case_id());
@@ -105,40 +111,26 @@ public class ProcessServiceImpl implements ProcessService {
 			caseFiled=true;
 		}
 		ApplicationContext applicationContext=(ApplicationContext) ServletActionContext.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-		for(int send_massage_type:list) {
-			switch (send_massage_type) {
-			case PROCESS_FILE_HAND:
-				new SMSThread(MsgSend.CASE_PAGE_HAND_IN_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext).start();
-				break;
-			case PROCESS_LIVE_AT_HOME_UNDE_SURVEILLANCE:
-				new SMSThread(MsgSend.MONITORING_LIVE_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext).start();
-				break;
-			case PROCESS_CRIMINAL_DETENTION://刑事拘留
-				
-				break;
-			case PROCESS_GET_KEEP_WAIT_INTERROGATE:
-				new SMSThread(MsgSend.GET_KEEP_WAIT_EXAMINE_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext).start();
-				break;
-			case PROCESS_DETENTION:
-				new SMSThread(MsgSend.PUNISH_DETENTION_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext).start();
-				break;
-			case PROCESS_ARREST:
-				new SMSThread(MsgSend.SUE_RESULT_CATCH_POLICE_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext).start();
-				break;
-			case PROCESS_PENALTY:
-				new SMSThread(MsgSend.PUNISH_FINE_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext).start();
-				break;
-			case PROCESS_TREATMENT_CATEGORY:
-				if(process.getProcess_treatment_category().equals("社区戒毒")) {
-					new SMSThread(MsgSend.COMMUNITY_ABANDON_DRUG_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext).start();
-				}else {
-					new SMSThread(MsgSend.MANDATORY_ABANDON_DRUG_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext).start();
-				}
-				break;
-			}
-		}
-		
-		
+		switch (changeType) {
+		case case_end://结案通知上交案卷
+			new SMSThread(MsgSend.CASE_END_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext).start();
+			break;
+		case punish://处罚通知涉案财物入库
+			new SMSThread(MsgSend.CASE_GOODS_LIB_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext).start();
+			break;
+		case question://问题整改结束提醒处罚
+			new SMSThread(MsgSend.QUESTION_UP_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext).start();
+			break;
+		case rollback://打回完成通知提出问题
+			new SMSThread(MsgSend.CASE_FILE_UP_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext).start();
+			break;	
+		case result://起诉结果
+			break;
+		case forceMeasure://强制措施，如果为拘留通知上交案卷
+			break;
+		case fileBack://延长期限通知拿回案卷
+			break;
+		}	
 		return JsonUtils.toJson(processDTO);
 	}
 	
