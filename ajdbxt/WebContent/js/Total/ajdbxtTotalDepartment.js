@@ -41,7 +41,7 @@ function List_Total_By_Department(e,pageIndex){
 			/*
 			 * 将数据库的数据取出来放到表格里
 			 */
-			for(var num=0;num<total_vo.statisticPoliceCaseDto.length;num++){
+			for(var num=0;num<total_vo.statisticDepartmentCaseNumDTO.length;num++){
 				new_tr=document.createElement("tr");
 				new_tr.ClassName="new_tr";
 				new_tr.appendChild(document.createTextNode(''));
@@ -58,34 +58,40 @@ function List_Total_By_Department(e,pageIndex){
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].department.department_name;
+
+				new_td.innerHTML = total_vo.statisticDepartmentCaseNumDTO[num].department.department_name;
+
 				
 				/*
 				 * 3.行政案件
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].adminCase;
+
+				new_td.innerHTML = total_vo.statisticDepartmentCaseNumDTO[num].adminCase;
+
 				
 				/*
 				 * 4.刑事案件
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].criminalCase;
+				new_td.innerHTML = total_vo.statisticDepartmentCaseNumDTO[num].criminalCase;
 				/*
 				 * 5.总案件数
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
 				new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].totalCase;
+
+				new_td.innerHTML = total_vo.statisticDepartmentCaseNumDTO[num].totalCase;
 				
 				/*
 				 * 6.平均分
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].averageScore;
+				new_td.innerHTML = total_vo.statisticDepartmentCaseNumDTO[num].averageScore;
 				/*
 				 * 加载图标
 				 */

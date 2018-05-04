@@ -45,7 +45,7 @@ public class StatisticServiceImpl implements StatisticService {
 			}
 			listDepartmentCaseDto.add(statisticDepartmentCaseNumDTO);
 		}
-		departmentStatisticVo.setStatisticPoliceCaseNumDTO(listDepartmentCaseDto);
+		departmentStatisticVo.setStatisticDepartmentCaseNumDTO(listDepartmentCaseDto);
 		//排序
 		if(departmentStatisticVo.getOrderString().trim()==null || departmentStatisticVo.getOrderString().trim().equals("平均分")) {
 			Collections.sort(listDepartmentCaseDto, new Comparator<StatisticDepartmentCaseNumDTO>() {
