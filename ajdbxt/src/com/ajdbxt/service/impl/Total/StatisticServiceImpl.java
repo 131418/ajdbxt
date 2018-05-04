@@ -41,11 +41,10 @@ public class StatisticServiceImpl implements StatisticService {
 			if(totalCase==0) {
 				statisticDepartmentCaseNumDTO.setAverageScore("0");
 			}else {
-			statisticDepartmentCaseNumDTO.setAverageScore(String.valueOf(totalScore/totalCase));
+			statisticDepartmentCaseNumDTO.setAverageScore(String.format("%.2f", (totalScore/totalCase)));//保留两位小数
 			}
 			listDepartmentCaseDto.add(statisticDepartmentCaseNumDTO);
 		}
-		departmentStatisticVo.setStatisticDepartmentCaseNumDTO(listDepartmentCaseDto);
 		//排序
 		if(departmentStatisticVo.getOrderString().trim()==null || departmentStatisticVo.getOrderString().trim().equals("平均分")) {
 			Collections.sort(listDepartmentCaseDto, new Comparator<StatisticDepartmentCaseNumDTO>() {
@@ -95,6 +94,7 @@ public class StatisticServiceImpl implements StatisticService {
 			});
 		}
 		
+		departmentStatisticVo.setStatisticDepartmentCaseNumDTO(listDepartmentCaseDto);
 		//分页
 		/*List<StatisticDepartmentCaseNumDTO> newListDepartmentCaseDto=new ArrayList<StatisticDepartmentCaseNumDTO>();
 		for(int i=(departmentStatisticVo.getCurrePage()-1)*departmentStatisticVo.getPageSize();
@@ -143,7 +143,8 @@ public class StatisticServiceImpl implements StatisticService {
 			statisticCaseByPoliceDTO.setAdminAsistCase(statisticDao.findPoliceAsistCaseNum(policeCaseStatisticVo, listPolice.get(i).getAjdbxt_police_id(), "行政案件"));
 			statisticCaseByPoliceDTO.setCrimalMainCase(crimalMianCaseNum);
 			statisticCaseByPoliceDTO.setCrimalAsistCase(statisticDao.findPoliceAsistCaseNum(policeCaseStatisticVo, listPolice.get(i).getAjdbxt_police_id(), "刑事案件"));
-			statisticCaseByPoliceDTO.setScore_mian(statisticDao.findTotalScoreByPolice(policeCaseStatisticVo, listPolice.get(i).getAjdbxt_police_id()));
+			double averageScore=statisticDao.findTotalScoreByPolice(policeCaseStatisticVo, listPolice.get(i).getAjdbxt_police_id());
+			statisticCaseByPoliceDTO.setScore_mian(Double.parseDouble(String.format("%.2f",averageScore)));
 			statisticCaseByPoliceList.add(statisticCaseByPoliceDTO);
 		}
 		policeCaseStatisticVo.setStatisticPoliceCaseDto(statisticCaseByPoliceList);
@@ -196,7 +197,6 @@ public class StatisticServiceImpl implements StatisticService {
 			});
 		}else if(policeCaseStatisticVo.getOrderString().trim().equals("协办行政案件")) {
 			Collections.sort(statisticCaseByPoliceList,new Comparator<StatisticPoliceCaseDto>() {
-
 				@Override
 				public int compare(StatisticPoliceCaseDto o1, StatisticPoliceCaseDto o2) {
 					if(o1.getAdminAsistCase()>o2.getAdminAsistCase()) {

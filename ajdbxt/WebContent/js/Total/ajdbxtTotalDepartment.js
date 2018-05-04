@@ -82,8 +82,6 @@ function List_Total_By_Department(e,pageIndex){
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
-				new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].totalCase;
-
 				new_td.innerHTML = total_vo.statisticDepartmentCaseNumDTO[num].totalCase;
 				
 				/*
