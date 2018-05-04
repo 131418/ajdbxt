@@ -33,7 +33,7 @@
 		<h1 class="mui-title">修改人员</h1>
 	</header>
 	<div class="mui-content">
-		<div class="mui-card" style="margin-bottom: 70px">
+		<div class="mui-card" style="margin:0px;">
 			<!--页眉，放置标题-->
 			<!--	<div class="mui-card-header">页眉</div>-->
 			<!--内容区-->
@@ -83,7 +83,7 @@
 			</div>
 			<!--页脚，放置补充信息或支持的操作-->
 			<div class="mui-card-footer">
-				<button type="button" class="mui-btn mui-btn-blue"
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-outlined"
 					style="width: 100%;" onclick="updatePolice();">确认修改</button>
 			</div>
 		</div>
@@ -114,13 +114,10 @@
 	<script type="text/javascript">
 		mui.init();
 		//修改初始化
-		/* var update_police_vo = null;
-		var button_id = button.id;
-		var formData = new FormData();
+		var update_police_vo = null;
 		var update_xhr = new XMLHttpRequest();
-		formData.append("ajdbxt_police.ajdbxt_police_id", button_id);
 		update_xhr.open("POST", "/ajdbxt/user/User_findPoliceById");
-		update_xhr.send(formData);
+		update_xhr.send(null);
 		update_xhr.onreadystatechange = function() {
 			if (update_xhr.readyState == 4) {
 				if (update_xhr.status == 200) {
@@ -129,14 +126,6 @@
 					console.log("xhr.readyState:"
 							+ update_xhr.readyState);
 					console.log("xhr.status:" + update_xhr.status);
-					var ajdbxt_police_id = update_police_vo.ajdbxt_police.ajdbxt_police_id;
-					console.log("ajdbxt_police_id:"
-							+ ajdbxt_police_id);
-					if (ajdbxt_police_id == button_id) {
-						console
-								.log("ajdbxt_police_id == button_id:"
-										+ ajdbxt_police_id == button_id);
-
 						// Id
 						var update_input_ajdbxt_police_id = document
 								.getElementById("update_input_ajdbxt_police_id");
@@ -228,8 +217,6 @@
 					}
 				}
 			}
-
-		} */
 	</script>
 </body>
 

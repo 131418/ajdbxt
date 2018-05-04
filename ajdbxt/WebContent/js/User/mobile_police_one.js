@@ -77,6 +77,7 @@ function List_Police_By_Page(pageIndex) {
 		if (xhr.readyState == 4) {
 			if (xhr.status == 200) {
 				police_vo = JSON.parse(xhr.responseText);
+				console.log("police_vo:"+police_vo);
 				var new_li = null;
 				var new_span0 = null;// 警员id
 				var new_span1 = null;// 警员序号
@@ -306,10 +307,12 @@ function List_Police_By_Page(pageIndex) {
 							new_btn_xg = document.createElement("button");
 							new_btn_xg.className = "mui-btn mui-btn-yellow btn_xg";
 							new_btn_xg.innerHTML = "修改";
+							new_btn_xg.id = police_vo.list[num].ajdbxt_police.ajdbxt_police_id;
 							new_btn_xg.style.marginLeft = "5px";
 							new_btn_xg.style.width = "60px";
 							new_btn_xg.onclick = function() {
-								window.location.href = "/ajdbxt/user/User_mobile_police_update";
+								window.location.href = "/ajdbxt/user/User_mobile_police_update?police_id="+this.id;
+								/*window.location.href = "/ajdbxt/user/User_mobile_police_update"*/
 								return false;
 							}
 							new_btn_sc = document.createElement("button");
