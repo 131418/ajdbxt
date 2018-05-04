@@ -141,16 +141,23 @@ public class UserAction extends ActionSupport {
 	}
 
 	public String mobile_police_update() {
+		ActionContext.getContext().getSession().put("police_id", police_id);
+		return "mobile_police_update";
+	}
+	
+	//移动端按id查询民警
+	public void findPoliceById_mobile() {
 		try {
 			HttpServletResponse response = ServletActionContext.getResponse();
 			response.setContentType("text/html;charset=utf-8");
+			String police_id = (String)ActionContext.getContext().getSession().get("police_id");
 			policedptVO policeById = userService.findPoliceById(police_id);
 			response.getWriter().write(new Gson().toJson(policeById));
+			ActionContext.getContext().getSession().remove(police_id);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "mobile_police_update";
 	}
 	
 	public String mobile_police_setting() {
@@ -387,5 +394,6 @@ public class UserAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
+	
 
 }
