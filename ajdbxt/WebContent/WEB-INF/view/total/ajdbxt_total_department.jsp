@@ -74,7 +74,7 @@
 									<tr>
 										<th>序号</th>
 										<th>办案单位</th>
-										<th><input type="button" id="adminCase"
+										<th><input type="button" id="adminCase" 
 											onclick="List_Total_By_Department(this.value,1)" value="行政案件" /></th>
 										<th><input type="button" id="criminalCase"
 											onclick="List_Total_By_Department(this.value,1)" value="刑事案件" /></th>

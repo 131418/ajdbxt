@@ -5,7 +5,6 @@ var xhr;
 var total_vo = null;
 
 function List_Total_By_Department(e,pageIndex){
-	alert(e);
 	getXMLHttp();	
 	var select_start_time=document.getElementById("select_start_time").value;
 	var select_stop_time=document.getElementById("select_stop_time").value;
