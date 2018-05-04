@@ -81,8 +81,7 @@
 										<th rowspan="2" colspan="2">序号</th>
 										<th rowspan="2" colspan="2"><select
 											id="select_case_department"
-											style="width: 80%; margin: 0 auto;" class="form-control"
-											onchange="List_Total_By_Page(1)">
+											style="width: 80%; margin: 0 auto;" class="form-control">
 										</select></th>
 										<th rowspan="2" colspan="2">人员</th>
 										<th colspan="2">主办案件</th>
@@ -186,6 +185,9 @@
 			});
 			$("#input_Total_PoliceSearchText").bind("input", function() {
 				List_Total_By_Page(averageScore, 1);
+			});
+			$("#select_case_department").bind("input",function(){
+				List_Total_By_Page(averageScore,1);
 			});
 		</script>
 

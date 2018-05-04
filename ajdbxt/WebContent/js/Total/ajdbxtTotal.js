@@ -9,6 +9,9 @@ $(".input_button").bind("click",function(){
 	$(".input_date").bind("change",function(){
 		List_Total_By_Page(btn_value,1);
 	});
+	$("#select_case_department").bind("input",function(){
+		List_Total_By_Page(btn_value,1);
+	});
 });
 
 
