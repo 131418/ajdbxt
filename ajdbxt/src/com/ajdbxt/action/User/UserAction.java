@@ -17,8 +17,11 @@ import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+
 @SuppressWarnings("serial")
 public class UserAction extends ActionSupport {
+	
+	private String police_id;
 
 	private UserService userService;
 
@@ -33,6 +36,17 @@ public class UserAction extends ActionSupport {
 	private findDepartmentByPageVO findDepartmentByPageVO;
 	
 	private String ids[];
+	
+
+	public String getPolice_id() {
+		return police_id;
+	}
+
+
+	public void setPolice_id(String police_id) {
+		this.police_id = police_id;
+	}
+
 	
 	public void setUserService(UserService userService) {
 		this.userService = userService;
@@ -127,7 +141,23 @@ public class UserAction extends ActionSupport {
 	}
 
 	public String mobile_police_update() {
+		ActionContext.getContext().getSession().put("police_id", police_id);
 		return "mobile_police_update";
+	}
+	
+	//移动端按id查询民警
+	public void findPoliceById_mobile() {
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setContentType("text/html;charset=utf-8");
+			String police_id = (String)ActionContext.getContext().getSession().get("police_id");
+			policedptVO policeById = userService.findPoliceById(police_id);
+			response.getWriter().write(new Gson().toJson(policeById));
+			ActionContext.getContext().getSession().remove(police_id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public String mobile_police_setting() {
@@ -250,11 +280,12 @@ public class UserAction extends ActionSupport {
 				for(Object ob : queryForPage.getList()) {
 					aj=(policedptVO) ob;
 					aj0 = aj.getAjdbxt_police();
+					aj0.setPolice_serial_number(aj0.getPolice_serial_number().replaceAll(policeName, "<span style='color:red;'>"+policeName+"</span>"));
 					aj0.setPolice_name(aj0.getPolice_name().replaceAll(policeName, "<span style='color:red;'>"+policeName+"</span>"));
+					aj0.setPolice_phone_number(aj0.getPolice_phone_number().replaceAll(policeName, "<span style='color:red;'>"+policeName+"</span>"));
 				}
 			}
 			String  redWord = new Gson().toJson(queryForPage);
-			//把搜索关键字转换成红色
 			response.getWriter().write(redWord);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -277,7 +308,9 @@ public class UserAction extends ActionSupport {
 				for(Object ob : findByDpt.getList()) {
 					aj=(policedptVO) ob;
 					aj0 = aj.getAjdbxt_police();
+					aj0.setPolice_serial_number(aj0.getPolice_serial_number().replaceAll(policeName, "<span style='color:red;'>"+policeName+"</span>"));
 					aj0.setPolice_name(aj0.getPolice_name().replaceAll(policeName, "<span style='color:red;'>"+policeName+"</span>"));
+					aj0.setPolice_phone_number(aj0.getPolice_phone_number().replaceAll(policeName, "<span style='color:red;'>"+policeName+"</span>"));
 				}
 			}
 			String  redWord = new Gson().toJson(findByDpt);
@@ -361,5 +394,6 @@ public class UserAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
+	
 
 }

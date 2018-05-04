@@ -90,21 +90,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public findPoliceByPageVO queryForPage(int pageSize, int currentPage, String police_name) {
 		// TODO Auto-generated method stub
-		/*
-		 * String hql_count= "select count(*) from ajdbxt_police"; int count =
-		 * userDao.getCount(hql_count); // 总记录数 int totalPage =
-		 * findPoliceByPageVO.countTotalPage(pageSize, count); // 总页数 int offset =
-		 * findPoliceByPageVO.countOffset(pageSize, currentPage); // 当前页开始记录 int length
-		 * = pageSize; // 每页记录数 int currentpage =
-		 * findPoliceByPageVO.countCurrentPage(currentPage);
-		 */
 		String hql_count;
 		String hql;
 		// String hql="from ajdbxt_police order by police_gmt_modify desc";
 		if (police_name != null && !"".equals(police_name)) {
 			hql_count = "select count(*) from ajdbxt_police where police_name like '%" + police_name + "%'";
-			hql = "select new com.ajdbxt.domain.VO.User.policedptVO(p,d) from ajdbxt_police p,ajdbxt_department d where p.police_department = d.ajdbxt_department_id and p.police_name like '%"
-					+ police_name + "%' order by p.police_gmt_modify desc";
+			hql = "select new com.ajdbxt.domain.VO.User.policedptVO(p,d) from ajdbxt_police p,ajdbxt_department d where p.police_department = d.ajdbxt_department_id and (p.police_serial_number like '%" + police_name + "%' or p.police_name like '%" + police_name + "%' or p.police_phone_number like '%" + police_name + "%') order by p.police_gmt_modify desc";
 		} else {
 			hql_count = "select count(*) from ajdbxt_police";
 			// hql="from ajdbxt_police order by police_gmt_modify desc";
@@ -136,8 +127,7 @@ public class UserServiceImpl implements UserService {
 		String hql;
 		if (police_name != null && !"".equals(police_name)) {
 			hql_count = "select count(*) from ajdbxt_police where police_department = '"+department+"' and police_name like '%" + police_name + "%'";
-			hql = "select new com.ajdbxt.domain.VO.User.policedptVO(p,d) from ajdbxt_police p,ajdbxt_department d where p.police_department = d.ajdbxt_department_id and p.police_department = '"+department+"' and p.police_name like '%"
-					+ police_name + "%' order by p.police_gmt_modify desc";
+			hql = "select new com.ajdbxt.domain.VO.User.policedptVO(p,d) from ajdbxt_police p,ajdbxt_department d where p.police_department = d.ajdbxt_department_id and p.police_department = '"+department+"' and (p.police_serial_number like '%" + police_name + "%' or p.police_name like '%" + police_name + "%' or p.police_phone_number like '%" + police_name + "%') order by p.police_gmt_modify desc";
 		} else {
 			hql_count = "select count(*) from ajdbxt_police where police_department = '"+department+"'";
 			// hql="from ajdbxt_police order by police_gmt_modify desc";
