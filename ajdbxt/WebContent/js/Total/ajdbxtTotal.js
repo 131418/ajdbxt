@@ -74,6 +74,7 @@ function List_Total_By_Page(e,pageIndex) {
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
 					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].department.department_name;
+
 					new_td.colSpan = '2';
 					/*
 					 * 人员id
@@ -85,6 +86,7 @@ function List_Total_By_Page(e,pageIndex) {
 					 * new_td.innerHTML = td_ajdbxt_police_id;
 					 * new_td.style.display = "none";
 					 */
+
 					/*
 					 * 2. 人员
 					 */

@@ -1294,4 +1294,5 @@ html, body, .radio, .checkbox, .button_process {
 	</script>
 
 </body>
+>>>>>>> origin/lyqqer
 </html>
