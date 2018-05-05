@@ -50,6 +50,15 @@ public class SMSThread extends Thread{
 			case MsgSend.CASE_FILE_UP_VOICE:
 				caseEnd();
 				break;
+			case MsgSend.CRIMINAL_SEARCH_BACK_VOICE:
+				result();
+				break;
+			case MsgSend.CRIMINAL_BAIL_VOICE:
+				forceMeasure();
+				break;
+			case MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE:
+				fileBack();
+				break;
 			
 			}	
 		}catch(Exception e) {
