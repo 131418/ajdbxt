@@ -131,7 +131,7 @@ public class SMSThread extends Thread{
 		for(int index=0;index<16;index++) {
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process =processDTO.getProcess();
-			if(process.getProcess_is_rollback()==null||process.getProcess_is_rollback().isEmpty()) {
+			if(process.getProcess_is_rollback()==null||process.getProcess_is_rollback().isEmpty()||process.getProcess_is_rollback().equals("待处理")) {
 				ajdbxt_police police=processDTO.getLegal();
 				String num=police.getPolice_phone_number();
 				String [] params= {processDTO.getInfo().getInfo_name()};
@@ -144,6 +144,7 @@ public class SMSThread extends Thread{
 				rollBackUpdate();
 				break;
 			}else {
+				rollBackOver();
 				break;
 			}
 		}
@@ -168,6 +169,8 @@ public class SMSThread extends Thread{
 				}
 				wait(1);
 			}else {
+				process.setProcess_is_rollback("待处理");
+				applicationCotext.getBean(ProcessService.class).update(process, -1);
 				rollBackOver();
 				break;
 			}
@@ -180,7 +183,7 @@ public class SMSThread extends Thread{
 		for(int index=0;index<16;index++) {
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process =processDTO.getProcess();
-			if(process.getProcess_question()==null) {
+			if(process.getProcess_is_rollback().equals("待处理")) {
 				ajdbxt_police police=processDTO.getLegal();
 				String num=police.getPolice_phone_number();
 				String [] params= {processDTO.getInfo().getInfo_name()};
@@ -189,6 +192,8 @@ public class SMSThread extends Thread{
 				MsgSend.doSendSimple(params, tel, MsgSend.CASE_ROLLBACK_OVER);
 				MsgSend.doSendVoiceSimple(params, num, MsgSend.CASE_ROLLBACK_OVER_VOICE);
 				wait(1);
+			}else if(process.getProcess_is_rollback().equals("否")){
+				break;
 			}else {
 				break;
 			}
@@ -368,6 +373,8 @@ public class SMSThread extends Thread{
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process=processDTO.getProcess();
 			if(process.getProcess_force_measure_one().equals("拘留")) {
+				
+				
 				
 			}
 		}
