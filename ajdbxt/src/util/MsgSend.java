@@ -48,13 +48,13 @@ public class MsgSend {
 	public static final String CASE_FILE_UP_CHECK_VOICE="_案件案卷上交法制大队";
 	public static final String CASE_FILE_UP_OUT_VOICE="_案件案卷未按规定上交";
 	public static final String CASE_END_VOICE="_案件已抓捕_小时还未结案";
-	public static final String CRIMINAL_ARREST_DUE_voice="_案件逮捕期限还剩10天尽快办理";
-	public static final String CRIMINAL_BAIL_DUE_voice="_案件取保候审快满一年尽快办理";
-	public static final String CRIMINAL_MONITORING_LIVE_DUE_voice="_案件监视居住6个月时间不足10天，尽快办理";
-	public static final String CRIMINAL_BAILvoice="_案件进行3月一次侦查";
-	public static final String CRIMINAL_CASE_FILE_BACK_voice="_案件的案卷拿回";
-	public static final String CRIMINAL_LENGTH_DETENTION_voice="办理_案件延长拘留手续";
-	public static final String CRIMINAL_SUBPOENA_A_SUSPECT_TIME_OUT_voice="_案件传唤超12小时办理延长传唤手续";
+	public static final String CRIMINAL_ARREST_DUE_VOICE="_案件逮捕期限还剩10天尽快办理";
+	public static final String CRIMINAL_BAIL_DUE_VOICE="_案件取保候审快满一年尽快办理";
+	public static final String CRIMINAL_MONITORING_LIVE_DUE_VOICE="_案件监视居住6个月时间不足10天，尽快办理";
+	public static final String CRIMINAL_BAIL_VOICE="_案件进行3月一次侦查";
+	public static final String CRIMINAL_CASE_FILE_BACK_VOICE="_案件的案卷拿回";
+	public static final String CRIMINAL_LENGTH_DETENTION_VOICE="办理_案件延长拘留手续";
+	public static final String CRIMINAL_SUBPOENA_A_SUSPECT_TIME_OUT_VOICE="_案件传唤超12小时办理延长传唤手续";
 	//短信模板
 	public static final int SUBPOENA_A_SUSPECT=114978;
 	public static final int SUBPOENA_A_SUSPECT_TIME_OUT=114979;

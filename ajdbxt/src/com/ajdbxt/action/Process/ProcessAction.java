@@ -146,11 +146,11 @@ public class ProcessAction  extends ActionSupport{
 					case "process_force_measure_one":
 					case "process_force_measure_two":
 					case "process_force_measure_three":
+					case "process_result_of_prosecution":
 						changeType=ProcessService.forceMeasure;
 						break;
 					case "process_search_result_one":
 					case "process_search_result_two":
-					case "process_result_of_prosecution":
 						changeType=ProcessService.result;
 						break;
 					}
