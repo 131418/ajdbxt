@@ -29,7 +29,7 @@ h1, a {
 
 <body>
 	<!-- 添加人员 -->
-			<div class="mui-icon mui-icon-plusempty" id="div_police_add" style="position: fixed;top: 10px;right: 90px; font-weight:bold;color: #eee;z-index: 9999999;" onclick="window.location.href='<%=basePath%>user/User_mobile_police_add'"></div>
+			<div class="mui-icon mui-icon-plusempty" id="div_police_add" style="position: fixed;top: 10px;right: 20px; font-weight:bold;color: white;z-index: 9999999;" onclick="window.location.href='<%=basePath%>user/User_mobile_police_add'"></div>
 	<header class="mui-bar mui-bar-nav index_nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title" style="color: white;">人员信息</h1>

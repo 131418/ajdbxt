@@ -56,7 +56,8 @@ window.onload = function() {
 			}
 			$("#input_police_power").html(
 					'<option selected="selected" value="">请选择</option>'
-							+ police_power_options);// 添加权限选项
+							+ police_power_options);// 增加添加权限选项
+			$("#update_input_police_power").html(police_power_options);// 修改权限选项
 			List_Police_By_Page(1);
 		}
 
@@ -67,7 +68,8 @@ window.onload = function() {
 // -------------------------
 // 列表显示
 function List_Police_By_Page(pageIndex) {
-	var input_PoliceSearchText = document.getElementById("input_PoliceSearchText").value;
+	var input_PoliceSearchText = document
+			.getElementById("input_PoliceSearchText").value;
 	console.log("input_PoliceSearchText:" + input_PoliceSearchText);
 	var formData = new FormData();
 	var xhr = false;
@@ -77,6 +79,7 @@ function List_Police_By_Page(pageIndex) {
 		if (xhr.readyState == 4) {
 			if (xhr.status == 200) {
 				police_vo = JSON.parse(xhr.responseText);
+				console.log("police_vo:" + police_vo);
 				var new_li = null;
 				var new_span0 = null;// 警员id
 				var new_span1 = null;// 警员序号
@@ -306,10 +309,16 @@ function List_Police_By_Page(pageIndex) {
 							new_btn_xg = document.createElement("button");
 							new_btn_xg.className = "mui-btn mui-btn-yellow btn_xg";
 							new_btn_xg.innerHTML = "修改";
+							new_btn_xg.id = police_vo.list[num].ajdbxt_police.ajdbxt_police_id;
 							new_btn_xg.style.marginLeft = "5px";
 							new_btn_xg.style.width = "60px";
 							new_btn_xg.onclick = function() {
-								window.location.href = "/ajdbxt/user/User_mobile_police_update";
+								window.location.href = "/ajdbxt/user/User_mobile_police_update?police_id="
+										+ this.id;
+								/*
+								 * window.location.href =
+								 * "/ajdbxt/user/User_mobile_police_update"
+								 */
 								return false;
 							}
 							new_btn_sc = document.createElement("button");
@@ -525,24 +534,104 @@ function createPolice() {
 }
 // -----------------------------
 // --------修改人员--------------
-/*$(".btn_xg").bind("click", function() {
-	window.location.href = "/ajdbxt/user/User_mobile_police_update";
-});
-*/
-// -----------------------------
-// --------删除人员--------------
-// 删除按钮绑定事件
-/*
- * $(".new_btn_sc").bind("click",function(){ var btn_id=this.id
- * console.log("btn_id:"+btn_id); var btnArray = [ '是', '否' ];
- * mui.confirm('确定删除？', '提示', btnArray, function(e) { if (e.index == 0) { var
- * formData = new FormData(); formData.append("ids",btn_id); var xhr=new
- * XMLHttpRequest(); xhr.open("POST", "/ajdbxt/user/User_batchDelete");
- * xhr.send(formData); xhr.onreadystatechange=function(){ if (xhr.readyState ==
- * 4 && xhr.status == 200) { if (xhr.responseText == "success") {
- * mui.toast("删除成功"); List_Police_By_Page(1); } else { mui.toast("删除失败"); } }
- * else { mui.toast(xhr.status); } } } }); return false; })
- */
+function updatePolice() {
+	var input_ajdbxt_police_id = document
+			.getElementById("input_ajdbxt_police_id").value;
+	// 警号
+	var input_police_serial_number = document
+			.getElementById("input_police_serial_number").value;
+
+	if (input_police_serial_number == "") {
+		mui.toast("警号不能为空！");
+		return false;
+	}
+	// 密码
+	var input_police_password = document
+			.getElementById("input_police_password").value;
+	// 姓名
+	var input_police_name = document.getElementById("input_police_name").value;
+	if (input_police_name == "") {
+		mui.toast("姓名不能为空！");
+		return false;
+	}
+	// 单位
+	var input_police_department = document
+			.getElementById("input_police_department").value;
+	if (input_police_department == "") {
+		mui.toast("请选择单位！");
+		return false;
+	}
+	// 职务
+	var input_police_duty = document.getElementById("input_police_duty").value;
+	if (input_police_duty == "") {
+		mui.toast("职务不能为空！");
+		return false;
+	}
+	// 法制员
+
+	var input_police_legaler = document.getElementById("input_police_legaler").value;
+	if (input_police_legaler == "") {
+		mui.toast("请选择是否为法制员！");
+		return false;
+	}
+	// 角色
+	var update_input_police_power = document.getElementById("update_input_police_power").value;
+	if (update_input_police_power == "") {
+		mui.toast("请选择权限！");
+		return false;
+	}
+	// 手机号码
+	var input_police_phone_number = document
+			.getElementById("input_police_phone_number").value;
+	if (input_police_phone_number == "") {
+		mui.toast("手机号码不能为空！");
+		return false;
+	}
+	var formData = new FormData();
+
+	var xhr = false;
+	xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4) {
+			if (xhr.status == 200) {
+				if (xhr.responseText == "success") {
+					mui.toast("修改成功！");
+					window.location.href="/ajdbxt/user/User_mobile_police_one";
+				} else {
+					mui.toast("修改失败！");
+					return false;
+				}
+
+			} else {
+				mui.toast(xhr.status);
+			}
+		}
+	}
+	// id
+	formData.append("ajdbxt_police.ajdbxt_police_id", input_ajdbxt_police_id);
+	// 警号
+	formData.append("ajdbxt_police.police_serial_number",
+			input_police_serial_number);
+	// 密码
+	formData.append("ajdbxt_police.police_password", input_police_password);
+	// 姓名
+	formData.append("ajdbxt_police.police_name", input_police_name);
+	// 单位
+	formData.append("ajdbxt_police.police_department", input_police_department);
+	// 职位
+	formData.append("ajdbxt_police.police_duty", input_police_duty);
+	// 法制员
+	formData.append("ajdbxt_police.police_legaler", input_police_legaler);
+	// 角色
+	formData.append("ajdbxt_police.police_power", update_input_police_power);
+	// 手机号码
+	formData.append("ajdbxt_police.police_phone_number",
+			input_police_phone_number);
+
+	xhr.open("POST", "/ajdbxt/user/User_updatePolice");
+	xhr.send(formData);
+
+}
 /*
  * 判断页数
  */
