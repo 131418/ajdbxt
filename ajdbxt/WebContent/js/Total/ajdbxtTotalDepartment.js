@@ -43,7 +43,7 @@ function List_Total_By_Department(e,pageIndex){
 			 */
 			for(var num=0;num<total_vo.statisticDepartmentCaseNumDTO.length;num++){
 				new_tr=document.createElement("tr");
-				new_tr.ClassName="new_tr";
+				new_tr.className="new_tr";
 				new_tr.appendChild(document.createTextNode(''));
 				table_total.firstElementChild.appendChild(new_tr);
 				
