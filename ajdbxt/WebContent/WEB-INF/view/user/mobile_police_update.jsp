@@ -24,6 +24,9 @@
 .index_nav h1, a {
 	color: white;
 }
+select,input{
+font-size:14px;
+}
 </style>
 </head>
 
@@ -38,46 +41,47 @@
 			<!--	<div class="mui-card-header">页眉</div>-->
 			<!--内容区-->
 			<div class="mui-card-content">
-				<form class="mui-input-group mui-h5">
-					<div class="mui-input-row">
-						<label>警号</label> <input type="text" class="mui-input-clear "
-							id="update_input_police_serial_number">
+				<form class="mui-input-group">
+				<div class="mui-input-row" style="display:none;">
+						<label class="mui-h5">Id</label> <input type="text" class="mui-input-clear "
+							id="input_ajdbxt_police_id">
 					</div>
 					<div class="mui-input-row">
-						<label>密码</label> <input type="text" class="mui-input-clear"
-							id="update_input_police_password">
+						<label class="mui-h5">警号</label> <input type="text" class="mui-input-clear "
+							id="input_police_serial_number">
+					</div>
+					<div class="mui-input-row" style="display:none;">
+						<label class="mui-h5">密码</label> <input type="text" class="mui-input-clear "
+							id="input_police_password">
 					</div>
 					<div class="mui-input-row">
-						<label>姓名</label> <input type="text" class="mui-input-clear"
-							id="update_input_police_name">
+						<label class="mui-h5">姓名</label> <input type="text" class="mui-input-clear"
+							id="input_police_name">
 					</div>
 					<div class="mui-input-row">
-						<label>单位</label> <select class="mui-select"
-							id="update_input_police_department">
+						<label class="mui-h5">单位</label> <select class="mui-select"
+							id="input_police_department"  style="font-size:14px;">
 						</select>
 					</div>
 					<div class="mui-input-row">
-						<label>职务</label> <input type="text" class="mui-input-clear"
-							id="update_input_police_duty">
+						<label class="mui-h5">职务</label> <input type="text" class="mui-input-clear"
+							id="input_police_duty">
 					</div>
 					<div class="mui-input-row">
-						<label>法制员</label> <select class="mui-select"
-							id="iupdate_nput_police_legaler">
-							<option selected="selected" value="">请选择</option>
+						<label class="mui-h5">法制员</label> <select class="mui-select"
+							id="input_police_legaler"  style="font-size:14px;">
 							<option value="1">是</option>
 							<option value="2">否</option>
 						</select>
 					</div>
 					<div class="mui-input-row">
-						<label>权限</label> <select id="update_input_police_power">
-							<!-- <option value="1">单位内浏览</option>
-							<option value="2">单位内管理</option>
-							<option value="3">所有单位内管理</option> -->
+						<label class="mui-h5">权限</label> 
+						<select class="mui-select" id="update_input_police_power"  style="font-size:14px;">
 						</select>
 					</div>
 					<div class="mui-input-row">
-						<label>电话</label> <input type="text" class="mui-input-clear"
-							id="update_input_police_phone_number">
+						<label class="mui-h5">电话</label> <input type="text" class="mui-input-clear"
+							id="input_police_phone_number">
 					</div>
 				</form>
 			</div>
@@ -116,7 +120,7 @@
 		//修改初始化
 		var update_police_vo = null;
 		var update_xhr = new XMLHttpRequest();
-		update_xhr.open("POST", "/ajdbxt/user/User_findPoliceById");
+		update_xhr.open("POST", "/ajdbxt/user/User_findPoliceById_mobile");
 		update_xhr.send(null);
 		update_xhr.onreadystatechange = function() {
 			if (update_xhr.readyState == 4) {
@@ -127,25 +131,25 @@
 							+ update_xhr.readyState);
 					console.log("xhr.status:" + update_xhr.status);
 						// Id
-						var update_input_ajdbxt_police_id = document
-								.getElementById("update_input_ajdbxt_police_id");
-						update_input_ajdbxt_police_id.value = ajdbxt_police_id;
+						var input_ajdbxt_police_id = document
+								.getElementById("input_ajdbxt_police_id");
+						input_ajdbxt_police_id.value = update_police_vo.ajdbxt_police.ajdbxt_police_id;
 
 						// 警号
-						var update_input_police_serial_number = document
-								.getElementById("update_input_police_serial_number");
-						update_input_police_serial_number.value = update_police_vo.ajdbxt_police.police_serial_number;
+						var input_police_serial_number = document
+								.getElementById("input_police_serial_number");
+						input_police_serial_number.value = update_police_vo.ajdbxt_police.police_serial_number;
 						// 密码
-						var update_input_police_password = document
-								.getElementById("update_input_police_password");
-						update_input_police_password.value = update_police_vo.ajdbxt_police.police_password;
-						console.log("update_input_police_password:"
-								+ update_input_police_password.value);
+						var input_police_password = document
+								.getElementById("input_police_password");
+						input_police_password.value = update_police_vo.ajdbxt_police.police_password;
+						console.log("input_police_password:"
+								+ input_police_password.value);
 
 						// 姓名
-						var update_input_police_name = document
-								.getElementById("update_input_police_name");
-						update_input_police_name.value = update_police_vo.ajdbxt_police.police_name;
+						var input_police_name = document
+								.getElementById("input_police_name");
+						input_police_name.value = update_police_vo.ajdbxt_police.police_name;
 
 						// 单位
 						var xmlHttpRequest = new XMLHttpRequest();
@@ -160,6 +164,7 @@
 								var option = '';
 								if (loginRole.ajdbxt_police.police_power == "3") {
 									var deparment = update_police_vo.ajdbxt_department.ajdbxt_department_id;
+									console.log("update_police_vo.ajdbxt_department.ajdbxt_department_id:"+update_police_vo.ajdbxt_department.ajdbxt_department_id);
 									$
 											.post(
 													'/ajdbxt/user/User_findDepartmentByPage',
@@ -197,23 +202,24 @@
 						}
 
 						// 职务
-						var update_input_police_duty = document
-								.getElementById("update_input_police_duty");
-						update_input_police_duty.value = update_police_vo.ajdbxt_police.police_duty;
-						// 职务
-						var update_input_police_legaler = document
-								.getElementById("update_input_police_legaler");
-						update_input_police_legaler.value = update_police_vo.ajdbxt_police.police_legaler;
-
-						// 角色
+						var input_police_duty = document
+								.getElementById("input_police_duty");
+						input_police_duty.value = update_police_vo.ajdbxt_police.police_duty;
+						// 法制员
+						var input_police_legaler = document
+								.getElementById("input_police_legaler");
+						console.log("update_police_vo.ajdbxt_police.police_legaler:"+update_police_vo.ajdbxt_police.police_legaler);
+						input_police_legaler.value = update_police_vo.ajdbxt_police.police_legaler;
+						// 权限
 						var update_input_police_power = document
 								.getElementById("update_input_police_power");
 						update_input_police_power.value = update_police_vo.ajdbxt_police.police_power;
 
 						// 手机号码
-						var update_input_police_phone_number = document
-								.getElementById("update_input_police_phone_number");
-						update_input_police_phone_number.value = update_police_vo.ajdbxt_police.police_phone_number;
+						var input_police_phone_number = document
+								.getElementById("input_police_phone_number");
+						console.log("update_police_vo.ajdbxt_police.police_phone_number:"+update_police_vo.ajdbxt_police.police_phone_number);
+						input_police_phone_number.value = update_police_vo.ajdbxt_police.police_phone_number;
 					}
 				}
 			}
