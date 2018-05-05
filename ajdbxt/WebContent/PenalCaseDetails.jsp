@@ -841,10 +841,13 @@ html, body, .radio, .checkbox, .button_process {
 															<div class="radio col-md-4">
 																<label style="margin: 0 10px;"> <input
 																	type="radio" onclick=changeproblem_asking_yes(this)
-																	name="detention_delay_date" id="" value="是"> 是
+																	name="detention_delay_date" id="" value="0"> 30
 																</label><label style="margin: 0 10px;"> <input
 																	type="radio" onclick=changeproblem_asking_no(this)
-																	name="detention_delay_date" id="" value="否"> 否
+																	name="detention_delay_date" id="" value="1"> 7
+																</label><label style="margin: 0 10px;"> <input
+																	type="radio" onclick=changeproblem_asking_no(this)
+																	name="detention_delay_date" id="" value="2"> 0
 																</label>
 															</div>
 															<div class="col-md-4 process_button">
@@ -904,60 +907,6 @@ html, body, .radio, .checkbox, .button_process {
 											</div>
 											
 											<!-------------------------------------->
-											<!-------------第四阶段 法制大队提出问题---------------->
-											<div class="first_process_div col-md-12">
-												<div class="first_process">
-													<fieldset>
-														<legend>提出问题</legend>
-														<div class="summon_process col-md-12">													
-															<div class="process_title col-md-4">
-																<input type="text" class="form-control"
-																	name="process.process_question_list"
-																	id="process_question_list" placeholder="请填写提出问题数量">
-															</div>
-															<div class="col-md-4 process_button">
-																<s:if
-																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="problem_asking()"
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
-															</div>
-														</div>
-													</fieldset>
-												</div>
-											</div>
-											<!-------------------------------------->
-											<!-------------第六阶段 普通警员进行问题整改---------------->
-											<div class="first_process_div col-md-12">
-												<div class="first_process">
-													<fieldset>
-														<legend>问题整改</legend>
-														<!--  -->
-														<div class="summon_process col-md-12">
-															<!-- <div class="process_title col-md-4">问题整改：</div>	 -->													
-															<div class="process_title col-md-4">
-																<input type="text" class="form-control"
-																	name="process.process_question" id="process_question"
-																	placeholder="请填写问题整改数量">
-															</div>
-															<div class="col-md-4 process_button">
-																<s:if
-																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="problem_rectification()"
-																		id="but_process_question"
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
-															</div>
-														</div>
-													</fieldset>
-												</div>
-											</div>
-											<!-------------------------------------->
-											
 											<!-------------第五阶段   起诉---------------->
 											<div class="first_process_div col-md-12" id="sheancaiwu">
 												<div class="first_process">
@@ -1035,6 +984,61 @@ html, body, .radio, .checkbox, .button_process {
 												</div>
 											</div>
 											<!-------------------------------------->
+											<!-------------第四阶段 法制大队提出问题---------------->
+											<div class="first_process_div col-md-12">
+												<div class="first_process">
+													<fieldset>
+														<legend>提出问题</legend>
+														<div class="summon_process col-md-12">													
+															<div class="process_title col-md-4">
+																<input type="text" class="form-control"
+																	name="process.process_question_list"
+																	id="process_question_list" placeholder="请填写提出问题数量">
+															</div>
+															<div class="col-md-4 process_button">
+																<s:if
+																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+																	<button type="button"
+																		class="btn btn-primary  btn-block"
+																		onclick="problem_asking()"
+																		style="width: 40%; float: right;">提交</button>
+																</s:if>
+															</div>
+														</div>
+													</fieldset>
+												</div>
+											</div>
+											<!-------------------------------------->
+											<!-------------第六阶段 普通警员进行问题整改---------------->
+											<div class="first_process_div col-md-12">
+												<div class="first_process">
+													<fieldset>
+														<legend>问题整改</legend>
+														<!--  -->
+														<div class="summon_process col-md-12">
+															<!-- <div class="process_title col-md-4">问题整改：</div>	 -->													
+															<div class="process_title col-md-4">
+																<input type="text" class="form-control"
+																	name="process.process_question" id="process_question"
+																	placeholder="请填写问题整改数量">
+															</div>
+															<div class="col-md-4 process_button">
+																<s:if
+																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+																	<button type="button"
+																		class="btn btn-primary  btn-block"
+																		onclick="problem_rectification()"
+																		id="but_process_question"
+																		style="width: 40%; float: right;">提交</button>
+																</s:if>
+															</div>
+														</div>
+													</fieldset>
+												</div>
+											</div>
+											<!-------------------------------------->
+											
+											
 											<!-------------第七阶段 法制大队结案---------------->
 											<div class="first_process_div col-md-12">
 												<div class="first_process">

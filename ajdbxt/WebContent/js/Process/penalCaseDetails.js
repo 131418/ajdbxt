@@ -29,7 +29,7 @@ function mandatory_measuresBtnClick() {
 				second_str='<label style="margin: 0 10px;"> <input type="radio" name="punishment" id="punishment_arrest" class="second_punishment" value="0"> 逮捕</label>';
 				second_str+='<label style="margin: 0 10px;"><input type="radio" name="punishment" id="punishment_qbhs" class="second_punishment" value="1" > 取保候审 </label>';
 				second_str+='<label style="margin: 0 10px;"><input type="radio" name="punishment" class="second_punishment" value="2">监视居住 </label>';
-				second_str+='<label style="margin: 0 0px;"> <input type="radio" name="punishment" class="second_punishment" value="3"> 刑转治 </label>';
+				second_str+='<label style="margin: 0 0px;"> <input type="radio" name="punishment" class="second_punishment" value="3"> 撤案 </label>';
 				$("#second_punishment_content").html(second_str);
 				var punishment = document.getElementsByName("punishment");
 				$(".second_punishment").bind("click",function(){
@@ -43,7 +43,7 @@ function mandatory_measuresBtnClick() {
 						$("#third_punishmentone").css("display","block");
 					}
 					else if (this.value == "1"){
-						third_str='<div class="process_title col-md-4">刑转治</div>';
+						third_str='<div class="process_title col-md-4">撤案</div>';
 						third_str+='<div class="radio col-md-4">';
 						third_str+='<label style="margin: 0 10px;"> <input type="radio"  name="detention_delay_date" id="" value="1"> 是 </label>';
 						third_str+='<label style="margin: 0 10px;"> <input type="radio" name="detention_delay_date" id="" value="0"> 否 </label>';
@@ -63,10 +63,13 @@ function mandatory_measuresBtnClick() {
 				second_str='<label style="margin: 0 10px;"> <input type="radio" name="punishment" value="4"> 解保 </label>';
 				second_str+='<label style="margin: 0 0px;"> <input type="radio" name="punishment" value="5"> 撤案 </label>';
 				$("#second_punishment_content").html(second_str);
+				$("#third_punishmentone").css("display","none");
+				
 			}
 			else{//其余为"1",表示监视居住
 				document.getElementById("detention_delay_date").style.display = "none";
 				document.getElementById("second_punishment").style.display = "none";
+				document.getElementById("third_punishmentone").style.display="none";
 			}
 		} 
 	}
