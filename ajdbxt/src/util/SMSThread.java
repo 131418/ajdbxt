@@ -583,8 +583,8 @@ public class SMSThread extends Thread{
 				String num=police.getPolice_phone_number();
 				List<String> tel=new ArrayList<>();
 				tel.add(num);
-				MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_MONITORING_LIVE_DUE);//补查
-				MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_MONITORING_LIVE_DUE_VOICE);
+				MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_SEARCH_BACK);//补查
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_SEARCH_BACK_VOICE);
 			}
 		}
 		
