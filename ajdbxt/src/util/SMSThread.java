@@ -45,7 +45,11 @@ public class SMSThread extends Thread{
 				questionChange();
 				break;
 			case MsgSend.CASE_GOODS_LIB_VOICE:
-				punishMan();
+				if(caseFiled){
+					punishMan();//如果为行政案件这这样处理
+				}else {
+					caseGoods();
+				}
 				break;
 			case MsgSend.CASE_FILE_UP_VOICE:
 				caseEnd();
@@ -59,7 +63,6 @@ public class SMSThread extends Thread{
 			case MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE:
 				fileBack();
 				break;
-			
 			}	
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -235,7 +238,7 @@ public class SMSThread extends Thread{
 	 * 问题整改
 	 */
 	private void questionChange() throws InterruptedException {
-		for(int index=0;index<16;index++) {
+		
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process =processDTO.getProcess();
 			if(process.getProcess_question()!=null) {//如果整改数量不为空
@@ -248,11 +251,29 @@ public class SMSThread extends Thread{
 				tel.add(processDTO.getCap().getPolice_phone_number());
 				MsgSend.doSendSimple(params, tel, MsgSend.QUESTION_UP_CHECK);
 				MsgSend.doSendVoiceSimple(params, processDTO.getLeader().getPolice_phone_number(), MsgSend.QUESTION_UP_CHECK_VOICE);
-				break;
-			}else {
-				waitTime(4);
+				for(int index=0;index<16;index++) {
+					processDTO=getProcessDTO();
+					process=processDTO.getProcess();
+					if(process.getProcess_administrativ_warning()==null
+							&&process.getProcess_detention()==null
+							&&process.getProcess_community_abandon_drug()==null
+							&&process.getProcess_mandatory_abandon_drug()==null
+							&&process.getProcess_penalty()==null) {//如果没有处罚
+						List<ajdbxt_police> policeList=processDTO.getPolice();
+						for(ajdbxt_police police:policeList) {
+							String name=police.getPolice_name();
+							String num=police.getPolice_phone_number();
+							String []param= {processDTO.getInfo().getInfo_name()};
+							tel=new ArrayList<>();
+							tel.add(num);
+							MsgSend.doSendSimple(param, tel, MsgSend.QUESTION_UP);
+							MsgSend.doSendVoiceSimple(param, num, MsgSend.QUESTION_UP_VOICE);
+						}
+						waitTime(4);
+					}
+					
+				}
 			}
-		}
 	}
 	/*
 	 * 处罚

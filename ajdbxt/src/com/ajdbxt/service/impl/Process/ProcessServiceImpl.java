@@ -133,6 +133,10 @@ public class ProcessServiceImpl implements ProcessService {
 		case fileBack://延长期限通知拿回案卷
 			new SMSThread(MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext).start();
 			break;
+		case goods_lib:
+			if(!caseFiled) {
+				new SMSThread(MsgSend.CASE_GOODS_LIB_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext);
+			}
 		}	
 		return JsonUtils.toJson(processDTO);
 	}

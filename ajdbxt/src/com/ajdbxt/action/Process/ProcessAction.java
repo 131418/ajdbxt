@@ -149,6 +149,9 @@ public class ProcessAction  extends ActionSupport{
 					case "process_result_of_prosecution":
 						changeType=ProcessService.forceMeasure;
 						break;
+					case "process_case_goods":
+						changeType= ProcessService.goods_lib;
+						break;
 					case "process_search_result_one":
 					case "process_search_result_two":
 						changeType=ProcessService.result;
