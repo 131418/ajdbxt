@@ -48,7 +48,15 @@ public class MsgSend {
 	public static final String CASE_FILE_UP_CHECK_VOICE="_案件案卷上交法制大队";
 	public static final String CASE_FILE_UP_OUT_VOICE="_案件案卷未按规定上交";
 	public static final String CASE_END_VOICE="_案件已抓捕_小时还未结案";
-	//d短信模板
+	public static final String CRIMINAL_ARREST_DUE_VOICE="_案件逮捕期限还剩10天尽快办理";
+	public static final String CRIMINAL_BAIL_DUE_VOICE="_案件取保候审快满一年尽快办理";
+	public static final String CRIMINAL_MONITORING_LIVE_DUE_VOICE="_案件监视居住6个月时间不足10天，尽快办理";
+	public static final String CRIMINAL_BAIL_VOICE="_案件进行3月一次侦查";
+	public static final String CRIMINAL_CASE_FILE_BACK_VOICE="_案件的案卷拿回";
+	public static final String CRIMINAL_LENGTH_DETENTION_VOICE="办理_案件延长拘留手续";
+	public static final String CRIMINAL_SUBPOENA_A_SUSPECT_TIME_OUT_VOICE="_案件传唤超12小时办理延长传唤手续";
+	public static final String CRIMINAL_SEARCH_BACK_VOICE="_案件退查还剩10天，尽快办理";
+	//短信模板
 	public static final int SUBPOENA_A_SUSPECT=114978;
 	public static final int SUBPOENA_A_SUSPECT_TIME_OUT=114979;
 	public static final int CASE_ROLLBACK=114980;
@@ -64,6 +72,14 @@ public class MsgSend {
 	public static final int CASE_FILE_UP_CHECK=114992;
 	public static final int CASE_FILE_UP_OUT=114993;
 	public static final int CASE_END=114994;
+	public static final int CRIMINAL_ARREST_DUE=117117;
+	public static final int CRIMINAL_BAIL_DUE=117080;
+	public static final int CRIMINAL_MONITORING_LIVE_DUE=115372;
+	public static final int CRIMINAL_BAIL=115371;
+	public static final int CRIMINAL_CASE_FILE_BACK=115370;
+	public static final int CRIMINAL_LENGTH_DETENTION=115368;
+	public static final int CRIMINAL_SUBPOENA_A_SUSPECT_TIME_OUT=115366;
+	public static final int CRIMINAL_SEARCH_BACK=117217;
 	
 	/**
 	 * 测试方法

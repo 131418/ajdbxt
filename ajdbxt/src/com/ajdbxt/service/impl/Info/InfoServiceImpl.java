@@ -251,6 +251,7 @@ public class InfoServiceImpl implements InfoService {
 	@Override
 	public void deleteCase(String caseInfo_id) {
 		infoDao.deleteCase(caseInfo_id);
+		processDao.deleteProcess(caseInfo_id);
 	}
 
 	@Override
