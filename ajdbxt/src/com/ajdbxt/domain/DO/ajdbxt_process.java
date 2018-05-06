@@ -34,7 +34,7 @@ public class ajdbxt_process {
 	private String process_force_measure_one;//强制措施1
 	private String process_force_measure_two;//强制措施2
 	private String process_force_measure_three;//强制措施3
-	private String process_result_of_prosecution;//起诉结果
+	private String process_result_of_prosecution;//强制措施4
 	public String getAjdbxt_process_id() {
 		return ajdbxt_process_id;
 	}
@@ -290,4 +290,3 @@ public class ajdbxt_process {
 	}
 
 }
-

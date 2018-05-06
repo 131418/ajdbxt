@@ -8,8 +8,8 @@ import com.ajdbxt.domain.DO.ajdbxt_police;
 public class LegalSystemAndLeadersVO {
 	private List<ajdbxt_police> legals;
 	private List<ajdbxt_police> leaders;
-	private List<ajdbxt_department> departments;
 	private List<ajdbxt_police> legalers;
+	private List<ajdbxt_department> departments;
 	
 	public List<ajdbxt_police> getLegalers() {
 		return legalers;

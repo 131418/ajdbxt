@@ -77,8 +77,9 @@ public class ProcessDaoImpl implements ProcessDao {
 	}
 
 	@Override
-	public void deleteProcess(ajdbxt_process process) {
+	public void deleteProcess(String caseInfo_id) {
 		Session session=sessionFactory.getCurrentSession();
+		ajdbxt_process process=(ajdbxt_process) session.createCriteria(ajdbxt_process.class).add(Restrictions.eq("process_case_id",caseInfo_id)).uniqueResult();
 		session.delete(process);
 		session.flush();
 	}

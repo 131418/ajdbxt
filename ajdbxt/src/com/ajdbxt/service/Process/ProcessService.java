@@ -5,13 +5,14 @@ import com.ajdbxt.domain.DTO.Process.ProcessDTO;
 import com.ajdbxt.domain.VO.Process.showProcessVO;
 
 public interface ProcessService {
-	public static int rollback=1;
-	public static int question =2;
-	public static int case_end =3;
-	public static int punish=4;
-	public static int forceMeasure=5;
-	public static int result=6;
-	public static int fileBack=7;
+	public final static int rollback=1;
+	public final static int question =2;
+	public final static int case_end =3;
+	public final static int punish=4;
+	public final static int forceMeasure=5;
+	public final static int result=6;
+	public final static int fileBack=7;
+	public final static int goods_lib=8;
 	
 	public ProcessDTO getSingleProcessByCaseId(String case_id);
 	/**
@@ -23,4 +24,3 @@ public interface ProcessService {
 	public String update(ajdbxt_process process,int changeType);
 	public showProcessVO getSomeProcessByShowProcessVO(showProcessVO processVO);
 }
-

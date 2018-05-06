@@ -125,11 +125,18 @@ public class ProcessServiceImpl implements ProcessService {
 			new SMSThread(MsgSend.CASE_FILE_UP_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext).start();
 			break;	
 		case result://起诉结果
+			new SMSThread(MsgSend.CRIMINAL_SEARCH_BACK_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext).start();
 			break;
 		case forceMeasure://强制措施，如果为拘留通知上交案卷
+			new SMSThread(MsgSend.CRIMINAL_BAIL_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext).start();
 			break;
 		case fileBack://延长期限通知拿回案卷
+			new SMSThread(MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext).start();
 			break;
+		case goods_lib:
+			if(!caseFiled) {
+				new SMSThread(MsgSend.CASE_GOODS_LIB_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext);
+			}
 		}	
 		return JsonUtils.toJson(processDTO);
 	}
