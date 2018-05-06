@@ -36,7 +36,8 @@ public class SMSThread extends Thread{
 			switch (tpl_id) {
 			case MsgSend.SUBPOENA_A_SUSPECT_VOICE://传唤嫌疑人
 				subpoenaASuspect();
-				checkCaseEnd();
+				if(caseFiled)
+					checkCaseEnd();
 				break;	
 			case MsgSend.CASE_ROLLBACK_VOICE://回退
 				rollBack();
@@ -238,7 +239,6 @@ public class SMSThread extends Thread{
 	 * 问题整改
 	 */
 	private void questionChange() throws InterruptedException {
-		
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process =processDTO.getProcess();
 			if(process.getProcess_question()!=null) {//如果整改数量不为空
@@ -370,9 +370,7 @@ public class SMSThread extends Thread{
 				int hour=caseFiled?18:999999 ;
 				try {
 					Date date= DateFormat.getDateInstance().parse(processDTO.getInfo().getInfo_catch_time());
-					hour=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)-date.getHours()>0?
-							caseFiled? 18-(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)-date.getHours()):
-								999999-(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)-date.getHours()):0;
+					hour=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)-date.getHours()>0?18-(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)-date.getHours()):0;
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}finally {
@@ -415,19 +413,53 @@ public class SMSThread extends Thread{
 	/*
 	 * 案卷上交后触发，拿回案卷
 	 */
-	private void fileBack() {
+	private void fileBack() throws InterruptedException {
 		for(;true;) {
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process=processDTO.getProcess();
 			if(process.getProcess_file_hand().equals("是")) {
 				if(process.getProcess_lengthen_criminal_detention().equals("7")) {//延长七天
-					
+					waitTime(4*24);
+					if(process.getProcess_file_hand().equals("是")) {
+						List<ajdbxt_police> policeList=processDTO.getPolice();
+						String [] params= {processDTO.getInfo().getInfo_name()};
+						for(ajdbxt_police police:policeList) {
+							String num=police.getPolice_phone_number();
+							List<String> tel=new ArrayList<>();
+							tel.add(num);
+							MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_CASE_FILE_BACK);
+							MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE);
+						}
+					}
 				}else if(process.getProcess_lengthen_criminal_detention().equals("30")) {//延长30天
-					
+					waitTime(23*24);
+					if(process.getProcess_file_hand().equals("是")) {
+						List<ajdbxt_police> policeList=processDTO.getPolice();
+						String [] params= {processDTO.getInfo().getInfo_name()};
+						for(ajdbxt_police police:policeList) {
+							String num=police.getPolice_phone_number();
+							List<String> tel=new ArrayList<>();
+							tel.add(num);
+							MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_CASE_FILE_BACK);
+							MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE);
+						}
+					}
 				}else if(process.getProcess_lengthen_criminal_detention().equals("60")) {
-					
+					waitTime(50*24);
+					if(process.getProcess_file_hand().equals("是")) {
+						List<ajdbxt_police> policeList=processDTO.getPolice();
+						String [] params= {processDTO.getInfo().getInfo_name()};
+						for(ajdbxt_police police:policeList) {
+							String num=police.getPolice_phone_number();
+							List<String> tel=new ArrayList<>();
+							tel.add(num);
+							MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_CASE_FILE_BACK);
+							MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE);
+						}
+					}
 				}
 			}
+			break;
 		}
 	}
 	/*
@@ -439,19 +471,17 @@ public class SMSThread extends Thread{
 		if(process.getProcess_result_of_prosecution()!=null) {//第四次强制措施
 			switch (process.getProcess_result_of_prosecution()) {
 			case "起诉":
-				
-				break;
 			case "撤案":
+				caseEnd();
 				break;
 
 			}
 		}else if(process.getProcess_force_measure_three()!=null) {//第三次强制措施
 			switch (process.getProcess_force_measure_three()) {
 			case "刑转治":
-				break;
 			case "起诉":
-				break;
 			case "撤案":
+				caseEnd();
 				break;
 			case "取保候审":
 				bail();
@@ -471,7 +501,7 @@ public class SMSThread extends Thread{
 				bail();
 				break;
 			case "逮捕":
-				
+				arrest();
 				break;
 			}
 		}else if(process.getProcess_force_measure_one()!=null) {//第一次强制措施
@@ -531,9 +561,8 @@ public class SMSThread extends Thread{
 	 *取保候审 
 	 */
 	private void bail() throws InterruptedException {
-		for(int index=0;index<85;index++) {
+		for(int index=0;index<3;index++) {
 			ProcessDTO processDTO=getProcessDTO();
-			ajdbxt_process process=processDTO.getProcess();
 			List<ajdbxt_police> policeList=processDTO.getPolice();
 			String [] params= {processDTO.getInfo().getInfo_name()};
 			for(ajdbxt_police police:policeList) {
@@ -547,7 +576,6 @@ public class SMSThread extends Thread{
 		}
 		waitTime(355*24);
 		ProcessDTO processDTO=getProcessDTO();
-		ajdbxt_process process=processDTO.getProcess();
 		List<ajdbxt_police> policeList=processDTO.getPolice();
 		String [] params= {processDTO.getInfo().getInfo_name()};
 		for(ajdbxt_police police:policeList) {
@@ -588,18 +616,10 @@ public class SMSThread extends Thread{
 	private void result() throws InterruptedException {
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process=processDTO.getProcess();
-		if(process.getProcess_search_result_two()!=null) {
-			
-		}else if(process.getProcess_search_result_one()!=null) {
-			switch (process.getProcess_search_result_one()) {
-			case "补查二次":
-				searchResult();
-				break;
-
-			default:
-				break;
-			}
-			
+		if(process.getProcess_search_result_two()!=null&&process.getProcess_search_result_two().equals("是")) {
+			searchResult();
+		}else if(process.getProcess_search_result_one()!=null&&process.getProcess_search_result_two().equals("是")) {
+			searchResult();		
 		}
 	}
 	private void searchResult() throws InterruptedException {
