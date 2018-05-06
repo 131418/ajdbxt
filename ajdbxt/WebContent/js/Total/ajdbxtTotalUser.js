@@ -9,9 +9,7 @@ function List_Total_User_By_Page(pageIndex) {
 	var select_stop_time = document.getElementById("select_stop_time");
 	
 	var input_police_id=document.getElementById("input_police_id").value;
-/*	var span_total_department=document.getElementById("span_total_department").value;*/
-	/*console.log("select_start_time2:" + select_start_time.value);
-	console.log("select_stop_time2:" + select_stop_time.value);*/
+
 	getXMLHttp();
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
@@ -44,6 +42,7 @@ function List_Total_User_By_Page(pageIndex) {
 					
 					/*获取单位*/
 					document.getElementById("span_total_department").innerHTML=total_vo.caseListByPolice[num].department.department_name;
+
 					/*
 					 * 1. 所有類型
 					 */
@@ -75,8 +74,8 @@ function List_Total_User_By_Page(pageIndex) {
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
 					new_td.innerHTML = total_vo.caseListByPolice[num].insisPoliceOne.police_name
-						+","+total_vo.caseListByPolice[num].insisPOliceTwo.police_name;
-
+						+"   "+total_vo.caseListByPolice[num].insisPOliceTwo.police_name;
+					
 					/* 加载图标 */
 					var i_pulse = document.getElementById("i_pulse");
 					i_pulse.style.display = "none";
@@ -84,7 +83,7 @@ function List_Total_User_By_Page(pageIndex) {
 		
 				/*获取人员*/
 				document.getElementById("span_total_user").innerHTML=total_vo.policeName;
-			/*	document.getElementById("span_total_user").style.color="black";*/
+			
 				/*
 				 * * 设置页数 /
 				 */
@@ -100,7 +99,7 @@ function List_Total_User_By_Page(pageIndex) {
 	formData.append("listEachPoliceCaseVO.currePage", pageIndex);
 	formData.append("listEachPoliceCaseVO.queryCaseName",
 			input_Total_CaseSearchText);
-	formData.append("listEachPoliceCaseVO.category", select_case_kind);// 要确认！
+	formData.append("listEachPoliceCaseVO.category", select_case_kind);
 	formData.append("listEachPoliceCaseVO.start_time", select_start_time.value);
 	formData.append("listEachPoliceCaseVO.stop_time", select_stop_time.value);
 	xhr.open("POST", "/ajdbxt/total/Total_getListPoiceCase?listEachPoliceCaseVO.police_id="+input_police_id, true);

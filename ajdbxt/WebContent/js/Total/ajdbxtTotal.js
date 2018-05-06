@@ -1,27 +1,45 @@
 var xhr;
 var total_vo = null;
+var btn_value=null;
 
-function List_Total_By_Page(pageIndex) {
+$(".input_button").bind("click",function(){
+	btn_value=this.value;
+	/*alert(btn_value);*/
+	List_Total_By_Page(btn_value,1);
+	$(".input_date").bind("change",function(){
+		List_Total_By_Page(btn_value,1);
+	});
+	$("#select_case_department").bind("input",function(){
+		List_Total_By_Page(btn_value,1);
+	});
+	$(".page_flip").bind("click",function(){
+		List_Total_By_Page(btn_value,1);
+	});
+});
+
+
+function List_Total_By_Page(e,pageIndex) {
 	var select_start_time = document.getElementById("select_start_time");
 	var select_stop_time = document.getElementById("select_stop_time");
-	console.log("select_start_time2:" + select_start_time.value);
-	console.log("select_stop_time2:" + select_stop_time.value);
 	var input_Total_PoliceSearchText = document
 			.getElementById("input_Total_PoliceSearchText").value;
-	var select_case_department = document.getElementById("select_case_department").value;
-	
-	console.log("select_case_department:" + select_case_department);
-	
+	var select_case_department = document
+			.getElementById("select_case_department").value;
+	var MainadminCase = document.getElementById("MainadminCase").value;
+	var MaincriminalCase = document.getElementById("MaincriminalCase").value;
+	var InsisadminCase = document.getElementById("InsisadminCase").value;
+	var InsiscriminalCase = document.getElementById("InsiscriminalCase").value;
+	var averageScore=document.getElementById("averageScore").value;
 
 	getXMLHttp();
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4) {
 			if (xhr.status == 200) {
-				
+
 				total_vo = JSON.parse(xhr.responseText);
 				var new_tr = null;
 				var new_td = null;
-				var ner_a = null;
+				var new_a = null;
 				var table_total = document.getElementById("table_total");
 
 				/*
@@ -31,57 +49,83 @@ function List_Total_By_Page(pageIndex) {
 				var long = old_tr.length;
 				for (var i = 0; i < long; i++) {
 					old_tr[0].parentNode.removeChild(old_tr[0]);
-					// table_total.firstElementChild.removeChild(old_tr[0]);
-				}
+					// table_total_user.firstElementChild.removeChild(old_tr[0]);
+				}			
 				/*
 				 * 将数据库的数据取出来放到表格里
 				 */
-				for (var num = 0; num < total_vo.statisticPoliceCaseNumDTO.length; num++) {
+				for (var num = 0; num < total_vo.statisticPoliceCaseDto.length; num++) {
 					new_tr = document.createElement("tr");
 					new_tr.className = "new_tr";
 					new_tr.appendChild(document.createTextNode(''));
 					table_total.firstElementChild.appendChild(new_tr);
-					
+
+					/*
+					 * 序号
+					 */
+					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.innerHTML = (num + 1);
+					new_td.colSpan = '2';
 
 					/*
 					 * 1. 办案单位
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].department.department_name;
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].department.department_name;
 
-					
+					new_td.colSpan = '2';
 					/*
 					 * 人员id
 					 */
-					new_td = document.createElement("td");
-					new_tr.appendChild(new_td);
-					var td_ajdbxt_police_id=total_vo.statisticPoliceCaseNumDTO[num].police.ajdbxt_police_id
-					new_td.innerHTML =td_ajdbxt_police_id ;
-					new_td.style.display="none";
+					/*
+					 * new_td = document.createElement("td");
+					 * new_tr.appendChild(new_td); var td_ajdbxt_police_id =
+					 * total_vo.StatisticPoliceCaseDto[num].police.ajdbxt_police_id
+					 * new_td.innerHTML = td_ajdbxt_police_id;
+					 * new_td.style.display = "none";
+					 */
+
 					/*
 					 * 2. 人员
 					 */
 					new_td = document.createElement("td");
-					new_a = document.createElement("a");
-					new_a.href = "/ajdbxt/total/Total_page_listPoliceCase?police_id="+td_ajdbxt_police_id;
-					new_td.appendChild(new_a);
 					new_tr.appendChild(new_td);
-					new_a.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].police.police_name;
-					new_a.style.cursor = "pointer";
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].police.police_name;
+					new_td.colSpan = '2';
+					/* new_a.style.cursor = "pointer"; */
 
 					/*
-					 * 3. 行政案件
+					 * 3. 主办行政案件数
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].adminCase;
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].adminMianCase;
 					/*
-					 * 4. 刑事案件
+					 * 4. 主办刑事案件数
 					 */
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
-					new_td.innerHTML = total_vo.statisticPoliceCaseNumDTO[num].criminalCase;
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].crimalMainCase;
+					/*
+					 * 5. 协办行政案件数
+					 */
+					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].adminAsistCase;
+					/*
+					 * 6. 协办刑事案件数
+					 */
+					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].crimalAsistCase;
+					/*
+					 * 7.平均分
+					 */
+					new_td = document.createElement("td");
+					new_tr.appendChild(new_td);
+					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].score_mian;
 
 					/* 加载图标 */
 					var i_pulse = document.getElementById("i_pulse");
@@ -99,18 +143,15 @@ function List_Total_By_Page(pageIndex) {
 		}
 	}
 	var formData = new FormData();
-	formData.append("listPoliceCaseByPageAndSearchVO.currePage",
-			pageIndex);
-	formData.append("listPoliceCaseByPageAndSearchVO.searchPolice",
+	formData.append("policeCaseStatisticVo.currePage", pageIndex);
+	formData.append("policeCaseStatisticVo.searchPolice",
 			input_Total_PoliceSearchText);
-	formData.append("listPoliceCaseByPageAndSearchVO.department",
-			select_case_department);
-	console.log("select_case_department:"+select_case_department);
-	formData.append("listPoliceCaseByPageAndSearchVO.start_time",
-			select_start_time.value);
-	formData.append("listPoliceCaseByPageAndSearchVO.stop_time",
-			select_stop_time.value);
-	xhr.open("POST", "/ajdbxt/total/Total_getListPoliceCaseStatistics",true);
+	formData.append("policeCaseStatisticVo.department", select_case_department);
+	formData.append("policeCaseStatisticVo.start_time", select_start_time.value);
+	formData.append("policeCaseStatisticVo.stop_time", select_stop_time.value);
+	formData.append("policeCaseStatisticVo.orderString",e);
+	
+	xhr.open("POST", "/ajdbxt/total/Total_getListPoiceCaseStatistic", true);
 	xhr.send(formData);
 }
 /*
@@ -120,7 +161,7 @@ function flip(flipPage) {
 	switch (flipPage) {
 	/* 首页 */
 	case 1: {
-		List_Total_By_Page(1)
+		List_Total_By_Page(btn_value,1)
 		break;
 	}
 		/* 上一页 */
@@ -128,7 +169,7 @@ function flip(flipPage) {
 		if (total_vo.currePage - 1 == 0) {
 			toastr.warning("已经是第一页了");
 		} else {
-			List_Total_By_Page(total_vo.currePage - 1);
+			List_Total_By_Page(btn_value,total_vo.currePage - 1);
 		}
 		break;
 	}
@@ -137,18 +178,18 @@ function flip(flipPage) {
 		if (total_vo.currePage == total_vo.totalPages) {
 			toastr.warning("已经是最后一页了");
 		} else {
-			List_Total_By_Page(total_vo.currePage + 1);
+			List_Total_By_Page(btn_value,total_vo.currePage + 1);
 		}
 		break;
 	}
 		/* 尾页 */
 	case 4: {
-		List_Total_By_Page(total_vo.totalPages);
+		List_Total_By_Page(btn_value,total_vo.totalPages);
 
 		break;
 	}
 
-	}  
+	}
 }
 
 function getXMLHttp() {

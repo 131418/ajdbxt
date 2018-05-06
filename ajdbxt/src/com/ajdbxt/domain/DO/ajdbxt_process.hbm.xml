@@ -1,96 +1,94 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2018??4??17?? ????8:48:48 by Hibernate Tools 3.5.0.Final -->
+
+<!-- Generated 2018-5-2 23:19:39 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
     <class name="com.ajdbxt.domain.DO.ajdbxt_process" table="AJDBXT_PROCESS">
         <id name="ajdbxt_process_id" type="java.lang.String">
-            <column name="AJDBXT_PROCESS_ID" />
+            <column name="ajdbxt_process_id" />
             <generator class="assigned" />
         </id>
         <property name="process_case_id" type="java.lang.String">
-            <column name="PROCESS_CASE_ID" />
+            <column name="process_case_id" />
         </property>
         <property name="process_lengthen_subpoena" type="java.lang.String">
-            <column name="PROCESS_LENGTHEN_SUBPOENA" />
+            <column name="process_lengthen_subpoena" />
         </property>
         <property name="process_nonage" type="java.lang.String">
-            <column name="PROCESS_NONAGE" />
+            <column name="process_nonage" />
         </property>
         <property name="process_authenticate" type="java.lang.String">
-            <column name="PROCESS_AUTHENTICATE" />
+            <column name="process_authenticate" />
         </property>
         <property name="process_case_goods" type="java.lang.String">
-            <column name="PROCESS_CASE_GOODS" />
+            <column name="process_case_goods" />
         </property>
         <property name="process_detention" type="java.lang.String">
-            <column name="PROCESS_DETENTION" />
+            <column name="process_detention" />
         </property>
         <property name="process_penalty" type="java.lang.String">
-            <column name="PROCESS_PENALTY" />
-        </property>
-        <property name="process_treatment_category" type="java.lang.String">
-            <column name="PROCESS_TREATMENT_CATEGORY" />
+            <column name="process_penalty" />
         </property>
         <property name="process_apply_right" type="java.lang.String">
-            <column name="PROCESS_APPLY_RIGHT" />
+            <column name="process_apply_right" />
         </property>
         <property name="process_goods_in_lib" type="java.lang.String">
-            <column name="PROCESS_GOODS_IN_LIB" />
+            <column name="process_goods_in_lib" />
         </property>
-        <property name="process_punish_inform" type="java.lang.String">
-            <column name="PROCESS_PUNISH_INFORM" />
+        <property name="process_question" type="java.lang.Integer">
+            <column name="process_question" />
         </property>
-        <property name="process_accpet_right" type="java.lang.String">
-            <column name="PROCESS_ACCPET_RIGHT" />
-        </property>
-        <property name="process_question" type="java.lang.String">
-            <column name="PROCESS_QUESTION" />
-        </property>
-        <property name="process_score" type="java.lang.String">
-            <column name="PROCESS_SCORE" />
+        <property name="process_score" type="java.lang.Double">
+            <column name="process_score" />
         </property>
         <property name="process_captain_check" type="java.lang.String">
-            <column name="PROCESS_CAPTAIN_CHECK" />
+            <column name="process_captain_check" />
         </property>
         <property name="process_file_hand" type="java.lang.String">
-            <column name="PROCESS_FILE_HAND" />
+            <column name="process_file_hand" />
         </property>
         <property name="process_case_end" type="java.lang.String">
-            <column name="PROCESS_CASE_END" />
+            <column name="process_case_end" />
         </property>
         <property name="process_gmt_create" type="java.lang.String">
-            <column name="PROCESS_GMT_CREATE" />
+            <column name="process_gmt_create" />
         </property>
         <property name="process_gmt_modify" type="java.lang.String">
-            <column name="PROCESS_GMT_MODIFY" />
+            <column name="process_gmt_modify" />
         </property>
-        <property name="process_question_list" type="java.lang.String">
-            <column name="PROCESS_QUESTION_LIST" />
-        </property>
-        <property name="process_subpoena" type="java.lang.String">
-            <column name="PROCESS_SUBPOENA" />
-        </property>
-        <property name="process_criminal_detention" type="java.lang.String">
-            <column name="PROCESS_CRIMINAL_DETENTION" />
-        </property>
-        <property name="process_arrest" type="java.lang.String">
-            <column name="PROCESS_ARREST" />
-        </property>
-        <property name="process_get_keep_wait_interrogate" type="java.lang.String">
-            <column name="PROCESS_GET_KEEP_WAIT_INTERROGATE" />
-        </property>
-        <property name="process_live_at_home_unde_surveillance" type="java.lang.String">
-            <column name="PROCESS_LIVE_AT_HOME_UNDE_SURVEILLANCE" />
-        </property>
-        <property name="process_result_of_prosecution" type="java.lang.String">
-            <column name="PROCESS_RESULT_OF_PROSECUTION" />
+        <property name="process_question_list" type="java.lang.Integer">
+            <column name="process_question_list" />
         </property>
         <property name="process_search_result_one" type="java.lang.String">
-            <column name="PROCESS_SEARCH_RESULT_ONE" />
+            <column name="process_search_result_one" />
         </property>
         <property name="process_search_result_two" type="java.lang.String">
-            <column name="PROCESS_SEARCH_RESULT_TWO" />
+            <column name="process_search_result_two" />
+        </property>
+        <property name="process_is_rollback" type="java.lang.String">
+            <column name="process_is_rollback" />
+        </property>
+        <property name="process_administrativ_warning" type="java.lang.String">
+            <column name="process_administrativ_warning" />
+        </property>
+        <property name="process_community_abandon_drug" type="java.lang.String">
+            <column name="process_community_abandon_drug" />
+        </property>
+        <property name="process_mandatory_abandon_drug" type="java.lang.String">
+            <column name="process_mandatory_abandon_drug" />
+        </property>
+        <property name="process_lengthen_criminal_detention" type="java.lang.String">
+            <column name="process_lengthen_criminal_detention" />
+        </property>
+        <property name="process_force_measure_one" type="java.lang.String">
+            <column name="process_force_measure_one" />
+        </property>
+        <property name="process_force_measure_two" type="java.lang.String">
+            <column name="process_force_measure_two" />
+        </property>
+        <property name="process_force_measure_three" type="java.lang.String">
+            <column name="process_force_measure_three" />
         </property>
     </class>
 </hibernate-mapping>

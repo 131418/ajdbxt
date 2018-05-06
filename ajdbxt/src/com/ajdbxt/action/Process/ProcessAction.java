@@ -114,45 +114,52 @@ public class ProcessAction  extends ActionSupport{
 		ajdbxt_process process=processService.getSingleProcessByCaseId(ajdbxtProcess.getProcess_case_id()).getProcess();
 		Class clazz=ajdbxtProcess.getClass();
 		Field [] f= clazz.getDeclaredFields();
-		List<Integer> list=new ArrayList<>();//一些特殊的改变保存在这里
+		String json="";
+		int changeType=-1;
 		for(Field field: f){
 			field.setAccessible(true);//解锁
 			try {
 				Object o =field.get(ajdbxtProcess);
-				if(o!=null&&(o.equals("")==false)) {
+				if(o!=null&&(o.equals(field.get(process))==false)) {
 					field.set(process, o);
 					switch (field.getName()) {
-						case "process_case_end"://案件流程结束
-							list.add(ProcessService.PROCESS_FILE_HAND);
-							break;
-						case "process_detention"://行政拘留
-							list.add(ProcessService.PROCESS_DETENTION);
-							break;
-						case "process_penalty"://罚款
-							list.add(ProcessService.PROCESS_PENALTY);
-							break;
-						case  "process_treatment_category"://戒毒
-							list.add(ProcessService.PROCESS_TREATMENT_CATEGORY);
-							break;
-						case "process_criminal_detention"://刑事拘留
-							list.add(ProcessService.PROCESS_CRIMINAL_DETENTION);
-							break;
-						case "process_arrest"://逮捕
-							list.add(ProcessService.PROCESS_ARREST);
-							break;
-						case "process_get_keep_wait_interrogate"://取保候审
-							list.add(ProcessService.PROCESS_GET_KEEP_WAIT_INTERROGATE);
-							break;
-						case "process_live_at_home_unde_surveillance"://监视居住
-							list.add(ProcessService.PROCESS_LIVE_AT_HOME_UNDE_SURVEILLANCE);
-							break;		
+					case "process_question":
+						changeType=ProcessService.question;
+						break;
+					case "process_apply_right":
+						changeType=ProcessService.rollback;
+						break;
+					case "process_case_end":
+						changeType=ProcessService.case_end;
+						break;
+						//以下为行政处罚
+					case "process_administrativ_warning":
+					case "process_detention":
+					case "process_community_abandon_drug":
+					case "process_mandatory_abandon_drug":
+					case "process_penalty":
+						changeType=ProcessService.punish;
+						break;
+					case "process_lengthen_criminal_detention":
+						changeType=ProcessService.fileBack;
+						break;
+					case "process_force_measure_one":
+					case "process_force_measure_two":
+					case "process_force_measure_three":
+						changeType=ProcessService.forceMeasure;
+						break;
+					case "process_search_result_one":
+					case "process_search_result_two":
+					case "process_result_of_prosecution":
+						changeType=ProcessService.result;
+						break;
 					}
 				}
 			}catch(Exception e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		String json=processService.update(process, list);
+		json=processService.update(process, changeType);
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		try {
 			ServletActionContext.getResponse().getWriter().println(json);

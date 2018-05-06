@@ -140,8 +140,6 @@ function List_Police_By_Page(pageIndex) {
 								new_td.innerHTML = "所有单位内管理";
 							}
 
-							
-
 							/*
 							 * 6. 电话号码
 							 */
@@ -389,7 +387,6 @@ function createPolice() {
 												'/ajdbxt/user/User_findDepartmentByPage',
 												function(Department_data) {
 													// 所有案件循环
-
 													for (var len = 0; len < Department_data.list.length; len++) {
 														option += '<option ';
 														option += ' value="'
