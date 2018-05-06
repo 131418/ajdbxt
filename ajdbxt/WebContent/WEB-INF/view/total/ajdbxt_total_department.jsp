@@ -31,7 +31,9 @@
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
-				<h3 class="panel-title"><span>统计</span><span>-</span><span>按单位统计</span></h3>
+				<h3 class="panel-title">
+					<span>统计</span><span>-</span><span>按单位统计</span>
+				</h3>
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
@@ -42,18 +44,16 @@
 								<div>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">按日期筛选：</span>
-									<input id="select_start_time" class="form-control mydate"
+									<input id="select_start_time" class="form-control mydate input_date"
 										style="width: 150px; float: left; text-align: center;"
-										type="text" placeholder="起始时间"
-										onchange="List_Total_By_Department()" value="2018-01-01" />
+										type="text" placeholder="起始时间" value="2018-01-01" />
 									<%--  --%>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">至</span>
 									<!--  -->
-									<input id="select_stop_time" class="form-control mydate"
+									<input id="select_stop_time" class="form-control mydate input_date"
 										style="width: 150px; float: left; margin: 0 0 0 20px; text-align: center;"
-										type="text" placeholder="结束时间"
-										onchange="List_Total_By_Department()" />
+										type="text" placeholder="结束时间"	/>
 									<%--  --%>
 								</div>
 								<!--按类型统计  -->
@@ -61,8 +61,8 @@
 									<!-- <button class="btn btn-default role_one"
 										onclick="createPolice()">按人员统计</button> -->
 									<button class="btn btn-default role_one"
-									onclick="javascript:location.href='/ajdbxt/total/Total_page_listPoliceCase'">按人员统计</button>
-									
+										onclick="window.location.href='/ajdbxt/total/Total_page_listPoliceCase'">按人员统计</button>
+
 								</div>
 							</div>
 							<!--  -->
@@ -71,11 +71,11 @@
 								<tbody>
 									<tr>
 										<th>序号</th>
-										<th>办案单位</th>										
-										<th><input type="button" id="adminCase" onclick="List_Total_By_Department()" value="行政案件" /></th>
-										<th><input type="button" id="criminalCase" onclick="List_Total_By_Department()" value="刑事案件" /></th>
+										<th>办案单位</th>
+										<th><input type="button" id="adminCase" class="input_button"											 value="行政案件" /></th>
+										<th><input type="button" id="criminalCase" class="input_button"											value="刑事案件" /></th>
 										<th>总案件数</th>
-										<th><input type="button" id="average" onclick="List_Total_By_Department()" value="平均分"></input></th>
+										<th><input type="button" id="averageScore" class="input_button"											 value="平均分" /></th>
 									</tr>
 								</tbody>
 							</table>
@@ -84,7 +84,25 @@
 							<div id="i_pulse" style="text-align: center;">
 								<i class="fa fa-spinner fa-pulse fa-3x"></i>
 							</div>
-							
+							<!--翻页  -->
+							<div id="page_flip"
+								style="margin: 0 auto; width: 400px; text-align: center; display:none;">
+								<span> <a onclick="flip(1)"><i
+										class="fa fa-angle-double-left">首页</i> </a> &nbsp&nbsp <a
+									onclick="flip(2)"><i class="fa fa-angle-left"></i>上一页 </a>
+									&nbsp&nbsp <a onclick="flip(3)">下一页<i
+										class="fa fa-angle-right"></i>
+								</a> &nbsp&nbsp <a onclick="flip(4)">尾页<i
+										class="fa fa-angle-double-right"></i>
+								</a> <br />
+									<p class='info' style="margin-top: 5px;">
+										第<span id="span_pageIndex">1</span>页&nbsp&nbsp共 <span
+											id="span_totalPages">1</span>页&nbsp&nbsp共 <span
+											id="span_totalRecords">0</span>条记录
+									</p></span>
+							</div>
+
+						</div>
 					</div>
 					<!-- END TABLE HOVER -->
 				</div>
@@ -114,7 +132,11 @@
 		select_stop_time.value = str;
 		console.log("select_start_time1:" + select_start_time.value);
 		console.log("select_stop_time1:" + select_stop_time.value);
-		List_Total_By_Department();
+		var averageScore=document.getElementById("averageScore").value;
+		List_Total_By_Department(averageScore,1);
+		$(".input_date").bind("change", function() {
+			List_Total_By_Department(averageScore, 1);
+		});
 	</script>
 
 	<script type="text/javascript">

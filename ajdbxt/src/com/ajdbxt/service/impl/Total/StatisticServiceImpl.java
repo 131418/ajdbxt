@@ -45,16 +45,16 @@ public class StatisticServiceImpl implements StatisticService {
 			}
 			listDepartmentCaseDto.add(statisticDepartmentCaseNumDTO);
 		}
-		
+		departmentStatisticVo.setStatisticPoliceCaseNumDTO(listDepartmentCaseDto);
 		//排序
-		/*if(departmentStatisticVo.getOrderString().trim()==null || departmentStatisticVo.getOrderString().trim().equals("平均分")) {
+		if(departmentStatisticVo.getOrderString().trim()==null || departmentStatisticVo.getOrderString().trim().equals("平均分")) {
 			Collections.sort(listDepartmentCaseDto, new Comparator<StatisticDepartmentCaseNumDTO>() {
 
 				@Override
 				public int compare(StatisticDepartmentCaseNumDTO o1, StatisticDepartmentCaseNumDTO o2) {
-					if(o1.getAverageScore()>o2.getAverageScore()) {
+					if(Double.parseDouble(o1.getAverageScore())>Double.parseDouble(o2.getAverageScore())) {
 						return -1;
-					}else if(o1.getAverageScore()<o2.getAverageScore()) {
+					}else if(Double.parseDouble(o1.getAverageScore())<Double.parseDouble(o2.getAverageScore())) {
 						return 1;
 					}else {
 						return 0;
@@ -93,10 +93,10 @@ public class StatisticServiceImpl implements StatisticService {
 				}
 				
 			});
-		}*/
+		}
 		
 		//分页
-		List<StatisticDepartmentCaseNumDTO> newListDepartmentCaseDto=new ArrayList<StatisticDepartmentCaseNumDTO>();
+		/*List<StatisticDepartmentCaseNumDTO> newListDepartmentCaseDto=new ArrayList<StatisticDepartmentCaseNumDTO>();
 		for(int i=(departmentStatisticVo.getCurrePage()-1)*departmentStatisticVo.getPageSize();
 				i<departmentStatisticVo.getCurrePage()*departmentStatisticVo.getPageSize();i++) {
 			if(i<listDepartmentCaseDto.size()) {
@@ -121,7 +121,7 @@ public class StatisticServiceImpl implements StatisticService {
 			 departmentStatisticVo.setHasNextPage(false);
 		 }else {
 			 departmentStatisticVo.setHasNextPage(true);
-		 }
+		 }*/
 		return departmentStatisticVo;
 	}
 
@@ -149,6 +149,82 @@ public class StatisticServiceImpl implements StatisticService {
 		policeCaseStatisticVo.setStatisticPoliceCaseDto(statisticCaseByPoliceList);
 		
 		//排序
+		if(policeCaseStatisticVo.getOrderString().trim()==null || policeCaseStatisticVo.getOrderString().trim().equals("平均分")) {
+			Collections.sort(statisticCaseByPoliceList, new Comparator<StatisticPoliceCaseDto>() {
+
+				@Override
+				public int compare(StatisticPoliceCaseDto o1, StatisticPoliceCaseDto o2) {
+					if(o1.getScore_mian()>o2.getScore_mian()) {
+						return -1;
+					}else if(o1.getScore_mian()<o2.getScore_mian()) {
+						return 1;
+					}else {
+						return 0;
+					}
+				}
+				
+			});
+		}else if(policeCaseStatisticVo.getOrderString().trim().equals("主办行政案件")) {
+			Collections.sort(statisticCaseByPoliceList,new Comparator<StatisticPoliceCaseDto>() {
+
+				@Override
+				public int compare(StatisticPoliceCaseDto o1, StatisticPoliceCaseDto o2) {
+					if(o1.getAdminMianCase()>o2.getAdminMianCase()) {
+						return -1;
+					}else if(o1.getAdminMianCase()<o2.getAdminMianCase()) {
+						return 1;
+					}else {
+						return 0;
+					}
+				}
+				
+			});
+		}else if(policeCaseStatisticVo.getOrderString().trim().equals("主办刑事案件")) {
+			Collections.sort(statisticCaseByPoliceList,new Comparator<StatisticPoliceCaseDto>() {
+
+				@Override
+				public int compare(StatisticPoliceCaseDto o1, StatisticPoliceCaseDto o2) {
+					if(o1.getCrimalMainCase()>o2.getCrimalMainCase()) {
+						return -1;
+					}else if(o1.getCrimalMainCase()<o2.getCrimalMainCase()) {
+						return 1;
+					}else {
+						return 0;
+					}
+				}
+				
+			});
+		}else if(policeCaseStatisticVo.getOrderString().trim().equals("协办行政案件")) {
+			Collections.sort(statisticCaseByPoliceList,new Comparator<StatisticPoliceCaseDto>() {
+
+				@Override
+				public int compare(StatisticPoliceCaseDto o1, StatisticPoliceCaseDto o2) {
+					if(o1.getAdminAsistCase()>o2.getAdminAsistCase()) {
+						return -1;
+					}else if(o1.getAdminAsistCase()<o2.getAdminAsistCase()) {
+						return 1;
+					}else {
+						return 0;
+					}
+				}
+				
+			});
+		}else if(policeCaseStatisticVo.getOrderString().trim().equals("协办刑事案件")) {
+			Collections.sort(statisticCaseByPoliceList,new Comparator<StatisticPoliceCaseDto>() {
+
+				@Override
+				public int compare(StatisticPoliceCaseDto o1, StatisticPoliceCaseDto o2) {
+					if(o1.getCrimalAsistCase()>o2.getCrimalAsistCase()) {
+						return -1;
+					}else if(o1.getCrimalAsistCase()<o2.getCrimalAsistCase()) {
+						return 1;
+					}else {
+						return 0;
+					}
+				}
+				
+			});
+		}
 		//分页
 		List<StatisticPoliceCaseDto> newStatisticPoliceCaseDto=new ArrayList<StatisticPoliceCaseDto>();
 		for(int i=(policeCaseStatisticVo.getCurrePage()-1)*policeCaseStatisticVo.getPageSize();
@@ -159,6 +235,7 @@ public class StatisticServiceImpl implements StatisticService {
 				break;
 			}
 		}
+		policeCaseStatisticVo.setStatisticPoliceCaseDto(newStatisticPoliceCaseDto);
 		
 		int i= statisticCaseByPoliceList.size();
 		policeCaseStatisticVo.setTotalRecords(i);
@@ -173,6 +250,7 @@ public class StatisticServiceImpl implements StatisticService {
 		 }else {
 			 policeCaseStatisticVo.setHasNextPage(true);
 		 }
+		 
 		return policeCaseStatisticVo;
 	}
 	
