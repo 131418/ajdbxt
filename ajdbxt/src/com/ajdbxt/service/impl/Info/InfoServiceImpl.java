@@ -270,6 +270,8 @@ public class InfoServiceImpl implements InfoService {
 			String three=info.getInfo_assistant_police_two();
 			if(three!=null&&(three.isEmpty()==false)) {
 				policeList.add(infoPoliceDao.findPoliceById(three));
+			} else {
+				policeList.add(null);
 			}
 			policeList.add(infoPoliceDao.findPoliceById(info.getInfo_legal_team_member()));
 			policeList.add(infoPoliceDao.findPoliceById(info.getInfo_bureau_leader()));
@@ -371,6 +373,7 @@ public class InfoServiceImpl implements InfoService {
 		}
 		processDTO.setPolice(policeList);
 		processDTO.setProcess(processDao.findProcessByCaseId(info_id).get(0));
+System.out.println(":::" + infoPoliceDao.findPoliceById(info.getInfo_department_legal_member()));
 		processDTO.setTeam_legal(infoPoliceDao.findPoliceById(info.getInfo_department_legal_member()));
 		processDTO.setCap(infoPoliceDao.findPoliceById(info.getInfo_department_captain()));
 		processDTO.setLeader(infoPoliceDao.findPoliceById(info.getInfo_bureau_leader()));
