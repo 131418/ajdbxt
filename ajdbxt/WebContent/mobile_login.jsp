@@ -30,9 +30,8 @@
 			.center {
 				position: absolute;
 				top: 73%;
-				left: 50%;
 				width: 100%;
-				height: 55%;
+				
 				padding: 30px;
 				text-align: center;
 				transform: translate(-50%, -50%);

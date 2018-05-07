@@ -46,10 +46,10 @@
 										class="form-control" onchange="List_Index_CaseInfo_By_Page(1)">
 										<!-- <option selected="selected" value="">请选择</option> -->
 										<option  
-											selected="selected">正在参与的案件</option>
-										<option>待核对案件</option>
-										<option>等待提交问题清单的案件</option>
-										<option>等待评分的案件</option>
+											selected="selected">未结案的案件</option>
+										<option>待审核案件</option>
+										<!-- <option>等待提交问题清单的案件</option> -->
+										<!-- <option>等待评分的案件</option> -->
 
 									</select>
 								</div>

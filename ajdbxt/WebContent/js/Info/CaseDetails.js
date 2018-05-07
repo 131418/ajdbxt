@@ -4,6 +4,7 @@ window.onload = function() {
 //console.log(info_id);
 	get_staffDetails(info_id);
 	get_processDetails(info_id);
+	get_penalProcessDetails(info_id);
 }
 
 function isContains(str, substr) {
@@ -22,7 +23,11 @@ function get_processDetails(info_id) {
 			+ info_id;
 	get_processDetails_Ajax(url, info_id);
 }
-
+function get_penalProcessDetails(info_id){
+	var url = "/ajdbxt/process/findSingleProcessAction?ajdbxtProcess.process_case_id="
+		+ info_id;
+get_penalProcessDetails_Ajax(url, info_id);
+}
 //案件基本信息
 function get_staffDetails_Ajax(url, info_id) {
 	var xmlhttp;
@@ -94,7 +99,522 @@ function info_category(staff_info){
 		$("#xingshi_case").hide();
 	}
 }
+//刑事案件流程
+function get_penalProcessDetails_Ajax(url, info_id){
+	var xmlhttp;
+	if (window.XMLHttpRequest) {
+		// IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		// IE6, IE5 浏览器执行代码
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var staff_info = xmlhttp.responseText;
+			staff_info = JSON.parse(staff_info);
+			var case1 = staff_info.process;
+			$.each(case1, function(key, value) {
+				$('input[name="ajdbxtProcess.' + key + '"]').val(value);
+			});
+			//延长传唤
+			if(case1.process_lengthen_subpoena!=null && case1.process_lengthen_subpoena.length>0){
+				if("是"==case1.process_lengthen_subpoena){
+					$('#penalsuspect_summon_yes').attr("checked","checked");
+					$("#penalsuspect_summon_no").prop("disabled", true);
+				}
+				if("否"==case1.process_lengthen_subpoena){
+					$('#penalsuspect_summon_no').attr("checked","checked");
+					$("#penalsuspect_summon_yes").prop("disabled", true);
+				}
+			}  
+			//未成年人
+			if(case1.process_nonage!=null && case1.process_nonage.length>0){
+				if("是"==case1.process_nonage){
+					$('#penalminors_asking_yes').attr("checked","checked");
+					$("#penalminors_asking_no").prop("disabled", true);
+				}
+				if("否"==case1.process_nonage){
+					$('#penalminors_asking_no').attr("checked","checked");
+					$("#penalminors_asking_yes").prop("disabled", true);
+				}
+			}  
+			//鉴定
+			if(case1.process_authenticate!=null && case1.process_authenticate.length>0){
+				if("是"==case1.process_authenticate){
+					$('#penalidentification_yes').attr("checked","checked");
+					$("#penalidentification_no").prop("disabled", true);
+				}
+				if("否"==case1.process_authenticate){
+					$('#penalidentification_no').attr("checked","checked");
+					$("#penalidentification_yes").prop("disabled", true);
+				}
+			}
+			//听证
+			if(case1.process_apply_right!=null && case1.process_apply_right.length>0){
+				if("是"==case1.process_apply_right){
+					$('#penalhearing_applying_yes').attr("checked","checked");
+					$("#penalhearing_applying_no").prop("disabled", true);
+				}
+				if("否"==case1.process_apply_right){
+					$('#penalhearing_applying_no').attr("checked","checked");
+					$("#penalhearing_applying_yes").prop("disabled", true);
+				}
+			}
+			//第一次强制措施
+			if(case1.process_force_measure_one!=null && case1.process_force_measure_one.length>0){
+				if("拘留"==case1.process_force_measure_one){
+					$('#measure_one_one').attr("checked","checked");
+					$("#measure_one_two").prop("disabled", true);
+					$("#measure_one_three").prop("disabled", true);
+				}
+				if("监视居住"==case1.process_force_measure_one){
+					$('#measure_one_two').attr("checked","checked");
+					$("#measure_one_one").prop("disabled", true);
+					$("#measure_one_three").prop("disabled", true);
+				}
+				if("取保候审"==case1.process_force_measure_one){
+					$('#measure_one_three').attr("checked","checked");
+					$("#measure_one_one").prop("disabled", true);
+					$("#measure_one_two").prop("disabled", true);
+				}
+			} 
+			//有无涉案财物
+			if(case1.process_case_goods!=null && case1.process_case_goods.length>0){
+				if("是"==case1.process_case_goods){
+					$('#penalcase_property_yes').attr("checked","checked");
+					$("#penalcase_property_no").prop("disabled", true);
+				}
+				if("否"==case1.process_case_goods){
+					$('#penalcase_property_no').attr("checked","checked");
+					$("#penalcase_property_yes").prop("disabled", true);
+				}
+			} 
+		
+		}
+	}
+	xmlhttp.open("post", url, true);
+	xmlhttp.send();
+}
+//-----------------------------------------按钮操作-------------------------------
+//改变是否涉案财物
+function penalchangecase_property_yes(even) {
+	var sex = document.getElementById("penalcase_property_yes");
+	sex.value = '是';
+	return sex.value;
+}
+function penalchangecase_property_no(even) {
+	var sex = document.getElementById("penalcase_property_no");
+	sex.value ='否';
+	return sex.value;
+}
+function penalcase_property() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
 
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadcaseDetail_case_property();
+				}
+			}
+		}
+	});
+}
+// 是否涉案财物提交按钮
+function penalloadcaseDetail_case_property() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//延长传唤
+function penalchangesuspect_summon_yes(even) {
+	var sex = document.getElementById("penalsuspect_summon_yes");
+	sex.value = '是';
+	return sex.value;
+}
+function penalchangesuspect_summon_no(even) {
+	var sex = document.getElementById("penalsuspect_summon_no");
+	sex.value ='否';
+	return sex.value;
+}
+function penalsuspect_summon() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadpenalsuspect_summon();
+				}
+			}
+		}
+	});
+}
+// 是否延长传唤提交按钮
+function penalloadpenalsuspect_summon() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//未成年人
+function penalchangeminors_asking_yes(even) {
+	var sex = document.getElementById("penalminors_asking_yes");
+	sex.value = '是';
+	return sex.value;
+}
+function penalchangeminors_asking_no(even) {
+	var sex = document.getElementById("penalminors_asking_no");
+	sex.value ='否';
+	return sex.value;
+}
+function penalminors_asking() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadepnalminors_asking();
+				}
+			}
+		}
+	});
+}
+// 是否未成年人提交按钮
+function penalloadepnalminors_asking() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//鉴定
+function penalchangeidentification_yes(even) {
+	var sex = document.getElementById("penalidentification_yes");
+	sex.value = '是';
+	return sex.value;
+}
+function penalchangeidentification_no(even) {
+	var sex = document.getElementById("penalidentification_no");
+	sex.value ='否';
+	return sex.value;
+}
+function penalidentification() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadpenalidentification();
+				}
+			}
+		}
+	});
+}
+// 是否鉴定提交按钮
+function penalloadpenalidentification() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//听证
+function penalchangehearing_applying_yes(even) {
+	var sex = document.getElementById("penalhearing_applying_yes");
+	sex.value = '是';
+	return sex.value;
+}
+function penalchangehearing_applying_no(even) {
+	var sex = document.getElementById("penalhearing_applying_no");
+	sex.value ='否';
+	return sex.value;
+}
+function penalhearing_applying() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadpenalhearing_applying();
+				}
+			}
+		}
+	});
+}
+// 是否听证提交按钮
+function penalloadpenalhearing_applying() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//第一次强制措施
+function mandatory_measuresBtnClick_one(even) {
+	var sex = document.getElementById("measure_one_one");
+	sex.value = '拘留';
+	return sex.value;
+}
+function mandatory_measuresBtnClick_two(even) {
+	var sex = document.getElementById("measure_one_two");
+	sex.value ='监视居住';
+	return sex.value;
+}
+function mandatory_measuresBtnClick_three(even) {
+	var sex = document.getElementById("measure_one_three");
+	sex.value ='取保候审';
+	return sex.value;
+}
+function penalmeasure_one() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadpenalmeasure_one();
+				}
+			}
+		}
+	});
+}
+// 第一次强制措施提交按钮
+function penalloadpenalmeasure_one() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//提出问题
+function pencalproblem_asking() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadpencalproblem_asking();
+				}
+			}
+		}
+	});
+}
+// 是否提出问题提交按钮
+function penalloadpencalproblem_asking() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var question_list = document.getElementById("penalprocess_question_list").value;
+	var formData = new FormData(processDetails);
+	formData.append("ajdbxtProcess.process_question_list", question_list);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//问题整改
+function pencalproblem_rectification() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadpencalproblem_rectification();
+				}
+			}
+		}
+	});
+}
+// 是否问题整改提交按钮
+function penalloadpencalproblem_rectification() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
 //行政案件流程
 function get_processDetails_Ajax(url, info_id) {
 	var xmlhttp;
@@ -111,8 +631,8 @@ function get_processDetails_Ajax(url, info_id) {
 			staff_info = JSON.parse(staff_info);
 			//单选框
 			var case1 = staff_info.process;
-			
-			//判断显示“打回修改完成”
+			console.log("aaaaa"+case1.process_lengthen_subpoena);
+			//最开始隐藏“打回修改完成”
 			if(case1.process_is_rollback == "是") {
 				$('#xiugaiok').show();
 			} else {
@@ -137,7 +657,7 @@ function get_processDetails_Ajax(url, info_id) {
 			if(case1.process_lengthen_subpoena!=null && case1.process_lengthen_subpoena.length>0){
 				if("是"==case1.process_lengthen_subpoena){
 					$('#suspect_summon_yes').attr("checked","checked");
-					if (case1.process_is_rollback != '是') {
+					if (case1.process_is_rollback.substr(0, 1) != '是') {
 						$("#suspect_summon_no").prop("disabled", "true");
 						$("#suspect_summon_yes").prop("disabled", "true");
 					} else {
@@ -145,9 +665,15 @@ function get_processDetails_Ajax(url, info_id) {
 						$("#suspect_summon_yes").removeProp("disabled");
 					}
 				}
-				if("否"==case1.process_lengthen_subpoena){
+				if(case1.process_is_rollback.substr(0, 1) != '是'){
 					$('#suspect_summon_no').attr("checked","checked");
-					$("#suspect_summon_yes").prop("disabled", true);
+					if (case1.process_is_rollback != '是, ') {
+						$("#suspect_summon_no").prop("disabled", "true");
+						$("#suspect_summon_yes").prop("disabled", "true");
+					} else {
+						$("#suspect_summon_no").removeProp("disabled");
+						$("#suspect_summon_yes").removeProp("disabled");
+					}
 				}
 			}    
 			//未成年
@@ -1326,3 +1852,7 @@ function loadcaseDetail_process_is_rollback_ok(){
 //					+ staff_id, true);
 //	xmlhttp.send(formData);
 //}
+//刑事案件
+
+
+

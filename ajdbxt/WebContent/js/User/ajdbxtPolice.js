@@ -6,6 +6,9 @@ var open_url=null;//人员查询列表路径
 var power_one_two = '<option value="1">单位内浏览</option><option value="2">单位内管理</option>';// 角色1和2可选权限
 // 角色3可选权限
 var power_three = '<option value="1">单位内浏览</option><option value="2">单位内管理</option><option value="3">所有单位内管理</option>';
+
+
+
 // 列表显示
 function List_Police_By_Page(pageIndex) {
 	// --------------------
@@ -214,7 +217,7 @@ function List_Police_By_Page(pageIndex) {
 			if (pageIndex == null || pageIndex.preventDefault) {
 				pageIndex = 1;
 			}
-			console.log("pageIndex:" + pageIndex);
+//			console.log("pageIndex:" + pageIndex);
 			formData.append("findPoliceByPageVO.currentPage", pageIndex);
 			formData.append("findPoliceByPageVO.police_name",
 					input_PoliceSearchText);

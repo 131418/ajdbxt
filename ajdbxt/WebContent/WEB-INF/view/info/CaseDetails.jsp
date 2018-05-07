@@ -153,7 +153,7 @@ html, body, .radio, .checkbox, .button_process {
 											<legend>传讯</legend>
 											<!-- 是否传唤嫌疑人 -->
 											<div class="summon_process col-md-12">
-												<div class="process_title col-md-4">办理延长传唤手续：</div>
+												<div class="process_title col-md-4">办案单位延长传唤：</div>
 												<div class="radio col-md-4">
 													<label style="margin: 0 10px;"> <input type="radio" onclick=changesuspect_summon_yes(this)
 														name="ajdbxtProcess.process_lengthen_subpoena" id="suspect_summon_yes">
@@ -164,7 +164,7 @@ html, body, .radio, .checkbox, .button_process {
 													</label>
 												</div>
 												<div class="col-md-4 process_button">
-													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员"'>
+													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
 													<button type="button" class="btn btn-primary  btn-block"
 													onclick="suspect_summon(this)"	style="width: 40%; float: right;">提交</button>
 												</s:if>
@@ -172,7 +172,7 @@ html, body, .radio, .checkbox, .button_process {
 											</div>
 											<!-- 询问未成年人 -->
 											<div class="summon_process col-md-12">
-												<div class="process_title col-md-4">询问未成年人：</div>
+												<div class="process_title col-md-4">办案单位询问未成年人：</div>
 												<div class="radio col-md-4">
 													<label style="margin: 0 10px;"> <input type="radio" onclick=changeminors_asking_yes(this)
 														name="ajdbxtProcess.process_nonage" id="minors_asking_yes" value="是">
@@ -183,8 +183,7 @@ html, body, .radio, .checkbox, .button_process {
 													</label>
 												</div>
 												<div class="col-md-4 process_button">
-												<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员"'>
-													<%-- <s:if test='#session.loginPolice.police_duty=="警员"'> --%>
+													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
 													<button type="button" class="btn btn-primary  btn-block" onclick="minors_asking()"
 														style="width: 40%; float: right;">提交</button>
 													</s:if>
@@ -194,7 +193,7 @@ html, body, .radio, .checkbox, .button_process {
 
 											<!-- 鉴定 -->
 											<div class="summon_process col-md-12">
-												<div class="process_title col-md-4">是否鉴定：</div>
+												<div class="process_title col-md-4">办案单位是否鉴定：</div>
 												<div class="radio col-md-4">
 													<label style="margin: 0 10px;"> <input type="radio" onclick=changeidentification_yes(this)
 														name="ajdbxtProcess.process_authenticate" id="identification_yes" value="是">
@@ -206,7 +205,7 @@ html, body, .radio, .checkbox, .button_process {
 												</div>
 												<!-- <div class="col-md-4 process_title">提醒：请在4日内作出决定，5日内将鉴定意见复印件送达违法嫌疑人及被害人</div> -->
 												<div class="col-md-4 process_button"> 
-													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员"'>
+													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
 													<button type="button" class="btn btn-primary  btn-block" onclick="identification()"
 														style="width: 40%; float: right;">提交</button>
 													</s:if>
@@ -215,7 +214,7 @@ html, body, .radio, .checkbox, .button_process {
 
 											<!-- 涉案财物 -->
 											<div class="summon_process col-md-12">
-												<div class="process_title col-md-4">涉案财物：</div>
+												<div class="process_title col-md-4">办案单位涉案财物：</div>
 												<div class="radio col-md-4">
 													<label style="margin: 0 10px;"> <input type="radio" onclick=changecase_property_yes(this)
 														name="ajdbxtProcess.process_case_goods" id="case_property_yes" value="是">
@@ -226,7 +225,7 @@ html, body, .radio, .checkbox, .button_process {
 													</label>
 												</div>
 												<div class="col-md-4 process_button">
-													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员"'>
+													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
 													<button type="button" class="btn btn-primary  btn-block"
 														style="width: 40%; float: right;" onclick="case_property()">提交</button>
 												    </s:if>
@@ -244,7 +243,7 @@ html, body, .radio, .checkbox, .button_process {
 											<legend>听证</legend>
 											<!-- 听证申请-->
 											<div class="summon_process col-md-12" id="hearing_applying_div">
-												<div class="process_title col-md-4">听证申请：</div>
+												<div class="process_title col-md-4">办案单位听证申请：</div>
 												<div class="radio col-md-4">
 													<label style="margin: 0 10px;"> <input type="radio" onclick=changehearing_applying_yes(this)
 														name="ajdbxtProcess.process_apply_right" id="hearing_applying_yes" value="是">
@@ -255,7 +254,7 @@ html, body, .radio, .checkbox, .button_process {
 													</label>
 												</div>
 												<div class="col-md-4 process_button">
-													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员"'>
+													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
 													<button type="button" class="btn btn-primary  btn-block"
 														style="width: 40%; float: right;" onclick="hearing_applying()">提交</button>
 												    </s:if>
@@ -273,7 +272,7 @@ html, body, .radio, .checkbox, .button_process {
 										<fieldset>
 											<legend>打回修改</legend>
 											<div class="summon_process col-md-12">
-												<div class="process_title col-md-4">是否打回：</div>
+												<div class="process_title col-md-4">法制大队是否打回：</div>
 												<div class="radio col-md-4">
 													<label style="margin: 0 10px;"> <input type="radio" onclick=changerollback_yes(this)
 														name="ajdbxtProcess.process_is_rollback" id="rollback_yes" value="是">
@@ -297,16 +296,16 @@ html, body, .radio, .checkbox, .button_process {
 								<!-------------------------------------->
 								
 								<!-------------------------打回修改完成  -->
-								<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员"'>
+								<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
 								<div class="first_process_div col-md-12" id="xiugaiok" hidden="true">
 									<div class="first_process">
 										<fieldset>
-											<legend>打回修改完成</legend>
+											<legend>办案单位修改完成</legend>
 											<!--  -->
 											<div class="summon_process col-md-12">
 												<!-- <div class="process_title col-md-4">修改完成：</div> -->
 												<div class="process_title col-md-4"><input type="hidden" name="ajdbxtProcess.process_is_rollback" value="待处理">
-													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员"'>
+													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
 													<button type="button" class="btn btn-primary  btn-block" onclick="process_is_rollback_ok()"
 														style="float: center;">打回修改完成</button>
 													</s:if>
@@ -347,7 +346,7 @@ html, body, .radio, .checkbox, .button_process {
 								<div class="first_process_div col-md-12">
 									<div class="first_process">
 										<fieldset>
-											<legend>提出问题</legend>
+											<legend>法制大队提出问题</legend>
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">提出问题数量：</div>
                                                 <div class="process_title col-md-4">
@@ -369,7 +368,7 @@ html, body, .radio, .checkbox, .button_process {
 								<div class="first_process_div col-md-12" >
 									<div class="first_process">
 										<fieldset>
-											<legend>问题整改</legend>
+											<legend>法制大队问题整改</legend>
 											<!--  -->
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">问题整改数量：</div>
@@ -392,7 +391,7 @@ html, body, .radio, .checkbox, .button_process {
 									<div class="first_process_div col-md-12">
 									<div class="first_process">
 										<fieldset>
-											<legend>处罚</legend>
+											<legend>办案单位处罚</legend>
 											<!-- 处罚 -->
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-2">处罚:</div>
@@ -411,7 +410,7 @@ html, body, .radio, .checkbox, .button_process {
 													</label>
 												</div>
 												<div class="col-md-2 process_button">
-													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员"'>
+													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
 													<button type="button" class="btn btn-primary  btn-block" onclick="punishmentab()" id="punishmentab"
 														style="width: 90%; float: right;">提交</button>
 													</s:if>
@@ -445,7 +444,7 @@ html, body, .radio, .checkbox, .button_process {
 								<div class="first_process_div col-md-12">
 									<div class="first_process">
 										<fieldset>
-											<legend>审核</legend>
+											<legend>所队长审核</legend>
 											<!--  -->
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">是否审核：</div>
@@ -473,7 +472,7 @@ html, body, .radio, .checkbox, .button_process {
 								<div class="first_process_div col-md-12" id="sheancaiwu">
 									<div class="first_process">
 										<fieldset>
-											<legend>涉案财物入库</legend>
+											<legend>法制大队涉案财物入库</legend>
 											<!--  -->
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">涉案财物已入库：</div>
@@ -500,7 +499,7 @@ html, body, .radio, .checkbox, .button_process {
 								<div class="first_process_div col-md-12">
 									<div class="first_process">
 										<fieldset>
-											<legend>结案</legend>
+											<legend>法制大队结案</legend>
 											<!--  -->
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">是否结案：</div>
@@ -526,7 +525,7 @@ html, body, .radio, .checkbox, .button_process {
 								<div class="first_process_div col-md-12">
 									<div class="first_process">
 										<fieldset>
-											<legend>评分</legend>
+											<legend>法制大队评分</legend>
 											<!--  -->
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">办案评分：</div>
@@ -598,14 +597,14 @@ html, body, .radio, .checkbox, .button_process {
 								<div class="first_process_div col-md-12">
 									<div class="first_process">
 										<fieldset>
-											<legend>案卷上交</legend>
+											<legend>法制大队确认案卷上交</legend>
 											<!--  -->
 											<div class="summon_process col-md-12">
 												<!-- <div class="process_title col-md-4">修改完成：</div> -->
 												<div class="process_title col-md-4"><!-- <input type="hidden" name="ajdbxtProcess.process_is_rollback" value="是"> -->
-													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员"'>
+													<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
 													<button value="是" name="ajdbxtProcess.process_file_hand" type="button" class="btn btn-primary  btn-block" onclick="process_file_hand()"
-														style="float: center;">打回修改完成</button>
+														style="float: center;">案卷已上交</button>
 													</s:if>
 												</div>
 
@@ -630,11 +629,7 @@ html, body, .radio, .checkbox, .button_process {
 	</div>
 	
 <!-- -------------------------------------------刑事案件----------------------------------------- -->
-<<<<<<< HEAD
 <div style="margin: 80px 0 0 0; float: left; width: 100%;" id="xingshi_case">
-=======
-<div style="margin: 80px 0 0 0; float: left; width: 100%;" id="xingshi_case" id="xingshi_case">
->>>>>>> origin/lyqqer
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
@@ -653,7 +648,7 @@ html, body, .radio, .checkbox, .button_process {
 											<!-- 	<div id="administrative_process_right" class="col-md-12"> -->
 											<!-------------------------------------->
 											<!-------------第一阶段   涉案财物入库---------------->
-											<div class="first_process_div col-md-12">
+											<div class="first_process_div col-md-12" id="sheancaiwu">
 												<div class="first_process">
 													<fieldset>
 														<legend>涉案财物</legend>
@@ -662,53 +657,46 @@ html, body, .radio, .checkbox, .button_process {
 															<div class="process_title col-md-4">涉案财物：</div>
 															<div class="radio col-md-4">
 																<label style="margin: 0 10px;"> <input
-																	type="radio" onclick="case_propertyBtnClick(this)"
-																	name="case_property" 
-																	id="case_property_yes" value="1"> 有
+																	type="radio" onclick=penalchangecase_property_yes(this)
+														name="ajdbxtProcess.process_case_goods" id="penalcase_property_yes" value="是"> 有
 																</label><label style="margin: 0 10px;"> <input
-																	type="radio" onclick="case_propertyBtnClick(this)"
-																	name="case_property"
-																	id="case_property_no" value="0"> 无
+																	type="radio" onclick=penalchangecase_property_no(this)
+														name="ajdbxtProcess.process_case_goods" id="penalcase_property_no" value="否"> 无
 																</label>
 															</div>
 															<div class="col-md-4 process_button">
-																<s:if
-																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="case_ending()" id="process_case_end"
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
-															</div>															
+															<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+																<button type="button"
+																	class="btn btn-primary  btn-block policemen_manager"  onclick="penalcase_property()"
+																	style="width: 40%; float: right;">提交</button>
+																	</s:if>
+															</div>
 														</div>
 														<!-- 涉案财物已入库 -->
-														<div class="summon_process col-md-12" id="property_storage_div" style="display:none;" >
+														<div class="summon_process col-md-12"
+															id="property_storage_div" style="display: none;">
 															<div class="process_title col-md-4">涉案财物已入库：</div>
 															<div class="radio col-md-4">
 																<label style="margin: 0 10px;"> <input
-																	type="radio" onclick=case_propertyBtnClick(this)
-																	name="property_storage"
-																	id="case_property_yes" value="是"> 是
+																	type="radio" name="property_storage" value="是">
+																	是
 																</label><label style="margin: 0 10px;"> <input
-																	type="radio" onclick=case_propertyBtnClick(this)
-																	name="property_storage"
-																	id="case_property_no" value="否"> 否
+																	type="radio" name="property_storage" value="否">
+																	否
 																</label>
 															</div>
 															<div class="col-md-4 process_button">
-																<s:if
-																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="case_ending()" id="process_case_end"
-																		style="width: 40%; float: right;">提交</button>
+															<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+																<button type="button"
+																	class="btn btn-primary  btn-block legal_team_manager_btn"
+																	style="width: 40%; float: right;">提交</button>
 																</s:if>
-															</div>															
+															</div>
 														</div>
 
 													</fieldset>
 												</div>
-												</div>
+											</div>
 											<!-------------------------------------->
 											<!-------------第二阶段 传唤---------------->
 											<div class="first_process_div col-md-12">
@@ -717,48 +705,41 @@ html, body, .radio, .checkbox, .button_process {
 														<legend>传唤</legend>
 														<!-- 是否传唤嫌疑人 -->
 														<div class="summon_process col-md-12">
-															<div class="process_title col-md-4">延长传唤嫌疑人：</div>
-															<div class="radio col-md-4">
-																<label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changesuspect_summon_yes(this)
-																	name="ajdbxtProcess.process_lengthen_subpoena"
-																	id="suspect_summon_yes" value="是"> 是
-																</label><label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changesuspect_summon_no(this)
-																	name="ajdbxtProcess.process_lengthen_subpoena"
-																	id="suspect_summon_no" value="否"> 否
-																</label>
-															</div>
-															<div class="col-md-4 process_button">
-																<s:if test='#session.loginPolice.police_duty=="警员"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="suspect_summon(this)"
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
-															</div>
-														</div>
+												<div class="process_title col-md-4">办案单位延长传唤：</div>
+												<div class="radio col-md-4">
+													<label style="margin: 0 10px;"> <input type="radio" onclick=penalchangesuspect_summon_yes(this)
+														name="ajdbxtProcess.process_lengthen_subpoena" id="penalsuspect_summon_yes">
+														是
+													</label><label style="margin: 0 10px;"> <input type="radio" onclick=penalchangesuspect_summon_no(this)
+														name="ajdbxtProcess.process_lengthen_subpoena" id="penalsuspect_summon_no">
+														否
+													</label>
+												</div>
+												<div class="col-md-4 process_button">
+													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+													<button type="button" class="btn btn-primary  btn-block"
+													onclick="penalsuspect_summon(this)"	style="width: 40%; float: right;">提交</button>
+												</s:if>
+												</div>
+											</div>
 														<!-- 询问未成年人 -->
 														<div class="summon_process col-md-12">
 															<div class="process_title col-md-4">询问未成年人：</div>
 															<div class="radio col-md-4">
 																<label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changeminors_asking_yes(this)
-																	name="ajdbxtProcess.process_nonage"
-																	id="minors_asking_yes" value="是"> 是
+																	type="radio" name="ajdbxtProcess.process_nonage"  id="penalminors_asking_yes"  onclick=penalchangeminors_asking_yes(this)
+																	value="是"> 是
 																</label><label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changeminors_asking_no(this)
-																	name="ajdbxtProcess.process_nonage"
-																	id="minors_asking_no" value="否"> 否
+																	type="radio" name="ajdbxtProcess.process_nonage"  id="penalminors_asking_no"   onclick=penalchangeminors_asking_no(this)
+																	value="否"> 否
 																</label>
 															</div>
 															<div class="col-md-4 process_button">
-																<s:if test='#session.loginPolice.police_duty=="警员"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="minors_asking()"
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
+															<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+																<button type="button"
+																	class="btn btn-primary  btn-block policemen_manager"  onclick="penalminors_asking()"
+																	style="width: 40%; float: right;">提交</button>
+																	</s:if>
 															</div>
 															<!-- <div class="col-md-4 process_title">提醒：通知监护人到场</div> -->
 														</div>
@@ -768,23 +749,20 @@ html, body, .radio, .checkbox, .button_process {
 															<div class="process_title col-md-4">鉴定：</div>
 															<div class="radio col-md-4">
 																<label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changeidentification_yes(this)
-																	name="ajdbxtProcess.process_authenticate"
-																	id="identification_yes" value="是"> 是
+																	type="radio" name="ajdbxtProcess.process_authenticate"  id="penalidentification_yes"  onclick=penalchangeidentification_yes(this)
+																	value="是"> 是
 																</label><label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changeidentification_no(this)
-																	name="ajdbxtProcess.process_authenticate"
-																	id="identification_no" value="否"> 否
+																	type="radio" name="ajdbxtProcess.process_authenticate"  id="penalidentification_no"  onclick=penalchangeidentification_no(this)
+																	value="否"> 否
 																</label>
 															</div>
 															<!-- <div class="col-md-4 process_title">提醒：请在4日内作出决定，5日内将鉴定意见复印件送达违法嫌疑人及被害人</div> -->
 															<div class="col-md-4 process_button">
-																<s:if test='#session.loginPolice.police_duty=="警员"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="identification()"
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
+															<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+																<button type="button"
+																	class="btn btn-primary  btn-block policemen_manager"    onclick="penalidentification()"
+																	style="width: 40%; float: right;">提交</button>
+																	</s:if>
 															</div>
 														</div>
 
@@ -793,22 +771,19 @@ html, body, .radio, .checkbox, .button_process {
 															<div class="process_title col-md-4">申请听证：</div>
 															<div class="radio col-md-4">
 																<label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changecase_property_yes(this)
-																	name="ajdbxtProcess.process_case_goods"
-																	id="case_property_yes" value="是"> 是
+																	type="radio" name="ajdbxtProcess.process_apply_right" id="penalhearing_applying_yes" onclick=penalchangehearing_applying_yes(this)
+																	value="是"> 是
 																</label><label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changecase_property_no(this)
-																	name="ajdbxtProcess.process_case_goods"
-																	id="case_property_no" value="否"> 否
+																	type="radio" name="ajdbxtProcess.process_apply_right"  id="penalhearing_applying_no"  onclick=penalchangehearing_applying_no(this)
+																	value="否"> 否
 																</label>
 															</div>
 															<div class="col-md-4 process_button">
-																<s:if test='#session.loginPolice.police_duty=="警员"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		style="width: 40%; float: right;"
-																		onclick="case_property()">提交</button>
-																</s:if>
+															<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员"'>
+																<button type="button"
+																	class="btn btn-primary  btn-block policemen_manager"    onclick="penalhearing_applying()"
+																	style="width: 40%; float: right;">提交</button>
+																	</s:if>
 															</div>
 														</div>
 
@@ -819,34 +794,29 @@ html, body, .radio, .checkbox, .button_process {
 											<!-- 第三阶段  第一次强制措施 -->
 											<div class="first_process_div col-md-12">
 												<div class="first_process">
-													<fieldset>	
-													<legend>第一次强制措施 ：</legend>													
+													<fieldset>
+														<legend>第一次强制措施 ：</legend>
 														<div class="summon_process col-md-12"
 															id="hearing_applying_div">
-															
+
 															<div class="radio col-md-4">
 																<label style="margin: 0 10px;"> <input
-																	type="radio" onclick=mandatory_measuresBtnClick(this)
-																	name="mandatory_measuresOne"
-																	value="0"> 拘留
+																	type="radio" onclick=mandatory_measuresBtnClick_one(this)   id="measure_one_one"
+																	name="ajdbxtProcess.process_force_measure_one" value="拘留"> 拘留   
 																</label><label style="margin: 0 10px;"> <input
-																	type="radio" onclick=mandatory_measuresBtnClick(this)
-																	name="mandatory_measuresOne"
-																	value="1"> 监视居住
-																</label>
-																<label style="margin: 0 10px;"> <input
-																	type="radio" onclick=mandatory_measuresBtnClick(this)
-																	name="mandatory_measuresOne"
-																	value="2"> 取保候审
+																	type="radio" onclick=mandatory_measuresBtnClick_two(this)   id="measure_one_two"
+																	name="ajdbxtProcess.process_force_measure_one" value="监视居住"> 监视居住
+																</label> <label style="margin: 0 10px;"> <input
+																	type="radio" onclick=mandatory_measuresBtnClick_three(this)   id="measure_one_three"
+																	name="ajdbxtProcess.process_force_measure_one" value="取保候审"> 取保候审
 																</label>
 															</div>
 															<div class="col-md-4 process_button">
-																<s:if test='#session.loginPolice.police_duty=="警员"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		style="width: 40%; float: right;"
-																		onclick="hearing_applying()">提交</button>
-																</s:if>
+															<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+																<button type="button"
+																	class="btn btn-primary  btn-block policemen_manager"  onclick="penalmeasure_one()"
+																	style="width: 40%; float: right;">提交</button>
+																	</s:if>
 															</div>
 														</div>
 													</fieldset>
@@ -854,7 +824,8 @@ html, body, .radio, .checkbox, .button_process {
 											</div>
 											<!-------------------------------------->
 											<!-------------第四阶段 拘留延长期限---------------->
-											<div class="first_process_div col-md-12" style="display:none;" id="detention_delay_date">
+											<div class="first_process_div col-md-12"
+												style="display: none;" id="detention_delay_date">
 												<div class="first_process">
 													<fieldset>
 														<legend>拘留延长期限</legend>
@@ -862,89 +833,45 @@ html, body, .radio, .checkbox, .button_process {
 															<div class="process_title col-md-4">拘留延长期限：</div>
 															<div class="radio col-md-4">
 																<label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changeproblem_asking_yes(this)
-																	name="detention_delay_date" id="" value="是"> 是
+																	type="radio" name="detention_delay_date" value="30">
+																	30
 																</label><label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changeproblem_asking_no(this)
-																	name="detention_delay_date" id="" value="否"> 否
+																	type="radio" name="detention_delay_date" value="7">
+																	7
+																</label><label style="margin: 0 10px;"> <input
+																	type="radio" name="detention_delay_date" value="0">
+																	0
 																</label>
 															</div>
 															<div class="col-md-4 process_button">
-																<s:if
-																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block" onclick=""
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
+<%-- 															<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'> --%>
+																<button type="button"
+																	class="btn btn-primary  btn-block policemen_manager"
+																	style="width: 40%; float: right;">提交</button>
+<%-- 																	</s:if> --%>
 															</div>
 														</div>
 													</fieldset>
 												</div>
 											</div>
 											<!-------------------------------------->
-											<!-------------第三阶段 第二次强制措施---------------->
-											<div class="first_process_div col-md-12" id="second_punishment" style="display:none;">
-												<div class="first_process">
-													<fieldset>
-														<legend>第二次强制措施 ：</legend>		
-														<!-- 处罚 -->
-														<div class="summon_process col-md-12 ">
-															<!-- <div class="process_title col-md-2">第二次强制措施:</div> -->
-															<div class="checkbox col-md-8" id="second_punishment_content">
-																
-															</div>
-															<div class="col-md-2 process_button">
-																<s:if test='#session.loginPolice.police_duty=="警员"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="punishmentab()" id="punishmentab"
-																		style="width: 90%; float: right;">提交</button>
-																</s:if>
-															</div>
-														</div>													
-													</fieldset>
-												</div>
-											</div>
-											<!-------------------------------------->
-											<!-------------第五阶段   第三次强制措施1---------------->
-											<div class="first_process_div col-md-12" style="display:none;" id="third_punishmentone">
-												<div class="first_process">
-													<fieldset>
-														<legend>第三次强制措施：</legend>
-														<div class="summon_process col-md-12" id="third_punishmentone_value">
-															<div class="col-md-4 process_button">
-																<s:if
-																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block" onclick=""
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
-															</div>
-														</div>
-													</fieldset>
-												</div>
-											</div>
-											
-											<!-------------------------------------->
-											<!-------------第四阶段 法制大队提出问题---------------->
+											<!-------------第五阶段 法制大队提出问题---------------->
 											<div class="first_process_div col-md-12">
 												<div class="first_process">
 													<fieldset>
 														<legend>提出问题</legend>
-														<div class="summon_process col-md-12">													
+														<div class="summon_process col-md-12">
 															<div class="process_title col-md-4">
 																<input type="text" class="form-control"
-																	name="process.process_question_list"
-																	id="process_question_list" placeholder="请填写提出问题数量">
+																	name="process.process_question_list"  id="penalprocess_question_list" 
+																	placeholder="请填写提出问题数量">
 															</div>
 															<div class="col-md-4 process_button">
-																<s:if
-																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="problem_asking()"
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
+<%-- 															<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'> --%>
+																<button type="button"
+																	class="btn btn-primary  btn-block legal_team_manager_btn"    onclick="pencalproblem_asking()"
+																	style="width: 40%; float: right;">提交</button>
+<%-- 																	</s:if> --%>
 															</div>
 														</div>
 													</fieldset>
@@ -958,98 +885,124 @@ html, body, .radio, .checkbox, .button_process {
 														<legend>问题整改</legend>
 														<!--  -->
 														<div class="summon_process col-md-12">
-															<!-- <div class="process_title col-md-4">问题整改：</div>	 -->													
+															<!-- <div class="process_title col-md-4">问题整改：</div>	 -->
 															<div class="process_title col-md-4">
 																<input type="text" class="form-control"
-																	name="process.process_question" id="process_question"
+																	name="process.process_question" id="penalprocess_question"
 																	placeholder="请填写问题整改数量">
 															</div>
 															<div class="col-md-4 process_button">
-																<s:if
-																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="problem_rectification()"
-																		id="but_process_question"
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
+<%-- 															<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'> --%>
+																<button type="button"
+																	class="btn btn-primary  btn-block legal_team_manager_btn"  onclick="pencalproblem_rectification()" 
+																	id="but_process_question"
+																	style="width: 40%; float: right;">提交</button>
+<%-- 																	</s:if> --%>
 															</div>
 														</div>
 													</fieldset>
 												</div>
 											</div>
 											<!-------------------------------------->
-											
-											<!-------------第五阶段   起诉---------------->
-											<div class="first_process_div col-md-12" id="sheancaiwu">
+
+											<!-------------第七阶段 第二次强制措施---------------->
+											<div class="first_process_div col-md-12"
+												id="second_punishment" style="display: none;">
 												<div class="first_process">
 													<fieldset>
-														<legend>起诉</legend>
-														<!--  -->
-														<div class="summon_process col-md-12">
-															<div class="process_title col-md-4">起诉：</div>
-															<div class="radio col-md-4">
-																<label style="margin: 0 10px;"> <input
-																	type="radio" onclick="changesue(this)"
-																	name="sue" id="" value="1"> 是
-																</label><label style="margin: 0 10px;"> <input
-																	type="radio" onclick="changesue(this)"
-																	name="sue"
-																	value="0"> 否
-																</label>
-															</div>
-															<div class="col-md-4 process_button">
-																<s:if
-																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="case_ending()" id="process_case_end"
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
+														<legend>第二次强制措施 ：</legend>
+														<!-- 处罚 -->
+														<div class="summon_process col-md-12 ">
+															<!-- <div class="process_title col-md-2">第二次强制措施:</div> -->
+															<div class="checkbox col-md-8"
+																id="second_punishment_content"></div>
+															<div class="col-md-2 process_button">
+															<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+																<button type="button"
+																	class="btn btn-primary  btn-block policemen_manager"
+																	style="width: 90%; float: right;">提交</button>
+																	</s:if>
 															</div>
 														</div>
-														<!--  -->
-														<div class="summon_process col-md-12" id="checkOne" style="display:none;">
+													</fieldset>
+												</div>
+											</div>
+											<!-------------------------------------->
+											<!-------------第八阶段 第三次强制措施---------------->
+											<div class="first_process_div col-md-12"
+												id="third_punishment" style="display: none;">
+												<div class="first_process">
+													<fieldset>
+														<legend>第三次强制措施 ：</legend>
+														<!-- 处罚 -->
+														<div class="summon_process col-md-12 ">
+															<!-- <div class="process_title col-md-2">第三次强制措施:</div> -->
+															<div class="checkbox col-md-8"
+																id="third_punishment_value"></div>
+															<div class="col-md-2 process_button">
+															<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+																<button type="button"
+																	class="btn btn-primary  btn-block policemen_manager"
+																	style="width: 90%; float: right;">提交</button>
+																	</s:if>
+															</div>
+														</div>
+													</fieldset>
+												</div>
+											</div>
+											<!-------------------------------------->
+											<!-------------第九阶段 第四次强制措施---------------->
+											<div class="first_process_div col-md-12"
+												id="fourth_punishment" style="display: none;">
+												<div class="first_process">
+													<fieldset>
+														<legend>第四次强制措施 ：</legend>
+														<!-- 处罚 -->
+														<div class="summon_process col-md-12 ">
+															<!-- <div class="process_title col-md-2">第四次强制措施:</div> -->
+															<div class="checkbox col-md-8"
+																id="fourth_punishment_value"></div>
+															<div class="col-md-2 process_button">
+															<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+																<button type="button"
+																	class="btn btn-primary  btn-block policemen_manager"
+																	style="width: 90%; float: right;">提交</button>
+																	</s:if>
+															</div>
+														</div>
+													</fieldset>
+												</div>
+											</div>
+											<!-------------------------------------->
+											<!-------------第十阶段   补查---------------->
+											<div class="first_process_div col-md-12"
+												id="supplement_check" style="display: none;">
+												<div class="first_process">
+													<fieldset>
+														<!-- <legend>补查</legend> -->
+														<div class="summon_process col-md-12" id="checkOne"
+															style="display: none;">
 															<div class="process_title col-md-4">补查一次：</div>
-															<div class="radio col-md-4">
-																<label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changecase_ending_yes(this)
-																	name="checkOne" id="checkOneYes" value="是"> 是
-																</label><label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changecase_ending_no(this) name="checkOne"
-																	id="checkOneNo" value="否"> 否
-																</label>
-															</div>
+															<div class="radio col-md-4" id="checkOne_value"></div>
 															<div class="col-md-4 process_button">
-																<s:if
-																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="case_ending()" id="process_case_end"
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
+															<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+																<button type="button"
+																	class="btn btn-primary  btn-block policemen_manager"
+																	style="width: 40%; float: right;">提交</button>
+																	</s:if>
 															</div>
 														</div>
 														<!--  -->
-														<div class="summon_process col-md-12" id="checkTwo" style="display:none;">
+														<div class="summon_process col-md-12" id="checkTwo"
+															style="display: none;">
 															<div class="process_title col-md-4">补查二次：</div>
-															<div class="radio col-md-4">
-																<label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changecase_ending_yes(this)
-																	name="checkTwo" id="" value="是"> 是
-																</label><label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changecase_ending_no(this) name="checkTwo"
-																	id="" value="否"> 否
-																</label>
-															</div>
+															<div class="radio col-md-4" id="checkTwo_value"></div>
 															<div class="col-md-4 process_button">
-																<s:if
-																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="case_ending()" id="process_case_end"
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
+															<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+																<button type="button"
+																	class="btn btn-primary  btn-block policemen_manager"
+																	style="width: 40%; float: right;">提交</button>
+																	</s:if>
 															</div>
 														</div>
 
@@ -1057,7 +1010,7 @@ html, body, .radio, .checkbox, .button_process {
 												</div>
 											</div>
 											<!-------------------------------------->
-											<!-------------第七阶段 法制大队结案---------------->
+											<!-------------第十一阶段 法制大队结案---------------->
 											<div class="first_process_div col-md-12">
 												<div class="first_process">
 													<fieldset>
@@ -1067,23 +1020,19 @@ html, body, .radio, .checkbox, .button_process {
 															<div class="process_title col-md-4">结案：</div>
 															<div class="radio col-md-4">
 																<label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changecase_ending_yes(this)
-																	name="ajdbxtProcess.process_case_end"
-																	id="case_ending_yes" value="是"> 是
+																	type="radio" name="ajdbxtProcess.process_case_end"
+																	value="是"> 是
 																</label><label style="margin: 0 10px;"> <input
-																	type="radio" onclick=changecase_ending_no(this)
-																	name="ajdbxtProcess.process_case_end"
-																	id="case_ending_no" value="否"> 否
+																	type="radio" name="ajdbxtProcess.process_case_end"
+																	value="否"> 否
 																</label>
 															</div>
 															<div class="col-md-4 process_button">
-																<s:if
-																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="case_ending()" id="process_case_end"
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
+															<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+																<button type="button"
+																	class="btn btn-primary  btn-block policemen_manager"
+																	style="width: 40%; float: right;">提交</button>
+																	</s:if>
 															</div>
 														</div>
 
@@ -1091,7 +1040,7 @@ html, body, .radio, .checkbox, .button_process {
 												</div>
 											</div>
 											<!-------------------------------------->
-											<!-------------第八阶段 法制大队评分---------------->
+											<!-------------第十二阶段 法制大队评分---------------->
 											<div class="first_process_div col-md-12">
 												<div class="first_process">
 													<fieldset>
@@ -1101,17 +1050,14 @@ html, body, .radio, .checkbox, .button_process {
 															<!-- <div class="process_title col-md-4">案件评分：</div> -->
 															<div class="process_title col-md-4">
 																<input type="text" class="form-control"
-																	name="process.process_score" id="input_case_score"
-																	placeholder="请填写案件评分">
+																	name="process.process_score" placeholder="请填写案件评分">
 															</div>
 															<div class="col-md-4 process_button">
-																<s:if
-																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="case_score()" id="case_score"
-																		style="width: 40%; float: right;">提交</button>
-																</s:if>
+																<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
+																<button type="button"
+																	class="btn btn-primary  btn-block legal_team_manager_btn"
+																	style="width: 40%; float: right;">提交</button>
+																	</s:if>
 															</div>
 														</div>
 													</fieldset>
@@ -1119,7 +1065,8 @@ html, body, .radio, .checkbox, .button_process {
 											</div>
 
 											<!-------------------------------------->
-											<!-------------第九阶段 办案民警---------------->
+											<!-------------第十三阶段 案卷上交---------------->
+											<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
 											<div class="first_process_div col-md-12">
 												<div class="first_process">
 													<fieldset>
@@ -1130,19 +1077,16 @@ html, body, .radio, .checkbox, .button_process {
 															<div class="process_title col-md-4">
 																<input type="hidden"
 																	name="ajdbxtProcess.process_file_hand" value="是">
-																<s:if
-																	test='#session.loginPolice.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-																	<button type="button"
-																		class="btn btn-primary  btn-block"
-																		onclick="process_file_hand()" id="process_file_hand"
-																		style="float: center;">上交案卷</button>
-																</s:if>
+																<button type="button"
+																	class="btn btn-primary  btn-block legal_team_manager_btn"
+																	style="float: center;">案卷上交</button>
 															</div>
 
 														</div>
 													</fieldset>
 												</div>
 											</div>
+											</s:if>
 
 										</div>
 									</form>
@@ -1161,6 +1105,8 @@ html, body, .radio, .checkbox, .button_process {
 
 	<script type="text/javascript"
 		src="<%=basePath%>js/Info/CaseDetails.js"></script>
+<%-- 	<script type="text/javascript" --%>
+<%-- 		src="<%=basePath%>js/Process/penalCaseDetails.js"> --%>
 <%-- 	<script type="text/javascript" --%>
 <%-- 		src="<%=basePath%>js/Process/processDetails.js"></script> --%>
 	<script type="text/javascript">

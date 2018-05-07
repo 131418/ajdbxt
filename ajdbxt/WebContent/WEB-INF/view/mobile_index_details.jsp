@@ -8,7 +8,6 @@
 <!doctype html>
 <html>
 
-<<<<<<< HEAD
 <head>
 <meta charset="UTF-8">
 <title></title>
@@ -127,8 +126,7 @@ padding:0 5px;
 		case_details();
 	</script>
 </body>
-=======
-	<head>
+	<%-- <head>
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -221,7 +219,6 @@ padding:0 5px;
 		<script type="text/javascript">
 		case_details();
 		</script>
-	</body>
->>>>>>> origin/lyqqer
+	</body> --%>
 
 </html>

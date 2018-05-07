@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 			ajdbxt_police.setPolice_gmt_create(TeamUtil.getStringSecond());
 			ajdbxt_police.setPolice_gmt_modify(TeamUtil.getStringSecond());
 			ajdbxt_police.setPolice_password(md5.GetMD5Code(ajdbxt_police.getPolice_password()));
-			;
+			ajdbxt_police.getAjdbxt_police_id();
 			// 返回保存结果
 			boolean result = userDao.addPolice(ajdbxt_police);
 			if (result) {
