@@ -154,11 +154,5 @@ public class FindInfoByPageVO {
 		return curPage;
 	}
 
-
-	
-	
-
-	
-	
 }
 

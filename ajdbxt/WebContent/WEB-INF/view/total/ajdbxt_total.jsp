@@ -18,7 +18,7 @@
 	margin: 0 auto;
 }
 
-#page_flip span a:hover, #select_start_time, #select_stop_time {
+#page_flip span a:hover,#select_start_time, #select_stop_time {
 	cursor: pointer;
 }
 </style>
@@ -107,7 +107,7 @@
 								<i class="fa fa-spinner fa-pulse fa-3x"></i>
 							</div>
 							<!--翻页  -->
-							<div id="page_flip "
+							<div id="page_flip"
 								style="margin: 0 auto; width: 400px; text-align: center;">
 								<span> <a onclick="flip(1)"><i
 										class="fa fa-angle-double-left">首页</i> </a> &nbsp&nbsp <a
@@ -121,7 +121,9 @@
 										第<span id="span_pageIndex">1</span>页&nbsp&nbsp共 <span
 											id="span_totalPages">1</span>页&nbsp&nbsp共 <span
 											id="span_totalRecords">0</span>条记录
+
 									</p></span>
+
 							</div>
 
 						</div>
@@ -189,6 +191,7 @@
 			$("#select_case_department").bind("input",function(){
 				List_Total_By_Page(averageScore,1);
 			});
+			
 		</script>
 
 		<script type="text/javascript">

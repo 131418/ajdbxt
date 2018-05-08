@@ -349,7 +349,7 @@ public class SMSThread extends Thread{
 		if(index>=7) {//超时通知局队长
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process =processDTO.getProcess();
-			if(process.getProcess_case_goods().equals("是")&&
+			if(process.getProcess_case_goods().equals("有 ")&&
 					(process.getProcess_goods_in_lib()==null||process.getProcess_goods_in_lib().equals("否"))) {
 				String [] params= {processDTO.getInfo().getInfo_name()};
 				List<String> tel=new ArrayList<>();
@@ -362,6 +362,17 @@ public class SMSThread extends Thread{
 			}
 		}
 	}
+	/*
+	 * 涉案财物
+	 */
+	private void caseGoods() throws InterruptedException {
+		punishMan();
+		ProcessDTO processDTO=getProcessDTO();
+		ajdbxt_process process =processDTO.getProcess();
+		process.setProcess_case_goods("无");
+		applicationCotext.getBean(ProcessService.class).update(process, -1);
+	}
+	
 	private void checkCaseEnd() throws InterruptedException {
 		new Thread(new Runnable() {
 			public void run() {
@@ -400,16 +411,7 @@ public class SMSThread extends Thread{
 			
 		}).start();;
 	}
-	/*
-	 * 涉案财物
-	 */
-	private void caseGoods() throws InterruptedException {
-		punishMan();
-		ProcessDTO processDTO=getProcessDTO();
-		ajdbxt_process process =processDTO.getProcess();
-		process.setProcess_case_goods("无");
-		applicationCotext.getBean(ProcessService.class).update(process, -1);
-	}
+	
 	/*
 	 * 案卷上交后触发，拿回案卷
 	 */

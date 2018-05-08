@@ -10,7 +10,8 @@
 
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>移动端-首页</title>
+
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <link href="<%=basePath%>css/mui.min.css" rel="stylesheet" />
@@ -55,7 +56,8 @@
 	<!--头部-->
 	<header class="mui-bar mui-bar-nav index_nav">
 		<div class="index_nav_img">
-			<img src="<%=basePath%>img/police.png" height="40px;" />
+			<img src="<%=basePath%>img/police.png" height="35px;" style="margin-top:5px;" />
+			<%-- <img src="<%=basePath%>img/police.png" height="40px;" /> --%>
 		</div>
 		<div class="index_nav_police">
 			<div class="index_nav_police_name"></div>
@@ -102,24 +104,36 @@
 	<!--------------------------------->
 	<!--底部导航-->
 	<nav class="mui-bar mui-bar-tab">
-				<a class="mui-tab-item " onclick="window.location.href='<%=basePath%>user/User_mobile_index'" href="<%=basePath%>user/User_mobile_index"> <span
+				<a class="mui-tab-item " onclick="window.location.href='<%=basePath%>user/User_mobile_index'"> <span
 			class="mui-icon mui-icon-home"></span> <span class="mui-tab-label">首页</span>
-		</a> <a class="mui-tab-item" onclick="window.location.href='<%=basePath%>user/User_mobile_police_one'" href='<%=basePath%>user/User_mobile_police_one'> <span class="mui-icon mui-icon-person"></span>
+		</a> <a class="mui-tab-item" onclick="window.location.href='<%=basePath%>user/User_mobile_police_one'"> <span class="mui-icon mui-icon-person"></span>
 			<span class="mui-tab-label" >人员</span>
-		</a> <a class="mui-tab-item" onclick="window.location.href='<%=basePath%>total/Total_page_listPoliceCaseStatistics'" href="<%=basePath%>total/Total_page_listPoliceCaseStatistics"> <span class="mui-icon mui-icon-email"></span>
+		</a> <a class="mui-tab-item"  href="#Popover_1"> <span class="mui-icon mui-icon-email"></span>
 			<span class="mui-tab-label">统计</span>
-		</a> <a class="mui-tab-item" onclick="window.location.href='<%=basePath%>info/Info_page_CaseInfo'" href="<%=basePath%>info/Info_page_CaseInfo"> <span
+		</a> <a class="mui-tab-item"> <span
 			class="mui-icon mui-icon-chatboxes"></span> <span
 			class="mui-tab-label">案件</span>
 		</a>
 
 	</nav>
+	<div id="Popover_1" class="mui-popover mui-bar-popover" style="top: 376px; left: 112.167px;width:150px;text-align: center;position: fixed;">
+			<div class="mui-popover-arrow mui-bottom">
+			</div>
+			<ul class="mui-table-view" style="width:150px;background-color: white;">
+				<li class="mui-table-view-cell" >
+					<a href="">按单位统计</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="">按人员统计</a>
+				</li>
+			</ul>
+		</div>
 
 	<!--------------------------------->
 	<!--主体部分-->
-	<div class="mui-content" style="padding: 0; margin: 60px 0 70px 0;">
+	<div class="mui-content" >
 		<!--卡片视图-->
-		<div class="mui-card">
+		<div class="mui-card" style="margin: 0;">
 			<!--页眉，放置标题-->
 			<div class="mui-card-header" id="case_info_type">正在参与的案件</div>
 			<!--内容区-->

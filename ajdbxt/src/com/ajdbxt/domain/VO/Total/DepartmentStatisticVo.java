@@ -24,7 +24,15 @@ public class DepartmentStatisticVo {
 			//排序方式
 			private String orderString;
 			
-			private List<StatisticDepartmentCaseNumDTO> statisticPoliceCaseNumDTO;
+			public List<StatisticDepartmentCaseNumDTO> getStatisticDepartmentCaseNumDTO() {
+				return statisticDepartmentCaseNumDTO;
+			}
+
+			public void setStatisticDepartmentCaseNumDTO(List<StatisticDepartmentCaseNumDTO> statisticDepartmentCaseNumDTO) {
+				this.statisticDepartmentCaseNumDTO = statisticDepartmentCaseNumDTO;
+			}
+
+			private List<StatisticDepartmentCaseNumDTO> statisticDepartmentCaseNumDTO;
 
 			public int getCurrePage() {
 				return currePage;
@@ -89,15 +97,7 @@ public class DepartmentStatisticVo {
 			public void setStop_time(String stop_time) {
 				this.stop_time = stop_time;
 			}
-			
 
-			public List<StatisticDepartmentCaseNumDTO> getStatisticPoliceCaseNumDTO() {
-				return statisticPoliceCaseNumDTO;
-			}
-
-			public void setStatisticPoliceCaseNumDTO(List<StatisticDepartmentCaseNumDTO> statisticPoliceCaseNumDTO) {
-				this.statisticPoliceCaseNumDTO = statisticPoliceCaseNumDTO;
-			}
 
 			public String getOrderString() {
 				return orderString;

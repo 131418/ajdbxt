@@ -5,25 +5,18 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts2.ServletActionContext;
-
-import com.ajdbxt.domain.DTO.Total.StatisticCaseByPoliceDTO;
 import com.ajdbxt.domain.DTO.Total.StatisticDepartmentCaseNumDTO;
 import com.ajdbxt.domain.DTO.Total.StatisticPoliceCaseDto;
-import com.ajdbxt.domain.VO.Total.page_eachPoliceCaseVO;
 import com.ajdbxt.domain.VO.Total.DepartmentStatisticVo;
 import com.ajdbxt.domain.VO.Total.PoliceCaseStatisticVo;
-import com.ajdbxt.service.Total.Statistic;
 import com.ajdbxt.service.Total.StatisticService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class StatisticAction extends ActionSupport {
-	/**
-	 */
+	
 	private StatisticService statisticService;
 	private StatisticDepartmentCaseNumDTO statisticDepartmentCaseNumDTO;
 	private StatisticPoliceCaseDto statisticPoliceCaseDto;

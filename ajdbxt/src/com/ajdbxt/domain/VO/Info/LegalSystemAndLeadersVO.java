@@ -11,7 +11,6 @@ public class LegalSystemAndLeadersVO {
 	private List<ajdbxt_police> legalers;
 	private List<ajdbxt_department> departments;
 	
-	
 	public List<ajdbxt_police> getLegalers() {
 		return legalers;
 	}

@@ -6,7 +6,7 @@ window.onload = function() {
 	xmlHttpRequest.onreadystatechange = function() {
 		if (xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200) {
 			var loginRole = JSON.parse(xmlHttpRequest.responseText);
-			console.log("权限:"+loginRole.ajdbxt_police.police_power);
+//			console.log("权限:"+loginRole.ajdbxt_police.police_power);
 			if (loginRole.ajdbxt_police.police_power == "1") {
 				$("#type_chose").html('<option  value="正在参与的案件">正在参与的案件</option>');
 				}
@@ -15,7 +15,9 @@ window.onload = function() {
 	
 	List_Index_CaseInfo_By_Page(1);
 }
+
 var index_case_info_vo = null;
+
 function List_Index_CaseInfo_By_Page(pageIndex){
 	var type_chose=document.getElementById("type_chose").value;
 	
@@ -38,7 +40,7 @@ function List_Index_CaseInfo_By_Page(pageIndex){
 					var new_a=null;
 					var table_case_info = document.getElementById("table_case_info");
 					
-					console.log("type_chose:"+type_chose);
+//					console.log("type_chose:"+type_chose);	
 
 					/*
 					 * 移出除标题以外的所有行
@@ -126,9 +128,9 @@ function List_Index_CaseInfo_By_Page(pageIndex){
 					 * * 设置页数 /
 					 */
 					
-					console.log("index_case_info_vo.currPage:"+index_case_info_vo.currPage);
-					console.log("index_case_info_vo.totalPages:"+index_case_info_vo.totalPages);
-					console.log("index_case_info_vo.countRecords:"+index_case_info_vo.countRecords);
+//console.log("index_case_info_vo.currPage:"+index_case_info_vo.currPage);
+//console.log("index_case_info_vo.totalPages:"+index_case_info_vo.totalPages);
+//console.log("index_case_info_vo.countRecords:"+index_case_info_vo.countRecords);
 					document.getElementById("span_pageIndex").innerHTML = index_case_info_vo.currPage;// 当前页
 					document.getElementById("span_totalPages").innerHTML = index_case_info_vo.totalPages;// 总页数
 					document.getElementById("span_totalRecords").innerHTML = index_case_info_vo.countRecords;// 总记录数
@@ -144,18 +146,19 @@ function List_Index_CaseInfo_By_Page(pageIndex){
 		}
 		
 		formData.append("infoVO.currPage", pageIndex);
-		console.log(type_chose);
-		if(type_chose=="正在参与的案件"){
+//console.log(type_chose);
+		if(type_chose=="未结案的案件"){
 			formData.append("ajdbxtProcess.process_case_end","false");
-		}else if(type_chose=="待核对案件"){
-			formData.append("ajdbxtProcess.process_captain_check","false");
-		}else if(type_chose=="等待提交问题清单的案件"){
-			formData.append("ajdbxtProcess.process_question","false");
-		}else if(type_chose=="等待评分的案件"){
-			formData.append("ajdbxtProcess.process_score","false");
-		}else{
-			return;
 		}
+		if(type_chose=="待审核案件"){
+			formData.append("ajdbxtProcess.process_captain_check","false");
+		}/*else if(type_chose=="等待提交问题清单的案件"){
+			formData.append("ajdbxtProcess.process_question","false");
+		}*//*else if(type_chose=="等待评分的案件"){
+			formData.append("ajdbxtProcess.process_score","false");
+		}*//*else{
+			return;
+		}*/
 
 		xhr.open("POST", "/ajdbxt/process/getInfoProcessAction");
 		xhr.send(formData);

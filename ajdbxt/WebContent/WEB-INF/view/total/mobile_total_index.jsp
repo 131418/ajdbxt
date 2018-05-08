@@ -31,50 +31,54 @@
 		<div class="panel" style="width: 95%; margin: 20px auto;">
 			<!--  -->
 			<div class="panel-heading">
-				<h3 class="panel-title">
-					<span>统计</span><span>-</span><span>按单位统计</span>
-				</h3>
+				<h3 class="panel-title">统计</h3>
 			</div>
 			<div class="panel-body">
 				<div class="col-md-12">
 					<div class="panel">
+
 						<!--  -->
 						<div class="panel-body">
 							<div style="height: 34px; margin: 0 0 20px 0; width: 100%;">
 								<div>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">按日期筛选：</span>
-									<input id="select_start_time" class="form-control mydate input_date"
+									<input id="select_start_time" class="form-control mydate"
 										style="width: 150px; float: left; text-align: center;"
-										type="text" placeholder="起始时间" value="2018-01-01" />
+										type="text" placeholder="起始时间"
+										onchange="List_Total_By_Page(1)" value="2018-01-01" />
 									<%--  --%>
 									<span
 										style="float: left; margin: 0 0 0 20px; line-height: 34px;">至</span>
 									<!--  -->
-									<input id="select_stop_time" class="form-control mydate input_date"
+									<input id="select_stop_time" class="form-control mydate"
 										style="width: 150px; float: left; margin: 0 0 0 20px; text-align: center;"
-										type="text" placeholder="结束时间"	/>
+										type="text" placeholder="结束时间"
+										onchange="List_Total_By_Page(1)" />
 									<%--  --%>
 								</div>
-								<!--按类型统计  -->
-								<div style="width: 160px; float: right;">
-									<!-- <button class="btn btn-default role_one"
-										onclick="createPolice()">按人员统计</button> -->
-									<button class="btn btn-default role_one"
-										onclick="window.location.href='/ajdbxt/total/Total_page_listPoliceCase'">按人员统计</button>
+								<!-- 检索 -->
+								<div class="input-group" style="width: 300px; float: right;">
+									<input id="input_Total_PoliceSearchText" class="form-control"
+										oninput="List_Total_By_Page(1)" type="text" placeholder="搜索人员" />
+									<span class="input-group-addon" style="border-radius: unset;">
+										<i class="fa fa-search"></i>
+									</span>
 								</div>
 							</div>
-							<!--  -->
+
 							<table id="table_total" class="table table-hover "
 								style="text-align: center; margin: 20px 0;">
 								<tbody>
 									<tr>
-										<th>序号</th>
-										<th>办案单位</th>
-										<th><input type="button" id="adminCase" class="input_button"											 value="行政案件" /></th>
-										<th><input type="button" id="criminalCase" class="input_button"											value="刑事案件" /></th>
-										<th>总案件数</th>
-										<th><input type="button" id="averageScore" class="input_button"											 value="平均分" /></th>
+										<th><select id="select_case_department"
+											style="width: 70%; margin: 0 auto;" class="form-control"
+											onchange="List_Total_By_Page(1)">
+										</select></th>
+										<th>人员</th>
+										<th>行政案件</th>
+										<th>刑事案件</th>
+
 									</tr>
 								</tbody>
 							</table>
@@ -85,7 +89,7 @@
 							</div>
 							<!--翻页  -->
 							<div id="page_flip"
-								style="margin: 0 auto; width: 400px; text-align: center; display:none;">
+								style="margin: 0 auto; width: 400px; text-align: center;">
 								<span> <a onclick="flip(1)"><i
 										class="fa fa-angle-double-left">首页</i> </a> &nbsp&nbsp <a
 									onclick="flip(2)"><i class="fa fa-angle-left"></i>上一页 </a>
@@ -114,7 +118,30 @@
 	<script type="text/javascript" src="<%=basePath%>js/Input_Select.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/laydate/laydate.js"></script>
 	<script type="text/javascript"
-		src="<%=basePath%>js/Total/ajdbxtTotalDepartment.js"></script>
+		src="<%=basePath%>js/Total/ajdbxtTotal.js"></script>
+
+	<script type="text/javascript">
+		$(function() {
+			$
+					.post(
+							'/ajdbxt/user/User_findDepartmentByPage',
+							function(Department_data) {
+								// 所有案件循环
+								var option = '';
+								for (var len = 0; len < Department_data.list.length; len++) {
+									option += '<option ';
+									option += ' value="'
+											+ Department_data.list[len].ajdbxt_department_id
+											+ '">'
+											+ Department_data.list[len].department_name
+											+ '</option>';
+								}
+								$('#select_case_department').html(
+										'<option selected="selected" value="">所有单位</option>'
+												+ option);
+							}, 'json');
+		});
+	</script>
 	<script type="text/javascript">
 		var select_start_time = document.getElementById("select_start_time");
 		var select_stop_time = document.getElementById("select_stop_time");
@@ -131,11 +158,7 @@
 		select_stop_time.value = str;
 		console.log("select_start_time1:" + select_start_time.value);
 		console.log("select_stop_time1:" + select_stop_time.value);
-		var averageScore=document.getElementById("averageScore").value;
-		List_Total_By_Department(averageScore,1);
-		$(".input_date").bind("change", function() {
-			List_Total_By_Department(averageScore, 1);
-		});
+		List_Total_By_Page(1);
 	</script>
 
 	<script type="text/javascript">
@@ -159,12 +182,5 @@
 			maxDate : '2100/01/01', // 设置最大日期
 		});
 	</script>
-	<!-- 路径跳转 -->
-		<script type="text/javascript">
-			function ByUserTotal() {
-				/* window.location.href="ajdbxt_total.jsp";  */
-				 window.navigate("ajdbxt_total.jsp");
-			}
-		</script>
 </body>
 </html>

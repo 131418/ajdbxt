@@ -51,7 +51,7 @@ public class StatisticDaoImpl implements StatisticDao {
 		return i.intValue();
 	}
 
-
+	//所有部门
 	@Override
 	public List<ajdbxt_department> findAllDepartment() {
 		Session session=getSession();
