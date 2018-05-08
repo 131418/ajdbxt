@@ -105,6 +105,38 @@ public class ProcessAction  extends ActionSupport{
 		
 	}
 	/**
+	 * 统计与该警官相关的案件信息，用传vo
+	 * @param ajdbxtProcess.process_case_end="false" 查未结案的
+	 * @param ajdbxtProcess.process_captain_check="false" 查未审核的
+	 * @param ajdbxtProcess.process_score="false" 查未评分的
+	 * @param ajdbxtProcess.process_question="false" 查未整改问题的
+	 */
+	public void countInfo() {
+		noLogin();
+		Object o =ActionContext.getContext().getSession().get("loginPolice");//得到该警察
+		policedptVO police=(policedptVO)o;
+		String police_id=police.getAjdbxt_police().getAjdbxt_police_id();
+		int sum=0;
+		if(ajdbxtProcess.getProcess_case_end()!=null&&ajdbxtProcess.getProcess_case_end().equals("true")==false) {
+			sum=processInfoService.countInfoList(ProcessInfoService.CASE_END, police_id);
+		}else if(ajdbxtProcess.getProcess_captain_check()!=null&&ajdbxtProcess.getProcess_captain_check().equals("true")==false){
+			sum=processInfoService.countInfoList(ProcessInfoService.CAPTAIN_CHECK, police_id);
+		}else if(ajdbxtProcess.getProcess_score()!=null&&ajdbxtProcess.getProcess_score().equals("true")==false){
+			sum=processInfoService.countInfoList(ProcessInfoService.PROCESS_SCORE, police_id);
+		}else if(ajdbxtProcess.getProcess_question()!=null&&ajdbxtProcess.getProcess_question().equals("true")==false) {
+			sum=processInfoService.countInfoList(ProcessInfoService.PROCESS_QUESTION, police_id);
+		}else {
+			sum=processInfoService.countInfoList(100, police_id);
+		}
+		HttpServletResponse response=ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=utf-8");
+		try {
+			ServletActionContext.getResponse().getWriter().print(sum);
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	/**
 	 * 更新流程表，我用反射得到更改后的值，一些特殊字段的改变会存起来处罚短信逻辑
 	 * @param 修改后的流程对象
 	 * 
