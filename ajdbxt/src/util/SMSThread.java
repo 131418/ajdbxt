@@ -32,7 +32,7 @@ public class SMSThread extends Thread{
 	
 	public void run() {
 		try {
-			//isWorking();//休息时间不干活谢谢
+			isWorking();//休息时间不干活谢谢
 			switch (tpl_id) {
 			case MsgSend.SUBPOENA_A_SUSPECT_VOICE://传唤嫌疑人
 				subpoenaASuspect();
@@ -101,6 +101,7 @@ public class SMSThread extends Thread{
 				tel.add(processDTO.getLegal().getPolice_phone_number());
 				tel.add(processDTO.getTeam_legal().getPolice_phone_number());
 				MsgSend.doSendSimple(params,tel , MsgSend.SUBPOENA_A_SUSPECT);
+				tel.remove(processDTO.getLeader().getPolice_phone_number());//不给局长发语音
 				for(String num:tel) {
 					MsgSend.doSendVoiceSimple(params, num, MsgSend.SUBPOENA_A_SUSPECT_VOICE);
 				}
@@ -313,6 +314,7 @@ public class SMSThread extends Thread{
 				tel.add(processDTO.getLeader().getPolice_phone_number());
 				tel.add(processDTO.getCap().getPolice_phone_number());
 				MsgSend.doSendSimple(params, tel, MsgSend.CASE_GOODS_LIB_OUT);
+				tel.remove(processDTO.getLeader().getPolice_phone_number());//不给局长发语音
 				for(String num:tel) {
 					MsgSend.doSendVoiceSimple(params, num, MsgSend.CASE_GOODS_LIB_OUT_VOICE);
 				}
@@ -356,6 +358,7 @@ public class SMSThread extends Thread{
 				tel.add(processDTO.getLeader().getPolice_phone_number());
 				tel.add(processDTO.getCap().getPolice_phone_number());
 				MsgSend.doSendSimple(params, tel, MsgSend.CASE_FILE_UP_OUT);
+				tel.remove(processDTO.getLeader().getPolice_phone_number());//不给局长发语音
 				for(String num:tel) {
 					MsgSend.doSendVoiceSimple(params, num, MsgSend.CASE_FILE_UP_OUT_VOICE);
 				}
