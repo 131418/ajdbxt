@@ -170,5 +170,28 @@ public class ProcessInfoServiceImpl implements ProcessInfoService {
 		return JsonUtils.toJson(processVO);
 	}
 
+	@Override
+	public int countInfoList(int check_end_score_question, String police_id) {
+		int countList=0;
+		switch (check_end_score_question) {
+		case CAPTAIN_CHECK:
+			countList=processInfoDao.countInfoListCaptainCheck(police_id);
+			break;
+		case CASE_END:
+			countList=processInfoDao.countInfoListCaseEnd(police_id);
+			break;
+		case PROCESS_SCORE:
+			countList=processInfoDao.countInfoListProcessScore(police_id);
+			break;
+		case PROCESS_QUESTION:
+			countList=processInfoDao.countInfoListProcessQuestion(police_id);
+			break;
+		default:
+			countList=processInfoDao.countInfoList(police_id);
+			break;
+		}
+		return countList;
+	}
+
 }
 
