@@ -105,8 +105,9 @@ public class ProcessAction  extends ActionSupport{
 		
 	}
 	/**
-	 * 更新流程表
+	 * 更新流程表，我用反射得到更改后的值，一些特殊字段的改变会存起来处罚短信逻辑
 	 * @param 修改后的流程对象
+	 * 
 	 * 
 	 */
 	public void update() {
