@@ -34,11 +34,6 @@ h1, a {
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="window.location.href='<%=basePath%>user/User_mobile_index'"></a>
 		<h1 class="mui-title" style="color: white;">人员信息</h1>
 	
-<!-- =======
-	<header class="mui-bar mui-bar-nav index_nav">
-		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		<h1 class="mui-title" style="color: white;">人员信息</h1>
->>>>>>> origin/lyqqer -->
 	</header>
 	<div class="mui-content" >
 		<%-- <!-- 搜索框 -->
@@ -50,11 +45,7 @@ h1, a {
 				</div>
 				--%>
 		
-		<!-- <div class="mui-card" style="margin-bottom: 70px"> -->
 		<div class="mui-card" style="margin:0 0 50px 0">
-<!-- =======
-		<div class="mui-card" style="margin-bottom: 70px">
->>>>>>> origin/lyqqer -->
 			<!--页眉，放置标题-->
 			<div class="mui-card-header" style="padding:0px;">
 				<%-- <!-- 搜索框 -->
@@ -111,35 +102,12 @@ h1, a {
 				</li>
 			</ul>
 		</div>
-<%-- =======
-	<!--底部导航-->
-	<nav class="mui-bar mui-bar-tab">
-		<a class="mui-tab-item "
-			onclick="window.location.href='<%=basePath%>user/User_mobile_index'"
-			href="<%=basePath%>user/User_mobile_index"> <span
-			class="mui-icon mui-icon-home"></span> <span class="mui-tab-label">首页</span>
-		</a> <a class="mui-tab-item"
-			onclick="window.location.href='<%=basePath%>user/User_mobile_police_one'"
-			href='<%=basePath%>user/User_mobile_police_one'> <span
-			class="mui-icon mui-icon-person"></span> <span class="mui-tab-label">人员</span>
-			<a class="mui-tab-item"> <span class="mui-icon mui-icon-email"></span>
-				<span class="mui-tab-label">统计</span>
-		</a> <a class="mui-tab-item"> <span
-				class="mui-icon mui-icon-chatboxes"></span> <span
-				class="mui-tab-label">案件</span>
-		</a>
-	</nav>
->>>>>>> origin/lyqqer --%>
 	<script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>js/User/mobile_police_one.js"></script>
 	<script src="<%=basePath%>js/mui.min.js"></script>
 	<script type="text/javascript">
 		mui.init();
-	
-/* =======
-		List_Police_By_Page(1);
->>>>>>> origin/lyqqer */
 	</script>
 </body>
 

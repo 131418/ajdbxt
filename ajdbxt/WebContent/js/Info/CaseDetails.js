@@ -1628,22 +1628,22 @@ function get_processDetails_Ajax(url, info_id) {
 			if(case1.process_lengthen_subpoena!=null && case1.process_lengthen_subpoena.length>0){
 				if("是"==case1.process_lengthen_subpoena){
 					$('#suspect_summon_yes').attr("checked","checked");
-					if (case1.process_is_rollback.substr(0, 1) != '是') {
+					if (case1.process_is_rollback != '是') {
 						$("#suspect_summon_no").prop("disabled", "true");
 						$("#suspect_summon_yes").prop("disabled", "true");
 					} else {
-						$("#suspect_summon_no").removeProp("disabled");
-						$("#suspect_summon_yes").removeProp("disabled");
+						$("#suspect_summon_no").prop("disabled",false);
+						$("#suspect_summon_yes").prop("disabled",false);
 					}
 				}
-				if(case1.process_is_rollback.substr(0, 1) != '是'){
+				if(case1.process_lengthen_subpoena != '是'){
 					$('#suspect_summon_no').attr("checked","checked");
-					if (case1.process_is_rollback != '是, ') {
+					if (case1.process_is_rollback != '是') {
 						$("#suspect_summon_no").prop("disabled", "true");
 						$("#suspect_summon_yes").prop("disabled", "true");
 					} else {
-						$("#suspect_summon_no").removeProp("disabled");
-						$("#suspect_summon_yes").removeProp("disabled");
+						$("#suspect_summon_no").prop("disabled",false);
+						$("#suspect_summon_yes").prop("disabled",false);
 					}
 				}
 			}    
@@ -1673,11 +1673,24 @@ function get_processDetails_Ajax(url, info_id) {
 			if(case1.process_case_goods!=null && case1.process_case_goods.length>0){
 				if("是"==case1.process_case_goods){
 					$('#case_property_yes').attr("checked","checked");
-					$("#case_property_no").prop("disabled", true);
+					if (case1.process_is_rollback != '是') {
+						$("#case_property_no").prop("disabled", "true");
+						$("#case_property_yes").prop("disabled", "true");
+					} else {
+//						$("#case_property_no").removeProp("disabled","true");
+						$("#case_property_no").prop("disabled",false);
+						$("#case_property_yes").prop("disabled",false);
+					}
 				}
-				if("否"==case1.process_case_goods){
+				if(case1.process_case_goods != '是'){
 					$('#case_property_no').attr("checked","checked");
-					$("#case_property_yes").prop("disabled", true);
+					if (case1.process_is_rollback != '是') {
+						$("#case_property_no").prop("disabled", "true");
+						$("#case_property_yes").prop("disabled", "true");
+					} else {
+						$("#case_property_no").prop("disabled",false);
+						$("#case_property_yes").prop("disabled",false);
+					}
 				}
 			} 
 			//听证
