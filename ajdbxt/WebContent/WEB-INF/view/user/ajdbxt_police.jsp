@@ -51,7 +51,7 @@
 								<div class="input-group" style="width: 300px; float: right;">
 									<input id="input_PoliceSearchText" class="form-control"
 										oninput="List_Police_By_Page(1);" type="text"
-										placeholder="搜索人员" /> <span class="input-group-addon"
+										placeholder="搜索" /> <span class="input-group-addon"
 										style="border-radius: unset;"> <i class="fa fa-search"></i>
 									</span>
 								</div>
@@ -67,6 +67,7 @@
 										<th>姓名</th>
 										<th>单位</th>
 										<th>职务</th>
+										<!-- <th>法制员</th> -->
 										<th>权限</th>
 										<th>手机号码</th>
 										<th>操作</th>

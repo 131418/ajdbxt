@@ -161,10 +161,8 @@ function List_Index_CaseInfo_By_Page(pageIndex) {
 				}
 				//-------------------------
 				//给每个案件链接绑定一个click方法
-				$(".a_to_details").bind("click", function(a) {
-					mui.openWindow({
-						  url: "/ajdbxt/user/User_mobile_index_details",
-						});
+				$(".a_to_details").bind("click", function() {
+					window.location.href="/ajdbxt/user/User_mobile_index_details";
 				})
 				
 				}else{

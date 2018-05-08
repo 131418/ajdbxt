@@ -4,7 +4,6 @@
 var xhr;
 var total_vo = null;
 var btn_value=null;
-
 $(".input_button").bind("click",function(){
 	btn_value=this.value;
 	/*alert(btn_value);*/
@@ -44,7 +43,7 @@ function List_Total_By_Department(e,pageIndex){
 			 */
 			for(var num=0;num<total_vo.statisticDepartmentCaseNumDTO.length;num++){
 				new_tr=document.createElement("tr");
-				new_tr.ClassName="new_tr";
+				new_tr.className="new_tr";
 				new_tr.appendChild(document.createTextNode(''));
 				table_total.firstElementChild.appendChild(new_tr);
 				
@@ -54,20 +53,23 @@ function List_Total_By_Department(e,pageIndex){
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
 				new_td.innerHTML =(num+1);
-				
 				/*
 				 * 2.办案单位
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
+
 				new_td.innerHTML = total_vo.statisticDepartmentCaseNumDTO[num].department.department_name;
+
 				
 				/*
 				 * 3.行政案件
 				 */
 				new_td=document.createElement("td");
 				new_tr.appendChild(new_td);
+
 				new_td.innerHTML = total_vo.statisticDepartmentCaseNumDTO[num].adminCase;
+
 				
 				/*
 				 * 4.刑事案件
@@ -148,7 +150,6 @@ function flip(flipPage) {
 
 		break;
 	}
-
 	}
 }
 

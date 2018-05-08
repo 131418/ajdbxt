@@ -12,6 +12,9 @@ $(".input_button").bind("click",function(){
 	$("#select_case_department").bind("input",function(){
 		List_Total_By_Page(btn_value,1);
 	});
+	$(".page_flip").bind("click",function(){
+		List_Total_By_Page(btn_value,1);
+	});
 });
 
 
@@ -71,6 +74,7 @@ function List_Total_By_Page(e,pageIndex) {
 					new_td = document.createElement("td");
 					new_tr.appendChild(new_td);
 					new_td.innerHTML = total_vo.statisticPoliceCaseDto[num].department.department_name;
+
 					new_td.colSpan = '2';
 					/*
 					 * 人员id
@@ -82,6 +86,7 @@ function List_Total_By_Page(e,pageIndex) {
 					 * new_td.innerHTML = td_ajdbxt_police_id;
 					 * new_td.style.display = "none";
 					 */
+
 					/*
 					 * 2. 人员
 					 */
@@ -156,7 +161,7 @@ function flip(flipPage) {
 	switch (flipPage) {
 	/* 首页 */
 	case 1: {
-		List_Total_By_Page(1)
+		List_Total_By_Page(btn_value,1)
 		break;
 	}
 		/* 上一页 */
@@ -164,7 +169,7 @@ function flip(flipPage) {
 		if (total_vo.currePage - 1 == 0) {
 			toastr.warning("已经是第一页了");
 		} else {
-			List_Total_By_Page(total_vo.currePage - 1);
+			List_Total_By_Page(btn_value,total_vo.currePage - 1);
 		}
 		break;
 	}
@@ -173,13 +178,13 @@ function flip(flipPage) {
 		if (total_vo.currePage == total_vo.totalPages) {
 			toastr.warning("已经是最后一页了");
 		} else {
-			List_Total_By_Page(total_vo.currePage + 1);
+			List_Total_By_Page(btn_value,total_vo.currePage + 1);
 		}
 		break;
 	}
 		/* 尾页 */
 	case 4: {
-		List_Total_By_Page(total_vo.totalPages);
+		List_Total_By_Page(btn_value,total_vo.totalPages);
 
 		break;
 	}

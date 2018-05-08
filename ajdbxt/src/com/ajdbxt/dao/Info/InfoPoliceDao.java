@@ -12,4 +12,3 @@ public interface InfoPoliceDao {
 	public ajdbxt_police findCaptainByDepartment(String department_id);
 	public List<ajdbxt_police> findLegalOfDepartment();
 }
-
