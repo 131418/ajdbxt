@@ -45,6 +45,7 @@ h1, a {
 				</div>
 				--%>
 		
+		<!-- <div class="mui-card" style="margin-bottom: 70px"> -->
 		<div class="mui-card" style="margin:0 0 50px 0">
 			<!--页眉，放置标题-->
 			<div class="mui-card-header" style="padding:0px;">
@@ -70,6 +71,7 @@ h1, a {
 				<ul class="mui-pagination" id="ul_page_count">
 				</ul>
 			</div>
+			
 		</div>
 
 	</div>
@@ -108,6 +110,7 @@ h1, a {
 	<script src="<%=basePath%>js/mui.min.js"></script>
 	<script type="text/javascript">
 		mui.init();
+	
 	</script>
 </body>
 
