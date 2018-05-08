@@ -90,5 +90,8 @@
         <property name="process_force_measure_three" type="java.lang.String">
             <column name="process_force_measure_three" />
         </property>
+        <property name="process_result_of_prosecution" type="java.lang.String">
+            <column name="process_result_of_prosecution" />
+        </property>
     </class>
 </hibernate-mapping>

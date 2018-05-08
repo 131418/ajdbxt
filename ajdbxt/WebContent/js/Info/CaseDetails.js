@@ -99,6 +99,8 @@ function info_category(staff_info){
 		$("#xingshi_case").hide();
 	}
 }
+
+
 //刑事案件流程
 function get_penalProcessDetails_Ajax(url, info_id){
 	var xmlhttp;
@@ -190,13 +192,569 @@ function get_penalProcessDetails_Ajax(url, info_id){
 					$("#penalcase_property_yes").prop("disabled", true);
 				}
 			} 
-		
+		//结案
+			if(case1.process_case_end!=null && case1.process_case_end.length>0){
+				if("是"==case1.process_case_end){
+					$('#pencalcase_ending_yes').attr("checked","checked");
+					$("#pencalcase_ending_no").prop("disabled", true);
+				}
+				if("否"==case1.process_case_end){
+					$('#pencalcase_ending_no').attr("checked","checked");
+					$("#pencalcase_ending_yes").prop("disabled", true);
+				}
+			} 
+			//延长拘留
+			if(case1.process_lengthen_criminal_detention!=null && case1.process_lengthen_criminal_detention.length>0){
+				if("30"==case1.process_lengthen_criminal_detention){
+					$('#process_lengthen_criminal_detention_one').attr("checked","checked");
+					$("#process_lengthen_criminal_detention_two").prop("disabled", true);
+					$("#process_lengthen_criminal_detention_three").prop("disabled", true);
+				}
+				if("7"==case1.process_lengthen_criminal_detention){
+					$('#process_lengthen_criminal_detention_two').attr("checked","checked");
+					$("#process_lengthen_criminal_detention_one").prop("disabled", true);
+					$("#process_lengthen_criminal_detention_three").prop("disabled", true);
+				}
+				if("0"==case1.process_lengthen_criminal_detention){
+					$('#process_lengthen_criminal_detention_three').attr("checked","checked");
+					$("#process_lengthen_criminal_detention_one").prop("disabled", true);
+					$("#process_lengthen_criminal_detention_two").prop("disabled", true);
+				}
+			} 
+			//第二次强制措施
+			if(case1.process_force_measure_two!=null && case1.process_force_measure_two.length>0){
+				if("逮捕"==case1.process_force_measure_two){
+					$('#second_punishment_one').attr("checked","checked");
+					$("#second_punishment_two").prop("disabled", true);
+					$("#second_punishment_three").prop("disabled", true);
+				}
+				if("取保候审"==case1.process_force_measure_two){
+					$('#second_punishment_two').attr("checked","checked");
+					$("#second_punishment_one").prop("disabled", true);
+					$("#second_punishment_three").prop("disabled", true);
+				}
+				if("监视居住"==case1.process_force_measure_two){
+					$('#second_punishment_three').attr("checked","checked");
+					$("#second_punishment_one").prop("disabled", true);
+					$("#second_punishment_two").prop("disabled", true);
+				}
+				if("撤案"==case1.process_force_measure_two){
+					$('#chenantwo_yes').attr("checked","checked");
+					$("#chenantwo_no").prop("disabled", true);
+				}
+				if("起诉"==case1.process_force_measure_two){
+					$('#chenantwo_no').attr("checked","checked");
+					$("#chenantwo_yes").prop("disabled", true);
+				}
+			} 
+			//第三强制措施
+			if(case1.process_force_measure_three!=null && case1.process_force_measure_three.length>0){
+				if("取保候审"==case1.process_force_measure_three){
+					$('#qubaothree_yes').attr("checked","checked");
+					$("#qubaothree_no").prop("disabled", true);
+				}
+				if("起诉"==case1.process_force_measure_three){
+					$('#qubaothree_no').attr("checked","checked");
+					$("#qubaothree_yes").prop("disabled", true);
+					$('#cheanthree_no').attr("checked","checked");
+					$("#cheanthree_yes").prop("disabled", true);
+				}
+				if("撤案"==case1.process_force_measure_three){
+					$('#cheanthree_yes').attr("checked","checked");
+					$("#cheanthree_no").prop("disabled", true);
+				}
+			}
+			//第四次强制措施
+			if(case1.process_result_of_prosecution!=null && case1.process_result_of_prosecution.length>0){
+				if("撤案"==case1.process_result_of_prosecution){
+					$('#cheanfour_yes').attr("checked","checked");
+					$("#chenanfour_no").prop("disabled", true);
+				}
+				if("起诉"==case1.process_result_of_prosecution){
+					$('#chenanfour_no').attr("checked","checked");
+					$("#cheanfour_yes").prop("disabled", true);
+				}
+			}
+			//第一次补查
+			if(case1.process_search_result_one!=null && case1.process_search_result_one.length>0){
+				if("是"==case1.process_search_result_one){
+					$('#checkone_yes').attr("checked","checked");
+					$("#checkedone_no").prop("disabled", true);
+				}
+				if("否"==case1.process_result_of_prosecution){
+					$('#checkedone_no').attr("checked","checked");
+					$("#checkone_yes").prop("disabled", true);
+				}
+			}
+			//第二次补查
+			if(case1.process_search_result_two!=null && case1.process_search_result_two.length>0){
+				if("是"==case1.process_search_result_two){
+					$('#checktwo_yes').attr("checked","checked");
+					$("#checkedtwo_no").prop("disabled", true);
+				}
+				if("否"==case1.process_result_of_prosecution){
+					$('#checkedtwo_no').attr("checked","checked");
+					$("#checktwo_yes").prop("disabled", true);
+				}
+			}
+			//涉案财物已入库
+			if(case1.process_goods_in_lib!=null && case1.process_goods_in_lib.length>0){
+				if("是"==case1.process_goods_in_lib){
+					$('#goods_in_lib_yes').attr("checked","checked");
+					$("#goods_in_lib_no").prop("disabled", true);
+				}
+				if("否"==case1.process_goods_in_lib){
+					$('#goods_in_lib_no').attr("checked","checked");
+					$("#goods_in_lib_yes").prop("disabled", true);
+				}
+			} 
+			  pencalmanagement(case1);
 		}
 	}
 	xmlhttp.open("post", url, true);
 	xmlhttp.send();
 }
+//------------------------------------------------隐藏与显示
+function   pencalmanagement(case1){
+	//涉案财物已入库
+	if(case1.process_case_goods=="是"){
+		$("#property_storage_div").show();
+	}
+	//拘留延长期限、第二次强制措施
+	if(case1.process_force_measure_one=="拘留"){
+		$("#detention_delay_date").show();
+		$("#second_punishment").show();
+	}
+	if(case1.process_force_measure_one=="取保候审"||case1.process_force_measure_one=="监视居住"){
+		$("#qubao_second_punishment").show();
+	}
+	//第三次强制措施
+	if(case1.process_force_measure_two=="逮捕"){
+		$("#third_punishment").show();
+	}
+	if(case1.process_force_measure_two=="取保候审"||case1.process_force_measure_two=="监视居住"){
+		$("#qubao_third_punishment").show();
+	}
+//	if(case1.process_force_measure_two=="起诉"){
+//		$("#supplement_check").show();
+//		$("#checkOne").show();
+//	}
+	//第四次强制措施
+	if(case1.process_force_measure_three=="取保候审"){
+		$("#fourth_punishment").show();
+	}
+//	if(caase1.process_force_measure_three=="起诉"){
+//		$("#supplement_check").show();
+//		$("#checkOne").show();
+//	}
+	//第四次的强制措施中的起诉
+//	if(case1.process_result_of_prosecution=="起诉"){
+//		$("#supplement_check").show();
+//		$("#checkOne").show();
+//	}
+	//补查一次
+	if(case1.process_search_result_one=="是"){
+		$("#supplement_check").show();
+		$("#checkTwo").show();
+	}
+	if(case1.process_search_result_one=="是"||case1.process_search_result_one=="否"){
+		$("#supplement_check").show();
+		$("#checkOne").show();
+	}
+}
+//隐藏2
+/*
+ * 第一次强制措施方法
+ */
+function mandatory_measuresBtnClick() {
+	var mandatory_measuresOne = document
+			.getElementsByName("ajdbxtProcess.process_force_measure_one");
+	for (var num = 0; num < 3; num++) {
+		var mandatory_measuresOne_value = mandatory_measuresOne[num].value;
+		if (mandatory_measuresOne[num].checked) {
+			if (mandatory_measuresOne_value == "拘留") {// 根据第一次强制措施选择拘留进行判断
+				document.getElementById("detention_delay_date").style.display = "block";// 选择拘留时，显示出拘留延长期限
+				/*
+				 * 选择拘留显示第二次强制措施内容
+				 */
+				document.getElementById("second_punishment").style.display = "block";
+				document.getElementById("qubao_second_punishment").style.display = "none";
+				document.getElementById("supplement_check").style.display = "none";// 隐藏补查
+				
+				$("#third_punishment").css("display", "none");// 第三次强制措施内容隐藏
+
+				$("#fourth_punishment").css("display", "none");// 第四次强制措施内容隐藏
+
+			} else if (mandatory_measuresOne_value == "取保候审"||mandatory_measuresOne_value == "监视居住") {// 选择取保候审显示第二次强制措施内容
+				document.getElementById("detention_delay_date").style.display = "none";
+				document.getElementById("second_punishment").style.display = "none";
+				document.getElementById("qubao_second_punishment").style.display = "block";
+			
+				document.getElementById("supplement_check").style.display = "none";// 隐藏补查
+
+				$("#third_punishment").css("display", "none");// 第三次强制措施内容隐藏
+
+				$("#fourth_punishment").css("display", "none");// 第四次强制措施内容隐藏
+
+			} else  {// 选择监视居住显示第二次强制措施内容
+				//document.getElementById("detention_delay_date").style.display = "none";
+				//document.getElementById("second_punishment").style.display = "none";
+			//	document.getElementById("qubao_second_punishment").style.display = "none";
+				
+				document.getElementById("supplement_check").style.display = "none";// 隐藏补查
+
+				$("#third_punishment").css("display", "none");// 第三次强制措施隐藏
+
+				$("#fourth_punishment").css("display", "none");// 第四次强制措施隐藏
+			}
+
+		}
+	}
+}
+/*
+ * 第二次强制措施方法
+ */
+function second_punishmentClick() {
+
+	var second_punishment = document.getElementsByName("ajdbxtProcess.process_force_measure_two");
+	for (var num = 0; num < 5; num++) {
+		var second_punishment_value = second_punishment[num].value;
+		if (second_punishment[num].checked) {
+			if (second_punishment_value == "逮捕") {// 选择第二次的逮捕显示第三次强制措施内容
+				$("#qubao_third_punishment").css("display", "none");
+				$("#third_punishment").css("display", "block");
+				document.getElementById("supplement_check").style.display = "none";// 隐藏补查
+
+			} else if (second_punishment_value == "取保候审"||second_punishment_value == "监视居住") {// 选择第二次的取保候审显示第三次强制措施内容
+				
+				$("#qubao_third_punishment").css("display", "block");
+				$("#third_punishment").css("display", "none");
+				$("#fourth_punishment").css("display", "none");// 第四次强制措施隐藏
+				document.getElementById("supplement_check").style.display = "none";// 隐藏补查
+
+			} 	else if(second_punishment_value == "起诉"){
+				document.getElementById("supplement_check").style.display = "block";
+			
+				document.getElementById("checkOne").style.display = "block";
+				document.getElementById("checkTwo").style.display = "none";
+			}
+			else {// 选择第二次的监视居住显示第三次强制措施内容
+			
+				//$("#third_punishment").css("display", "block");
+			
+				
+				document.getElementById("checkOne").style.display = "none";
+				document.getElementById("checkTwo").style.display = "none";
+				$("#fourth_punishment").css("display", "none");// 第四次强制措施隐藏
+				document.getElementById("supplement_check").style.display = "none";// 隐藏补查
+
+			}
+		}
+
+	}
+}
+
+
+/*
+ * 第三次强制措施方法
+ */
+function third_punishmentClick() {
+
+	var third_punishment = document.getElementsByName("ajdbxtProcess.process_force_measure_three");
+	for (var num = 0; num < 4; num++) {
+		var third_punishment_value = third_punishment[num].value;
+		if (third_punishment[num].checked) {
+			if (third_punishment_value == "起诉") {// 选择第三次的起诉显示补查一次
+				document.getElementById("supplement_check").style.display = "block";
+				// 第四次强制措施隐藏
+				$("#fourth_punishment").css("display", "none");
+				document.getElementById("checkOne").style.display = "block";
+				document.getElementById("checkTwo").style.display = "none";
+			
+			} else if(third_punishment_value == "撤案"){
+				$("#fourth_punishment").css("display", "none");
+				document.getElementById("checkOne").style.display = "none";
+				document.getElementById("checkTwo").style.display = "none";
+			}
+			else {// 选择第二次的监视居住显示第三次强制措施内容
+				document.getElementById("checkOne").style.display = "none";
+				document.getElementById("checkTwo").style.display = "none";
+				$("#fourth_punishment").css("display", "block");
+				document.getElementById("supplement_check").style.display = "none";// 隐藏补查
+			}
+		}
+
+	}
+
+}
+/* 
+ * 第四次强制措施
+ */
+function  four_punishmentClick(){
+
+	var four_punishment = document.getElementsByName("ajdbxtProcess.process_result_of_prosecution");
+	for (var num = 0; num < 2; num++) {
+		var four_punishment_value = four_punishment[num].value;
+		if (four_punishment[num].checked) {
+			if (four_punishment_value == "起诉") {// 选择第三次的起诉显示补查一次
+				document.getElementById("supplement_check").style.display = "block";
+				// 第四次强制措施隐藏
+			
+				document.getElementById("checkOne").style.display = "block";
+				document.getElementById("checkTwo").style.display = "none";
+			
+			} else {// 选择第二次的监视居住显示第三次强制措施内容
+				document.getElementById("checkOne").style.display = "none";
+				document.getElementById("checkTwo").style.display = "none";
+		
+				document.getElementById("supplement_check").style.display = "none";// 隐藏补查
+			}
+		}
+
+	}
+}
+/*
+ * 点击补查一次为是时，显示补查二次。否则不显示
+ */
+function checkOne_Click() {
+	var checkOne = document.getElementsByName("ajdbxtProcess.process_search_result_one");
+	for (var num = 0; num < 2; num++) {
+		var checkOne_value = checkOne[num].value;
+		if (checkOne[num].checked) {
+			if (checkOne_value == "是") {
+				document.getElementById("checkTwo").style.display = "block";
+			} else {
+				document.getElementById("checkTwo").style.display = "none";
+			}
+		}
+	}
+}
 //-----------------------------------------按钮操作-------------------------------
+//涉案财物已入库
+function pencalchange_goods_in_lib_yes(even) {
+	var sex = document.getElementById("goods_in_lib_yes");
+	sex.value = '是';
+	return sex.value;
+}
+function pencalchange_goods_in_lib_no(even) {
+	var sex = document.getElementById("goods_in_lib_no");
+	sex.value ='否';
+	return sex.value;
+}
+function goods_in_lib() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadgoods_in_lib();
+				}
+			}
+		}
+	});
+}
+// 是否涉案财物入库提交按钮
+function penalloadgoods_in_lib() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//第二次强制措施
+function changesecond_punishmentClick_one(even) {
+	var sex = document.getElementById("second_punishment_one");
+	sex.value = '逮捕';
+	return sex.value;
+}
+function changesecond_punishmentClick_two(even) {
+	var sex = document.getElementById("second_punishment_two");
+	sex.value ='取保候审';
+	return sex.value;
+}
+function changesecond_punishmentClick_three(even) {
+	var sex = document.getElementById("second_punishment_three");
+	sex.value ='监视居住';
+	return sex.value;
+}
+function pencalchange_cheantwo_yes(even){
+	var sex = document.getElementById("chenantwo_yes");
+	sex.value ='撤案';
+	return sex.value;
+}
+function pencalchange_cheantwo_no(even){
+	var sex = document.getElementById("chenantwo_no");
+	sex.value ='起诉';
+	return sex.value;
+}
+function second_punishment() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadsecond_punishment();
+				}
+			}
+		}
+	});
+}
+function chenantwo_second_punishment() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadchenantwo_second_punishment();
+				}
+			}
+		}
+	});
+}
+// 是否第二次强制措施提交按钮
+function penalloadsecond_punishment() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//
+function penalloadchenantwo_second_punishment() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//延长拘留
+function pencalchangecriminal_detention_one(even) {
+	var sex = document.getElementById("process_lengthen_criminal_detention_one");
+	sex.value = '30';
+	return sex.value;
+}
+function pencalchangecriminal_detention_two(even) {
+	var sex = document.getElementById("process_lengthen_criminal_detention_two");
+	sex.value ='7';
+	return sex.value;
+}
+function pencalchangecriminal_detention_three(even) {
+	var sex = document.getElementById("process_lengthen_criminal_detention_three");
+	sex.value ='0';
+	return sex.value;
+}
+function process_lengthen_criminal_detention() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadprocess_lengthen_criminal_detention();
+				}
+			}
+		}
+	});
+}
+// 是否延长拘留提交按钮
+function penalloadprocess_lengthen_criminal_detention() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
 //改变是否涉案财物
 function penalchangecase_property_yes(even) {
 	var sex = document.getElementById("penalcase_property_yes");
@@ -226,6 +784,275 @@ function penalcase_property() {
 }
 // 是否涉案财物提交按钮
 function penalloadcaseDetail_case_property() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//第三次强制措施
+function pencalchangequbaothree_yes(even) {
+	var sex = document.getElementById("qubaothree_yes");
+	sex.value = '取保候审';
+	return sex.value;
+}
+function pencalchangequbaothree_no(even) {
+	var sex = document.getElementById("qubaothree_no");
+	sex.value ='起诉';
+	return sex.value;
+}
+function pencalchangecheanthree_yes(even) {
+	var sex = document.getElementById("cheanthree_yes");
+	sex.value ='撤案';
+	return sex.value;
+}
+function pencalchangecheanthree_no(even) {
+	var sex = document.getElementById("cheanthree_no");
+	sex.value ='起诉';
+	return sex.value;
+}
+function third_punishment() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadthird_punishment();
+				}
+			}
+		}
+	});
+}
+function qubao_third_punishment() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadqubao_third_punishment();
+				}
+			}
+		}
+	});
+}
+// 是否第三次强制措施提交按钮
+function penalloadthird_punishment() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//
+function penalloadqubao_third_punishment() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//第四次强制措施
+function pencalchangechenfour_yes(even) {
+	var sex = document.getElementById("cheanfour_yes");
+	sex.value = '撤案';
+	return sex.value;
+}
+function pencalchangechenfour_no(even) {
+	var sex = document.getElementById("chenanfour_no");
+	sex.value = '起诉';
+	return sex.value;
+}
+function fourth_punishment() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadfourth_punishment();
+				}
+			}
+		}
+	});
+}
+// 是否第四次强制措施提交按钮
+function penalloadfourth_punishment() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//第一次补查
+function pencalchangecheckone_yes(even) {
+	var sex = document.getElementById("checkone_yes");
+	sex.value = '是';
+	return sex.value;
+}
+function pencalchangecheckone_no(even) {
+	var sex = document.getElementById("checkedone_no");
+	sex.value ='否';
+	return sex.value;
+}
+function checkOne() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadcheckOne();
+				}
+			}
+		}
+	});
+}
+// 是否第一次补查提交按钮
+function penalloadcheckOne() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//第二次补查
+function pencalchangechecktwo_yes(even) {
+	var sex = document.getElementById("checktwo_yes");
+	sex.value = '是';
+	return sex.value;
+}
+function pencalchangechecktwo_no(even) {
+	var sex = document.getElementById("checkedtwo_no");
+	sex.value ='否';
+	return sex.value;
+}
+function checkTwo() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadcheckTwo();
+				}
+			}
+		}
+	});
+}
+// 是否第二次补查提交按钮
+function penalloadcheckTwo() {
 	console.log("b2");
 	if (window.XMLHttpRequest) {
 		xmlhttp = new XMLHttpRequest();
@@ -590,6 +1417,150 @@ function pencalproblem_rectification() {
 }
 // 是否问题整改提交按钮
 function penalloadpencalproblem_rectification() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var penalprocess_question = document.getElementById("penalprocess_question").value;
+	var formData = new FormData(processDetails);
+	formData.append("ajdbxtProcess.process_question", penalprocess_question);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//结案
+function pencalchangecase_ending_yes(even) {
+	var sex = document.getElementById("pencalcase_ending_yes");
+	sex.value = '是';
+	return sex.value;
+}
+function pencalchangecase_ending_no(even) {
+	var sex = document.getElementById("pencalcase_ending_no");
+	sex.value ='否';
+	return sex.value;
+}
+function pencalcase_ending() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadpencalcase_ending();
+				}
+			}
+		}
+	});
+}
+// 是否结案提交按钮
+function penalloadpencalcase_ending() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//评分
+function pencalcase_score() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadpencalcase_score();
+				}
+			}
+		}
+	});
+}
+// 是否评分提交按钮
+function penalloadpencalcase_score() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var pencalinput_case_score = document.getElementById("pencalinput_case_score").value;
+	var formData = new FormData(processDetails);
+	formData.append("ajdbxtProcess.process_score", pencalinput_case_score);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
+//案件上交
+function pencalcasehand() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadpencalcasehand();
+				}
+			}
+		}
+	});
+}
+// 是否案件上交提交按钮
+function penalloadpencalcasehand() {
 	console.log("b2");
 	if (window.XMLHttpRequest) {
 		xmlhttp = new XMLHttpRequest();
