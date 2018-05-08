@@ -118,10 +118,10 @@
 			</div>
 			<ul class="mui-table-view" style="width:150px;background-color: white;">
 				<li class="mui-table-view-cell" >
-					<a href="">按单位统计</a>
+					<a href="<%=basePath%>total/Total_mobile_departmentStatistic">按单位统计</a>
 				</li>
 				<li class="mui-table-view-cell">
-					<a href="">按人员统计</a>
+					<a href="<%=basePath%>total/Total_mobile_policeStatistic">按人员统计</a>
 				</li>
 			</ul>
 		</div>
