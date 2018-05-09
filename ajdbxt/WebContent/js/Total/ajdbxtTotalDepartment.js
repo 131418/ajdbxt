@@ -14,6 +14,20 @@ $(".input_button").bind("click",function(){
 });
 
 function List_Total_By_Department(e,pageIndex){
+	
+	var e_str=null;
+	if(e=="平均分"){
+		e_str="0";
+		
+	}
+	else if(e=="行政案件"){
+		e_str="1";
+		
+	}
+	else{
+		e_str="2";
+	}
+
 	getXMLHttp();	
 	var select_start_time=document.getElementById("select_start_time").value;
 	var select_stop_time=document.getElementById("select_stop_time").value;
@@ -113,7 +127,7 @@ function List_Total_By_Department(e,pageIndex){
 	formData.append("departmentStatisticVo.currePage", pageIndex);
 	formData.append("departmentStatisticVo.start_time",select_start_time);
 	formData.append("departmentStatisticVo.stop_time",select_stop_time);
-	formData.append("departmentStatisticVo.orderString",e);
+	formData.append("departmentStatisticVo.orderString",e_str);
 	xhr.send(formData);
 }
 /*
