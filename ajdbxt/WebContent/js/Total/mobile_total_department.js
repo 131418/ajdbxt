@@ -5,33 +5,28 @@ var xhr;
 var total_vo = null;
 var a_value = null;
 $(".a_total_type").bind("click", function() {
-	
-	total_info_type = this.innerText;
+	total_info_type = this.innerHTML;
 	mui('.mui-popover').popover('hide');
 	$("#total_info_type").html(total_info_type);
-	
-	a_value = this.innerHTML;
-	console.log(a_value);
+	a_value = this.innerText;
 	List_Total_Department(a_value,1);
 	$(".input_date").bind("change", function() {
-		console.log(a_value);
 		List_Total_Department(a_value,1);
 	});
 
 });
-
 function List_Total_Department(e,pageIndex) {
+	console.log(e.length);
 	
 	var e_str="";
-	if(e=="按平均分统计"){
-		e_str="0";
-		console.log(e_str);
+	if(e=="按刑事案件数统计"){
+		e_str="2";
 	}
 	else if(e=="按行政案件数统计"){
 		e_str="1";
 	}
 	else{
-		e_str="2";
+		e_str="0";
 	}
 	getXMLHttp();
 	var select_start_time = document.getElementById("select_start_time").value;
