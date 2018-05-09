@@ -19,6 +19,27 @@ $(".input_button").bind("click",function(){
 
 
 function List_Total_By_Page(e,pageIndex) {
+	
+	var e_str=null;
+	if(e=="平均分"){
+		e_str="0";
+		
+	}
+	else if(e=="主办行政案件"){
+		e_str="1";
+		
+	}
+	else if(e=="主办刑事案件"){
+		e_str="2";
+		
+	}
+	else if(e=="协办行政案件"){
+		e_str="3";
+		
+	}	else{
+		e_str="4";
+	}
+	
 	var select_start_time = document.getElementById("select_start_time");
 	var select_stop_time = document.getElementById("select_stop_time");
 	var input_Total_PoliceSearchText = document
@@ -149,7 +170,7 @@ function List_Total_By_Page(e,pageIndex) {
 	formData.append("policeCaseStatisticVo.department", select_case_department);
 	formData.append("policeCaseStatisticVo.start_time", select_start_time.value);
 	formData.append("policeCaseStatisticVo.stop_time", select_stop_time.value);
-	formData.append("policeCaseStatisticVo.orderString",e);
+	formData.append("policeCaseStatisticVo.orderString",e_str);
 	
 	xhr.open("POST", "/ajdbxt/total/Total_getListPoiceCaseStatistic", true);
 	xhr.send(formData);

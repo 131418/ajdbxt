@@ -5,9 +5,11 @@ var xhr;
 var total_vo = null;
 var a_value = null;
 $(".a_total_type").bind("click", function() {
+	
 	total_info_type = this.innerText;
 	mui('.mui-popover').popover('hide');
 	$("#total_info_type").html(total_info_type);
+	
 	a_value = this.innerHTML;
 	console.log(a_value);
 	List_Total_Department(a_value,1);
@@ -19,6 +21,18 @@ $(".a_total_type").bind("click", function() {
 });
 
 function List_Total_Department(e,pageIndex) {
+	
+	var e_str="";
+	if(e=="按平均分统计"){
+		e_str="0";
+		console.log(e_str);
+	}
+	else if(e=="按行政案件数统计"){
+		e_str="1";
+	}
+	else{
+		e_str="2";
+	}
 	getXMLHttp();
 	var select_start_time = document.getElementById("select_start_time").value;
 	var select_stop_time = document.getElementById("select_stop_time").value;
@@ -241,7 +255,7 @@ function List_Total_Department(e,pageIndex) {
 	formData.append("departmentStatisticVo.currePage", pageIndex);
 	formData.append("departmentStatisticVo.start_time", select_start_time);
 	formData.append("departmentStatisticVo.stop_time", select_stop_time);
-	formData.append("departmentStatisticVo.orderString", e);
+	formData.append("departmentStatisticVo.orderString", e_str);
 	xhr.send(formData);
 }
 
