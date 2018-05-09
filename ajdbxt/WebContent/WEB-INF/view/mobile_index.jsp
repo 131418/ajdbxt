@@ -158,7 +158,7 @@
 					<a href="<%=basePath%>user/User_mobile_police_setting">修改密码</a>
 				</li>
 				<li class="mui-table-view-cell">
-					<a href="<%=basePath%>user/User_mobile_index" style="color: red;">退出登录</a>
+					<a href="<%=basePath%>user/User_mobile_loginout" style="color: red;">退出登录</a>
 				</li>
 			</ul>
 			<ul class="mui-table-view">

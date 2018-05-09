@@ -23,7 +23,7 @@ function mobile_password_update() {
 				if (result == "success") {
 					mui.toast("修改成功,请重新登录！");
 					setTimeout(function(){
-						window.location = "/ajdbxt/user/User_mobile_index";
+						window.location = "/ajdbxt/user/User_mobile_loginout";
 					},1000)
 					
 				} else {
