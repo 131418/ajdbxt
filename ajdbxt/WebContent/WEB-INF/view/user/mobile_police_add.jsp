@@ -60,8 +60,15 @@ font-size:14px;
 						</select>
 					</div>
 					<div class="mui-input-row">
-						<label  class=" mui-h5">职务</label> <input type="text" class="mui-input-clear "
-							id="input_police_duty" placeholder="请输入职务">
+						<label  class=" mui-h5">职务</label> <select id="input_police_duty" style="font-size:14px;" >
+							<option selected="selected" value="">请选择</option>
+							<option value="警员">警员</option>
+							<option value="副所队长">副所队长</option>
+							<option value="所队长">所队长</option>
+							<option value="副局长">副局长</option>
+							<option value="局长">局长</option>
+							<option value="政委">政委</option>
+						</select>
 					</div>
 					<div class="mui-input-row">
 						<label  class=" mui-h5">法制员</label> <select id="input_police_legaler" style="font-size:14px;" >
