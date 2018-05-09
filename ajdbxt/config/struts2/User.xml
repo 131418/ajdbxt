@@ -20,6 +20,7 @@
 			<result name="mobile_police_add">/WEB-INF/view/user/mobile_police_add.jsp</result>
 			<result name="mobile_police_update">/WEB-INF/view/user/mobile_police_update.jsp</result>
 			<result name="mobile_police_setting">/WEB-INF/view/user/mobile_police_setting.jsp</result>
+			<result name="mobile_login">/mobile_login.jsp</result>
 		</action>
 	</package>
 </struts>
