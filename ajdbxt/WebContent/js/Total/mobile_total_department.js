@@ -16,8 +16,6 @@ $(".a_total_type").bind("click", function() {
 
 });
 function List_Total_Department(e,pageIndex) {
-	console.log(e.length);
-	
 	var e_str="";
 	if(e=="按刑事案件数统计"){
 		e_str="2";
@@ -27,7 +25,7 @@ function List_Total_Department(e,pageIndex) {
 	}
 	else{
 		e_str="0";
-	}
+	}  
 	getXMLHttp();
 	var select_start_time = document.getElementById("select_start_time").value;
 	var select_stop_time = document.getElementById("select_stop_time").value;
@@ -126,9 +124,9 @@ function List_Total_Department(e,pageIndex) {
 						span_checkTotal.className = "mui-badge mui-badge-blue";
 						new_a.appendChild(span_checkTotal);
 						
-						if(document.getElementById("total_info_type").innerHTML=="按行政案件数统计"){
+						if(document.getElementById("total_info_type").innerText=="按行政案件数统计"){
 							span_checkTotal.innerHTML = total_vo.statisticDepartmentCaseNumDTO[num].adminCase;
-						}else if(document.getElementById("total_info_type").innerHTML=="按刑事案件数统计"){
+						}else if(document.getElementById("total_info_type").innerText=="按刑事案件数统计"){
 							span_checkTotal.innerHTML = total_vo.statisticDepartmentCaseNumDTO[num].criminalCase;
 						}else{
 							span_checkTotal.innerHTML = total_vo.statisticDepartmentCaseNumDTO[num].averageScore;
@@ -163,23 +161,6 @@ function List_Total_Department(e,pageIndex) {
 						div_averageScore.appendChild(label_averageScore);
 						div_averageScore.appendChild(input_averageScore);
 						new_form.appendChild(div_averageScore);
-
-						// 办案单位
-						div_department = document.createElement("div");
-						div_department.className = "mui-input-row mui-h5";
-						label_department = document.createElement("label");
-						label_department.innerHTML = "办案单位";
-						label_department.style.padding = "11px 0px";
-						input_department = document.createElement("input");
-						input_department.className = "mui-input-clear  mui-h5";
-
-						input_department.value = total_vo.statisticDepartmentCaseNumDTO[num].department.department_name;
-						input_department.type = "text";
-						input_department.disabled = "disabled";
-						input_department.style.paddingLeft = "20px";
-						div_department.appendChild(label_department);
-						div_department.appendChild(input_department);
-						new_form.appendChild(div_department);
 
 						// 行政案件
 						div_adminCase = document.createElement("div");
@@ -231,6 +212,23 @@ function List_Total_Department(e,pageIndex) {
 						div_sumCase.appendChild(label_sumCase);
 						div_sumCase.appendChild(input_sumCase);
 						new_form.appendChild(div_sumCase);
+
+						// 办案单位
+						div_department = document.createElement("div");
+						div_department.className = "mui-input-row mui-h5";
+						label_department = document.createElement("label");
+						label_department.innerHTML = "办案单位";
+						label_department.style.padding = "11px 0px";
+						input_department = document.createElement("input");
+						input_department.className = "mui-input-clear  mui-h5";
+
+						input_department.value = total_vo.statisticDepartmentCaseNumDTO[num].department.department_name;
+						input_department.type = "text";
+						input_department.disabled = "disabled";
+						input_department.style.paddingLeft = "20px";
+						div_department.appendChild(label_department);
+						div_department.appendChild(input_department);
+						new_form.appendChild(div_department);
 
 
 						$("label").css("padding", "11px 0px");
