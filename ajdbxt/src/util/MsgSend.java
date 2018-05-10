@@ -56,6 +56,7 @@ public class MsgSend {
 	public static final String CRIMINAL_LENGTH_DETENTION_VOICE="办理_案件延长拘留手续";
 	public static final String CRIMINAL_SUBPOENA_A_SUSPECT_TIME_OUT_VOICE="_案件传唤超12小时办理延长传唤手续";
 	public static final String CRIMINAL_SEARCH_BACK_VOICE="_案件退查还剩10天，尽快办理";
+	public static final String QUESTION_UPDATE_VOICE="{1}案件法制大队提出有{2}个问题尽快整改";
 	//短信模板
 	public static final int SUBPOENA_A_SUSPECT=114978;
 	public static final int SUBPOENA_A_SUSPECT_TIME_OUT=114979;
@@ -80,7 +81,7 @@ public class MsgSend {
 	public static final int CRIMINAL_LENGTH_DETENTION=115368;
 	public static final int CRIMINAL_SUBPOENA_A_SUSPECT_TIME_OUT=115366;
 	public static final int CRIMINAL_SEARCH_BACK=117217;
-	
+	public static final int QUESTION_UPDATE=119387;
 	/**
 	 * 测试方法
 	 */
