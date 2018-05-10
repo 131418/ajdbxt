@@ -11,7 +11,6 @@
 <head>
 <meta charset="UTF-8">
 <title>移动端-首页</title>
-
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <link href="<%=basePath%>css/mui.min.css" rel="stylesheet" />
@@ -27,7 +26,6 @@
 }
 
 .index_nav_img {
-	width: 12%;
 	margin: 0px 15px 0 10px;
 }
 
@@ -57,7 +55,6 @@
 	<header class="mui-bar mui-bar-nav index_nav">
 		<div class="index_nav_img">
 			<img src="<%=basePath%>img/police.png" height="35px;" style="margin-top:5px;" />
-			<%-- <img src="<%=basePath%>img/police.png" height="40px;" /> --%>
 		</div>
 		<div class="index_nav_police">
 			<div class="index_nav_police_name"></div>
@@ -121,10 +118,10 @@
 			</div>
 			<ul class="mui-table-view" style="width:150px;background-color: white;">
 				<li class="mui-table-view-cell" >
-					<a href="">按单位统计</a>
+					<a href="<%=basePath%>total/Total_mobile_departmentStatistic">按单位统计</a>
 				</li>
 				<li class="mui-table-view-cell">
-					<a href="">按人员统计</a>
+					<a href="<%=basePath%>total/Total_mobile_policeStatistic">按人员统计</a>
 				</li>
 			</ul>
 		</div>

@@ -8,6 +8,8 @@
 			method="{1}">
 			<result name="page_listDepartmentCaseStatistics">/WEB-INF/view/total/ajdbxt_total_department.jsp</result>
 			<result name="page_listPoliceCaseStatistic">/WEB-INF/view/total/ajdbxt_total.jsp</result>
+			<result name="mobile_departmentStatistic">/WEB-INF/view/total/mobile_total_department.jsp</result>
+			<result name="mobile_policeStatistic">/WEB-INF/view/total/mobile_total.jsp</result>
 		</action>
 	</package>
 

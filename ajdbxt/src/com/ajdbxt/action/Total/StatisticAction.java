@@ -41,6 +41,22 @@ public class StatisticAction extends ActionSupport {
 		return "page_listPoliceCaseStatistic";
 		
 	}
+	
+	/*
+	 * 移动端部门统计页面
+	 */
+	public String mobile_departmentStatistic() {
+		
+		return "mobile_departmentStatistic";
+	}
+	
+	/*
+	 * 移动端警员统计页面
+	 */
+	public String mobile_policeStatistic() {
+		
+		return "mobile_policeStatistic";
+	}
 
 	/*
 	 * 部门统计列表

@@ -163,7 +163,7 @@ select, input {
 
 					// 单位
 					var xmlHttpRequest = new XMLHttpRequest();
-					xmlHttpRequest.open("POST", "/ajdbxt/user/User_getPower",false);
+					xmlHttpRequest.open("POST", "/ajdbxt/user/User_getPower");
 					xmlHttpRequest.send(null);
 					xmlHttpRequest.onreadystatechange = function() {
 						if (xmlHttpRequest.readyState == 4
