@@ -535,7 +535,7 @@ public class SMSThread extends Thread{
 				break;
 			}
 		}else if(process.getProcess_force_measure_one()!=null) {//第一次强制措施
-			fileUp();
+			fileUp();//第一次强制措施通知上交案卷
 			switch (process.getProcess_force_measure_one()) {
 			case "拘留":
 				caseEnd();
@@ -558,7 +558,15 @@ public class SMSThread extends Thread{
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process=processDTO.getProcess();
 		if(process.getProcess_file_hand()==null||(process.getProcess_file_hand()!=null&&process.getProcess_file_hand().equals("否"))) {
-			
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			String [] params= {processDTO.getInfo().getInfo_name()};
+			for(ajdbxt_police police:policeList) {
+				String num=police.getPolice_phone_number();
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_FILE_UP);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_FILE_UP_VOICE);
+			}
 		}
 		
 	}
