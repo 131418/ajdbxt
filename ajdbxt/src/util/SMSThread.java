@@ -64,6 +64,9 @@ public class SMSThread extends Thread{
 			case MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE:
 				fileBack();
 				break;
+			case MsgSend.QUESTION_UPDATE_VOICE:
+				questionUpdate();
+				break;
 			}	
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -165,7 +168,7 @@ public class SMSThread extends Thread{
 	 * 回退
 	 */
 	private void rollBack() throws InterruptedException{
-		for(int index=0;index<16;index++) {
+		for(int index=0;index<24;index++) {
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process =processDTO.getProcess();
 			if(process.getProcess_is_rollback()==null||process.getProcess_is_rollback().isEmpty()||process.getProcess_is_rollback().equals("待处理")) {
@@ -190,7 +193,7 @@ public class SMSThread extends Thread{
 	 * 回退提醒修改
 	 */
 	private void rollBackUpdate() throws InterruptedException {
-		for(int index=0;index<16;index++) {
+		for(int index=0;index<24;index++) {
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process =processDTO.getProcess();
 			if(process.getProcess_is_rollback().equals("是")) {
@@ -237,6 +240,25 @@ public class SMSThread extends Thread{
 		}
 	}
 	/*
+	 * 通知民警整改问题
+	 */
+	private void questionUpdate() {
+		ProcessDTO processDTO=getProcessDTO();
+		ajdbxt_process process =processDTO.getProcess();
+		if(process.getProcess_question_list()!=null&&process.getProcess_question_list().intValue()>0) {
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			String []params= {processDTO.getInfo().getInfo_name(),process.getProcess_question_list().toString()};
+			List<String> tel=new ArrayList<>();
+			for(ajdbxt_police police:policeList) {
+				tel.add(police.getPolice_phone_number());
+			}
+			MsgSend.doSendSimple(params, tel, MsgSend.QUESTION_UPDATE);
+			for(String t:tel) {
+				MsgSend.doSendVoiceSimple(params, t, MsgSend.CASE_ROLLBACK_UPDATE_VOICE);
+			}
+		}
+	}
+	/*
 	 * 问题整改
 	 */
 	private void questionChange() throws InterruptedException {
@@ -245,13 +267,15 @@ public class SMSThread extends Thread{
 			if(process.getProcess_question()!=null) {//如果整改数量不为空
 				List<String> tel=new ArrayList<>();
 				String [] params= {processDTO.getInfo().getInfo_name(),process.getProcess_question_list().toString(),process.getProcess_question().toString()};
-				tel.add(processDTO.getLeader().getPolice_phone_number());
-				MsgSend.doSendSimple(params, tel, MsgSend.QUESTION_UP_LEADER);
-				MsgSend.doSendVoiceSimple(params, processDTO.getLeader().getPolice_phone_number(), MsgSend.QUESTION_UP_LEADER_VOICE);
-				tel=new ArrayList<>();
-				tel.add(processDTO.getCap().getPolice_phone_number());
-				MsgSend.doSendSimple(params, tel, MsgSend.QUESTION_UP_CHECK);
-				MsgSend.doSendVoiceSimple(params, processDTO.getLeader().getPolice_phone_number(), MsgSend.QUESTION_UP_CHECK_VOICE);
+				if(process.getProcess_question().intValue()!=process.getProcess_question_list().intValue()) {
+					tel.add(processDTO.getLeader().getPolice_phone_number());
+					MsgSend.doSendSimple(params, tel, MsgSend.QUESTION_UP_LEADER);
+//					MsgSend.doSendVoiceSimple(params, processDTO.getLeader().getPolice_phone_number(), MsgSend.QUESTION_UP_LEADER_VOICE);
+					tel=new ArrayList<>();
+					tel.add(processDTO.getCap().getPolice_phone_number());
+					MsgSend.doSendSimple(params, tel, MsgSend.QUESTION_UP_CHECK);
+					MsgSend.doSendVoiceSimple(params, processDTO.getLeader().getPolice_phone_number(), MsgSend.QUESTION_UP_CHECK_VOICE);
+				}
 				for(int index=0;index<16;index++) {
 					processDTO=getProcessDTO();
 					process=processDTO.getProcess();
@@ -275,6 +299,7 @@ public class SMSThread extends Thread{
 					
 				}
 			}
+			
 	}
 	/*
 	 * 处罚
@@ -595,7 +620,7 @@ public class SMSThread extends Thread{
 	 * 拘留超时
 	 */
 	private void detentionTimeOut() throws InterruptedException {
-		for(int index=0;index<6;index++) {
+		for(int index=0;index<8;index++) {
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process=processDTO.getProcess();
 			if(process.getProcess_lengthen_criminal_detention()==null) {
@@ -608,7 +633,7 @@ public class SMSThread extends Thread{
 					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_LENGTH_DETENTION);
 					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_LENGTH_DETENTION_VOICE);
 				}
-				waitTime(4);
+				waitTime(2);
 			}else {
 				break;
 			}

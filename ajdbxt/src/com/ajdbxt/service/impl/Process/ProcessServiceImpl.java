@@ -137,6 +137,8 @@ public class ProcessServiceImpl implements ProcessService {
 			if(!caseFiled) {
 				new SMSThread(MsgSend.CASE_GOODS_LIB_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext);
 			}
+		case question_update:
+			new SMSThread(MsgSend.QUESTION_UPDATE_VOICE, info.getAjdbxt_info_id(), caseFiled, applicationContext);
 		}	
 		return JsonUtils.toJson(processDTO);
 	}

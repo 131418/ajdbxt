@@ -13,6 +13,7 @@ public interface ProcessService {
 	public final static int result=6;
 	public final static int fileBack=7;
 	public final static int goods_lib=8;
+	public final static int question_update=9;
 	
 	public ProcessDTO getSingleProcessByCaseId(String case_id);
 	/**

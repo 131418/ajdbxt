@@ -159,10 +159,13 @@ public class ProcessAction  extends ActionSupport{
 					case "process_question":
 						changeType=ProcessService.question;
 						break;
+					case "process_question_list":
+						changeType=ProcessService.question_update;
+						break;
 					case "process_apply_right":
 						changeType=ProcessService.rollback;
 						break;
-					case "process_case_end":
+					case "process_score":
 						changeType=ProcessService.case_end;
 						break;
 						//以下为行政处罚
