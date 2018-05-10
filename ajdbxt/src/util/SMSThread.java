@@ -42,7 +42,7 @@ public class SMSThread extends Thread{
 			case MsgSend.CASE_ROLLBACK_VOICE://回退
 				rollBack();
 				break;
-			case MsgSend.QUESTION_UP_VOICE:
+			case MsgSend.QUESTION_UP_VOICE://案件整改完成
 				questionChange();
 				break;
 			case MsgSend.CASE_GOODS_LIB_VOICE:
@@ -535,6 +535,7 @@ public class SMSThread extends Thread{
 				break;
 			}
 		}else if(process.getProcess_force_measure_one()!=null) {//第一次强制措施
+			fileUp();
 			switch (process.getProcess_force_measure_one()) {
 			case "拘留":
 				caseEnd();
@@ -549,6 +550,17 @@ public class SMSThread extends Thread{
 				break;
 			}
 		}
+	}
+	/*
+	 * 第二天上交案卷
+	 */
+	private void fileUp() {
+		ProcessDTO processDTO=getProcessDTO();
+		ajdbxt_process process=processDTO.getProcess();
+		if(process.getProcess_file_hand()==null||(process.getProcess_file_hand()!=null&&process.getProcess_file_hand().equals("否"))) {
+			
+		}
+		
 	}
 	/*
 	 * 逮捕
@@ -574,7 +586,7 @@ public class SMSThread extends Thread{
 	 * 监视居住
 	 */
 	private void monitoringLive() throws InterruptedException {
-		waitTime(50*24);
+		waitTime(170*24);
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process=processDTO.getProcess();
 		List<ajdbxt_police> policeList=processDTO.getPolice();
@@ -591,19 +603,19 @@ public class SMSThread extends Thread{
 	 *取保候审 
 	 */
 	private void bail() throws InterruptedException {
-		for(int index=0;index<3;index++) {
-			ProcessDTO processDTO=getProcessDTO();
-			List<ajdbxt_police> policeList=processDTO.getPolice();
-			String [] params= {processDTO.getInfo().getInfo_name()};
-			for(ajdbxt_police police:policeList) {
-				String num=police.getPolice_phone_number();
-				List<String> tel=new ArrayList<>();
-				tel.add(num);
-				MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_BAIL);
-				MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_BAIL_VOICE);
-			}
-			wait(85*24);
-		}
+//		for(int index=0;index<3;index++) {
+//			ProcessDTO processDTO=getProcessDTO();
+//			List<ajdbxt_police> policeList=processDTO.getPolice();
+//			String [] params= {processDTO.getInfo().getInfo_name()};
+//			for(ajdbxt_police police:policeList) {
+//				String num=police.getPolice_phone_number();
+//				List<String> tel=new ArrayList<>();
+//				tel.add(num);
+//				MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_BAIL);
+//				MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_BAIL_VOICE);
+//			}
+//			wait(85*24);
+//		}
 		waitTime(355*24);
 		ProcessDTO processDTO=getProcessDTO();
 		List<ajdbxt_police> policeList=processDTO.getPolice();
