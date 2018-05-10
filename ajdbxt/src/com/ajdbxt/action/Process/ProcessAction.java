@@ -27,6 +27,7 @@ public class ProcessAction  extends ActionSupport{
 	private ProcessInfoService processInfoService;
 	private showProcessVO processVO;
 	private Page_list_caseInfoVo infoVO;
+
 	public Page_list_caseInfoVo getInfoVO() {
 		return infoVO;
 	}
@@ -159,10 +160,13 @@ public class ProcessAction  extends ActionSupport{
 					case "process_question":
 						changeType=ProcessService.question;
 						break;
+					case "process_question_list":
+						changeType=ProcessService.question_update;
+						break;
 					case "process_apply_right":
 						changeType=ProcessService.rollback;
 						break;
-					case "process_case_end":
+					case "process_score":
 						changeType=ProcessService.case_end;
 						break;
 						//以下为行政处罚
@@ -238,6 +242,15 @@ public class ProcessAction  extends ActionSupport{
 			ServletActionContext.getResponse().getWriter().print(json);
 		} catch (IOException e) {
 			new RuntimeException(e);
+		}
+	}
+	public void searchProcess() {
+		String json=processService.searchProcess(processVO);
+		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+		try {
+			ServletActionContext.getResponse().getWriter().print(json);
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 	public void findAboutMeSome() {

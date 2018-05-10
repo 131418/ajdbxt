@@ -13,6 +13,7 @@ public interface ProcessService {
 	public final static int result=6;
 	public final static int fileBack=7;
 	public final static int goods_lib=8;
+	public final static int question_update=9;
 	
 	public ProcessDTO getSingleProcessByCaseId(String case_id);
 	/**
@@ -23,4 +24,5 @@ public interface ProcessService {
 	 */
 	public String update(ajdbxt_process process,int changeType);
 	public showProcessVO getSomeProcessByShowProcessVO(showProcessVO processVO);
+	public String searchProcess(showProcessVO processVO);
 }

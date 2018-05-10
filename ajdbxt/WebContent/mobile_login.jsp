@@ -21,7 +21,7 @@
 <style>
 body {
 	font-size: 15px;
-	background: url(./img/ajdb.jpg);
+	background: url(/ajdbxt/img/ajdb.jpg);
 	background-size: 100%;
 }
 

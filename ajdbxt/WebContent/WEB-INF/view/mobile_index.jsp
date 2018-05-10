@@ -54,7 +54,9 @@
 	<!--头部-->
 	<header class="mui-bar mui-bar-nav index_nav">
 		<div class="index_nav_img">
-			<img src="<%=basePath%>img/police.png" height="35px;" style="margin-top:5px;" />
+			<a href="#setting">
+				<img src="<%=basePath%>img/police.png" height="35px;" style="margin-top:5px;" />
+			</a>
 		</div>
 		<div class="index_nav_police">
 			<div class="index_nav_police_name"></div>
@@ -149,6 +151,23 @@
 		</div>
 
 	</div>
+	<!-- 修改密码和退出登录部分 -->
+	<div id="setting" class="mui-popover mui-popover-action mui-popover-bottom" style="display: block;">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="<%=basePath%>user/User_mobile_police_setting">修改密码</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a href="<%=basePath%>user/User_mobile_loginout" style="color: red;">退出登录</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#setting"><b>取消</b></a>
+				</li>
+			</ul>
+		</div>
+	
 <script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
 	<script src="<%=basePath%>js/mui.min.js"></script>
 	<script type="text/javascript"
