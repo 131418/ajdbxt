@@ -197,6 +197,6 @@ public class ProcessServiceImpl implements ProcessService {
 			processDTOList.add(processDTO);
 		}
 		processVO.setList(processDTOList);
-		return null;
+		return JsonUtils.toJson(processVO);
 	}
 }
