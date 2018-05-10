@@ -151,7 +151,7 @@ public class ProcessServiceImpl implements ProcessService {
 		processVO.setCount(processDao.findAllProcess());
 		int pages=processVO.getCount()/length;
 		List<ajdbxt_process> processList=processDao.findSomeProcess((processVO.getCurrPage()-1)*10, length);
-		if(processVO.getCount()/length>0) {
+		if(processVO.getCount()%length>0) {
 			pages++;
 		}
 		processVO.setTotalPage(pages);
@@ -171,5 +171,32 @@ public class ProcessServiceImpl implements ProcessService {
 		}
 		processVO.setList(processDTOList);
 		return processVO;
+	}
+
+	@Override
+	public String searchProcess(showProcessVO processVO) {
+		int length=processVO.getPageSize();
+		List<ProcessDTO> processDTOList=new ArrayList<ProcessDTO>();
+		ProcessDTO processDTO;
+		processVO.setCount(processInfoDao.countInfoByKey(processVO.getKey()));
+		int pages=processVO.getCount()%length==0?processVO.getCount()/length:processVO.getCount()/length+1;
+		processVO.setTotalPage(pages);
+		List<ajdbxt_info> infoList=processInfoDao.findInfoByKey(processVO.getKey(),(processVO.getCurrPage()-1)*10, length);
+		for(ajdbxt_info info :infoList) {
+			processDTO=new ProcessDTO();
+			processDTO.setInfo(info);
+			processDTO.setProcess(processDao.findProcessByCaseId(info.getAjdbxt_info_id()).get(0));
+			List<ajdbxt_police> police_list=new ArrayList<ajdbxt_police>();
+			police_list.add(processPoliceDao.findPoliceById(processDTO.getInfo().getInfo_main_police()));
+			police_list.add(processPoliceDao.findPoliceById(processDTO.getInfo().getInfo_assistant_police_one()));
+			if(processDTO.getInfo().getInfo_assistant_police_two()!=null&&!processDTO.getInfo().getInfo_assistant_police_two().isEmpty()) {
+				police_list.add(processPoliceDao.findPoliceById(processDTO.getInfo().getInfo_assistant_police_two()));
+			}
+			processDTO.setPolice(police_list);
+			processDTO.setDepartment(processDepartmentDao.findDepartmentById(processDTO.getInfo().getInfo_department()));
+			processDTOList.add(processDTO);
+		}
+		processVO.setList(processDTOList);
+		return null;
 	}
 }

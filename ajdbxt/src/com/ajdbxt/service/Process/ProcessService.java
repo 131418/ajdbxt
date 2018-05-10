@@ -24,4 +24,5 @@ public interface ProcessService {
 	 */
 	public String update(ajdbxt_process process,int changeType);
 	public showProcessVO getSomeProcessByShowProcessVO(showProcessVO processVO);
+	public String searchProcess(showProcessVO processVO);
 }
