@@ -706,7 +706,7 @@ public class SMSThread extends Thread{
 	}
 	private void waitTime(int hour) throws InterruptedException {
 		synchronized (this) {
-			this.wait(hour*60*60*1000);
+			this.wait(hour*1000);
 		}
 	}
 
