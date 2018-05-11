@@ -46,7 +46,8 @@ public class StatisticServiceImpl implements StatisticService {
 			listDepartmentCaseDto.add(statisticDepartmentCaseNumDTO);
 		}
 		//排序
-		if(departmentStatisticVo.getOrderString().trim()==null || departmentStatisticVo.getOrderString().trim().equals("平均分")) {
+		//"0"代表平均分  "1" 代表行政案件  "2"代表刑事案件
+		if(departmentStatisticVo.getOrderString().trim()==null || departmentStatisticVo.getOrderString().trim().equals("0")) {
 			Collections.sort(listDepartmentCaseDto, new Comparator<StatisticDepartmentCaseNumDTO>() {
 
 				@Override
@@ -62,7 +63,7 @@ public class StatisticServiceImpl implements StatisticService {
 				
 			});
 		}
-		else if(departmentStatisticVo.getOrderString().trim().equals("行政案件")) {
+		else if(departmentStatisticVo.getOrderString().trim().equals("1")) {
 			Collections.sort(listDepartmentCaseDto,new Comparator<StatisticDepartmentCaseNumDTO>() {
 
 				@Override
@@ -77,7 +78,7 @@ public class StatisticServiceImpl implements StatisticService {
 				}
 			
 			});
-		}else if(departmentStatisticVo.getOrderString().trim().equals("刑事案件")){
+		}else if(departmentStatisticVo.getOrderString().trim().equals("2")){
 			Collections.sort(listDepartmentCaseDto, new Comparator<StatisticDepartmentCaseNumDTO>() {
 
 				@Override
@@ -150,7 +151,8 @@ public class StatisticServiceImpl implements StatisticService {
 		policeCaseStatisticVo.setStatisticPoliceCaseDto(statisticCaseByPoliceList);
 		
 		//排序
-		if(policeCaseStatisticVo.getOrderString().trim()==null || policeCaseStatisticVo.getOrderString().trim().equals("平均分")) {
+		//"0"代表平均分 "1"主办行政案件 "2"主办刑事案件 "3"协办行政案件 "4"协办刑事案件
+		if(policeCaseStatisticVo.getOrderString().trim()==null || policeCaseStatisticVo.getOrderString().trim().equals("0")) {
 			Collections.sort(statisticCaseByPoliceList, new Comparator<StatisticPoliceCaseDto>() {
 
 				@Override
@@ -165,7 +167,7 @@ public class StatisticServiceImpl implements StatisticService {
 				}
 				
 			});
-		}else if(policeCaseStatisticVo.getOrderString().trim().equals("主办行政案件")) {
+		}else if(policeCaseStatisticVo.getOrderString().trim().equals("1")) {
 			Collections.sort(statisticCaseByPoliceList,new Comparator<StatisticPoliceCaseDto>() {
 
 				@Override
@@ -180,7 +182,7 @@ public class StatisticServiceImpl implements StatisticService {
 				}
 				
 			});
-		}else if(policeCaseStatisticVo.getOrderString().trim().equals("主办刑事案件")) {
+		}else if(policeCaseStatisticVo.getOrderString().trim().equals("2")) {
 			Collections.sort(statisticCaseByPoliceList,new Comparator<StatisticPoliceCaseDto>() {
 
 				@Override
@@ -195,7 +197,7 @@ public class StatisticServiceImpl implements StatisticService {
 				}
 				
 			});
-		}else if(policeCaseStatisticVo.getOrderString().trim().equals("协办行政案件")) {
+		}else if(policeCaseStatisticVo.getOrderString().trim().equals("3")) {
 			Collections.sort(statisticCaseByPoliceList,new Comparator<StatisticPoliceCaseDto>() {
 				@Override
 				public int compare(StatisticPoliceCaseDto o1, StatisticPoliceCaseDto o2) {
@@ -209,7 +211,7 @@ public class StatisticServiceImpl implements StatisticService {
 				}
 				
 			});
-		}else if(policeCaseStatisticVo.getOrderString().trim().equals("协办刑事案件")) {
+		}else if(policeCaseStatisticVo.getOrderString().trim().equals("4")) {
 			Collections.sort(statisticCaseByPoliceList,new Comparator<StatisticPoliceCaseDto>() {
 
 				@Override

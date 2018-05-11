@@ -145,6 +145,11 @@ public class UserAction extends ActionSupport {
 		return "mobile_police_update";
 	}
 	
+	public String mobile_loginout() {
+		ActionContext.getContext().getSession().remove("police_id");
+		return "mobile_login";
+	}
+	
 	//移动端按id查询民警
 	public void findPoliceById_mobile() {
 		try {

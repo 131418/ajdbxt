@@ -143,7 +143,6 @@
 		src="<%=basePath%>js/Total/mobile_total_department.js"></script>
 		<script type="text/javascript">
 			var averageScore = document.getElementById("averageScore").innerHTML;
-			console.log(1);
 			List_Total_Department(averageScore,1);
 			$(".input_date").bind("change", function() {
 				List_Total_Department(averageScore,1);
