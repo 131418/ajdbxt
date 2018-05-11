@@ -10,7 +10,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>手机端—人员列表</title>
+<title>手机端—案件列表</title>
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <link href="<%=basePath%>css/mui.min.css" rel="stylesheet" />
@@ -28,11 +28,11 @@ h1, a {
 </head>
 
 <body>
-	<!-- 添加人员 -->
+	<!-- 添加案件-->
 			<div class="mui-icon mui-icon-plusempty" id="div_police_add" style="position: fixed;top: 10px;right: 20px; font-weight:bold;color: white;z-index: 9999999;" onclick="window.location.href='<%=basePath%>user/User_mobile_police_add'"></div>
 	<header class="mui-bar mui-bar-nav index_nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="window.location.href='<%=basePath%>user/User_mobile_index'"></a>
-		<h1 class="mui-title" style="color: white;">人员信息</h1>
+		<h1 class="mui-title" style="color: white;">案件信息</h1>
 	
 	</header>
 	<div class="mui-content" >
@@ -106,7 +106,7 @@ h1, a {
 		</div>
 	<script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript"
-		src="<%=basePath%>js/User/mobile_police_one.js"></script>
+		src="<%=basePath%>js/Info/mobile_caseList.js"></script>
 	<script src="<%=basePath%>js/mui.min.js"></script>
 	<script type="text/javascript">
 		mui.init();

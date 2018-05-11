@@ -85,7 +85,7 @@
 				<span class="mui-icon mui-icon-email"></span>
 				<span class="mui-tab-label">统计</span>
 			</a>
-			<a class="mui-tab-item">
+			<a class="mui-tab-item" onclick="window.location.href='<%=basePath%>info/Info_page_mobileCaseList'">
 				<span class="mui-icon mui-icon-chatboxes"></span>
 				<span class="mui-tab-label">案件</span>
 			</a>

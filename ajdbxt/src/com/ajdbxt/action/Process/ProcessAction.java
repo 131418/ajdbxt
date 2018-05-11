@@ -27,6 +27,7 @@ public class ProcessAction  extends ActionSupport{
 	private ProcessInfoService processInfoService;
 	private showProcessVO processVO;
 	private Page_list_caseInfoVo infoVO;
+
 	public Page_list_caseInfoVo getInfoVO() {
 		return infoVO;
 	}
@@ -241,6 +242,15 @@ public class ProcessAction  extends ActionSupport{
 			ServletActionContext.getResponse().getWriter().print(json);
 		} catch (IOException e) {
 			new RuntimeException(e);
+		}
+	}
+	public void searchProcess() {
+		String json=processService.searchProcess(processVO);
+		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+		try {
+			ServletActionContext.getResponse().getWriter().print(json);
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 	public void findAboutMeSome() {

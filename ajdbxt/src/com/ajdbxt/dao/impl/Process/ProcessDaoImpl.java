@@ -29,34 +29,8 @@ public class ProcessDaoImpl implements ProcessDao {
 	@Override
 	public List<ajdbxt_process> findProcessByColumn(String cloumn,String key) {
 		Session session=sessionFactory.getCurrentSession();
-		Criteria criterria=session.createCriteria(ajdbxt_process.class);
-		return criterria.add(Restrictions.eq(cloumn, key)).list();
-	}
-	
-	@Override
-	public List<ajdbxt_process> findProcessByKey(String key) {
-		Session session=sessionFactory.getCurrentSession();
-		String hql="from Process process where process.ajdbxt_process_id like '"+key+
-				"' or process.process_case_id like '"+key+
-				"' or process.process_lengthen_subpoena like '"+key+
-				"' or process.process_nonage like '"+key+
-				"' or process.process_authenticate like '"+key+
-				"' or process.process_case_goods like '"+key+
-				"' or process.process_detention like '"+key+
-				"' or process.process_penalty like '"+key+
-				"' or process.process_treatment_category like '"+key+
-				"' or process.process_case_id like '"+key+
-				"' or process.process_apply_right like '"+key+
-				"' or process.process_accpet_right like '"+key+
-				"' or process.process_question like '"+key+
-				"' or process.process_score like '"+key+
-				"' or process.process_captain_check like '"+key+
-				"' or process.process_file_hand like '"+key+
-				"' or process.process_case_end like '"+key+
-				"' or process.process_gmt_modify like '"+key+
-				"' or process.process_gmt_create like '"+key+"'";
-		Query query=session.createQuery(hql);
-		return query.list();
+		Criteria criterria=session.createCriteria(ajdbxt_process.class).add(Restrictions.eq(cloumn, key));
+		return criterria.list();
 	}
 
 	@Override
@@ -115,6 +89,5 @@ public class ProcessDaoImpl implements ProcessDao {
 	public int findAllProcess() {
 		Session session=sessionFactory.getCurrentSession();
 		return session.createQuery("from ajdbxt_process").list().size();
-	}
-	
+	}	
 }
