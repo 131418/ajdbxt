@@ -10,7 +10,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>手机端—人员列表</title>
+<title></title>
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <link href="<%=basePath%>css/mui.min.css" rel="stylesheet" />
@@ -21,63 +21,77 @@
 	font-size: 15px;
 }
 
-h1, a {
+.index_nav h1, a {
 	color: white;
+}
+select,input{
+font-size:14px;
 }
 </style>
 </head>
 
 <body>
-	<!-- 添加人员 -->
-			<div class="mui-icon mui-icon-plusempty" id="div_police_add" style="position: fixed;top: 10px;right: 20px; font-weight:bold;color: white;z-index: 9999999;" onclick="window.location.href='<%=basePath%>user/User_mobile_police_add'"></div>
 	<header class="mui-bar mui-bar-nav index_nav">
-		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="window.location.href='<%=basePath%>user/User_mobile_index'"></a>
-		<h1 class="mui-title" style="color: white;">人员信息</h1>
-	
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="window.location.href='<%=basePath%>user/User_mobile_police_one'"></a>
+		<h1 class="mui-title">新增案件</h1>
 	</header>
-	<div class="mui-content" >
-		<%-- <!-- 搜索框 -->
-				<div
-					style="background-color: #FFFFFF; width: 100%;" >
-					<span class="mui-icon mui-icon-search mui-h5"
-						style="width: 70px; margin-left: 40%; line-height: 30px;"><span
-						class="mui-h5" style="margin: 0 0 0 2px;">搜索</span></span>
-				</div>
-				--%>
-		
-		<!-- <div class="mui-card" style="margin-bottom: 70px"> -->
-		<div class="mui-card" style="margin:0 0 50px 0">
+	<div class="mui-content">
+		<div class="mui-card" style="margin:0px;">
 			<!--页眉，放置标题-->
-			<div class="mui-card-header" style="padding:0px;">
-				<%-- <!-- 搜索框 -->
-				<div
-					style="background-color: #FFFFFF; width: 100%;" >
-					<span class="mui-icon mui-icon-search mui-h5"
-						style="width: 70px; margin-left: 40%; line-height: 30px;"><span
-						class="mui-h5" style="margin: 0 0 0 2px;">搜索</span></span>
-				</div> --%>
-				<div class="mui-input-row mui-search" style="width:100%;">
-						    <input type="search" id="input_PoliceSearchText" oninput="List_Police_By_Page(1)" style="background-color: #FFFFFF;width: 100%;margin:0px;padding-left:50px;padding-right:50px;" class="mui-input-clear" placeholder="搜索" >
-						</div>
-			</div>
+			<!--	<div class="mui-card-header">页眉</div>-->
 			<!--内容区-->
 			<div class="mui-card-content">
-				<ul class="mui-table-view " id="ul_police_list">
-
-				</ul>
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label class=" mui-h5">警号</label> <input type="text" class="mui-input-clear"
+							id="input_police_serial_number" placeholder="请输入警号">
+					</div>
+					<div class="mui-input-row">
+						<label  class=" mui-h5">密码</label> <input type="text" class="mui-input-clear " 
+							id="input_police_password" placeholder="请输入密码">
+					</div>
+					<div class="mui-input-row">
+						<label  class=" mui-h5">姓名</label> <input type="text" class="mui-input-clear"
+							id="input_police_name" placeholder="请输入姓名">
+					</div>
+					<div class="mui-input-row">
+						<label  class=" mui-h5">单位</label> <select id="input_police_department" style="font-size:14px;">
+							<option>1</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label  class=" mui-h5">职务</label> <input type="text" class="mui-input-clear "
+							id="input_police_duty" placeholder="请输入职务">
+					</div>
+					<div class="mui-input-row">
+						<label  class=" mui-h5">法制员</label> <select id="input_police_legaler" style="font-size:14px;" >
+							<option selected="selected" value="">请选择</option>
+							<option value="1">是</option>
+							<option value="2">否</option>
+						</select>
+					</div>
+					<div class="mui-input-row ">
+						<label  class=" mui-h5">权限</label> <select id="input_police_power" style="font-size:14px;">
+							<!-- <option value="1">单位内浏览</option>
+							<option value="2">单位内管理</option>
+							<option value="3">所有单位内管理</option> -->
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label  class=" mui-h5">电话</label> <input type="text" class="mui-input-clear "
+							id="input_police_phone_number" placeholder="请输入电话号码">
+					</div>
+				</form>
 			</div>
 			<!--页脚，放置补充信息或支持的操作-->
-			<div class="mui-card-footer div_page_count">
-				<ul class="mui-pagination" id="ul_page_count">
-				</ul>
+			<div class="mui-card-footer">
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-outlined"
+					style="width:100%;" onclick="createPolice();">确认添加</button>
 			</div>
-			
 		</div>
-
 	</div>
 
 	<!--------------------------------->
-<!--------------------------------->
 	<!--底部导航-->
 	<nav class="mui-bar mui-bar-tab">
 				<a class="mui-tab-item " onclick="window.location.href='<%=basePath%>user/User_mobile_index'"> <span
@@ -110,7 +124,6 @@ h1, a {
 	<script src="<%=basePath%>js/mui.min.js"></script>
 	<script type="text/javascript">
 		mui.init();
-	
 	</script>
 </body>
 
