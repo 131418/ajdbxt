@@ -71,10 +71,10 @@
 									<tr>
 										<th>序号</th>
 										<th>办案单位</th>
-										<th><input type="button" id="adminCase" class="input_button"											 value="行政案件" /></th>
-										<th><input type="button" id="criminalCase" class="input_button"											value="刑事案件" /></th>
+										<th><input type="button" id="adminCase" class="input_button" value="行政案件" /></th>
+										<th><input type="button" id="criminalCase" class="input_button"	value="刑事案件" /></th>
 										<th>总案件数</th>
-										<th><input type="button" id="averageScore" class="input_button"											 value="平均分" /></th>
+										<th><input type="button" id="averageScore" class="input_button"	value="平均分" /></th>
 									</tr>
 								</tbody>
 							</table>
@@ -159,12 +159,5 @@
 			maxDate : '2100/01/01', // 设置最大日期
 		});
 	</script>
-	<!-- 路径跳转 -->
-		<script type="text/javascript">
-			function ByUserTotal() {
-				/* window.location.href="ajdbxt_total.jsp";  */
-				 window.navigate("ajdbxt_total.jsp");
-			}
-		</script>
 </body>
 </html>
