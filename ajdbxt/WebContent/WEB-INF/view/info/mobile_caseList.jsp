@@ -10,15 +10,11 @@
 
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>手机端—案件列表</title>
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <link href="<%=basePath%>css/mui.min.css" rel="stylesheet" />
 <style>
-body {
-	font-size: 15px;
-}
-
 .index_nav {
 	background-color: #007aff;
 	color: white;
@@ -28,67 +24,60 @@ body {
 h1, a {
 	color: white;
 }
-
-input {
-	text-align: right;
-}
-.mui-input-row{
-padding:0 5px;
-}
 </style>
 </head>
 
 <body>
+	<!-- 添加案件-->
+			<div class="mui-icon mui-icon-plusempty" id="div_police_add" style="position: fixed;top: 10px;right: 20px; font-weight:bold;color: white;z-index: 9999999;" onclick="window.location.href='<%=basePath%>user/User_mobile_police_add'"></div>
 	<header class="mui-bar mui-bar-nav index_nav">
-		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="window.location.href='<%=basePath%>user/User_mobile_index'"></a>
 		<h1 class="mui-title" style="color: white;">案件信息</h1>
+	
 	</header>
-	<div class="mui-content" id="case_details_content">
-
-		<div class="mui-card"
-			style="width: 100%; margin: 0px;">
+	<div class="mui-content" >
+		<%-- <!-- 搜索框 -->
+				<div
+					style="background-color: #FFFFFF; width: 100%;" >
+					<span class="mui-icon mui-icon-search mui-h5"
+						style="width: 70px; margin-left: 40%; line-height: 30px;"><span
+						class="mui-h5" style="margin: 0 0 0 2px;">搜索</span></span>
+				</div>
+				--%>
+		
+		<!-- <div class="mui-card" style="margin-bottom: 70px"> -->
+		<div class="mui-card" style="margin:0 0 50px 0">
 			<!--页眉，放置标题-->
-			<div class="mui-card-header">
-				<h3 class="mui-h4" style="color:#007aff">李四盗窃案</h3>
+			<div class="mui-card-header" style="padding:0px;">
+				<%-- <!-- 搜索框 -->
+				<div
+					style="background-color: #FFFFFF; width: 100%;" >
+					<span class="mui-icon mui-icon-search mui-h5"
+						style="width: 70px; margin-left: 40%; line-height: 30px;"><span
+						class="mui-h5" style="margin: 0 0 0 2px;">搜索</span></span>
+				</div> --%>
+				<div class="mui-input-row mui-search" style="width:100%;">
+						    <input type="search" id="input_PoliceSearchText" oninput="List_Police_By_Page(1)" style="background-color: #FFFFFF;width: 100%;margin:0px;padding-left:50px;padding-right:50px;" class="mui-input-clear" placeholder="搜索" >
+						</div>
 			</div>
+			<!--内容区-->
 			<div class="mui-card-content">
-				<form class="mui-input-group" id="form_case_detail">
-					<div class="mui-input-row">
-						<label class="mui-h5">案件类别</label> <input type="text"
-							class="mui-input-clear mui-h5" style="font-size:16px;" placeholder="" value="李四盗窃案">
-					</div>
-					<div class="mui-input-row">
-						<label class="mui-h5">办案单位</label> <input type="text" style="font-size:16px;"
-							class="mui-input-clear mui-h5" placeholder="" value="李四盗窃案">
-					</div>
-					<div class="mui-input-row">
-						<label class="mui-h5">抓获时间</label> <input type="text" style="font-size:16px;"
-							class="mui-input-clear mui-h5" placeholder="" value="李四盗窃案">
-					</div>
-					<div class="mui-input-row"> 
-						<label class="mui-h5">主办民警</label> <input type="text" style="font-size:16px;"
-							class="mui-input-clear mui-h5" placeholder="" value="李四盗窃案">
-					</div>
-					<div class="mui-input-row">
-						<label class="mui-h5">协办民警</label> <input type="text" style="font-size:16px;"
-							class="mui-input-clear mui-h5" placeholder="" value="李四盗窃案">
-					</div>
+				<ul class="mui-table-view " id="ul_police_list">
 
-				</form>
+				</ul>
 			</div>
 			<!--页脚，放置补充信息或支持的操作-->
-			<div class="mui-card-footer">
-				<button type="button"
-					class="mui-btn mui-btn-primary mui-btn-outlined"
-					style="width: 100%;" onclick=";">查看案件流程</button>
+			<div class="mui-card-footer div_page_count">
+				<ul class="mui-pagination" id="ul_page_count">
+				</ul>
 			</div>
+			
 		</div>
-
-
 
 	</div>
 
 	<!--------------------------------->
+<!--------------------------------->
 	<!--底部导航-->
 	<nav class="mui-bar mui-bar-tab">
 				<a class="mui-tab-item " onclick="window.location.href='<%=basePath%>user/User_mobile_index'"> <span
@@ -117,13 +106,11 @@ padding:0 5px;
 		</div>
 	<script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript"
-		src="<%=basePath%>js/Index/mobile_indexCaseDetails.js"></script>
+		src="<%=basePath%>js/Info/mobile_caseList.js"></script>
 	<script src="<%=basePath%>js/mui.min.js"></script>
 	<script type="text/javascript">
-		mui.init()
-	</script>
-	<script type="text/javascript">
-		case_details();
+		mui.init();
+	
 	</script>
 </body>
 

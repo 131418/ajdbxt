@@ -11,6 +11,8 @@
 			</result>
 			<result name="page_CaseDetails">/WEB-INF/view/info/CaseDetails.jsp
 			</result>
+			<result name="page_mobileCaseList">/WEB-INF/view/info/mobile_caseList.jsp
+			</result>
 		</action>
 	</package> 
 

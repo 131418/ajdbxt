@@ -324,16 +324,20 @@ function   pencalmanagement(case1){
 	if(case1.process_force_measure_one=="拘留"){
 		$("#detention_delay_date").show();
 		$("#second_punishment").show();
+		$("#twocase_hand_juliu").show();
 	}
 	if(case1.process_force_measure_one=="取保候审"||case1.process_force_measure_one=="监视居住"){
 		$("#qubao_second_punishment").show();
+		$("#twocase_hand_qubao").show();
 	}
 	//第三次强制措施
 	if(case1.process_force_measure_two=="逮捕"){
 		$("#third_punishment").show();
+		$("#threecase_hand_daibu").show();
 	}
 	if(case1.process_force_measure_two=="取保候审"||case1.process_force_measure_two=="监视居住"){
 		$("#qubao_third_punishment").show();
+		$("#threecase_hand_qubao").show();
 	}
 //	if(case1.process_force_measure_two=="起诉"){
 //		$("#supplement_check").show();

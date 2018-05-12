@@ -86,17 +86,15 @@ h1, a {
 	<!--------------------------------->
 	<!--底部导航-->
 	<nav class="mui-bar mui-bar-tab">
-		<a class="mui-tab-item "
-			onclick="window.location.href='<%=basePath%>user/User_mobile_index'">
-			<span class="mui-icon mui-icon-home"></span> <span
-			class="mui-tab-label">首页</span>
-		</a> <a class="mui-tab-item"
-			onclick="window.location.href='<%=basePath%>user/User_mobile_police_one'">
-			<span class="mui-icon mui-icon-person"></span> <span
-			class="mui-tab-label">人员</span>
-		</a> <a class="mui-tab-item" href="#Popover_1"> <span
-			class="mui-icon mui-icon-email"></span> <span class="mui-tab-label">统计</span>
-		</a> <a class="mui-tab-item"> <span
+
+				<a class="mui-tab-item " onclick="window.location.href='<%=basePath%>user/User_mobile_index'"> <span
+			class="mui-icon mui-icon-home"></span> <span class="mui-tab-label">首页</span>
+		</a> <a class="mui-tab-item" onclick="window.location.href='<%=basePath%>user/User_mobile_police_one'"> <span class="mui-icon mui-icon-person"></span>
+			<span class="mui-tab-label" >人员</span>
+		</a> <a class="mui-tab-item"  href="#Popover_1"> <span class="mui-icon mui-icon-email"></span>
+			<span class="mui-tab-label">统计</span>
+		</a> <a class="mui-tab-item" onclick="window.location.href='<%=basePath%>info/Info_page_mobileCaseList'"> <span
+
 			class="mui-icon mui-icon-chatboxes"></span> <span
 			class="mui-tab-label">案件</span>
 		</a>

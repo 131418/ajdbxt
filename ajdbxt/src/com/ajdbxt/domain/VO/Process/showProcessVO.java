@@ -7,6 +7,8 @@ import com.ajdbxt.domain.DO.ajdbxt_process;
 import com.ajdbxt.domain.DTO.Process.ProcessDTO;
 
 public class showProcessVO {
+	private String key;//搜索关键字
+
 	//d当前页
 	private int currPage;
 	//总页
@@ -58,7 +60,13 @@ public class showProcessVO {
 		this.pageSize = pageSize;
 	}
 
+	public String getKey() {
+		return key;
+	}
 
+	public void setKey(String key) {
+		this.key = key;
+	}
 	
 }
 

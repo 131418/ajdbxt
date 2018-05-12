@@ -33,7 +33,7 @@ font-size:14px;
 <body>
 	<header class="mui-bar mui-bar-nav index_nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="window.location.href='<%=basePath%>user/User_mobile_police_one'"></a>
-		<h1 class="mui-title">新增人员</h1>
+		<h1 class="mui-title">新增案件</h1>
 	</header>
 	<div class="mui-content">
 		<div class="mui-card" style="margin:0px;">
@@ -60,15 +60,8 @@ font-size:14px;
 						</select>
 					</div>
 					<div class="mui-input-row">
-						<label  class=" mui-h5">职务</label> <select id="input_police_duty" style="font-size:14px;" >
-							<option selected="selected" value="">请选择</option>
-							<option value="警员">警员</option>
-							<option value="副所队长">副所队长</option>
-							<option value="所队长">所队长</option>
-							<option value="副局长">副局长</option>
-							<option value="局长">局长</option>
-							<option value="政委">政委</option>
-						</select>
+						<label  class=" mui-h5">职务</label> <input type="text" class="mui-input-clear "
+							id="input_police_duty" placeholder="请输入职务">
 					</div>
 					<div class="mui-input-row">
 						<label  class=" mui-h5">法制员</label> <select id="input_police_legaler" style="font-size:14px;" >
