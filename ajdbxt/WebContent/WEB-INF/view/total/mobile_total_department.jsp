@@ -14,6 +14,8 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 <link href="<%=basePath%>css/mui.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="<%=basePath%>css/app.css" />
+<link rel="stylesheet" href="<%=basePath%>css/mui.picker.min.css" />
 <style>
 .index_nav {
 	background-color: #007aff;
@@ -51,20 +53,6 @@
 				href="#popover"></a>
 		</div>
 	</header>
-	<!--时间  -->
-	<div style="display:none;">
-					<input id="select_start_time"
-						class="form-control mydate input_date"
-						style="width: 120px; float: left; text-align: center;" type="text"
-						placeholder="起始时间" value="2018-01-01" />
-					<%--  --%>
-					<span style="float: left; line-height: 34px;">至</span>
-					<!--  -->
-					<input id="select_stop_time" class="form-control mydate input_date"
-						style="width: 120px; float: left; text-align: center;"
-						type="text" placeholder="结束时间" value="2018-05-07" />
-					<%--  --%>
-				</div>
 	<!--------------------------------->
 	<!--弹出菜单-->
 	<div id="popover" class="mui-popover">
@@ -72,17 +60,14 @@
 			<div class="mui-scroll">
 				<ul class="mui-table-view mui-h5" id="ul_total_type">
 					<li class="mui-table-view-cell"><span class="total_info_title">
-							<a class="a_total_type" id="averageScore" >按平均分统计
-						</a>
+							<a class="a_total_type" id="averageScore">按平均分统计 </a>
 					</span></li>
 					<li class="mui-table-view-cell"><span class="total_info_title">
-							<a class="a_total_type" id="adminCase" >按行政案件数统计
-						</a>
+							<a class="a_total_type" id="adminCase">按行政案件数统计 </a>
 					</span></li>
 
 					<li class="mui-table-view-cell"><span class="total_info_title">
-							<a class="a_total_type" id="criminalCase" >按刑事案件数统计
-						</a>
+							<a class="a_total_type" id="criminalCase">按刑事案件数统计 </a>
 					</span></li>
 
 				</ul>
@@ -93,60 +78,159 @@
 		<div class="mui-card" style="margin: 0 0 50px 0">
 			<!--页眉，放置标题-->
 			<div class="mui-card-header" style="padding: 0px;">
-				<div class="mui-card-header" id="total_info_type">按平均分统计</div>
-			</div>
-				<!--内容区-->
-				<div class="mui-card-content">
-					<ul class="mui-table-view" id="ul_total_department">
+				<div class="mui-card-header">
+					<div>
+						<span id="total_info_type">按平均分统计</span>
+						<div class="mui-content-padded">
+							<button id='select_start_time'
+								data-options='{"type":"date","beginYear":1900,"endYear":2100}'
+								class="btn mui-btn">2018-01-01</button>
+							<span>至</span>
+							<button id='select_stop_time'
+								data-options='{"type":"date","beginYear":1900,"endYear":2100}'
+								class="btn mui-btn"></button>
+						</div>
+					</div>
 
-					</ul>
 				</div>
-		</div>
-		</div>
 
-		<!--------------------------------->
-		<!--------------------------------->
-		<!--底部导航-->
-		<nav class="mui-bar mui-bar-tab">
-			<a class="mui-tab-item "
-				onclick="window.location.href='<%=basePath%>user/User_mobile_index'">
-				<span class="mui-icon mui-icon-home"></span> <span
-				class="mui-tab-label">首页</span>
-			</a> <a class="mui-tab-item"
-				onclick="window.location.href='<%=basePath%>user/User_mobile_police_one'">
-				<span class="mui-icon mui-icon-person"></span> <span
-				class="mui-tab-label">人员</span>
-			</a> <a class="mui-tab-item" href="#Popover_1"> <span
-				class="mui-icon mui-icon-email"></span> <span class="mui-tab-label">统计</span>
-			</a> <a class="mui-tab-item"> <span
-				class="mui-icon mui-icon-chatboxes"></span> <span
-				class="mui-tab-label">案件</span>
-			</a>
+			</div>
+			<!--内容区-->
+			<div class="mui-card-content">
+				<ul class="mui-table-view" id="ul_total_department">
 
-		</nav>
-		<div id="Popover_1" class="mui-popover mui-bar-popover"
-			style="top: 376px; left: 112.167px; width: 150px; text-align: center; position: fixed;">
-			<div class="mui-popover-arrow mui-bottom"></div>
-			<ul class="mui-table-view"
-				style="width: 150px; background-color: white;">
-				<li class="mui-table-view-cell"><a href="">按单位统计</a></li>
-				<li class="mui-table-view-cell"><a href="">按人员统计</a></li>
-			</ul>
+				</ul>
+			</div>
 		</div>
-		<script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
-		<script src="<%=basePath%>js/mui.min.js"></script>
-		<script type="text/javascript">
-			mui.init();
-			mui('.mui-scroll-wrapper').scroll()
-		</script>
-		<script type="text/javascript"
+	</div>
+
+	<!--------------------------------->
+	<!--------------------------------->
+	<!--------------------------------->
+	<!--底部导航-->
+	<nav class="mui-bar mui-bar-tab">
+		<a class="mui-tab-item "
+			onclick="window.location.href='<%=basePath%>user/User_mobile_index'">
+			<span class="mui-icon mui-icon-home"></span> <span
+			class="mui-tab-label">首页</span>
+		</a> <a class="mui-tab-item"
+			onclick="window.location.href='<%=basePath%>user/User_mobile_police_one'">
+			<span class="mui-icon mui-icon-person"></span> <span
+			class="mui-tab-label">人员</span>
+		</a> <a class="mui-tab-item" href="#Popover_1"> <span
+			class="mui-icon mui-icon-email"></span> <span class="mui-tab-label">统计</span>
+		</a> <a class="mui-tab-item"> <span
+			class="mui-icon mui-icon-chatboxes"></span> <span
+			class="mui-tab-label">案件</span>
+		</a>
+
+	</nav>
+	<div id="Popover_1" class="mui-popover mui-bar-popover"
+		style="top: 376px; left: 112.167px; width: 150px; text-align: center; position: fixed;">
+		<div class="mui-popover-arrow mui-bottom"></div>
+		<ul class="mui-table-view"
+			style="width: 150px; background-color: white;">
+			<li class="mui-table-view-cell"><a
+				href="<%=basePath%>total/Total_mobile_departmentStatistic">按单位统计</a>
+			</li>
+			<li class="mui-table-view-cell"><a
+				href="<%=basePath%>total/Total_mobile_policeStatistic">按人员统计</a></li>
+		</ul>
+	</div>
+
+	<script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
+	<script src="<%=basePath%>js/mui.min.js"></script>
+	<script type="text/javascript" src="<%=basePath%>js/mui.picker.min.js"></script>
+	<script type="text/javascript"
 		src="<%=basePath%>js/Total/mobile_total_department.js"></script>
-		<script type="text/javascript">
-			var averageScore = document.getElementById("averageScore").innerHTML;
-			List_Total_Department(averageScore,1);
-			$(".input_date").bind("change", function() {
-				List_Total_Department(averageScore,1);
+	<script type="text/javascript">
+		/* mui */
+		mui.init();
+		mui('.mui-scroll-wrapper').scroll()
+		/* 给结束日期设置为当前日期 */
+		var select_stop_time = document.getElementById("select_stop_time");
+		var str = '';
+		var now_date = new Date();
+		var now_date_year = now_date.getFullYear();
+		str += now_date_year;
+		var now_date_month = now_date.getMonth() + 1;
+		if (now_date_month < 10) {
+			str += "-0" + now_date_month;
+		} else {
+			str += "-" + now_date_month;
+		}
+
+		var now_date_date = now_date.getDate();
+		if (now_date_date < 10) {
+			str += "-0" + now_date_date;
+		} else {
+			str += "-" + now_date_date;
+		}
+		select_stop_time.innerText = str;
+		console.log("select_stop_time:" + select_stop_time.innerText);
+		/* 首页数据显示-按平均分统计 */
+		var averageScore = document.getElementById("averageScore").innerHTML;
+		console.log("averageScore:" + averageScore);
+		List_Total_Department(averageScore, 1);
+
+		/* 时间插件的js */
+		(function($) {
+			$.init();
+			var btns = $('.btn');
+			btns.each(function(i, btn) {
+				btn.addEventListener('tap', function() {
+					var _self = this;
+					if (_self.picker) {
+						_self.picker.show(function(rs) {
+							_self.innerText = rs.text;
+							_self.picker.dispose();
+							_self.picker = null;
+							console.log("1111");
+							List_Total_Department(averageScore, 1);
+						});
+					} else {
+						var optionsJson = this.getAttribute('data-options')
+								|| '{}';
+						var options = JSON.parse(optionsJson);
+						var id = this.getAttribute('id');
+						/*
+						 * 首次显示时实例化组件
+						 * 示例为了简洁，将 options 放在了按钮的 dom 上
+						 * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+						 */
+						_self.picker = new $.DtPicker(options);
+						_self.picker.show(function(rs) {
+							/*
+							 * rs.value 拼合后的 value
+							 * rs.text 拼合后的 text
+							 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+							 * rs.m 月，用法同年
+							 * rs.d 日，用法同年
+							 * rs.h 时，用法同年
+							 * rs.i 分（minutes 的第二个字母），用法同年
+							 */
+							_self.innerText = rs.text;
+							/* 
+							 * 返回 false 可以阻止选择框的关闭
+							 * return false;
+							 */
+							/*
+							 * 释放组件资源，释放后将将不能再操作组件
+							 * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+							 * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+							 * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+							 */
+							_self.picker.dispose();
+							_self.picker = null;
+							console.log("1111");
+							List_Total_Department(averageScore, 1);
+						});
+					}
+
+				}, false);
 			});
-		</script>
+		})(mui);
+	</script>
+
 </body>
 </html>
