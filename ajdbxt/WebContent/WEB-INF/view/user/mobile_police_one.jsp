@@ -49,7 +49,7 @@ h1, a {
 				--%>
 
 		<!-- <div class="mui-card" style="margin-bottom: 70px"> -->
-		<div class="mui-card" style="margin: 0 0 50px 0">
+		<div class="mui-card" style="margin:0px;padding:0 0 10px 0;">
 			<!--页眉，放置标题-->
 			<div class="mui-card-header" style="padding: 0px;">
 				<%-- <!-- 搜索框 -->
@@ -82,7 +82,7 @@ h1, a {
 
 	</div>
 
-	<!--------------------------------->
+	<%-- <!--------------------------------->
 	<!--------------------------------->
 	<!--底部导航-->
 	<nav class="mui-bar mui-bar-tab">
@@ -108,7 +108,7 @@ h1, a {
 			<li class="mui-table-view-cell"><a href="">按单位统计</a></li>
 			<li class="mui-table-view-cell"><a href="">按人员统计</a></li>
 		</ul>
-	</div>
+	</div> --%>
 	<script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>js/User/mobile_police_one.js"></script>
