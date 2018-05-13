@@ -47,8 +47,10 @@
 
 <body>
 	<header class="mui-bar mui-bar-nav index_nav">
-		<a style="color: white;" class="mui-icon mui-icon-more"
-			id='showUserPicker'></a>
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"
+			onclick="window.location.href='<%=basePath%>user/User_mobile_index'"></a>
+		<!-- <a style="color: white;" class="mui-icon mui-icon-more"
+			id='showUserPicker'></a> -->
 		<h1 class="mui-title" style="color: white;">按人员统计</h1>
 		<div class="index_nav_option" style="float: right;">
 			<a style="color: white;"
@@ -86,7 +88,7 @@
 		</div>
 	</div>
 	<div class="mui-content">
-		<div class="mui-card" style="margin: 0 0 50px 0">
+		<div class="mui-card" style="margin:0px;padding:0 0 5px 0;">
 			<!-- 搜索框 -->
 			<div class="mui-input-row mui-search" style="width: 100%;">
 				<input type="search" id="input_PoliceSearchText"
@@ -126,39 +128,6 @@
 				</ul>
 			</div>
 		</div>
-	</div>
-
-	<!--------------------------------->
-	<!--------------------------------->
-	<!--底部导航-->
-	<nav class="mui-bar mui-bar-tab">
-		<a class="mui-tab-item "
-			onclick="window.location.href='<%=basePath%>user/User_mobile_index'">
-			<span class="mui-icon mui-icon-home"></span> <span
-			class="mui-tab-label">首页</span>
-		</a> <a class="mui-tab-item"
-			onclick="window.location.href='<%=basePath%>user/User_mobile_police_one'">
-			<span class="mui-icon mui-icon-person"></span> <span
-			class="mui-tab-label">人员</span>
-		</a> <a class="mui-tab-item" href="#Popover_1"> <span
-			class="mui-icon mui-icon-email"></span> <span class="mui-tab-label">统计</span>
-		</a> <a class="mui-tab-item"> <span
-			class="mui-icon mui-icon-chatboxes"></span> <span
-			class="mui-tab-label">案件</span>
-		</a>
-
-	</nav>
-	<div id="Popover_1" class="mui-popover mui-bar-popover"
-		style="top: 376px; left: 112.167px; width: 150px; text-align: center; position: fixed;">
-		<div class="mui-popover-arrow mui-bottom"></div>
-		<ul class="mui-table-view"
-			style="width: 150px; background-color: white;">
-			<li class="mui-table-view-cell"><a
-				href="<%=basePath%>total/Total_mobile_departmentStatistic">按单位统计</a>
-			</li>
-			<li class="mui-table-view-cell"><a
-				href="<%=basePath%>total/Total_mobile_policeStatistic">按人员统计</a></li>
-		</ul>
 	</div>
 
 	<script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
@@ -227,13 +196,13 @@
 											}, 'json');
 						});
 
-						var showUserPickerButton = doc
-								.getElementById('showUserPicker');
+						/* var showUserPickerButton = doc
+								.getElementById('showUserPicker'); */
 						var select_case_department = doc
 								.getElementById('select_case_department');
 						var select_case_department_id = doc
 								.getElementById('select_case_department_id');
-						showUserPickerButton
+						select_case_department
 								.addEventListener(
 										'tap',
 										function(event) {

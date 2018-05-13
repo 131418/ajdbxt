@@ -92,7 +92,19 @@ function List_Total_User(e,pageIndex) {
 				// 获得ul的id
 				var ul_total_user = document.getElementById("ul_total_user");
 
+				/*
+				 * 移出除标题以外的所有行
+				 */
+
+				var old_li = document.getElementsByClassName("new_li");
+				var long = old_li.length;
+				for (var i = 0; i < long; i++) {
+					old_li[0].parentNode.removeChild(old_li[0]);
+				}
+
 				var str_page_row = null;
+				console.log("total_vo.totalRecords:" +total_vo.totalRecords);
+				if (total_vo.totalRecords > 0) {
 
 					/*
 					 * 移出除标题以外的所有行
@@ -104,6 +116,7 @@ function List_Total_User(e,pageIndex) {
 						old_li[0].parentNode.removeChild(old_li[0]);
 					}
 
+					
 					/*
 					 * 将数据库的数据取出来放到表格里
 					 */
@@ -295,9 +308,16 @@ function List_Total_User(e,pageIndex) {
 						new_div.appendChild(new_form);
 						new_li.appendChild(new_div);
 					}
+				}
+					else {
+						$("#ul_total_user")
+								.html(
+										'<li class="mui-table-view-cell mui-collapse new_li" style="text-align:center;color:red;font-size:20px;margin:10px 0;">抱歉，无统计信息</li>');
+					}
 					/*console.log("total_vo.currePage:" + total_vo.currePage);
 					console.log("total_vo.totalPages:" +total_vo.totalPages);
 					console.log("total_vo.totalRecords:" + total_vo.totalRecords);*/
+				console.log("total_vo.totalRecords:" + total_vo.totalRecords);
 					// 翻页
 					str_page_row = '<li class="mui-disabled "><span onclick="flip(2)"> &laquo; </span>';// 上一页
 					str_page_row += '<span><select class="mui-select" id="select_page" style="padding:0 15px;margin-bottom:0px;">'
