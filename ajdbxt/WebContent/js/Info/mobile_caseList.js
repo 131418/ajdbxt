@@ -167,9 +167,18 @@ function List_Police_By_Page(pageIndex) {
 						 * 0. a链接
 						 */
 						new_a = document.createElement("a");
-						new_a.className = "mui-navigate-right";
+						new_a.className = "a_to_details";
+						new_a.id="a";
+						//new_a.className = "mui-navigate-right";
+					//	new_a.href="/ajdbxt/info/Info_page_mobile_caseOneDetails"
+							
 						new_a.appendChild(document.createTextNode(''));
 						new_li.appendChild(new_a);
+						$(".a_to_details").bind("click", function() {
+							console.log("a");
+							//document.getElementById("a").href="/ajdbxt/info/Info_page_mobile_caseOneDetails"
+							window.location.href="/ajdbxt/info/Info_page_mobile_caseOneDetails?ajdbxt_info_id =e9d7f76e-96c3-4d31-8491-432edeaa90b7";
+						})
 
 						/*
 						 * 1. 案件序号
@@ -427,15 +436,15 @@ function List_Police_By_Page(pageIndex) {
 }
 
 // -----------------------------
-// --------添加人员--------------
+// --------添加案件--------------
 
 function createPolice() {
 
-	// 警号
-	var input_police_serial_number = document
-			.getElementById("input_police_serial_number").value;
-	if (input_police_serial_number == "") {
-		mui.toast("警号不能为空！");
+	// 案件名称
+	var input_info_name = document
+			.getElementById("input_info_name").value;
+	if (input_info_name == "") {
+		mui.toast("案件名称不能为空！");
 		return false;
 	}
 	// 密码

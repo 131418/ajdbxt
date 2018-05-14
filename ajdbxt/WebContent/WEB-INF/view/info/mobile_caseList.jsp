@@ -29,7 +29,7 @@ h1, a {
 
 <body>
 	<!-- 添加案件-->
-			<div class="mui-icon mui-icon-plusempty" id="div_police_add" style="position: fixed;top: 10px;right: 20px; font-weight:bold;color: white;z-index: 9999999;" onclick="window.location.href='<%=basePath%>user/User_mobile_police_add'"></div>
+			<div class="mui-icon mui-icon-plusempty" id="div_police_add" style="position: fixed;top: 10px;right: 20px; font-weight:bold;color: white;z-index: 9999999;" onclick="window.location.href='<%=basePath%>info/Info_page_mobile_caseAdd'"></div>
 	<header class="mui-bar mui-bar-nav index_nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="window.location.href='<%=basePath%>user/User_mobile_index'"></a>
 		<h1 class="mui-title" style="color: white;">案件信息</h1>
@@ -65,6 +65,7 @@ h1, a {
 				<ul class="mui-table-view " id="ul_police_list">
 
 				</ul>
+
 			</div>
 			<!--页脚，放置补充信息或支持的操作-->
 			<div class="mui-card-footer div_page_count">

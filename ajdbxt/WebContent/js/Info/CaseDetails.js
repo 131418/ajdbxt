@@ -325,6 +325,7 @@ function   pencalmanagement(case1){
 		$("#detention_delay_date").show();
 		$("#second_punishment").show();
 		$("#twocase_hand_juliu").show();
+		$("#casehand_no").show();
 	}
 	if(case1.process_force_measure_one=="取保候审"||case1.process_force_measure_one=="监视居住"){
 		$("#qubao_second_punishment").show();
@@ -1427,9 +1428,10 @@ function penalloadpencalproblem_rectification() {
 	} else {
 		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
 	}
-	var penalprocess_question = document.getElementById("penalprocess_question").value;
+	var penalprocess_question = document.getElementById("").value;
 	var formData = new FormData(processDetails);
 	formData.append("ajdbxtProcess.process_question", penalprocess_question);
+	
 	xmlhttp.onreadystatechange = function() {
 		console.log("c2");
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -1590,6 +1592,50 @@ function penalloadpencalcasehand() {
 					+ info_id, true);
 	xmlhttp.send(formData);
 }
+//案卷拿回
+function pencalcasehand_no() {
+	$.confirm({
+		title : '提交!',
+		content : '确定提交么!',
+		buttons : {
+
+			取消 : function() {
+			},
+			确定 : {
+				action : function() {
+					penalloadpencalcasehand_no();
+				}
+			}
+		}
+	});
+}
+// 是否案卷拿回提交按钮
+function penalloadpencalcasehand_no() {
+	console.log("b2");
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
+	}
+	var processDetails = document.getElementById("penalProcessDetails");
+	var formData = new FormData(processDetails);
+	xmlhttp.onreadystatechange = function() {
+		console.log("c2");
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			if (isContains(result,'success')) {
+				get_processDetails(info_id);
+				toastr.success('编辑成功！');
+			} else {
+				toastr.error('编辑失败！');
+			}
+		}
+	};
+	xmlhttp.open("post",
+			"/ajdbxt/process/updateProcessAction?ajdbxtProcess.process_case_id="
+					+ info_id, true);
+	xmlhttp.send(formData);
+}
 //行政案件流程
 function get_processDetails_Ajax(url, info_id) {
 	var xmlhttp;
@@ -1628,6 +1674,7 @@ function get_processDetails_Ajax(url, info_id) {
 				} else
 					obj.val(v);
 			});
+	
 		//单选框     //嫌疑人
 			if(case1.process_lengthen_subpoena!=null && case1.process_lengthen_subpoena.length>0){
 				if("是"==case1.process_lengthen_subpoena){
@@ -1710,15 +1757,15 @@ function get_processDetails_Ajax(url, info_id) {
 			}
 			
 			//戒毒
-			if(case1.process_treatment_category!=null && case1.process_treatment_category.length>0){
-				if($('#process_treatment_category_yes').val()==case1.process_treatment_category){
-					$('#process_treatment_category_yes').attr("checked","checked");
-					$("#process_treatment_category_no").prop("disabled", true);
-				}else{
-					$('#process_treatment_category_no').attr("checked","checked");
-					$("#process_treatment_category_yes").prop("disabled", true);
-				}
-			}
+//			if(case1.process_treatment_category!=null && case1.process_treatment_category.length>0){
+//				if($('#process_treatment_category_yes').val()==case1.process_treatment_category){
+//					$('#process_treatment_category_yes').attr("checked","checked");
+//					$("#process_treatment_category_no").prop("disabled", true);
+//				}else{
+//					$('#process_treatment_category_no').attr("checked","checked");
+//					$("#process_treatment_category_yes").prop("disabled", true);
+//				}
+//			}
 			
 			
 			//提出问题
@@ -1929,6 +1976,7 @@ function get_processDetails_Ajax(url, info_id) {
 //				}
 //			});
 			  management(case1);
+			  checkbox_process_question(case1);  
 		}
 		
 	}
@@ -1961,6 +2009,7 @@ function changesuspect_summon_no(even) {
 }
 // 办理延长传唤		提交
 function suspect_summon(button) {
+	alert("a");
 	$.confirm({
 		title : '提交!',
 		content : '确定提交么!',
@@ -1994,6 +2043,7 @@ function loadcaseDetail_suspect_summon(button) {
 //				location.reload(true);
 				get_processDetails(info_id);
 				toastr.success('编辑成功！');
+				
 			} else {
 				toastr.error('编辑失败！');
 			}
@@ -2501,9 +2551,11 @@ function loadcaseDetail_problem_rectification() {
 		xmlhttp = new ActiveXOBject("Microsoft.XMLHTTP");
 	}
 	//var processDetails = document.getElementById("processDetails");
-	var process_question = document.getElementById("process_question").value;
+//	var process_question = document.getElementById("process_question").value;
+//	var formData = new FormData(processDetails);
+	var processDetails = document.getElementById("processDetails");
 	var formData = new FormData(processDetails);
-	formData.append("ajdbxtProcess.process_question", process_question);
+//	formData.append("ajdbxtProcess.process_question", process_question);
 	xmlhttp.onreadystatechange = function() {
 		console.log("c2");
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -2596,7 +2648,8 @@ function changeprocess_treatment_category_no(even) {
 
 
 // CaseDetails.jsp中的处罚提交
-function punishmentab() {
+function punishmentab_chufa() {
+	alert("a");
 	$.confirm({
 		title : '提交!',
 		content : '确定提交么!',
@@ -2640,11 +2693,16 @@ function loadcaseDetail_punishmentab() {
 		if($('#process_community_abandon_drug').is(':checked')){
 			process_community_abandon_drug = '是'
 		}
+	var process_administrativ_warning = '否'
+		if($('#process_administrativ_warning').is(':checked')){
+			process_administrativ_warning = '是'
+		}
 	var formData = new FormData(processDetails);
 	formData.append("ajdbxtProcess.process_detention", process_detention);
 	formData.append("ajdbxtProcess.process_penalty", process_penalty);
 	formData.append("ajdbxtProcess.process_mandatory_abandon_drug", process_mandatory_abandon_drug);
 	formData.append("ajdbxtProcess.process_community_abandon_drug", process_community_abandon_drug);
+	formData.append("ajdbxtProcess.process_administrativ_warning", process_administrativ_warning);
 	xmlhttp.onreadystatechange = function() {
 		console.log("c2");
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -2842,5 +2900,52 @@ function loadcaseDetail_process_is_rollback_ok(){
 //}
 //刑事案件
 
+function checkbox_process_question(case1){
+//	var second_str ="" ;
+//	var question_list = case1.process_question_list;
+//	console.log("question_list"+question_list);
+//	for(var num = 0; num < question_list; num++){
+//		console.log(num)
+//		var n =1;
+//		//second_str = '<label style="margin: 0 10px;"> <input type="checkbox" name="second_punishment" value="num" onclick="second_punishmentClick()"> num</label>'
+//		second_str += '<label style="margin: 0 10px;"><input type="checkbox" name="second_punishment" value="取保候审" onclick="second_punishmentClick()" >  </label>';
+//			$("#checkbox_process_question").html(second_str);
+//
+//	}
+	//second_str = '<label style="margin: 0 10px;"> <input type="radio" name="second_punishment" value="逮捕" onclick="second_punishmentClick()"> 逮捕</label>';
+	//second_str += '<label style="margin: 0 10px;"><input type="radio" name="second_punishment" value="取保候审" onclick="second_punishmentClick()" > 取保候审 </label>';
+	//second_str += '<label style="margin: 0 10px;"><input type="radio" name="second_punishment" value="监视居住" onclick="second_punishmentClick()">监视居住 </label>';
+	
+	var question_list = case1.process_question_list;
+	var executerDiv=$("#checkbox_process_question");
+    executerDiv.innerHTML="";
+    var ul=document.createElement("ul");
 
+    for(var i=0;i<question_list;i++){
+       // var arr=question_list[i];
 
+        // 加入复选框
+        var checkBox=document.createElement("input");
+        checkBox.setAttribute("type","checkbox");
+//        checkBox.setAttribute("id",i+1);
+//        checkBox.setAttribute("name", case1.process_question);
+//        checkBox.setAttribute("value", i+1);
+        checkBox.name = " case1.process_question";  
+        checkBox.id= 1;
+        checkBox.value = 1;  
+        var li=document.createElement("li");
+        li.appendChild(checkBox);       
+        li.appendChild(document.createTextNode(i+1));
+
+        ul.appendChild(li);       
+    }   
+
+  //  executerDiv.appendChild(ul);
+    $("#checkbox_process_question").html(ul);
+a(case1);
+} 
+
+function a(case1){
+var s=	 document.getElementById( 'checkbox_process_question').getElementsByTagName("li")[0].value ;
+	console.log(s)
+}
