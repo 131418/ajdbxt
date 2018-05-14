@@ -822,6 +822,29 @@ html, body, .radio, .checkbox, .button_process {
 													</fieldset>
 												</div>
 											</div>
+											<!-- ---------------------------------------------------->
+											<!-------------第一次强制措施案卷上交---------------->
+											<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'> 
+											<div class="first_process_div col-md-12">
+												<div class="first_process">
+													<fieldset>
+														<legend>法制大队案卷上交</legend>
+														<!--  -->
+														<div class="summon_process col-md-12">
+															<div class="process_title col-md-4">案卷上交：</div>
+															<div class="process_title col-md-4">
+																<input type="hidden"  
+																	name="ajdbxtProcess.process_file_hand" value="是">
+																<button type="button"   onclick="pencalcasehand()"
+																	class="btn btn-primary  btn-block legal_team_manager_btn"
+																	style="float: center;">案卷上交</button>
+															</div>
+
+														</div>
+													</fieldset>
+												</div>
+											</div>
+											</s:if> 
 											<!-------------------------------------->
 											<!-------------第四阶段 拘留延长期限---------------->
 											<div class="first_process_div col-md-12"
@@ -934,6 +957,28 @@ html, body, .radio, .checkbox, .button_process {
 													</fieldset>
 												</div>
 											</div>
+											<!-- ------------------------------------------第二次强制措施案卷上交------------------------------------------------------>
+											<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'> 
+											<div class="first_process_div col-md-12"  id="twocase_hand_juliu" style="display: none;">
+												<div class="first_process">
+													<fieldset>
+														<legend>法制大队案卷上交</legend>
+														<!--  -->
+														<div class="summon_process col-md-12">
+															<div class="process_title col-md-4">案卷上交：</div>
+															<div class="process_title col-md-4">
+																<input type="hidden"
+																	name="ajdbxtProcess.process_file_hand" value="是">
+																<button type="button"   onclick="pencalcasehand()"
+																	class="btn btn-primary  btn-block legal_team_manager_btn"
+																	style="float: center;">案卷上交</button>
+															</div>
+
+														</div>
+													</fieldset>
+												</div>
+											</div>
+											</s:if> 
 											<!-- -------------------------------------------------------------取保候审、监视居住----------------- -->
 											<div class="first_process_div col-md-12"
 												id="qubao_second_punishment" style="display: none;">
@@ -959,6 +1004,28 @@ html, body, .radio, .checkbox, .button_process {
 													</fieldset>
 												</div>
 											</div>
+											<!-- ---------------------------------------------------------第二次案卷上交----------------- -->
+											<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'> 
+											<div class="first_process_div col-md-12"  id="twocase_hand_qubao" style="display: none;">
+												<div class="first_process">
+													<fieldset>
+														<legend>法制大队案卷上交</legend>
+														<!--  -->
+														<div class="summon_process col-md-12">
+															<div class="process_title col-md-4">案卷上交：</div>
+															<div class="process_title col-md-4">
+																<input type="hidden"
+																	name="ajdbxtProcess.process_file_hand" value="是">
+																<button type="button"   onclick="pencalcasehand()"
+																	class="btn btn-primary  btn-block legal_team_manager_btn"
+																	style="float: center;">案卷上交</button>
+															</div>
+
+														</div>
+													</fieldset>
+												</div>
+											</div>
+											</s:if> 
 											<!-------------------------------------->
 											<!-------------第八阶段 第三次强制措施--------（逮捕）-------->
 											<div class="first_process_div col-md-12"
@@ -985,6 +1052,29 @@ html, body, .radio, .checkbox, .button_process {
 													</fieldset>
 												</div>
 											</div>
+											<!-- ------------------------------------------------------------------------------- -->
+											<!-------------第三次案卷上交-------->
+											<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'> 
+											<div class="first_process_div col-md-12" id="threecase_hand_daibu" style="display: none;">
+												<div class="first_process">
+													<fieldset>
+														<legend>法制大队案卷上交</legend>
+														<!--  -->
+														<div class="summon_process col-md-12">
+															<div class="process_title col-md-4">案卷上交：</div>
+															<div class="process_title col-md-4">
+																<input type="hidden"
+																	name="ajdbxtProcess.process_file_hand" value="是">
+																<button type="button"   onclick="pencalcasehand()"
+																	class="btn btn-primary  btn-block legal_team_manager_btn"
+																	style="float: center;">案卷上交</button>
+															</div>
+
+														</div>
+													</fieldset>
+												</div>
+											</div>
+											</s:if> 
 											<!-- ------------------------------取保候审、监视居住------------------------------------- -->
 										<div class="first_process_div col-md-12"
 												id="qubao_third_punishment" style="display: none;">
@@ -1010,6 +1100,28 @@ html, body, .radio, .checkbox, .button_process {
 													</fieldset>
 												</div>
 											</div>
+											<!-------------第三次案卷上交---------------->
+											<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'> 
+											<div class="first_process_div col-md-12" id="threecase_hand_qubao" style="display: none;">
+												<div class="first_process">
+													<fieldset>
+														<legend>法制大队案卷上交</legend>
+														<!--  -->
+														<div class="summon_process col-md-12">
+															<div class="process_title col-md-4">案卷上交：</div>
+															<div class="process_title col-md-4">
+																<input type="hidden"
+																	name="ajdbxtProcess.process_file_hand" value="是">
+																<button type="button"   onclick="pencalcasehand()"
+																	class="btn btn-primary  btn-block legal_team_manager_btn"
+																	style="float: center;">案卷上交</button>
+															</div>
+
+														</div>
+													</fieldset>
+												</div>
+											</div>
+											</s:if> 
 											<!-------------------------------------->
 											<!-------------第九阶段 第四次强制措施------取保候审---------->
 											<div class="first_process_div col-md-12"
@@ -1135,27 +1247,27 @@ html, body, .radio, .checkbox, .button_process {
 
 											<!-------------------------------------->
 											<!-------------第十三阶段 案卷上交---------------->
-											<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'> 
-											<div class="first_process_div col-md-12">
-												<div class="first_process">
-													<fieldset>
-														<legend>法制大队案卷上交</legend>
-														<!--  -->
-														<div class="summon_process col-md-12">
-															<div class="process_title col-md-4">案卷上交：</div>
-															<div class="process_title col-md-4">
-																<input type="hidden"
-																	name="ajdbxtProcess.process_file_hand" value="是">
-																<button type="button"   onclick="pencalcasehand()"
-																	class="btn btn-primary  btn-block legal_team_manager_btn"
-																	style="float: center;">案卷上交</button>
-															</div>
+<%-- 											<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>  --%>
+<!-- 											<div class="first_process_div col-md-12"> -->
+<!-- 												<div class="first_process"> -->
+<!-- 													<fieldset> -->
+<!-- 														<legend>法制大队案卷上交</legend> -->
+<!-- 														 -->
+<!-- 														<div class="summon_process col-md-12"> -->
+<!-- 															<div class="process_title col-md-4">案卷上交：</div> -->
+<!-- 															<div class="process_title col-md-4"> -->
+<!-- 																<input type="hidden" -->
+<!-- 																	name="ajdbxtProcess.process_file_hand" value="是"> -->
+<!-- 																<button type="button"   onclick="pencalcasehand()" -->
+<!-- 																	class="btn btn-primary  btn-block legal_team_manager_btn" -->
+<!-- 																	style="float: center;">案卷上交</button> -->
+<!-- 															</div> -->
 
-														</div>
-													</fieldset>
-												</div>
-											</div>
-											</s:if> -
+<!-- 														</div> -->
+<!-- 													</fieldset> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<%-- 											</s:if>  --%>
 
 										</div>
 									</form>

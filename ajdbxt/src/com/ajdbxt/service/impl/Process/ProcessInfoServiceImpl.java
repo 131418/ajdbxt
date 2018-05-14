@@ -100,6 +100,8 @@ public class ProcessInfoServiceImpl implements ProcessInfoService {
 			String three=info.getInfo_assistant_police_two();
 			if(three!=null&&three.isEmpty()==false) {
 				policeList.add(processPoliceDao.findPoliceById(three));
+			}else {
+				policeList.add(new ajdbxt_police());
 			}
 			processInfo.setPolice(policeList);
 			case_list.add(processInfo);

@@ -160,6 +160,28 @@ public class ProcessInfoDaoImpl implements ProcessInfoDao {
 		}
 		return query.list().size();
 	}
+
+	@Override
+	public int countInfoByKey(String key) {
+		Session session=sessionFactory.getCurrentSession();
+		Criteria cri=session.createCriteria(ajdbxt_info.class)
+						.add(Restrictions.like("info_main_police", key))
+						.add(Restrictions.like("info_catch_time", key))
+						.add(Restrictions.like("info_name", key));
+		return cri.list().size();
+	}
+
+	@Override
+	public List<ajdbxt_info> findInfoByKey(String key, int start, int lenght) {
+		Session session=sessionFactory.getCurrentSession();
+		Criteria cri=session.createCriteria(ajdbxt_info.class)
+						.add(Restrictions.like("info_main_police", key))
+						.add(Restrictions.like("info_catch_time", key))
+						.add(Restrictions.like("info_name", key))
+						.setFirstResult(start)
+						.setMaxResults(lenght);
+		return cri.list();
+	}
 	
 }
 

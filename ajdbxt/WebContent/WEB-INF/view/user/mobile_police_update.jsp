@@ -38,7 +38,7 @@ select, input {
 		<h1 class="mui-title">修改人员</h1>
 	</header>
 	<div class="mui-content">
-		<div class="mui-card" style="margin: 0px;">
+		<div class="mui-card" style="margin:0px;padding:0 0 10px 0;">
 			<!--页眉，放置标题-->
 			<!--	<div class="mui-card-header">页眉</div>-->
 			<!--内容区-->
@@ -102,33 +102,6 @@ select, input {
 		</div>
 	</div>
 
-	<!--------------------------------->
-	<!--底部导航-->
-	<nav class="mui-bar mui-bar-tab">
-				<a class="mui-tab-item " onclick="window.location.href='<%=basePath%>user/User_mobile_index'"> <span
-			class="mui-icon mui-icon-home"></span> <span class="mui-tab-label">首页</span>
-		</a> <a class="mui-tab-item" onclick="window.location.href='<%=basePath%>user/User_mobile_police_one'"> <span class="mui-icon mui-icon-person"></span>
-			<span class="mui-tab-label" >人员</span>
-		</a> <a class="mui-tab-item"  href="#Popover_1"> <span class="mui-icon mui-icon-email"></span>
-			<span class="mui-tab-label">统计</span>
-		</a> <a class="mui-tab-item"> <span
-			class="mui-icon mui-icon-chatboxes"></span> <span
-			class="mui-tab-label">案件</span>
-		</a>
-
-	</nav>
-	<div id="Popover_1" class="mui-popover mui-bar-popover" style="top: 376px; left: 112.167px;width:150px;text-align: center;position: fixed;">
-			<div class="mui-popover-arrow mui-bottom">
-			</div>
-			<ul class="mui-table-view" style="width:150px;background-color: white;">
-				<li class="mui-table-view-cell" >
-					<a href="">按单位统计</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a href="">按人员统计</a>
-				</li>
-			</ul>
-		</div>
 	<script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>js/User/mobile_police_one.js"></script>

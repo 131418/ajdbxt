@@ -45,7 +45,7 @@ function List_Total_By_Page(e,pageIndex) {
 	var input_Total_PoliceSearchText = document
 			.getElementById("input_Total_PoliceSearchText").value;
 	var select_case_department = document
-			.getElementById("select_case_department").value;
+			.getElementById("select_case_department").value;//得到部门的id,其中value="...department_id"
 	var MainadminCase = document.getElementById("MainadminCase").value;
 	var MaincriminalCase = document.getElementById("MaincriminalCase").value;
 	var InsisadminCase = document.getElementById("InsisadminCase").value;
@@ -165,9 +165,8 @@ function List_Total_By_Page(e,pageIndex) {
 	}
 	var formData = new FormData();
 	formData.append("policeCaseStatisticVo.currePage", pageIndex);
-	formData.append("policeCaseStatisticVo.searchPolice",
-			input_Total_PoliceSearchText);
-	formData.append("policeCaseStatisticVo.department", select_case_department);
+	formData.append("policeCaseStatisticVo.searchPolice",input_Total_PoliceSearchText);
+	formData.append("policeCaseStatisticVo.department", select_case_department);//此处传的是部门id
 	formData.append("policeCaseStatisticVo.start_time", select_start_time.value);
 	formData.append("policeCaseStatisticVo.stop_time", select_stop_time.value);
 	formData.append("policeCaseStatisticVo.orderString",e_str);
