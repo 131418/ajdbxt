@@ -150,6 +150,10 @@ public class UserAction extends ActionSupport {
 		return "mobile_login";
 	}
 	
+	public String mobile_navbar() {
+		return "mobile_navbar";
+	}
+	
 	//移动端按id查询民警
 	public void findPoliceById_mobile() {
 		try {
