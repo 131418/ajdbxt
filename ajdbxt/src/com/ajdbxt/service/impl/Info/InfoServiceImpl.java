@@ -22,6 +22,7 @@ import com.ajdbxt.domain.DTO.Process.ProcessInfoDTO;
 import com.ajdbxt.domain.VO.Info.LegalSystemAndLeadersVO;
 import com.ajdbxt.domain.VO.Info.Page_list_caseInfoVo;
 import com.ajdbxt.service.Info.InfoService;
+import com.opensymphony.xwork2.ActionContext;
 import com.ajdbxt.domain.DO.*;
 import util.JsonUtils;
 import util.MsgSend;
@@ -411,7 +412,13 @@ System.out.println(":::" + infoPoliceDao.findPoliceById(info.getInfo_department_
 		if(info.getInfo_category().equals("行政案件")) {
 			caseFiled=true;
 		}
-		new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext).start();//人员变动带来的流程变动不好处理
+		
+		Object o=ServletActionContext.getServletContext().getAttribute("threadMap");
+		HashMap<String,Object> ho= (HashMap)o;
+		SMSThread t=new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext);
+		t.start();//人员变动带来的流程变动不好处理
+		ho.put(UUID.randomUUID().toString().toUpperCase(), t);
+		
 		return JsonUtils.toJson(processDTO);
 	}
 	
