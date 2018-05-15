@@ -13,7 +13,6 @@
 <title></title>
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-<link href="<%=basePath%>css/mui.min.css" rel="stylesheet" />
 <style>
 .index_nav {
 	background-color: #007aff;
@@ -21,46 +20,55 @@
 	font-size: 15px;
 }
 
-.index_nav h1, a {
+.index_nav h1, .index_nav a {
 	color: white;
 }
-select,input{
-font-size:14px;
+
+.mui-input-row select, .mui-input-row input {
+	font-size: 14px;
 }
 </style>
 </head>
 
 <body>
+	<s:action name="User_mobile_navbar" namespace="/user"
+		executeResult="true" />
 	<header class="mui-bar mui-bar-nav index_nav">
-		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="window.location.href='<%=basePath%>user/User_mobile_police_one'"></a>
+		<a id="tory_a"
+			class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">新增人员</h1>
 	</header>
 	<div class="mui-content">
-		<div class="mui-card" style="margin:0px;padding:0 0 10px 0;">
+		<div class="mui-card" style="margin: 0px;">
 			<!--页眉，放置标题-->
 			<!--	<div class="mui-card-header">页眉</div>-->
 			<!--内容区-->
 			<div class="mui-card-content">
 				<form class="mui-input-group">
 					<div class="mui-input-row">
-						<label class=" mui-h5">警号</label> <input type="text" class="mui-input-clear"
-							id="input_police_serial_number" placeholder="请输入警号">
+						<label class=" mui-h5">警号</label> <input type="text"
+							class="mui-input-clear" id="input_police_serial_number"
+							placeholder="请输入警号">
 					</div>
 					<div class="mui-input-row">
-						<label  class=" mui-h5">密码</label> <input type="text" class="mui-input-clear " 
-							id="input_police_password" placeholder="请输入密码">
+						<label class=" mui-h5">密码</label> <input type="text"
+							class="mui-input-clear " id="input_police_password"
+							placeholder="请输入密码">
 					</div>
 					<div class="mui-input-row">
-						<label  class=" mui-h5">姓名</label> <input type="text" class="mui-input-clear"
-							id="input_police_name" placeholder="请输入姓名">
+						<label class=" mui-h5">姓名</label> <input type="text"
+							class="mui-input-clear" id="input_police_name"
+							placeholder="请输入姓名">
 					</div>
 					<div class="mui-input-row">
-						<label  class=" mui-h5">单位</label> <select id="input_police_department" style="font-size:14px;">
+						<label class=" mui-h5">单位</label> <select
+							id="input_police_department" style="font-size: 14px;">
 							<option>1</option>
 						</select>
 					</div>
 					<div class="mui-input-row">
-						<label  class=" mui-h5">职务</label> <select id="input_police_duty" style="font-size:14px;" >
+						<label class=" mui-h5">职务</label> <select id="input_police_duty"
+							style="font-size: 14px;">
 							<option selected="selected" value="">请选择</option>
 							<option value="警员">警员</option>
 							<option value="副所队长">副所队长</option>
@@ -71,39 +79,46 @@ font-size:14px;
 						</select>
 					</div>
 					<div class="mui-input-row">
-						<label  class=" mui-h5">法制员</label> <select id="input_police_legaler" style="font-size:14px;" >
+						<label class=" mui-h5">法制员</label> <select
+							id="input_police_legaler" style="font-size: 14px;">
 							<option selected="selected" value="">请选择</option>
 							<option value="1">是</option>
 							<option value="2">否</option>
 						</select>
 					</div>
 					<div class="mui-input-row ">
-						<label  class=" mui-h5">权限</label> <select id="input_police_power" style="font-size:14px;">
+						<label class=" mui-h5">权限</label> <select id="input_police_power"
+							style="font-size: 14px;">
 							<!-- <option value="1">单位内浏览</option>
 							<option value="2">单位内管理</option>
 							<option value="3">所有单位内管理</option> -->
 						</select>
 					</div>
 					<div class="mui-input-row">
-						<label  class=" mui-h5">电话</label> <input type="text" class="mui-input-clear "
-							id="input_police_phone_number" placeholder="请输入电话号码">
+						<label class=" mui-h5">电话</label> <input type="text"
+							class="mui-input-clear " id="input_police_phone_number"
+							placeholder="请输入电话号码">
 					</div>
 				</form>
 			</div>
 			<!--页脚，放置补充信息或支持的操作-->
 			<div class="mui-card-footer">
-				<button type="button" class="mui-btn mui-btn-primary mui-btn-outlined"
-					style="width:100%;" onclick="createPolice();">确认添加</button>
+				<button type="button"
+					class="mui-btn mui-btn-primary mui-btn-outlined"
+					style="width: 100%;" onclick="createPolice();">确认添加</button>
 			</div>
 		</div>
 	</div>
 
-	<script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>js/User/mobile_police_one.js"></script>
-	<script src="<%=basePath%>js/mui.min.js"></script>
 	<script type="text/javascript">
 		mui.init();
+		document.getElementById("tory_a").addEventListener("tap", function() {
+			mui.openWindow({
+				url : '/ajdbxt/user/User_mobile_police_one',
+			});
+		});
 	</script>
 </body>
 
