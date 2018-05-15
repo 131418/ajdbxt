@@ -2042,7 +2042,8 @@ function loadcaseDetail_suspect_summon(button) {
 			if (isContains(result,'success')) {
 //				location.reload(true);
 				get_processDetails(info_id);
-				toastr.success('编辑成功！');
+				//toastr.success('编辑成功！');
+				mui.toast('编辑成功！');
 				
 			} else {
 				toastr.error('编辑失败！');

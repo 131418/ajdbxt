@@ -37,6 +37,17 @@ font-size:14px;
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="window.location.href='<%=basePath%>info/Info_page_mobileCaseList'"></a>
 		<h1 class="mui-title">新增案件</h1>
 	</header>
+	<div class="mui-content">
+		
+					<div class="mui-input-row">
+						<label  class=" mui-h5">抓获时间</label> 
+						<button id='demo1' data-options='{}' class="btn mui-btn mui-btn-block">选择日期时间 ...</button>
+						<input type="text" name="info.info_catch_time"
+						class="mui-input-clear mydate_minute"  id="input_info_catch_time">
+					</div>
+				</div>
+
+	<!--------------------------------->
 	<!--底部导航-->
 	<nav class="mui-bar mui-bar-tab">
 				<a class="mui-tab-item " onclick="window.location.href='<%=basePath%>user/User_mobile_index'"> <span
@@ -63,92 +74,11 @@ font-size:14px;
 				</li>
 			</ul>
 		</div>
-		<!-------------------------------------------------->
-	<div class="mui-content">
-		<div class="mui-card" style="margin:0px;">
-			<!--页眉，放置标题-->
-			<!--	<div class="mui-card-header">页眉</div>-->
-			<!--内容区-->
-			<div class="mui-card-content" id="case_input">
-				<form class="mui-input-group" >
-					<div class="mui-input-row">
-						<label class=" mui-h5">案件名称</label> <input type="text"  name="info.info_name" 
-						class="mui-input-clear"	id="input_info_name" placeholder="请输入案件名称">
-					</div>
-					<div class="mui-input-row">
-						<label  class=" mui-h5">案件类别</label> <select id="input_info_category"
-						name="info.info_category"  style="font-size:14px;" >
-							<option selected="selected" value="">请选择</option>
-							<option value="行政案件">行政案件</option>
-							<option value="刑事案件">刑事案件</option>
-							
-						</select>
-					</div>
-					<div class="mui-input-row">
-						<label  class=" mui-h5">办案单位</label> <select id="info_department"
-						name="info.info_department"  style="font-size:14px;">
-						</select>
-					</div>
-					<div class="mui-input-row">
-						<label  class=" mui-h5">抓获时间</label> 
-						<button id='demo1' data-options='{}' class="btn mui-btn mui-btn-block" name="info.info_catch_time" style="float:left;font-size:14px;width:200px;;">选择抓获时间 </button>
-					</div>
-					<div class="mui-input-row">
-						<label  class=" mui-h5">主办民警</label> <select name="info.info_main_police" 
-						id="info_main_police"  style="font-size:14px;">
-						</select>
-					</div>
-					<div class="mui-input-row">
-							<label  class=" mui-h5">协办民警1</label> <select name="info.info_assistant_police_one"
-						id="info_assistant_police_one"  style="font-size:14px;">
-						</select>
-					</div>
-						<div class="mui-input-row " id="add_img">
-						<label  class=" mui-h5">添加协办民警2</label>
-						<img alt="" src="<%=basePath%>img/addition_fill.png" id="add_police_two">
-					</div>
-					<div class="mui-input-row " id="police_two_td">
-							<label  class=" mui-h5">协办民警2</label> <select name="info.info_assistant_police_two" 
-						id="info_assistant_police_two"  style="font-size:14px;">
-						</select>
-					</div>
-					<div class="mui-input-row">
-						<label  class=" mui-h5">所（队）法制员</label> <select name="info.info_department_legal_member"
-						id="info_department_legal_member"  style="font-size:14px;">
-						</select>
-					</div>
-					<div class="mui-input-row">
-						<label  class=" mui-h5">所（队）长</label><input type="text"  name="police.police_name"
-						class="mui-input-clear"	id="info_department_captain_name" >
-							<input  id="info_department_captain_id" class="mui-input-clear"
-											name="info.info_department_captain" type="hidden">
-					</div>
-					<div class="mui-input-row">
-							<label  class=" mui-h5">法制大队值班民警</label> <select name="info.info_legal_team_member"  
-						id="info_legal_team_member"  style="font-size:14px;">
-						</select>
-					</div>
-					<div class="mui-input-row">
-						<label  class=" mui-h5">值班局领导</label> <select name="info.info_bureau_leader" 
-						id="info_bureau_leader"  style="font-size:14px;">
-						</select>
-						<input type="hidden" name="info.ajdbxt_info_id">
-					</div>
-				</form>
-			</div>
-			<!--页脚，放置补充信息或支持的操作-->
-			<div class="mui-card-footer">
-				<button type="button" class="mui-btn mui-btn-primary mui-btn-outlined" id="input_sure"
-					style="width:100%;" >确认添加</button>
-			</div>
-		</div>
-	</div>
-
-	<!--------------------------------->
-	
 	<script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript"
+		src="<%=basePath%>js/User/mobile_police_one.js"></script>
 		<script type="text/javascript"
- 		src="<%=basePath%>js/Info/mobile_caseAdd.js"></script> 
+		src="<%=basePath%>js/Info/mobile_caseAdd.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/mui.min.js" ></script>
 		<script type="text/javascript" src="<%=basePath%>js/mui.picker.min.js" ></script>
 		<script>

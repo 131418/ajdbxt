@@ -86,6 +86,8 @@ function List_Police_By_Page(pageIndex) {
 				var new_span2 = null;// 警员名
 				var new_span3 = null;// 单位名
 				var new_a = null;// 案件名链接
+				var new_xianshi=null;//div显示修改删除按钮
+				
 				var input_name = null;
 
 				// -----折叠信息-----
@@ -153,6 +155,7 @@ function List_Police_By_Page(pageIndex) {
 					for (var num = 0; num < police_vo.Caselist.length; num++) {
 						new_li = document.createElement("li");
 						new_li.className = "mui-table-view-cell mui-collapse new_li";
+						new_li.style.borderRadius="0px";
 						new_li.appendChild(document.createTextNode(''));
 						ul_police_list.appendChild(new_li);
 						/*
@@ -167,9 +170,20 @@ function List_Police_By_Page(pageIndex) {
 						 * 0. a链接
 						 */
 						new_a = document.createElement("a");
-						new_a.className = "mui-navigate-right";
+						new_a.className = "a_to_details mui-slider-handle";
+						new_a.id=police_vo.Caselist[num].info.ajdbxt_info_id;
+						//new_a.className = "mui-navigate-right";
+					//	new_a.href="/ajdbxt/info/Info_page_mobile_caseOneDetails"
+							
 						new_a.appendChild(document.createTextNode(''));
 						new_li.appendChild(new_a);
+						
+						$(".a_to_details").bind("click", function() {
+							console.log("a");
+						
+							//document.getElementById("a").href="/ajdbxt/info/Info_page_mobile_caseOneDetails"
+						//	window.location.href="/ajdbxt/info/Info_page_mobile_caseOneDetails?ajdbxt_info_id="+ this.id;
+						})
 
 						/*
 						 * 1. 案件序号
@@ -194,6 +208,14 @@ function List_Police_By_Page(pageIndex) {
 						new_span3.className = "mui-badge mui-badge-blue";
 						new_span3.innerHTML = police_vo.Caselist[num].info.info_category;
 						new_a.appendChild(new_span3);
+						
+//						new_span4=document.createElement("span");
+//						new_span4.className = "mui-slider-right mui-disabled";
+//						new_span5.document.createElement("a");
+//						new_span5.className = "mui-btn mui-btn-yellow";
+//						new_span5.value="修改";
+//						new_a.appendChild(new_span4);
+//						new_span4.appendChild(new_span5);
 						/*
 						 * 4. 折叠信息
 						 */
@@ -304,80 +326,83 @@ function List_Police_By_Page(pageIndex) {
 						// 7按钮
 //						if (loginRole.ajdbxt_police.police_power == "2"
 //								|| loginRole.ajdbxt_police.police_power == "3") {
-//							new_row_button = document.createElement("div");
-//							new_row_button.className = "mui-input-row";
-//							new_btn_xg = document.createElement("button");
-//							new_btn_xg.className = "mui-btn mui-btn-yellow btn_xg";
-//							new_btn_xg.innerHTML = "修改";
-//							new_btn_xg.id = police_vo.list[num].ajdbxt_police.ajdbxt_police_id;
-//							new_btn_xg.style.marginLeft = "5px";
-//							new_btn_xg.style.width = "60px";
-//							new_btn_xg.onclick = function() {
-//								window.location.href = "/ajdbxt/user/User_mobile_police_update?police_id="
-//										+ this.id;
-//								/*
-//								 * window.location.href =
-//								 * "/ajdbxt/user/User_mobile_police_update"
-//								 */
-//								return false;
-//							}
-//							new_btn_sc = document.createElement("button");
-//							new_btn_sc.className = "mui-btn mui-btn-red btn_sc";
-//							new_btn_sc.id = police_vo.list[num].ajdbxt_police.ajdbxt_police_id;
-//							new_btn_sc.innerHTML = "删除";
-//							new_btn_sc.style.margin = "0 30px 0 5px";
-//							new_btn_sc.style.width = "60px";
-//							// 删除按钮点击事件
-//							new_btn_sc.onclick = function() {
-//								var btn_id = this.id
-//								var btnArray = [ '是', '否' ];
-//								mui
-//										.confirm(
-//												'确定删除？',
-//												'提示',
-//												btnArray,
-//												function(e) {
-//													if (e.index == 0) {
-//														var formData = new FormData();
-//														formData.append("ids",
-//																btn_id);
-//														var xhr = new XMLHttpRequest();
-//														xhr
-//																.open("POST",
-//																		"/ajdbxt/user/User_batchDelete");
-//														xhr.send(formData);
-//														xhr.onreadystatechange = function() {
-//															if (xhr.readyState == 4
-//																	&& xhr.status == 200) {
-//																if (xhr.responseText == "success") {
-//																	mui
-//																			.toast("删除成功");
-//																	List_Police_By_Page(1);
-//																} else {
-//																	mui
-//																			.toast("删除失败");
-//																}
-//															} else {
-//																mui
-//																		.toast(xhr.status);
-//															}
-//														}
-//
-//													}
-//												});
-//								return false;
-//							}// ---end 删除
-//							new_row_button.appendChild(new_btn_sc);
-//							new_row_button.appendChild(new_btn_xg);
-//							new_form.appendChild(new_row_button);
-//
-//						}// -----按钮
+							new_row_button = document.createElement("div");
+							new_row_button.className = "mui-slider-right mui-disabled";
+							new_btn_xg = document.createElement("button");
+							new_btn_xg.className = "mui-btn mui-btn-yellow";
+							new_btn_xg.innerHTML = "修改";
+							new_btn_xg.id = police_vo.Caselist[num].info.ajdbxt_info_id;
+							new_btn_xg.style.marginLeft = "5px";
+					//		new_btn_xg.style.width = "60px";
+							new_btn_xg.onclick = function() {
+								window.location.href = "/ajdbxt/info/Info_page_mobile_caseUpdate?ajdbxt_info_id="
+										+ this.id;
+								/*
+								 * window.location.href =
+								 * "/ajdbxt/user/User_mobile_police_update"
+								 */
+								return false;
+							}
+							new_btn_sc = document.createElement("button");
+							new_btn_sc.className = "mui-btn mui-btn-red";
+							new_btn_sc.id = police_vo.Caselist[num].info.ajdbxt_info_id;
+							new_btn_sc.innerHTML = "删除";
+							new_btn_sc.style.margin = "0 30px 0 5px";
+							new_btn_sc.style.width = "60px";
+							// 删除按钮点击事件
+							new_btn_sc.onclick = function() {
+								var btn_id = this.id
+								var btnArray = [ '是', '否' ];
+								mui
+										.confirm(
+												'确定删除？',
+												'提示',
+												btnArray,
+												function(e) {
+													if (e.index == 0) {
+														var formData = new FormData();
+														formData.append("info.ajdbxt_info_id",
+																btn_id);
+														var xhr = new XMLHttpRequest();
+														xhr
+																.open("POST",
+																		"/ajdbxt/info/Info_delete");
+														xhr.send(formData);
+														xhr.onreadystatechange = function() {
+															if (xhr.readyState == 4
+																	&& xhr.status == 200) {
+																if (xhr.responseText == "success") {
+																	mui
+																			.toast("删除成功");
+																	List_Police_By_Page(1);
+																} else {
+																	mui
+																			.toast("删除失败");
+																}
+															} else {
+																mui
+																		.toast(xhr.status);
+															}
+														}
+
+													}
+												});
+								return false;
+							}// ---end 删除
+							new_row_button.appendChild(new_btn_sc);
+							new_row_button.appendChild(new_btn_xg);
+							new_li.appendChild(new_row_button);
+                            //显示修改、删除
+							new_xianshi=document.createElement("div");
+							new_xianshi.className = "mui-slider-handle";
+							new_li.appendChild(new_xianshi);
+						// -----按钮
 //						$("label").css("padding", "11px 0px");
 //						$("label").css("text-align", "center");
 //						$("input").css("padding", "0 30px");
 //						$("input").css("text-align", "right");
-//						new_div.appendChild(new_form);
-//						new_li.appendChild(new_div);
+						//new_div.appendChild(new_form);
+					//	new_li.appendChild(new_div);
 
 					}// ---for循环
 
@@ -427,15 +452,15 @@ function List_Police_By_Page(pageIndex) {
 }
 
 // -----------------------------
-// --------添加人员--------------
+// --------添加案件--------------
 
 function createPolice() {
 
-	// 警号
-	var input_police_serial_number = document
-			.getElementById("input_police_serial_number").value;
-	if (input_police_serial_number == "") {
-		mui.toast("警号不能为空！");
+	// 案件名称
+	var input_info_name = document
+			.getElementById("input_info_name").value;
+	if (input_info_name == "") {
+		mui.toast("案件名称不能为空！");
 		return false;
 	}
 	// 密码

@@ -36,6 +36,35 @@ html, body, .radio, .checkbox, .button_process {
 	display: inline-block;
 	vertical-align: middle;
 }
+  #checkbox_process_question{
+    }
+
+    #checkbox_process_question ul{
+        margin:0 10px;
+         
+        padding:0px;
+        list-style-type:none;
+        vertical-align:middle  ;
+    }
+
+    #checkbox_process_question li{
+        float:left;
+        display:block;
+/*         width:100px;  */
+/*         height:20px; */
+/*         line-height:20px; */
+
+/*         font-size:14px;   */
+/*         font-weight:bold;           */
+/*         color:#666666; */
+
+        text-decoration:none;
+/*         text-align:left;  */
+        margin: 0 10px;
+/*         background:#ffffff; */
+        
+       
+    }
 </style>
 </head>
 <body>
@@ -372,9 +401,9 @@ html, body, .radio, .checkbox, .button_process {
 											<!--  -->
 											<div class="summon_process col-md-12">
 												<div class="process_title col-md-4">问题整改数量：</div>
-                                                <div class="process_title col-md-4">
-													<input type="text" class="form-control" name="process.process_question"
-														id="process_question" placeholder="请填写问题整改数量">
+                                                <div class="process_title col-md-4"  id="checkbox_process_question">
+<!-- 													<input type="text" class="form-control" name="process.process_question" -->
+<!-- 														id="process_question" placeholder="请填写问题整改数量"> -->
 												</div>
 												<div class="col-md-4 process_button">
 													<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
@@ -403,15 +432,18 @@ html, body, .radio, .checkbox, .button_process {
 													</label>
 													 <label style="margin: 0 10px;">
 													 <!-- onclick=changeprocess_treatment_category_yes(this) -->
-													 	<input type="checkbox" name="ajdbxtProcess.process_mandatory_abandon_drug" value="是" id="process_mandatory_abandon_drug">强制隔离戒毒
+													 	<input type="checkbox" name="process.process_mandatory_abandon_drug" value="是" id="process_mandatory_abandon_drug">强制隔离戒毒
 													</label>
 													<label style="margin: 0 0px;"> 
-													<input type="checkbox" name="ajdbxtProcess.process_community_abandon_drug" value="是" id="process_community_abandon_drug"> 社区戒毒
+													<input type="checkbox" name="process.process_community_abandon_drug" value="是" id="process_community_abandon_drug"> 社区戒毒
+													</label>
+													<label style="margin: 0 0px;"> 
+													<input type="checkbox" name="process.process_administrativ_warning" value="是" id="process_administrativ_warning"> 行政警告
 													</label>
 												</div>
 												<div class="col-md-2 process_button">
 													<s:if test='#session.loginPolice.ajdbxt_police.police_duty=="警员" && #session.loginPolice.ajdbxt_police.police_department!="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'>
-													<button type="button" class="btn btn-primary  btn-block" onclick="punishmentab()" id="punishmentab"
+													<button type="button" class="btn btn-primary  btn-block" onclick="punishmentab_chufa()" id="punishmentab"
 														style="width: 90%; float: right;">提交</button>
 													</s:if>
 												</div>
@@ -846,6 +878,28 @@ html, body, .radio, .checkbox, .button_process {
 											</div>
 											</s:if> 
 											<!-------------------------------------->
+											<!-- ----------------------------------------案件已拿回------ -->
+												<s:if test='#session.loginPolice.ajdbxt_police.police_department=="67ed5ab3-d773-4ac1-981b-2839ed0cec5c"'> 
+											<div class="first_process_div col-md-12"  id="casehand_no" style="display: none;">
+												<div class="first_process">
+													<fieldset>
+														<legend>法制大队案卷已拿回</legend>
+														<!--  -->
+														<div class="summon_process col-md-12">
+															<div class="process_title col-md-4">案卷拿回：</div>
+															<div class="process_title col-md-4">
+																<input type="hidden"  
+																	name="ajdbxtProcess.process_file_hand" value="否">
+																<button type="button"   onclick="pencalcasehand_no()"
+																	class="btn btn-primary  btn-block legal_team_manager_btn"
+																	style="float: center;">案卷拿回</button>
+															</div>
+
+														</div>
+													</fieldset>
+												</div>
+											</div>
+											</s:if> 
 											<!-------------第四阶段 拘留延长期限---------------->
 											<div class="first_process_div col-md-12"
 												style="display: none;" id="detention_delay_date">
