@@ -14,7 +14,7 @@ public interface ProcessService {
 	public final static int fileBack=7;
 	public final static int goods_lib=8;
 	public final static int question_update=9;
-	
+	public final static int case_score=10;
 	public ProcessDTO getSingleProcessByCaseId(String case_id);
 	/**
 	 * 流程更改方法

@@ -36,9 +36,9 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 			isWorking();//休息时间不干活谢谢
 			switch (tpl_id) {
 			case MsgSend.SUBPOENA_A_SUSPECT_VOICE://传唤嫌疑人
-				subpoenaASuspect();
 				if(caseFiled)
 					checkCaseEnd();
+				subpoenaASuspect();
 				break;	
 			case MsgSend.CASE_ROLLBACK_VOICE://回退
 				rollBack();
@@ -67,6 +67,9 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 				break;
 			case MsgSend.QUESTION_UPDATE_VOICE:
 				questionUpdate();
+				break;
+			case MsgSend.CASE_END_VOICE:
+				caseEnd2();
 				break;
 			}	
 		}catch(Exception e) {
@@ -191,6 +194,26 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 		}
 	}
 	/*
+	 * 刑事案件的结案
+	 */
+	private void caseEnd2() throws InterruptedException {
+		while(true) {
+			ProcessDTO processDTO=getProcessDTO();
+			ajdbxt_process process=processDTO.getProcess();
+			if(process.getProcess_score()==null) {
+				List<String> tel=new ArrayList<>();
+				tel.add(processDTO.getLegal().getPolice_phone_number());
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				MsgSend.doSendSimple(params, tel, MsgSend.JKBL);
+				MsgSend.doSendVoiceSimple(params, tel.get(0), MsgSend.JKBL_VOICE);
+			}else {
+				break;
+			}
+			waitTime(4);
+		}
+	}
+	
+	/*
 	 * 回退提醒修改
 	 */
 	private void rollBackUpdate() throws InterruptedException {
@@ -268,7 +291,7 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 			if(process.getProcess_question()!=null) {//如果整改数量不为空
 				List<String> tel=new ArrayList<>();
 				String [] params= {processDTO.getInfo().getInfo_name(),process.getProcess_question_list().toString(),process.getProcess_question().toString()};
-				if(process.getProcess_question().intValue()!=process.getProcess_question_list().intValue()) {
+				if(process.getProcess_question().intValue()!=process.getProcess_question_list().intValue()) {//如果没有整改所有问题，则打小报告
 					tel.add(processDTO.getLeader().getPolice_phone_number());
 					MsgSend.doSendSimple(params, tel, MsgSend.QUESTION_UP_LEADER);
 //					MsgSend.doSendVoiceSimple(params, processDTO.getLeader().getPolice_phone_number(), MsgSend.QUESTION_UP_LEADER_VOICE);
@@ -277,7 +300,7 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 					MsgSend.doSendSimple(params, tel, MsgSend.QUESTION_UP_CHECK);
 					MsgSend.doSendVoiceSimple(params, processDTO.getLeader().getPolice_phone_number(), MsgSend.QUESTION_UP_CHECK_VOICE);
 				}
-				for(int index=0;index<16;index++) {
+				for(int index=0;index<6;index++) {
 					processDTO=getProcessDTO();
 					process=processDTO.getProcess();
 					if(process.getProcess_administrativ_warning()==null
@@ -391,23 +414,17 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 			}
 		}
 	}
-	/*
-	 * 涉案财物
-	 */
-	private void caseGoods() throws InterruptedException {
-		punishMan();
-		ProcessDTO processDTO=getProcessDTO();
-		ajdbxt_process process =processDTO.getProcess();
-		process.setProcess_case_goods("无");
-		applicationCotext.getBean(ProcessService.class).update(process, -1);
-	}
 	
+	
+	/*
+	 * 案件如果在一天内没有结案
+	 */
 	private void checkCaseEnd() throws InterruptedException {
 		new Thread(new Runnable() {
 			public void run() {
 				ProcessDTO processDTO=getProcessDTO();
 				ajdbxt_process process =processDTO.getProcess();
-				int hour=caseFiled?18:999999 ;
+				int hour=caseFiled?18:99999999 ;
 				try {
 					Date date= DateFormat.getDateInstance().parse(processDTO.getInfo().getInfo_catch_time());
 					hour=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)-date.getHours()>0?18-(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)-date.getHours()):0;
@@ -429,7 +446,13 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 								}
 							}
 							hour+=2;
-							this.wait(2*60*60*1000);
+							synchronized (this) {
+								try {
+									this.wait(2*60*60*1000);
+								} catch (InterruptedException e) {
+									
+								}
+							}
 						}
 					} catch (InterruptedException e) {
 						
@@ -442,70 +465,16 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 	}
 	
 	/*
-	 * 案卷上交后触发，拿回案卷
+	 * 涉案财物
 	 */
-	private void fileBack() throws InterruptedException {
-			ProcessDTO processDTO=getProcessDTO();
-			ajdbxt_process process=processDTO.getProcess();
-			if(process.getProcess_file_hand().equals("是")) {
-				if(process.getProcess_lengthen_criminal_detention().equals("7")) {//延长七天
-					waitTime(4*24);
-					for(int index=0;index<=6;index++) {
-						processDTO=getProcessDTO();
-						process=processDTO.getProcess();
-						if(process.getProcess_file_hand().equals("是")) {
-							List<ajdbxt_police> policeList=processDTO.getPolice();
-							String [] params= {processDTO.getInfo().getInfo_name()};
-							for(ajdbxt_police police:policeList) {
-								String num=police.getPolice_phone_number();
-								List<String> tel=new ArrayList<>();
-								tel.add(num);
-								MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_CASE_FILE_BACK);
-								MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE);
-							}
-							waitTime(4);
-						}
-					}
-				}else if(process.getProcess_lengthen_criminal_detention().equals("30")) {//延长30天
-					waitTime(7*24);
-					for(int index=0;index<=6;index++) {
-						processDTO=getProcessDTO();
-						process=processDTO.getProcess();
-						if(process.getProcess_file_hand().equals("是")) {
-							List<ajdbxt_police> policeList=processDTO.getPolice();
-							String [] params= {processDTO.getInfo().getInfo_name()};
-							for(ajdbxt_police police:policeList) {
-								String num=police.getPolice_phone_number();
-								List<String> tel=new ArrayList<>();
-								tel.add(num);
-								MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_CASE_FILE_BACK);
-								MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE);
-							}
-							waitTime(4);
-						}
-					}
-				}else if(process.getProcess_lengthen_criminal_detention().equals("60")) {
-					waitTime(50*24);
-					for(int index=0;index<=6;index++) {
-						processDTO=getProcessDTO();
-						process=processDTO.getProcess();
-						if(process.getProcess_file_hand().equals("是")) {
-							List<ajdbxt_police> policeList=processDTO.getPolice();
-							String [] params= {processDTO.getInfo().getInfo_name()};
-							for(ajdbxt_police police:policeList) {
-								String num=police.getPolice_phone_number();
-								List<String> tel=new ArrayList<>();
-								tel.add(num);
-								MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_CASE_FILE_BACK);
-								MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE);
-							}
-							waitTime(4);
-						}
-					}
-				}
-			}
-
+	private void caseGoods() throws InterruptedException {
+		punishMan();
+		ProcessDTO processDTO=getProcessDTO();
+		ajdbxt_process process =processDTO.getProcess();
+		process.setProcess_case_goods("无");
+		applicationCotext.getBean(ProcessService.class).update(process, -1);
 	}
+	
 	/*
 	 * 强制措施
 	 */
@@ -517,33 +486,29 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 			switch (process.getProcess_result_of_prosecution()) {
 			case "起诉":
 			case "撤案":
-				caseEnd();
+				suedOrWithdraw();
 				break;
 
 			}
 		}else if(process.getProcess_force_measure_three()!=null) {//第三次强制措施
 			switch (process.getProcess_force_measure_three()) {
-			case "刑转治":
 			case "起诉":
-			case "撤案":
-				caseEnd();
+				suedOrWithdraw();
+				break;
+			case "解保":
+				relieveBail();
 				break;
 			case "取保候审":
-				bail();
+				bail(3);
 				break;
 			}
 		}else if(process.getProcess_force_measure_two()!=null) {//第二次强制措施
 			switch (process.getProcess_force_measure_two()) {
-			case "拘留":
-				caseEnd();
-				waitTime(3*24);
-				detentionTimeOut();
-				break;
 			case "监视居住":
-				monitoringLive();
+				monitoringLive(2);
 				break;
 			case "取保候审":
-				bail();
+				bail(2);
 				break;
 			case "逮捕":
 				arrest();
@@ -553,19 +518,60 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 			fileUp();
 			switch (process.getProcess_force_measure_one()) {
 			case "拘留":
-				caseEnd();
-				waitTime(3*24);
-				detentionTimeOut();
+				fileUp();
 				break;
 			case "监视居住":
-				monitoringLive();
+				monitoringLive(1);
 				break;
 			case "取保候审":
-				bail();
+				bail(1);
 				break;
 			}
 		}
 	}
+	private void suedOrWithdraw() throws InterruptedException {
+		while(true) {
+			ProcessDTO processDTO=getProcessDTO();
+			ajdbxt_process process=processDTO.getProcess();
+			if(process.getProcess_case_end()==null&&process.getProcess_search_result_one()==null) {
+				List<String> polices=new ArrayList<>();
+				polices.add(processDTO.getLegal().getPolice_phone_number());
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				MsgSend.doSendSimple(params, polices, MsgSend.JKBL);
+				for(String tel:polices) {
+					MsgSend.doSendVoiceSimple(params, tel, MsgSend.JKBL_VOICE);
+				}
+			}else {
+				break;
+			}
+			waitTime(4);
+		}
+	}
+	
+	/*
+	 * 解保
+	 */
+	private void relieveBail() throws InterruptedException {
+		while(true) {
+			ProcessDTO processDTO=getProcessDTO();
+			ajdbxt_process process=processDTO.getProcess();
+			if(process.getProcess_score()==null) {
+				List<String> polices=new ArrayList<>();
+				polices.add(processDTO.getLegal().getPolice_phone_number());
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				MsgSend.doSendSimple(params, polices, MsgSend.JKBL);
+				for(String tel:polices) {
+					MsgSend.doSendVoiceSimple(params, tel, MsgSend.JKBL_VOICE);
+				}
+			}else {
+				break;
+			}
+			waitTime(4);
+		}
+	}
+	/*
+	 * 每次强制措施要求法制员和队长督查
+	 */
 	private void forceMeasureNotify() {
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process=processDTO.getProcess();
@@ -578,8 +584,191 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 			MsgSend.doSendVoiceSimple(params, tel, MsgSend.FORCE_MEASURE_VOICE);
 		}
 	}
+	/*
+	 * 拿回案卷，延长拘留时触发
+	 */
+	private void fileBack() throws InterruptedException {
+			ProcessDTO processDTO=getProcessDTO();
+			ajdbxt_process process=processDTO.getProcess();
+			if(process.getProcess_file_hand().equals("是")) {
+				if(process.getProcess_lengthen_criminal_detention().equals("7")) {//延长七天
+					waitTime(12);
+					processDTO=getProcessDTO();
+					process=processDTO.getProcess();
+					if(process.getProcess_file_hand().equals("是")&&process.getProcess_force_measure_two()==null) {
+						List<ajdbxt_police> policeList=processDTO.getPolice();
+						String [] params= {processDTO.getInfo().getInfo_name()};
+						for(ajdbxt_police police:policeList) {
+							String num=police.getPolice_phone_number();
+							List<String> tel=new ArrayList<>();
+							tel.add(num);
+							MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_CASE_FILE_BACK);
+							MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE);
+						}
+					}
+					waitTime(72);
+					int index=0;
+					for(;index<6;index++) {
+						processDTO=getProcessDTO();
+						process=processDTO.getProcess();
+						if(process.getProcess_file_hand().equals("是")&&process.getProcess_force_measure_two()==null) {
+							List<ajdbxt_police> policeList=processDTO.getPolice();
+							String [] params= {processDTO.getInfo().getInfo_name()};
+							for(ajdbxt_police police:policeList) {
+								String num=police.getPolice_phone_number();
+								List<String> tel=new ArrayList<>();
+								tel.add(num);
+								MsgSend.doSendSimple(params, tel, MsgSend.FORCE_MEASURE_TIME_CLOSE);
+								MsgSend.doSendVoiceSimple(params, num, MsgSend.FORCE_MEASURE_TIME_CLOSE_VOICE);
+							}
+							waitTime(4);
+						}
+					}
+					if(index>=6) {
+						processDTO=getProcessDTO();
+						process =processDTO.getProcess();
+						if(process.getProcess_file_hand().equals("是")&&process.getProcess_force_measure_two()==null) {
+							String [] params= {processDTO.getInfo().getInfo_name()};
+							List<String> tel=new ArrayList<>();
+							tel.add(processDTO.getLeader().getPolice_phone_number());
+							tel.add(processDTO.getCap().getPolice_phone_number());
+							MsgSend.doSendSimple(params, tel, MsgSend.CASE_FILE_UP_OUT);
+							tel.remove(processDTO.getLeader().getPolice_phone_number());//不给局长发语音
+							for(String num:tel) {
+								MsgSend.doSendVoiceSimple(params, num, MsgSend.CASE_FILE_UP_OUT_VOICE);
+							}
+						}
+					}
+				}else if(process.getProcess_lengthen_criminal_detention().equals("30")) {//延长30天
+					waitTime(23*24);
+					processDTO=getProcessDTO();
+					process=processDTO.getProcess();
+					if(process.getProcess_file_hand().equals("是")&&process.getProcess_force_measure_two()==null) {
+						List<ajdbxt_police> policeList=processDTO.getPolice();
+						String [] params= {processDTO.getInfo().getInfo_name()};
+						for(ajdbxt_police police:policeList) {
+							String num=police.getPolice_phone_number();
+							List<String> tel=new ArrayList<>();
+							tel.add(num);
+							MsgSend.doSendSimple(params, tel, MsgSend.FORCE_MEASURE_TIME_CLOSE);
+							MsgSend.doSendVoiceSimple(params, num, MsgSend.FORCE_MEASURE_TIME_CLOSE_VOICE);
+						}
+					}
+					waitTime(2*24);
+					int index=0;
+					for(;index<6;index++) {
+						processDTO=getProcessDTO();
+						process=processDTO.getProcess();
+						if(process.getProcess_file_hand().equals("是")&&process.getProcess_force_measure_two()==null) {
+							List<ajdbxt_police> policeList=processDTO.getPolice();
+							String [] params= {processDTO.getInfo().getInfo_name()};
+							for(ajdbxt_police police:policeList) {
+								String num=police.getPolice_phone_number();
+								List<String> tel=new ArrayList<>();
+								tel.add(num);
+								MsgSend.doSendSimple(params, tel, MsgSend.FORCE_MEASURE_TIME_CLOSE);
+								MsgSend.doSendVoiceSimple(params, num, MsgSend.FORCE_MEASURE_TIME_CLOSE_VOICE);
+							}
+							waitTime(4);
+						}
+					}
+					if(index>=6) {
+						processDTO=getProcessDTO();
+						process =processDTO.getProcess();
+						if(process.getProcess_file_hand().equals("是")&&process.getProcess_force_measure_two()==null) {
+							String [] params= {processDTO.getInfo().getInfo_name()};
+							List<String> tel=new ArrayList<>();
+							tel.add(processDTO.getLeader().getPolice_phone_number());
+							tel.add(processDTO.getCap().getPolice_phone_number());
+							MsgSend.doSendSimple(params, tel, MsgSend.FORCE_MEASURE_TIME_CLOSE);
+							tel.remove(processDTO.getLeader().getPolice_phone_number());//不给局长发语音
+							for(String num:tel) {
+								MsgSend.doSendVoiceSimple(params, num, MsgSend.FORCE_MEASURE_TIME_CLOSE_VOICE);
+							}
+						}
+					}
+				}else if(process.getProcess_lengthen_criminal_detention().equals("60")) {
+//					waitTime(50*24);
+//					for(int index=0;index<=6;index++) {
+//						processDTO=getProcessDTO();
+//						process=processDTO.getProcess();
+//						if(process.getProcess_file_hand().equals("是")) {
+//							List<ajdbxt_police> policeList=processDTO.getPolice();
+//							String [] params= {processDTO.getInfo().getInfo_name()};
+//							for(ajdbxt_police police:policeList) {
+//								String num=police.getPolice_phone_number();
+//								List<String> tel=new ArrayList<>();
+//								tel.add(num);
+//								MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_CASE_FILE_BACK);
+//								MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE);
+//							}
+//							waitTime(4);
+//						}
+//					}
+				}
+			}
+
+	}
+	/*
+	 * 强制措施要求案卷上交
+	 */
 	private void fileUp() throws InterruptedException {
 		int index=0;
+		new Thread(new Runnable(){
+
+			@Override
+			public void run() {
+				int index;
+				try {
+					this.wait(3*24*60*60*1000);
+				} catch (InterruptedException e1) {
+					System.out.println(e1.getMessage());
+				}
+				for(index=0;index<6;index++) {
+					ProcessDTO processDTO=getProcessDTO();
+					ajdbxt_process process =processDTO.getProcess();
+					if(process.getProcess_file_hand().equals("是")&&
+							!(process.getProcess_lengthen_criminal_detention().equals("7")||process.getProcess_lengthen_criminal_detention().equals("30"))
+							&&process.getProcess_force_measure_two()==null) {
+						String [] params= {processDTO.getInfo().getInfo_name()};
+						List<ajdbxt_police> policeList=processDTO.getPolice();
+						for(ajdbxt_police police:policeList) {
+							String num=police.getPolice_phone_number();
+							List<String> tel=new ArrayList<>();
+							tel.add(num);
+							MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_CASE_FILE_BACK);
+							MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE);
+						}
+						synchronized (this) {
+							try {
+								this.wait(4*60*60*1000);
+							} catch (InterruptedException e) {
+								
+							}
+						}
+					}else {
+						break;
+					}
+				}
+				if(index>=6) {//超时通知局队长
+					ProcessDTO processDTO=getProcessDTO();
+					ajdbxt_process process =processDTO.getProcess();
+					if(process.getProcess_file_hand().equals("是")&&
+							!(process.getProcess_lengthen_criminal_detention().equals("7")||process.getProcess_lengthen_criminal_detention().equals("30"))) {
+						String [] params= {processDTO.getInfo().getInfo_name()};
+						List<String> tel=new ArrayList<>();
+						tel.add(processDTO.getLeader().getPolice_phone_number());
+						tel.add(processDTO.getCap().getPolice_phone_number());
+						MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_CASE_FILE_BACK);
+						tel.remove(processDTO.getLeader().getPolice_phone_number());//不给局长发语音
+						for(String num:tel) {
+							MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE);
+						}
+					}
+				}
+			}
+		}).start();//启动一个线程去提醒三天后拿回案卷
+		
 		waitTime(12);
 		for(;index<6;index++) {
 			ProcessDTO processDTO=getProcessDTO();
@@ -618,60 +807,127 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 					MsgSend.doSendVoiceSimple(params, num, MsgSend.CASE_FILE_UP_OUT_VOICE);
 				}
 			}
-		}
-		waitTime(60);
-		for(index=0;index<6;index++) {
-			ProcessDTO processDTO=getProcessDTO();
-			ajdbxt_process process =processDTO.getProcess();
-			if(process.getProcess_file_hand().equals("是")&&
-					!(process.getProcess_lengthen_criminal_detention().equals("7")||process.getProcess_lengthen_criminal_detention().equals("30"))) {
-				String [] params= {processDTO.getInfo().getInfo_name()};
-				List<ajdbxt_police> policeList=processDTO.getPolice();
-				for(ajdbxt_police police:policeList) {
-					String num=police.getPolice_phone_number();
-					List<String> tel=new ArrayList<>();
-					tel.add(num);
-					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_CASE_FILE_BACK);
-					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE);
-				}
-				waitTime(4);
-			}else {
-				break;
-			}
-		}
-		if(index>6) {//超时通知局队长
-			ProcessDTO processDTO=getProcessDTO();
-			ajdbxt_process process =processDTO.getProcess();
-			if(process.getProcess_file_hand().equals("是")&&
-					!(process.getProcess_lengthen_criminal_detention().equals("7")||process.getProcess_lengthen_criminal_detention().equals("30"))) {
-				String [] params= {processDTO.getInfo().getInfo_name()};
-				List<String> tel=new ArrayList<>();
-				tel.add(processDTO.getLeader().getPolice_phone_number());
-				tel.add(processDTO.getCap().getPolice_phone_number());
-				MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_CASE_FILE_BACK);
-				tel.remove(processDTO.getLeader().getPolice_phone_number());//不给局长发语音
-				for(String num:tel) {
-					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_CASE_FILE_BACK_VOICE);
-				}
-			}
-		}
+		}		
 	}
 	/*
 	 * 逮捕
 	 */
 	private void arrest() throws InterruptedException {
-		waitTime(50*24);
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				int index=0;
+				synchronized (this) {
+					try {
+						this.wait(7*24*60*60*1000);
+					} catch (InterruptedException e) {
+						
+					}
+				}
+				for(;index<6;index++) {
+					ProcessDTO processDTO=getProcessDTO();
+					ajdbxt_process process =processDTO.getProcess();
+					if(process.getProcess_file_hand()==null||process.getProcess_file_hand().equals("否")) {
+						String [] params= {processDTO.getInfo().getInfo_name()};
+						List<ajdbxt_police> policeList=processDTO.getPolice();
+						for(ajdbxt_police police:policeList) {
+							String num=police.getPolice_phone_number();
+							List<String> tel=new ArrayList<>();
+							tel.add(num);
+							MsgSend.doSendSimple(params, tel, MsgSend.CASE_FILE_UP);
+							MsgSend.doSendVoiceSimple(params, num, MsgSend.CASE_FILE_UP_VOICE);
+						}
+						List<String> tel=new ArrayList<>();
+						tel.add(processDTO.getLegal().getPolice_phone_number());
+						MsgSend.doSendSimple(params, tel, MsgSend.CASE_FILE_UP_CHECK);
+						MsgSend.doSendVoiceSimple(params, processDTO.getLegal().getPolice_phone_number(), MsgSend.CASE_FILE_UP_CHECK_VOICE);
+						synchronized (this) {
+							try {
+								this.wait(4*60*60*1000);
+							} catch (InterruptedException e) {
+								
+							}
+						}
+					}else {
+						break;
+					}
+				}				
+			}
+		}).start();
+		waitTime(30*24);
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process=processDTO.getProcess();
-		if(true) {
+		if(process.getProcess_force_measure_three()==null) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
 			String [] params= {processDTO.getInfo().getInfo_name()};
 			for(ajdbxt_police police:policeList) {
 				String num=police.getPolice_phone_number();
 				List<String> tel=new ArrayList<>();
 				tel.add(num);
-				MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_DUE);
-				MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_DUE_VOICE);
+				MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+			}
+		}
+		waitTime(23*24);
+		processDTO=getProcessDTO();
+		process=processDTO.getProcess();
+		if(process.getProcess_force_measure_three()==null) {
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			String [] params= {processDTO.getInfo().getInfo_name()};
+			for(ajdbxt_police police:policeList) {
+				String num=police.getPolice_phone_number();
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+			}
+		}
+		waitTime(4*24);
+		processDTO=getProcessDTO();
+		process=processDTO.getProcess();
+		if(process.getProcess_force_measure_three()==null) {
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			String [] params= {processDTO.getInfo().getInfo_name()};
+			for(ajdbxt_police police:policeList) {
+				String num=police.getPolice_phone_number();
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+			}
+		}
+		waitTime(3*24);
+		int index=0;
+		for(;index<6;index++) {
+			processDTO=getProcessDTO();
+			process=processDTO.getProcess();
+			if(process.getProcess_force_measure_three()==null) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				for(ajdbxt_police police:policeList) {
+					String num=police.getPolice_phone_number();
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+				}
+				waitTime(4);
+			}
+		}
+		if(index>=6) {
+			processDTO=getProcessDTO();
+			process =processDTO.getProcess();
+			if(process.getProcess_force_measure_three()==null) {
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				List<String> tel=new ArrayList<>();
+				tel.add(processDTO.getLeader().getPolice_phone_number());
+				tel.add(processDTO.getCap().getPolice_phone_number());
+				MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+				tel.remove(processDTO.getLeader().getPolice_phone_number());//不给局长发语音
+				for(String num:tel) {
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+				}
 			}
 		}
 	}
@@ -679,89 +935,508 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 	/*
 	 * 监视居住
 	 */
-	private void monitoringLive() throws InterruptedException {
-		waitTime(170*24);
-		ProcessDTO processDTO=getProcessDTO();
-		ajdbxt_process process=processDTO.getProcess();
-		List<ajdbxt_police> policeList=processDTO.getPolice();
-		String [] params= {processDTO.getInfo().getInfo_name()};
-		for(ajdbxt_police police:policeList) {
-			String num=police.getPolice_phone_number();
-			List<String> tel=new ArrayList<>();
-			tel.add(num);
-			MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_MONITORING_LIVE_DUE);
-			MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_MONITORING_LIVE_DUE_VOICE);
-		}
-	}
-	/*
-	 *取保候审 
-	 */
-	private void bail() throws InterruptedException {
-//		for(int index=0;index<3;index++) {
-//			ProcessDTO processDTO=getProcessDTO();
-//			List<ajdbxt_police> policeList=processDTO.getPolice();
-//			String [] params= {processDTO.getInfo().getInfo_name()};
-//			for(ajdbxt_police police:policeList) {
-//				String num=police.getPolice_phone_number();
-//				List<String> tel=new ArrayList<>();
-//				tel.add(num);
-//				MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_BAIL);
-//				MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_BAIL_VOICE);
-//			}
-//			wait(85*24);
-//		}
-		waitTime(355*24);
-		ProcessDTO processDTO=getProcessDTO();
-		List<ajdbxt_police> policeList=processDTO.getPolice();
-		String [] params= {processDTO.getInfo().getInfo_name()};
-		for(ajdbxt_police police:policeList) {
-			String num=police.getPolice_phone_number();
-			List<String> tel=new ArrayList<>();
-			tel.add(num);
-			MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_BAIL_DUE);
-			MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_BAIL_DUE_VOICE);
-		}
-	}
-	/*
-	 * 拘留超时
-	 */
-	private void detentionTimeOut() throws InterruptedException {
-		for(int index=0;index<8;index++) {
+	private void monitoringLive(int flag) throws InterruptedException {
+		if(flag==1) {
+			waitTime(30*24);
 			ProcessDTO processDTO=getProcessDTO();
 			ajdbxt_process process=processDTO.getProcess();
-			if(process.getProcess_lengthen_criminal_detention()==null) {
+			if(process.getProcess_force_measure_two()==null) {
 				List<ajdbxt_police> policeList=processDTO.getPolice();
 				String [] params= {processDTO.getInfo().getInfo_name()};
 				for(ajdbxt_police police:policeList) {
 					String num=police.getPolice_phone_number();
 					List<String> tel=new ArrayList<>();
 					tel.add(num);
-					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_LENGTH_DETENTION);
-					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_LENGTH_DETENTION_VOICE);
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
 				}
-				waitTime(2);
-			}else {
-				break;
+			}
+			waitTime(23*24);
+			processDTO=getProcessDTO();
+			process=processDTO.getProcess();
+			if(process.getProcess_force_measure_two()==null) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				for(ajdbxt_police police:policeList) {
+					String num=police.getPolice_phone_number();
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+				}
+			}
+			waitTime(4*24);
+			processDTO=getProcessDTO();
+			process=processDTO.getProcess();
+			if(process.getProcess_force_measure_two()==null) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				for(ajdbxt_police police:policeList) {
+					String num=police.getPolice_phone_number();
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+				}
+			}
+			waitTime(3*24);
+			int index=0;
+			for(;index<6;index++) {
+				processDTO=getProcessDTO();
+				process=processDTO.getProcess();
+				if(process.getProcess_force_measure_two()==null) {
+					List<ajdbxt_police> policeList=processDTO.getPolice();
+					String [] params= {processDTO.getInfo().getInfo_name()};
+					for(ajdbxt_police police:policeList) {
+						String num=police.getPolice_phone_number();
+						List<String> tel=new ArrayList<>();
+						tel.add(num);
+						MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+						MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+					}
+					waitTime(4);
+				}
+			}
+			if(index>=6) {
+				processDTO=getProcessDTO();
+				process =processDTO.getProcess();
+				if(process.getProcess_force_measure_two()==null) {
+					String [] params= {processDTO.getInfo().getInfo_name()};
+					List<String> tel=new ArrayList<>();
+					tel.add(processDTO.getLeader().getPolice_phone_number());
+					tel.add(processDTO.getCap().getPolice_phone_number());
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					tel.remove(processDTO.getLeader().getPolice_phone_number());//不给局长发语音
+					for(String num:tel) {
+						MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+					}
+				}
+			}
+		}else {
+			waitTime(30*24);
+			ProcessDTO processDTO=getProcessDTO();
+			ajdbxt_process process=processDTO.getProcess();
+			if(process.getProcess_force_measure_three()==null) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				for(ajdbxt_police police:policeList) {
+					String num=police.getPolice_phone_number();
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+				}
+			}
+			waitTime(23*24);
+			processDTO=getProcessDTO();
+			process=processDTO.getProcess();
+			if(process.getProcess_force_measure_three()==null) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				for(ajdbxt_police police:policeList) {
+					String num=police.getPolice_phone_number();
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+				}
+			}
+			waitTime(4*24);
+			processDTO=getProcessDTO();
+			process=processDTO.getProcess();
+			if(process.getProcess_force_measure_three()==null) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				for(ajdbxt_police police:policeList) {
+					String num=police.getPolice_phone_number();
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+				}
+			}
+			waitTime(3*24);
+			int index=0;
+			for(;index<6;index++) {
+				processDTO=getProcessDTO();
+				process=processDTO.getProcess();
+				if(process.getProcess_force_measure_three()==null) {
+					List<ajdbxt_police> policeList=processDTO.getPolice();
+					String [] params= {processDTO.getInfo().getInfo_name()};
+					for(ajdbxt_police police:policeList) {
+						String num=police.getPolice_phone_number();
+						List<String> tel=new ArrayList<>();
+						tel.add(num);
+						MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+						MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+					}
+					waitTime(4);
+				}
+			}
+			if(index>=6) {
+				processDTO=getProcessDTO();
+				process =processDTO.getProcess();
+				if(process.getProcess_force_measure_three()==null) {
+					String [] params= {processDTO.getInfo().getInfo_name()};
+					List<String> tel=new ArrayList<>();
+					tel.add(processDTO.getLeader().getPolice_phone_number());
+					tel.add(processDTO.getCap().getPolice_phone_number());
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					tel.remove(processDTO.getLeader().getPolice_phone_number());//不给局长发语音
+					for(String num:tel) {
+						MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+					}
+				}
 			}
 		}
+		
 	}
-	
+	/*
+	 *取保候审 
+	 */
+	private void bail(int flag) throws InterruptedException {
+		if(flag==1) {
+			ProcessDTO processDTO;
+			ajdbxt_process process;
+			for(int index=0;index<3;index++) {
+				waitTime(3*30*24);
+				processDTO=getProcessDTO();
+				process=processDTO.getProcess();
+				if(process.getProcess_force_measure_two()==null) {
+					List<ajdbxt_police> policeList=processDTO.getPolice();
+					String [] params= {processDTO.getInfo().getInfo_name()};
+					for(ajdbxt_police police:policeList) {
+						String num=police.getPolice_phone_number();
+						List<String> tel=new ArrayList<>();
+						tel.add(num);
+						MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+						MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+					}
+				}
+			}
+			waitTime(23*24);
+			processDTO=getProcessDTO();
+			process=processDTO.getProcess();
+			if(process.getProcess_force_measure_two()==null) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				for(ajdbxt_police police:policeList) {
+					String num=police.getPolice_phone_number();
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+				}
+			}
+			waitTime(4*24);
+			processDTO=getProcessDTO();
+			process=processDTO.getProcess();
+			if(process.getProcess_force_measure_two()==null) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				for(ajdbxt_police police:policeList) {
+					String num=police.getPolice_phone_number();
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+				}
+			}
+			waitTime(3*24);
+			int index=0;
+			for(;index<6;index++) {
+				processDTO=getProcessDTO();
+				process=processDTO.getProcess();
+				if(process.getProcess_force_measure_two()==null) {
+					List<ajdbxt_police> policeList=processDTO.getPolice();
+					String [] params= {processDTO.getInfo().getInfo_name()};
+					for(ajdbxt_police police:policeList) {
+						String num=police.getPolice_phone_number();
+						List<String> tel=new ArrayList<>();
+						tel.add(num);
+						MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+						MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+					}
+					waitTime(4);
+				}
+			}
+			if(index>=6) {
+				processDTO=getProcessDTO();
+				process =processDTO.getProcess();
+				if(process.getProcess_force_measure_two()==null) {
+					String [] params= {processDTO.getInfo().getInfo_name()};
+					List<String> tel=new ArrayList<>();
+					tel.add(processDTO.getLeader().getPolice_phone_number());
+					tel.add(processDTO.getCap().getPolice_phone_number());
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					tel.remove(processDTO.getLeader().getPolice_phone_number());//不给局长发语音
+					for(String num:tel) {
+						MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+					}
+				}
+			}
+		}else if(flag==2) {
+			ProcessDTO processDTO;
+			ajdbxt_process process;
+			for(int index=0;index<3;index++) {
+				waitTime(3*30*24);
+				processDTO=getProcessDTO();
+				process=processDTO.getProcess();
+				if(process.getProcess_force_measure_three()==null) {
+					List<ajdbxt_police> policeList=processDTO.getPolice();
+					String [] params= {processDTO.getInfo().getInfo_name()};
+					for(ajdbxt_police police:policeList) {
+						String num=police.getPolice_phone_number();
+						List<String> tel=new ArrayList<>();
+						tel.add(num);
+						MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+						MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+					}
+				}
+			}
+			waitTime(23*24);
+			processDTO=getProcessDTO();
+			process=processDTO.getProcess();
+			if(process.getProcess_force_measure_three()==null) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				for(ajdbxt_police police:policeList) {
+					String num=police.getPolice_phone_number();
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+				}
+			}
+			waitTime(4*24);
+			processDTO=getProcessDTO();
+			process=processDTO.getProcess();
+			if(process.getProcess_force_measure_three()==null) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				for(ajdbxt_police police:policeList) {
+					String num=police.getPolice_phone_number();
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+				}
+			}
+			waitTime(3*24);
+			int index=0;
+			for(;index<6;index++) {
+				processDTO=getProcessDTO();
+				process=processDTO.getProcess();
+				if(process.getProcess_force_measure_three()==null) {
+					List<ajdbxt_police> policeList=processDTO.getPolice();
+					String [] params= {processDTO.getInfo().getInfo_name()};
+					for(ajdbxt_police police:policeList) {
+						String num=police.getPolice_phone_number();
+						List<String> tel=new ArrayList<>();
+						tel.add(num);
+						MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+						MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+					}
+					waitTime(4);
+				}
+			}
+			if(index>=6) {
+				processDTO=getProcessDTO();
+				process =processDTO.getProcess();
+				if(process.getProcess_force_measure_three()==null) {
+					String [] params= {processDTO.getInfo().getInfo_name()};
+					List<String> tel=new ArrayList<>();
+					tel.add(processDTO.getLeader().getPolice_phone_number());
+					tel.add(processDTO.getCap().getPolice_phone_number());
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					tel.remove(processDTO.getLeader().getPolice_phone_number());//不给局长发语音
+					for(String num:tel) {
+						MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+					}
+				}
+			}
+		}else {
+			ProcessDTO processDTO;
+			ajdbxt_process process;
+			for(int index=0;index<3;index++) {
+				waitTime(3*30*24);
+				processDTO=getProcessDTO();
+				process=processDTO.getProcess();
+				if(process.getProcess_result_of_prosecution()==null) {
+					List<ajdbxt_police> policeList=processDTO.getPolice();
+					String [] params= {processDTO.getInfo().getInfo_name()};
+					for(ajdbxt_police police:policeList) {
+						String num=police.getPolice_phone_number();
+						List<String> tel=new ArrayList<>();
+						tel.add(num);
+						MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+						MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+					}
+				}
+			}
+			waitTime(23*24);
+			processDTO=getProcessDTO();
+			process=processDTO.getProcess();
+			if(process.getProcess_result_of_prosecution()==null) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				for(ajdbxt_police police:policeList) {
+					String num=police.getPolice_phone_number();
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+				}
+			}
+			waitTime(4*24);
+			processDTO=getProcessDTO();
+			process=processDTO.getProcess();
+			if(process.getProcess_result_of_prosecution()==null) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				for(ajdbxt_police police:policeList) {
+					String num=police.getPolice_phone_number();
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+				}
+			}
+			waitTime(3*24);
+			int index=0;
+			for(;index<6;index++) {
+				processDTO=getProcessDTO();
+				process=processDTO.getProcess();
+				if(process.getProcess_result_of_prosecution()==null) {
+					List<ajdbxt_police> policeList=processDTO.getPolice();
+					String [] params= {processDTO.getInfo().getInfo_name()};
+					for(ajdbxt_police police:policeList) {
+						String num=police.getPolice_phone_number();
+						List<String> tel=new ArrayList<>();
+						tel.add(num);
+						MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+						MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+					}
+					waitTime(4);
+				}
+			}
+			if(index>=6) {
+				processDTO=getProcessDTO();
+				process =processDTO.getProcess();
+				if(process.getProcess_result_of_prosecution()==null) {
+					String [] params= {processDTO.getInfo().getInfo_name()};
+					List<String> tel=new ArrayList<>();
+					tel.add(processDTO.getLeader().getPolice_phone_number());
+					tel.add(processDTO.getCap().getPolice_phone_number());
+					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_ARREST_TIME_CLOSE);
+					tel.remove(processDTO.getLeader().getPolice_phone_number());//不给局长发语音
+					for(String num:tel) {
+						MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_ARREST_TIME_CLOSE_VOICE);
+					}
+				}
+			}
+		}		
+	}
+//	/*
+//	 * 拘留超时
+//	 */
+//	private void detentionTimeOut() throws InterruptedException {
+//		for(int index=0;index<8;index++) {
+//			ProcessDTO processDTO=getProcessDTO();
+//			ajdbxt_process process=processDTO.getProcess();
+//			if(process.getProcess_lengthen_criminal_detention()==null) {
+//				List<ajdbxt_police> policeList=processDTO.getPolice();
+//				String [] params= {processDTO.getInfo().getInfo_name()};
+//				for(ajdbxt_police police:policeList) {
+//					String num=police.getPolice_phone_number();
+//					List<String> tel=new ArrayList<>();
+//					tel.add(num);
+//					MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_LENGTH_DETENTION);
+//					MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_LENGTH_DETENTION_VOICE);
+//				}
+//				waitTime(2);
+//			}else {
+//				break;
+//			}
+//		}
+//	}
+//	
 	/*
 	 * 补查结果
 	 */
 	private void result() throws InterruptedException {
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process=processDTO.getProcess();
-		if(process.getProcess_search_result_two()!=null&&process.getProcess_search_result_two().equals("是")) {
-			searchResult();
+		if(process.getProcess_search_result_two()!=null) {
+			if(process.getProcess_search_result_two().equals("是")) {
+				searchResult2();
+			}else {
+				while(true) {
+					processDTO=getProcessDTO();
+					process=processDTO.getProcess();
+					if(process.getProcess_case_end()==null) {
+						List<ajdbxt_police> policeList=processDTO.getPolice();
+						String [] params= {processDTO.getInfo().getInfo_name()};
+						for(ajdbxt_police police:policeList) {
+							String num=police.getPolice_phone_number();
+							List<String> tel=new ArrayList<>();
+							tel.add(num);
+							MsgSend.doSendSimple(params, tel, MsgSend.JKBL);
+							MsgSend.doSendVoiceSimple(params, num, MsgSend.JKBL_VOICE);
+						}
+						waitTime(4);
+					}else {
+						break;
+					}
+				}
+			}
 		}else if(process.getProcess_search_result_one()!=null&&process.getProcess_search_result_two().equals("是")) {
 			searchResult();		
 		}
 	}
+	private void searchResult2() throws InterruptedException {
+		ProcessDTO processDTO;
+		ajdbxt_process process;
+		waitTime(23*24);
+		processDTO=getProcessDTO();
+		process=processDTO.getProcess();
+		if(process.getProcess_case_end()==null) {
+			List<ajdbxt_police> policeList=processDTO.getPolice();
+			String [] params= {processDTO.getInfo().getInfo_name()};
+			for(ajdbxt_police police:policeList) {
+				String num=police.getPolice_phone_number();
+				List<String> tel=new ArrayList<>();
+				tel.add(num);
+				MsgSend.doSendSimple(params, tel, MsgSend.JKBL);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.JKBL_VOICE);
+			}
+		}
+		waitTime(4*24);
+		while(true) {
+			processDTO=getProcessDTO();
+			process=processDTO.getProcess();
+			if(process.getProcess_case_end()==null) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				for(ajdbxt_police police:policeList) {
+					String num=police.getPolice_phone_number();
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.JKBL);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.JKBL_VOICE);
+				}
+				waitTime(24);
+			}else {
+				break;
+			}
+		}
+	}
 	private void searchResult() throws InterruptedException {
-		waitTime(20*24);
-		ProcessDTO processDTO=getProcessDTO();
-		ajdbxt_process process=processDTO.getProcess();
+		ProcessDTO processDTO;
+		ajdbxt_process process;
+		waitTime(23*24);
+		processDTO=getProcessDTO();
+		process=processDTO.getProcess();
 		if(process.getProcess_search_result_two()==null) {
 			List<ajdbxt_police> policeList=processDTO.getPolice();
 			String [] params= {processDTO.getInfo().getInfo_name()};
@@ -769,8 +1444,41 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 				String num=police.getPolice_phone_number();
 				List<String> tel=new ArrayList<>();
 				tel.add(num);
-				MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_SEARCH_BACK);//补查
-				MsgSend.doSendVoiceSimple(params, num, MsgSend.CRIMINAL_SEARCH_BACK_VOICE);
+				MsgSend.doSendSimple(params, tel, MsgSend.JKBL);
+				MsgSend.doSendVoiceSimple(params, num, MsgSend.JKBL_VOICE);
+			}
+		}
+		waitTime(4*24);
+		int index=0;
+		for(;index<6;index++) {
+			processDTO=getProcessDTO();
+			process=processDTO.getProcess();
+			if(process.getProcess_search_result_two()==null) {
+				List<ajdbxt_police> policeList=processDTO.getPolice();
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				for(ajdbxt_police police:policeList) {
+					String num=police.getPolice_phone_number();
+					List<String> tel=new ArrayList<>();
+					tel.add(num);
+					MsgSend.doSendSimple(params, tel, MsgSend.JKBL);
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.JKBL_VOICE);
+				}
+				waitTime(4);
+			}
+		}
+		if(index>=6) {
+			processDTO=getProcessDTO();
+			process =processDTO.getProcess();
+			if(process.getProcess_search_result_two()==null) {
+				String [] params= {processDTO.getInfo().getInfo_name()};
+				List<String> tel=new ArrayList<>();
+				tel.add(processDTO.getLeader().getPolice_phone_number());
+				tel.add(processDTO.getCap().getPolice_phone_number());
+				MsgSend.doSendSimple(params, tel, MsgSend.JKBL);
+				tel.remove(processDTO.getLeader().getPolice_phone_number());//不给局长发语音
+				for(String num:tel) {
+					MsgSend.doSendVoiceSimple(params, num, MsgSend.JKBL_VOICE);
+				}
 			}
 		}
 		

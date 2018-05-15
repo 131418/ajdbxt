@@ -59,6 +59,12 @@ public class MsgSend {
 	public static final String CRIMINAL_FILE_UP_VOICE="_案件案卷第二天上交法制大队";
 	public static final String QUESTION_UPDATE_VOICE="_案件法制大队提出有_个问题尽快整改";
 	public static final String FORCE_MEASURE_VOICE="对_案件进行督查";
+	public static final String FORCE_MEASURE_TIME_CLOSE_VOICE="_案件拘留期限将近尽快办理";
+	public static final String CRIMINAL_ARREST_TIME_CLOSE_VOICE="_案件逮捕审期限将近尽快办理";
+	public static final String CRIMINAL_BAIL_TIME_CLOSE_VOICE="_案件取保候审期限将近尽快办理";
+	public static final String CRIMINAL_MONITORING_LIVE_TIME_CLOSE_VOICE="{1}案件监视居住期限将近尽快办理";
+	public static final String JKBL_VOICE="{1}案件尽快办理";
+	
 	//短信模板
 	public static final int SUBPOENA_A_SUSPECT=114978;
 	public static final int SUBPOENA_A_SUSPECT_TIME_OUT=114979;
@@ -86,6 +92,11 @@ public class MsgSend {
 	public static final int QUESTION_UPDATE=119387;
 	public static final int CRIMINAL_FILE_UP=119826;
 	public static final int FORCE_MEASURE=120895;
+	public static final int FORCE_MEASURE_TIME_CLOSE=121547;
+	public static final int CRIMINAL_ARREST_TIME_CLOSE=121563;
+	public static final int CRIMINAL_BAIL_TIME_CLOSE=121592;
+	public static final int CRIMINAL_MONITORING_LIVE_TIME_CLOSE=121598;
+	public static final int JKBL=121712;
 	/**
 	 * 测试方法
 	 */

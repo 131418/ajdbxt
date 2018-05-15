@@ -167,7 +167,7 @@ public class ProcessAction  extends ActionSupport{
 						changeType=ProcessService.rollback;
 						break;
 					case "process_score":
-						changeType=ProcessService.case_end;
+						changeType=ProcessService.case_score;
 						break;
 						//以下为行政处罚
 					case "process_administrativ_warning":
@@ -192,6 +192,9 @@ public class ProcessAction  extends ActionSupport{
 					case "process_search_result_one":
 					case "process_search_result_two":
 						changeType=ProcessService.result;
+						break;
+					case "process_case_end":
+						changeType=ProcessService.case_end;
 						break;
 					}
 				}

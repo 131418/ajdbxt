@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.Set;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -36,6 +37,12 @@ public class ThreadL implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent arg0)  {//服务器关闭时保存
     	Object o=arg0.getServletContext().getAttribute("threadMap");
 		HashMap<String,Object> ho= (HashMap)o;
+		Set<String> keys=ho.keySet();
+		for(String key:keys) {//可能会有异常，因为理论上ho的更改会影响到keys
+			if(ho.get(key)==null) {
+				ho.remove(key);
+			}
+		}
 		try {
 			File file=new File("thread.txt");
 			if(!file.exists()) {
