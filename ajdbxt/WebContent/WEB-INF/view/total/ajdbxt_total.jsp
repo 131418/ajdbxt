@@ -40,7 +40,8 @@
 			<div class="panel-body">
 				<div class="col-md-12">
 					<div class="panel">
-						<button onclick="javascript:history.go(-1)" type="button"
+						<!-- 返回到前一页 -->
+						<button onclick="history.go(-1)" type="button"
 							class="btn btn-default button button_return ">
 							<i class="fa fa-reply"></i> 返回
 						</button>
@@ -67,7 +68,7 @@
 								<!-- 检索 -->
 								<div class="input-group" style="width: 300px; float: right;">
 									<input id="input_Total_PoliceSearchText" class="form-control"
-										type="text" placeholder="搜索人员" /> <span
+										type="text" placeholder="搜索人员"  oninput="List_Total_By_Page(averageScore, 1)" /> <span
 										class="input-group-addon" style="border-radius: unset;">
 										<i class="fa fa-search"></i>
 									</span>
@@ -175,17 +176,11 @@
 			str += "-" + now_date_month;
 			var now_date_date = now_date.getDate();
 			str += "-" + now_date_date;
-			console.log("str:" + str);
 			/* select_start_time.value=str; */
 			select_stop_time.value = str;
-			console.log("select_start_time1:" + select_start_time.value);
-			console.log("select_stop_time1:" + select_stop_time.value);
 			var averageScore = document.getElementById("averageScore").value;
 			List_Total_By_Page(averageScore, 1);
 			$(".input_date").bind("change", function() {
-				List_Total_By_Page(averageScore, 1);
-			});
-			$("#input_Total_PoliceSearchText").bind("input", function() {
 				List_Total_By_Page(averageScore, 1);
 			});
 			$("#select_case_department").bind("input",function(){
