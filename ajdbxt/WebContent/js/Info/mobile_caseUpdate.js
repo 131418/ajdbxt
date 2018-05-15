@@ -33,20 +33,18 @@ function get_caseDetails(info_id){
 					//var xmlHttpRequest = new XMLHttpRequest();
 					//xmlHttpRequest.open("POST", "/ajdbxt/info/Info_lal");
 					//xmlHttpRequest.send(null);
-					xmlHttpRequest.onreadystatechange = function() {
-						if (xmlHttpRequest.readyState == 4
-								&& xmlHttpRequest.status == 200) {
-							var loginRole = JSON
-									.parse(xmlHttpRequest.responseText);
+//					xmlHttpRequest.onreadystatechange = function() {
+//						if (xmlHttpRequest.readyState == 4
+//								&& xmlHttpRequest.status == 200) {
+//							var loginRole = JSON
+//									.parse(xmlHttpRequest.responseText);
 							var option = '';
 //							if (loginRole.ajdbxt_police.police_power == "3") {
-								var deparment = update_police_vo.ajdbxt_department.ajdbxt_department_id;
-								console
-										.log("update_police_vo.ajdbxt_department.ajdbxt_department_id:"
-						 						+ update_police_vo.ajdbxt_department.ajdbxt_department_id);
+								var deparment = update_police_vo.department	.department_name;
+							
 								$
 										.post(
-												'/ajdbxt/user/User_findDepartmentByPage',
+												'/ajdbxt/info/Info_lal',
 												function(Department_data) {
 													// 所有案件循环
 													for (var len = 0; len < Department_data.list.length; len++) {
@@ -72,9 +70,9 @@ function get_caseDetails(info_id){
 //										+ login_police_deparment + '</option>';
 //								$('#input_police_department').html(option);
 //							}
-						}
+					//	}
 
-					}
+			//		}
 
 					// 职务
 					var input_police_duty = document
