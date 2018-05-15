@@ -182,7 +182,7 @@ function List_Police_By_Page(pageIndex) {
 							console.log("a");
 						
 							//document.getElementById("a").href="/ajdbxt/info/Info_page_mobile_caseOneDetails"
-							window.location.href="/ajdbxt/info/Info_page_mobile_caseOneDetails?ajdbxt_info_id="+ this.id;
+							//window.location.href="/ajdbxt/info/Info_page_mobile_caseOneDetails?ajdbxt_info_id="+ this.id;
 						})
 
 						/*

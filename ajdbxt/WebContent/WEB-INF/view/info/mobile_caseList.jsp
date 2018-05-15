@@ -32,7 +32,7 @@
 	<!-- 添加案件-->
 			<div class="mui-icon mui-icon-plusempty" id="div_police_add" style="position: fixed;top: 10px;right: 20px; font-weight:bold;color: white;z-index: 9999999;" onclick="window.location.href='<%=basePath%>info/Info_page_mobile_caseAdd'"></div>
 	<header class="mui-bar mui-bar-nav index_nav">
-		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="window.location.href='<%=basePath%>user/User_mobile_index'"></a>
+		<a id="tosy_a" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title" style="color: white;">案件信息</h1>
 	
 	</header>
@@ -67,10 +67,13 @@
 
 	<script type="text/javascript"
 		src="<%=basePath%>js/Info/mobile_caseList.js"></script>
-	<script type="text/javascript">
+<script type="text/javascript">
 		mui.init();
-	
-	</script>
+		document.getElementById("tosy_a").addEventListener("tap",function(){
+			mui.openWindow({
+				url:'/ajdbxt/user/User_mobile_index',
+			});
+		});
 </body>
 
 </html>
