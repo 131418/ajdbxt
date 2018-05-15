@@ -31,9 +31,6 @@ function List_Total_By_Department(e,pageIndex){
 	getXMLHttp();	
 	var select_start_time=document.getElementById("select_start_time").value;
 	var select_stop_time=document.getElementById("select_stop_time").value;
-	var adminCase=document.getElementById("adminCase").value;
-	var criminalCase=document.getElementById("criminalCase").value;
-	var averageScore=document.getElementById("averageScore").value;
 	
 	xhr.onreadystatechange=function(){
 		if (xhr.readyState == 4) {

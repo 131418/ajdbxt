@@ -105,8 +105,6 @@
 		</div>
 	</div>
 
-	
-
 	<script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
 	<script src="<%=basePath%>js/mui.min.js"></script>
 	<script type="text/javascript" src="<%=basePath%>js/mui.picker.min.js"></script>

@@ -60,6 +60,7 @@
 								<div style="width: 160px; float: right;">
 									<!-- <button class="btn btn-default role_one"
 										onclick="createPolice()">按人员统计</button> -->
+										<!-- 跳转到ajdbxt_total.jsp -->
 									<button class="btn btn-default role_one"
 										onclick="window.location.href='/ajdbxt/total/Total_page_listPoliceCase'">按人员统计</button>
 								</div>
@@ -126,11 +127,8 @@
 		str += "-" + now_date_month;
 		var now_date_date = now_date.getDate();
 		str += "-" + now_date_date;
-		console.log("str:" + str);
 		/* select_start_time.value=str; */
 		select_stop_time.value = str;
-		console.log("select_start_time1:" + select_start_time.value);
-		console.log("select_stop_time1:" + select_stop_time.value);
 		var averageScore=document.getElementById("averageScore").value;
 		List_Total_By_Department(averageScore,1);
 		$(".input_date").bind("change", function() {
