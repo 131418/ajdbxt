@@ -13,9 +13,6 @@
 <title>手机端—按单位统计</title>
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-<link href="<%=basePath%>css/mui.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="<%=basePath%>css/app.css" />
-<link rel="stylesheet" href="<%=basePath%>css/mui.picker.min.css" />
 <style>
 .index_nav {
 	background-color: #007aff;
@@ -23,7 +20,7 @@
 	font-size: 15px;
 }
 
-.index_nav h1, a {
+.index_nav h1,.index_nav a {
 	color: white;
 }
 
@@ -36,13 +33,12 @@
 	width: 160px;
 }
 
-#total_info_type {
-	color: #007aff;
-}
 </style>
 </head>
 
 <body>
+<s:action name="User_mobile_navbar" namespace="/user"
+		executeResult="true" />
 	<header class="mui-bar mui-bar-nav index_nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"
 			onclick="window.location.href='<%=basePath%>user/User_mobile_index'"></a>
@@ -75,7 +71,7 @@
 		</div>
 	</div>
 	<div class="mui-content">
-		<div class="mui-card" style="margin:0px;padding:0 0 5px 0;">
+		<div class="mui-card" style="margin:0px;">
 			<!--页眉，放置标题-->
 			<div class="mui-card-header" style="padding: 0px;">
 				<div class="mui-card-header">
@@ -105,11 +101,6 @@
 		</div>
 	</div>
 
-	
-
-	<script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
-	<script src="<%=basePath%>js/mui.min.js"></script>
-	<script type="text/javascript" src="<%=basePath%>js/mui.picker.min.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>js/Total/mobile_total_department.js"></script>
 	<script type="text/javascript">
