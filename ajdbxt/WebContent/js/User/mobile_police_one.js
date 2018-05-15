@@ -22,6 +22,9 @@ window.onload = function() {
 			login_police_deparment_id = loginRole.ajdbxt_department.ajdbxt_department_id;// 当前登录角色所在单位名字赋值
 			console.log("login_police_deparment:" + login_police_deparment);
 			var option = '';// 单位选择
+			if(loginRole.ajdbxt_police.police_power != "1"){
+				document.getElementById("div_police_add").style.display = "block";
+			}
 			if (loginRole.ajdbxt_police.police_power == "3") {
 				police_power_options = power_three;// 角色3可选权限赋值
 				open_url = "/ajdbxt/user/User_queryForPage";
@@ -51,7 +54,7 @@ window.onload = function() {
 						+ login_police_deparment + '</option>';
 				$('#input_police_department').html(option);// 添加单位选项
 			} else {
-				document.getElementById("div_police_add").style.display = "none";
+				
 				open_url = "/ajdbxt/user/User_queryForPageByDepartment";
 			}
 			$("#input_police_power").html(

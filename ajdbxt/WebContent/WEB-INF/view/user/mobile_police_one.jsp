@@ -31,7 +31,7 @@
 		executeResult="true" />
 	<!-- 添加人员 -->
 	<div class="mui-icon mui-icon-plusempty" id="div_police_add"
-		style="position: fixed; top: 10px; right: 20px; font-weight: bold; color: white; z-index: 9999999;"
+		style="position: fixed; top: 10px; right: 20px; font-weight: bold; color: white; z-index: 9999999;display:none;"
 		onclick="window.location.href='<%=basePath%>user/User_mobile_police_add'"></div>
 	<header class="mui-bar mui-bar-nav index_nav">
 		<a id="tosy_a"
