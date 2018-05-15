@@ -20,10 +20,8 @@ window.onload = function() {
 			$(".span_police_status").html(loginRole.ajdbxt_police.police_duty);
 			$(".span_police_depart").html(loginRole.ajdbxt_department.department_name);
 			console.log("权限:" + loginRole.ajdbxt_police.police_power);
-			if (loginRole.ajdbxt_police.police_power == "1") {
-				$("#ul_case_type")
-						.html(
-								'<li class="mui-table-view-cell"><span class="mui-icon mui-icon-paperplane"></span><span> <a class=" "  > 正在参与的案件 </a>	</span> <span class="mui-badge mui-badge-green">33</span></li>');
+			if (loginRole.ajdbxt_police.police_power != "1") {
+				$(".index_nav_option").css("display","block");
 			}
 		}
 	}
@@ -188,14 +186,10 @@ function List_Index_CaseInfo_By_Page(pageIndex) {
 
 	formData.append("infoVO.currPage", pageIndex);
 	console.log(type_chose);
-	if (type_chose == "正在参与的案件") {
+	if (type_chose == "未结案的案件") {
 		formData.append("ajdbxtProcess.process_case_end", "false");
-	} else if (type_chose == "待核对案件") {
+	} else if (type_chose == "待审核的案件") {
 		formData.append("ajdbxtProcess.process_captain_check", "false");
-	} else if (type_chose == "等待提交问题清单的案件") {
-		formData.append("ajdbxtProcess.process_question", "false");
-	} else if (type_chose == "等待评分的案件") {
-		formData.append("ajdbxtProcess.process_score", "false");
 	} else {
 		return;
 	}

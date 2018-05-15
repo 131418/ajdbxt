@@ -8,7 +8,7 @@ window.onload = function() {
 			var loginRole = JSON.parse(xmlHttpRequest.responseText);
 //			console.log("权限:"+loginRole.ajdbxt_police.police_power);
 			if (loginRole.ajdbxt_police.police_power == "1") {
-				$("#type_chose").html('<option  value="正在参与的案件">正在参与的案件</option>');
+				$("#type_chose").html('<option  value="未结案的案件">未结案的案件</option>');
 				}
 			}
 		}
@@ -150,7 +150,7 @@ function List_Index_CaseInfo_By_Page(pageIndex){
 		if(type_chose=="未结案的案件"){
 			formData.append("ajdbxtProcess.process_case_end","false");
 		}
-		if(type_chose=="待审核案件"){
+		if(type_chose=="待审核的案件"){
 			formData.append("ajdbxtProcess.process_captain_check","false");
 		}/*else if(type_chose=="等待提交问题清单的案件"){
 			formData.append("ajdbxtProcess.process_question","false");
