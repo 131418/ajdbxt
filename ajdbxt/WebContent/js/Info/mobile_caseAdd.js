@@ -65,7 +65,8 @@ function each_info_department(){
 							$('#case_input form').serialize(),
 							function(xhr) {
 								if (isContains(xhr,'success')) {
-									toastr.success('添加成功!');
+									//toastr.success('添加成功!');
+									window.location.href='<%=basePath%>info/Info_page_mobileCaseList'
 									//get_ListBreakecaseInformationByPageAndSearch(query_data);
 								} else {
 									toastr.error('添加失败!');
@@ -88,9 +89,9 @@ function each_info_department(){
 					option += '<option value="'
 							+ Case_data.police[0].ajdbxt_police_id + '">'
 							+ Case_data.police[0].police_name + '</option>';
-					$('select[name="info.info_main_police"]').html(option)
-							.selectpicker('refresh').selectpicker('val',
-									Case_data.police[0].ajdbxt_police_id);
+					$('select[name="info.info_main_police"]').html(option);
+//							.selectpicker('refresh').selectpicker('val',
+//									Case_data.police[0].ajdbxt_police_id);
 					var option1 = '';
 					option1 += '<option value="'
 							+ Case_data.police[1].ajdbxt_police_id + '">'

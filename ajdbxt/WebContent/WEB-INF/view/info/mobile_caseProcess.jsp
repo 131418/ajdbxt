@@ -601,7 +601,10 @@ padding:0 5px;
  		src="<%=basePath%>js/Info/mobile_caseOneProcess.js"></script> 
 	<script src="<%=basePath%>js/mui.min.js"></script>
 	<script type="text/javascript">
-		mui.init()
+		mui.init();
+		var self = plus.webview.currentWebview();  
+		var ajdbxt_info_id = self.ajdbxt_info_id;  
+		console.log(ajdbxt_info_id);
 	</script>
 <%-- <%-- 	<script type="text/javascript"> --%>
 <!--  		case_details();  -->
