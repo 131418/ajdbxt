@@ -60,6 +60,7 @@
 								<div style="width: 160px; float: right;">
 									<!-- <button class="btn btn-default role_one"
 										onclick="createPolice()">按人员统计</button> -->
+										<!-- 跳转到ajdbxt_total.jsp -->
 									<button class="btn btn-default role_one"
 										onclick="window.location.href='/ajdbxt/total/Total_page_listPoliceCase'">按人员统计</button>
 								</div>
@@ -71,10 +72,10 @@
 									<tr>
 										<th>序号</th>
 										<th>办案单位</th>
-										<th><input type="button" id="adminCase" class="input_button"											 value="行政案件" /></th>
-										<th><input type="button" id="criminalCase" class="input_button"											value="刑事案件" /></th>
+										<th><input type="button" id="adminCase" class="input_button" value="行政案件" /></th>
+										<th><input type="button" id="criminalCase" class="input_button"	value="刑事案件" /></th>
 										<th>总案件数</th>
-										<th><input type="button" id="averageScore" class="input_button"											 value="平均分" /></th>
+										<th><input type="button" id="averageScore" class="input_button"	value="平均分" /></th>
 									</tr>
 								</tbody>
 							</table>
@@ -126,11 +127,8 @@
 		str += "-" + now_date_month;
 		var now_date_date = now_date.getDate();
 		str += "-" + now_date_date;
-		console.log("str:" + str);
 		/* select_start_time.value=str; */
 		select_stop_time.value = str;
-		console.log("select_start_time1:" + select_start_time.value);
-		console.log("select_stop_time1:" + select_stop_time.value);
 		var averageScore=document.getElementById("averageScore").value;
 		List_Total_By_Department(averageScore,1);
 		$(".input_date").bind("change", function() {
@@ -159,12 +157,5 @@
 			maxDate : '2100/01/01', // 设置最大日期
 		});
 	</script>
-	<!-- 路径跳转 -->
-		<script type="text/javascript">
-			function ByUserTotal() {
-				/* window.location.href="ajdbxt_total.jsp";  */
-				 window.navigate("ajdbxt_total.jsp");
-			}
-		</script>
 </body>
 </html>

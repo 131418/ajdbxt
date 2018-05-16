@@ -27,8 +27,8 @@ function List_Total_Department(e,pageIndex) {
 		e_str="0";
 	}  
 	getXMLHttp();
-	var select_start_time = document.getElementById("select_start_time").value;
-	var select_stop_time = document.getElementById("select_stop_time").value;
+	var select_start_time = document.getElementById("select_start_time").innerText;
+	var select_stop_time = document.getElementById("select_stop_time").innerText;
 	var total_info_type = null;
 
 	xhr.onreadystatechange = function() {
@@ -39,7 +39,7 @@ function List_Total_Department(e,pageIndex) {
 				var new_a = null;
 				var span_num = null;// 部门序号
 				var span_department = null;// 办案单位
-				var span_average = null;// 平均分
+				var span_checkTotal = null;// 判断根据什么统计
 
 				// -----折叠信息-----
 				var new_div = null;

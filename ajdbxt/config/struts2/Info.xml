@@ -11,6 +11,16 @@
 			</result>
 			<result name="page_CaseDetails">/WEB-INF/view/info/CaseDetails.jsp
 			</result>
+			<result name="page_mobileCaseList">/WEB-INF/view/info/mobile_caseList.jsp
+			</result>
+			<result name="page_mobile_caseOneDetails">/WEB-INF/view/info/mobile_caseOneDetails.jsp
+			</result>
+			<result name="page_mobile_caseAdd">/WEB-INF/view/info/mobile_caseadd.jsp
+			</result>
+			<result name="page_mobile_caseProcess">/WEB-INF/view/info/mobile_caseProcess.jsp
+			</result>
+			<result name="page_mobile_caseUpdate">/WEB-INF/view/info/mobile_caseOneUpdate.jsp
+			</result>
 		</action>
 	</package> 
 

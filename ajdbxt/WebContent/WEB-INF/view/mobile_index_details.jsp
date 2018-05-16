@@ -13,7 +13,6 @@
 <title></title>
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-<link href="<%=basePath%>css/mui.min.css" rel="stylesheet" />
 <style>
 body {
 	font-size: 15px;
@@ -25,11 +24,11 @@ body {
 	font-size: 15px;
 }
 
-h1, a {
+.index_nav  h1, .index_nav  a {
 	color: white;
 }
 
-input {
+.mui-input-row input {
 	text-align: right;
 }
 .mui-input-row{
@@ -39,8 +38,10 @@ padding:0 5px;
 </head>
 
 <body>
+	<s:action name="User_mobile_navbar" namespace="/user"
+		executeResult="true" />
 	<header class="mui-bar mui-bar-nav index_nav">
-		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<a id="tosy_a" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title" style="color: white;">案件信息</h1>
 	</header>
 	<div class="mui-content" id="case_details_content">
@@ -97,7 +98,7 @@ padding:0 5px;
 			<span class="mui-tab-label" >人员</span>
 		</a> <a class="mui-tab-item"  href="#Popover_1"> <span class="mui-icon mui-icon-email"></span>
 			<span class="mui-tab-label">统计</span>
-		</a> <a class="mui-tab-item"> <span
+		</a> <a class="mui-tab-item" onclick="window.location.href='<%=basePath%>info/Info_page_mobileCaseList'"> <span
 			class="mui-icon mui-icon-chatboxes"></span> <span
 			class="mui-tab-label">案件</span>
 		</a>
@@ -115,14 +116,15 @@ padding:0 5px;
 				</li>
 			</ul>
 		</div>
-	<script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>js/Index/mobile_indexCaseDetails.js"></script>
-	<script src="<%=basePath%>js/mui.min.js"></script>
 	<script type="text/javascript">
-		mui.init()
-	</script>
-	<script type="text/javascript">
+		mui.init();
+		document.getElementById("tosy_a").addEventListener("tap",function(){
+			mui.openWindow({
+				url:'/ajdbxt/user/User_mobile_index',
+			});
+		});
 		case_details();
 	</script>
 </body>

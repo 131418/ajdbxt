@@ -22,7 +22,6 @@ window.onload = function() {
 			login_police_deparment_id = loginRole.ajdbxt_department.ajdbxt_department_id;// 当前登录角色所在单位名字赋值
 			console.log("login_police_deparment:" + login_police_deparment);
 			var option = '';// 单位选择
-			
 			if (loginRole.ajdbxt_police.police_power == "3") {
 				police_power_options = power_three;// 角色3可选权限赋值
 				open_url = "/ajdbxt/user/User_queryForPage";
@@ -52,18 +51,14 @@ window.onload = function() {
 						+ login_police_deparment + '</option>';
 				$('#input_police_department').html(option);// 添加单位选项
 			} else {
-				
+				document.getElementById("div_police_add").style.display = "none";
 				open_url = "/ajdbxt/user/User_queryForPageByDepartment";
 			}
-			
 			$("#input_police_power").html(
 					'<option selected="selected" value="">请选择</option>'
 							+ police_power_options);// 增加添加权限选项
 			$("#update_input_police_power").html(police_power_options);// 修改权限选项
 			List_Police_By_Page(1);
-			if(loginRole.ajdbxt_police.police_power != "1"){
-				document.getElementById("div_police_add").style.display = "block";
-			}
 		}
 
 	}
@@ -91,6 +86,8 @@ function List_Police_By_Page(pageIndex) {
 				var new_span2 = null;// 警员名
 				var new_span3 = null;// 单位名
 				var new_a = null;// 案件名链接
+				var new_xianshi=null;//div显示修改删除按钮
+				
 				var input_name = null;
 
 				// -----折叠信息-----
@@ -129,7 +126,7 @@ function List_Police_By_Page(pageIndex) {
 				var ul_police_list = document.getElementById("ul_police_list");
 
 				/*
-				 * 移出除标题以外的所有行
+				 * 移出除标题以外的所有行      （开始案件）
 				 */
 
 				var old_li = document.getElementsByClassName("new_li");
@@ -139,8 +136,8 @@ function List_Police_By_Page(pageIndex) {
 				}
 
 				var str_page_row = null;
-				console.log("police_vo.allRow:" + police_vo.allRow);
-				if (police_vo.allRow > 0) {
+				console.log("police_vo.countRecords:" + police_vo.countRecords);
+				if (police_vo.countRecords > 0) {
 
 					/*
 					 * 移出除标题以外的所有行
@@ -155,29 +152,41 @@ function List_Police_By_Page(pageIndex) {
 					/*
 					 * 将数据库的数据取出来放到表格里
 					 */
-					for (var num = 0; num < police_vo.list.length; num++) {
+					for (var num = 0; num < police_vo.Caselist.length; num++) {
 						new_li = document.createElement("li");
 						new_li.className = "mui-table-view-cell mui-collapse new_li";
+						new_li.style.borderRadius="0px";
 						new_li.appendChild(document.createTextNode(''));
 						ul_police_list.appendChild(new_li);
 						/*
-						 * 警员id
+						 * 案件id
 						 */
 						new_span0 = document.createElement("span");
 						new_li.appendChild(new_span0);
 						new_span0.style.display = "none";
 						new_span0.className = "input_ajdbxt_police_id";
-						new_span0.innerHTML = police_vo.list[num].ajdbxt_police.ajdbxt_police_id;
+						new_span0.innerHTML = police_vo.Caselist[num].info.ajdbxt_info_id;
 						/*
 						 * 0. a链接
 						 */
 						new_a = document.createElement("a");
-						new_a.className = "mui-navigate-right";
+						new_a.className = "a_to_details mui-slider-handle";
+						new_a.id=police_vo.Caselist[num].info.ajdbxt_info_id;
+						//new_a.className = "mui-navigate-right";
+					//	new_a.href="/ajdbxt/info/Info_page_mobile_caseOneDetails"
+							
 						new_a.appendChild(document.createTextNode(''));
 						new_li.appendChild(new_a);
+						
+						$(".a_to_details").bind("click", function() {
+							console.log("a");
+						
+							//document.getElementById("a").href="/ajdbxt/info/Info_page_mobile_caseOneDetails"
+							//window.location.href="/ajdbxt/info/Info_page_mobile_caseOneDetails?ajdbxt_info_id="+ this.id;
+						})
 
 						/*
-						 * 1. 警员序号
+						 * 1. 案件序号
 						 */
 						new_span1 = document.createElement("span");
 						new_span1.innerHTML = num + 1;
@@ -186,139 +195,147 @@ function List_Police_By_Page(pageIndex) {
 						new_a.appendChild(new_span1);
 
 						/*
-						 * 2. 警员名字
+						 * 2. 案件名称
 						 */
 						new_span2 = document.createElement("span");
-						new_span2.innerHTML = police_vo.list[num].ajdbxt_police.police_name;
+						new_span2.innerHTML = police_vo.Caselist[num].info.info_name;
 						input_name = new_span2.innerText;
 						new_a.appendChild(new_span2);
 						/*
-						 * 3.单位名
+						 * 3.案件类型
 						 */
 						new_span3 = document.createElement("span");
 						new_span3.className = "mui-badge mui-badge-blue";
-						new_span3.innerHTML = police_vo.list[num].ajdbxt_department.department_name;
+						new_span3.innerHTML = police_vo.Caselist[num].info.info_category;
 						new_a.appendChild(new_span3);
+						
+//						new_span4=document.createElement("span");
+//						new_span4.className = "mui-slider-right mui-disabled";
+//						new_span5.document.createElement("a");
+//						new_span5.className = "mui-btn mui-btn-yellow";
+//						new_span5.value="修改";
+//						new_a.appendChild(new_span4);
+//						new_span4.appendChild(new_span5);
 						/*
 						 * 4. 折叠信息
 						 */
-						new_div = document.createElement("div");// 折叠信息div
-						new_div.className = "mui-collapse-content mui-h5";
-						new_div.style.text_indent = "25px";
-						new_div.style.padding = "0 20px 0 20px";
-						new_div.style.textIndent = "25px";
-						new_form = document.createElement("form");
-						new_form.className = "mui-input-group mui-h5";
+//						new_div = document.createElement("div");// 折叠信息div
+//						new_div.className = "mui-collapse-content mui-h5";
+//						new_div.style.text_indent = "25px";
+//						new_div.style.padding = "0 20px 0 20px";
+//						new_div.style.textIndent = "25px";
+//						new_form = document.createElement("form");
+//						new_form.className = "mui-input-group mui-h5";
 						// 1警号
-						new_input_row_jh = document.createElement("div");
-						new_input_row_jh.className = "mui-input-row mui-h5";
-						new_label_jh = document.createElement("label");
-						new_label_jh.innerHTML = "警号";
-						new_label_jh.style.padding = "11px 0px";
-						new_input_jh = document.createElement("input");
-						new_input_jh.className = "mui-input-clear  mui-h5";
-						new_input_jh.value = police_vo.list[num].ajdbxt_police.police_serial_number;
-						new_input_jh.type = "text";
-						new_input_jh.disabled = "disabled";
-						new_input_jh.style.paddingLeft = "20px";
-						new_input_row_jh.appendChild(new_label_jh);
-						new_input_row_jh.appendChild(new_input_jh);
-						new_form.appendChild(new_input_row_jh);
+//						new_input_row_jh = document.createElement("div");
+//						new_input_row_jh.className = "mui-input-row mui-h5";
+//						new_label_jh = document.createElement("label");
+//						new_label_jh.innerHTML = "警号";
+//						new_label_jh.style.padding = "11px 0px";
+//						new_input_jh = document.createElement("input");
+//						new_input_jh.className = "mui-input-clear  mui-h5";
+//						new_input_jh.value = police_vo.list[num].ajdbxt_police.police_serial_number;
+//						new_input_jh.type = "text";
+//						new_input_jh.disabled = "disabled";
+//						new_input_jh.style.paddingLeft = "20px";
+//						new_input_row_jh.appendChild(new_label_jh);
+//						new_input_row_jh.appendChild(new_input_jh);
+//						new_form.appendChild(new_input_row_jh);
 						// 2姓名
-						new_input_row_xm = document.createElement("div");
-						new_input_row_xm.className = "mui-input-row";
-						new_label_xm = document.createElement("label");
-						new_label_xm.innerHTML = "姓名";
-						new_label_xm.style.padding = "11px 0px";
-						new_input_xm = document.createElement("input");
-						new_input_xm.className = "mui-input-clear  mui-h5";
-						new_input_xm.value = input_name;
-						new_input_xm.type = "text";
-						new_input_xm.disabled = "disabled";
-						new_input_xm.style.paddingLeft = "20px";
-						new_input_row_xm.appendChild(new_label_xm);
-						new_input_row_xm.appendChild(new_input_xm);
-						new_form.appendChild(new_input_row_xm);
-						// 3单位
-						new_input_row_dw = document.createElement("div");
-						new_input_row_dw.className = "mui-input-row";
-						new_label_dw = document.createElement("label");
-						new_label_dw.innerHTML = "单位";
-						new_label_dw.style.padding = "11px 0px";
-						new_input_dw = document.createElement("input");
-						new_input_dw.className = "mui-input-clear  mui-h5";
-						new_input_dw.value = police_vo.list[num].ajdbxt_department.department_name;
-						new_input_dw.type = "text";
-						new_input_dw.disabled = "disabled";
-						new_input_dw.style.paddingLeft = "20px";
-						new_input_row_dw.appendChild(new_label_dw);
-						new_input_row_dw.appendChild(new_input_dw);
-						new_form.appendChild(new_input_row_dw);
+//						new_input_row_xm = document.createElement("div");
+//						new_input_row_xm.className = "mui-input-row";
+//						new_label_xm = document.createElement("label");
+//						new_label_xm.innerHTML = "姓名";
+//						new_label_xm.style.padding = "11px 0px";
+//						new_input_xm = document.createElement("input");
+//						new_input_xm.className = "mui-input-clear  mui-h5";
+//						new_input_xm.value = input_name;
+//						new_input_xm.type = "text";
+//						new_input_xm.disabled = "disabled";
+//						new_input_xm.style.paddingLeft = "20px";
+//						new_input_row_xm.appendChild(new_label_xm);
+//						new_input_row_xm.appendChild(new_input_xm);
+//						new_form.appendChild(new_input_row_xm);
+//						// 3单位
+//						new_input_row_dw = document.createElement("div");
+//						new_input_row_dw.className = "mui-input-row";
+//						new_label_dw = document.createElement("label");
+//						new_label_dw.innerHTML = "单位";
+//						new_label_dw.style.padding = "11px 0px";
+//						new_input_dw = document.createElement("input");
+//						new_input_dw.className = "mui-input-clear  mui-h5";
+//						new_input_dw.value = police_vo.list[num].ajdbxt_department.department_name;
+//						new_input_dw.type = "text";
+//						new_input_dw.disabled = "disabled";
+//						new_input_dw.style.paddingLeft = "20px";
+//						new_input_row_dw.appendChild(new_label_dw);
+//						new_input_row_dw.appendChild(new_input_dw);
+//						new_form.appendChild(new_input_row_dw);
 						// 4职务
-						new_input_row_zw = document.createElement("div");
-						new_input_row_zw.className = "mui-input-row";
-						new_label_zw = document.createElement("label");
-						new_label_zw.innerHTML = "职务";
-						new_label_zw.style.padding = "11px 0px";
-						new_input_zw = document.createElement("input");
-						new_input_zw.className = "mui-input-clear  mui-h5";
-						new_input_zw.value = police_vo.list[num].ajdbxt_police.police_duty;
-						new_input_zw.type = "text";
-						new_input_zw.disabled = "disabled";
-						new_input_zw.style.paddingLeft = "20px";
-						new_input_row_zw.appendChild(new_label_zw);
-						new_input_row_zw.appendChild(new_input_zw);
-						new_form.appendChild(new_input_row_zw);
+//						new_input_row_zw = document.createElement("div");
+//						new_input_row_zw.className = "mui-input-row";
+//						new_label_zw = document.createElement("label");
+//						new_label_zw.innerHTML = "职务";
+//						new_label_zw.style.padding = "11px 0px";
+//						new_input_zw = document.createElement("input");
+//						new_input_zw.className = "mui-input-clear  mui-h5";
+//						new_input_zw.value = police_vo.list[num].ajdbxt_police.police_duty;
+//						new_input_zw.type = "text";
+//						new_input_zw.disabled = "disabled";
+//						new_input_zw.style.paddingLeft = "20px";
+//						new_input_row_zw.appendChild(new_label_zw);
+//						new_input_row_zw.appendChild(new_input_zw);
+//						new_form.appendChild(new_input_row_zw);
 						// 5权限
-						new_input_row_qx = document.createElement("div");
-						new_input_row_qx.className = "mui-input-row";
-						new_label_qx = document.createElement("label");
-						new_label_qx.innerHTML = "权限";
-						new_label_qx.style.padding = "11px 0px";
-						new_input_qx = document.createElement("input");
-						new_input_qx.className = "mui-input-clear  mui-h5";
-						if (police_vo.list[num].ajdbxt_police.police_power == "1") {
-							new_input_qx.value = "单位内浏览";
-						} else if (police_vo.list[num].ajdbxt_police.police_power == "2") {
-							new_input_qx.value = "单位内管理";
-						} else {
-							new_input_qx.value = "所有单位内管理";
-						}
-						new_input_qx.type = "text";
-						new_input_qx.disabled = "disabled";
-						new_input_qx.style.paddingLeft = "20px";
-						new_input_row_qx.appendChild(new_label_qx);
-						new_input_row_qx.appendChild(new_input_qx);
-						new_form.appendChild(new_input_row_qx);
+//						new_input_row_qx = document.createElement("div");
+//						new_input_row_qx.className = "mui-input-row";
+//						new_label_qx = document.createElement("label");
+//						new_label_qx.innerHTML = "权限";
+//						new_label_qx.style.padding = "11px 0px";
+//						new_input_qx = document.createElement("input");
+//						new_input_qx.className = "mui-input-clear  mui-h5";
+//						if (police_vo.list[num].ajdbxt_police.police_power == "1") {
+//							new_input_qx.value = "单位内浏览";
+//						} else if (police_vo.list[num].ajdbxt_police.police_power == "2") {
+//							new_input_qx.value = "单位内管理";
+//						} else {
+//							new_input_qx.value = "所有单位内管理";
+//						}
+//						new_input_qx.type = "text";
+//						new_input_qx.disabled = "disabled";
+//						new_input_qx.style.paddingLeft = "20px";
+//						new_input_row_qx.appendChild(new_label_qx);
+//						new_input_row_qx.appendChild(new_input_qx);
+//						new_form.appendChild(new_input_row_qx);
 						// 6手机号码
-						new_input_row_sjh = document.createElement("div");
-						new_input_row_sjh.className = "mui-input-row";
-						new_label_sjh = document.createElement("label");
-						new_label_sjh.innerHTML = "电话";
-						new_label_sjh.style.padding = "11px 0px";
-						new_input_sjh = document.createElement("input");
-						new_input_sjh.className = "mui-input-clear  mui-h5";
-						new_input_sjh.value = police_vo.list[num].ajdbxt_police.police_phone_number;
-						new_input_sjh.type = "text";
-						new_input_sjh.disabled = "disabled";
-						new_input_sjh.style.paddingLeft = "20px";
-						new_input_row_sjh.appendChild(new_label_sjh);
-						new_input_row_sjh.appendChild(new_input_sjh);
-						new_form.appendChild(new_input_row_sjh);
+//						new_input_row_sjh = document.createElement("div");
+//						new_input_row_sjh.className = "mui-input-row";
+//						new_label_sjh = document.createElement("label");
+//						new_label_sjh.innerHTML = "电话";
+//						new_label_sjh.style.padding = "11px 0px";
+//						new_input_sjh = document.createElement("input");
+//						new_input_sjh.className = "mui-input-clear  mui-h5";
+//						new_input_sjh.value = police_vo.list[num].ajdbxt_police.police_phone_number;
+//						new_input_sjh.type = "text";
+//						new_input_sjh.disabled = "disabled";
+//						new_input_sjh.style.paddingLeft = "20px";
+//						new_input_row_sjh.appendChild(new_label_sjh);
+//						new_input_row_sjh.appendChild(new_input_sjh);
+//						new_form.appendChild(new_input_row_sjh);
 
 						// 7按钮
-						if (loginRole.ajdbxt_police.police_power == "2"
-								|| loginRole.ajdbxt_police.police_power == "3") {
+//						if (loginRole.ajdbxt_police.police_power == "2"
+//								|| loginRole.ajdbxt_police.police_power == "3") {
 							new_row_button = document.createElement("div");
-							new_row_button.className = "mui-input-row";
+							new_row_button.className = "mui-slider-right mui-disabled";
 							new_btn_xg = document.createElement("button");
-							new_btn_xg.className = "mui-btn mui-btn-yellow btn_xg";
+							new_btn_xg.className = "mui-btn mui-btn-yellow";
 							new_btn_xg.innerHTML = "修改";
-							new_btn_xg.id = police_vo.list[num].ajdbxt_police.ajdbxt_police_id;
+							new_btn_xg.id = police_vo.Caselist[num].info.ajdbxt_info_id;
 							new_btn_xg.style.marginLeft = "5px";
-							new_btn_xg.style.width = "60px";
+					//		new_btn_xg.style.width = "60px";
 							new_btn_xg.onclick = function() {
-								window.location.href = "/ajdbxt/user/User_mobile_police_update?police_id="
+								window.location.href = "/ajdbxt/info/Info_page_mobile_caseUpdate?ajdbxt_info_id="
 										+ this.id;
 								/*
 								 * window.location.href =
@@ -327,8 +344,8 @@ function List_Police_By_Page(pageIndex) {
 								return false;
 							}
 							new_btn_sc = document.createElement("button");
-							new_btn_sc.className = "mui-btn mui-btn-red btn_sc";
-							new_btn_sc.id = police_vo.list[num].ajdbxt_police.ajdbxt_police_id;
+							new_btn_sc.className = "mui-btn mui-btn-red";
+							new_btn_sc.id = police_vo.Caselist[num].info.ajdbxt_info_id;
 							new_btn_sc.innerHTML = "删除";
 							new_btn_sc.style.margin = "0 30px 0 5px";
 							new_btn_sc.style.width = "60px";
@@ -344,12 +361,12 @@ function List_Police_By_Page(pageIndex) {
 												function(e) {
 													if (e.index == 0) {
 														var formData = new FormData();
-														formData.append("ids",
+														formData.append("info.ajdbxt_info_id",
 																btn_id);
 														var xhr = new XMLHttpRequest();
 														xhr
 																.open("POST",
-																		"/ajdbxt/user/User_batchDelete");
+																		"/ajdbxt/info/Info_delete");
 														xhr.send(formData);
 														xhr.onreadystatechange = function() {
 															if (xhr.readyState == 4
@@ -374,15 +391,18 @@ function List_Police_By_Page(pageIndex) {
 							}// ---end 删除
 							new_row_button.appendChild(new_btn_sc);
 							new_row_button.appendChild(new_btn_xg);
-							new_form.appendChild(new_row_button);
-
-						}// -----按钮
-						$("label").css("padding", "11px 0px");
-						$("label").css("text-align", "center");
-						$("input").css("padding", "0 30px");
-						$("input").css("text-align", "right");
-						new_div.appendChild(new_form);
-						new_li.appendChild(new_div);
+							new_li.appendChild(new_row_button);
+                            //显示修改、删除
+							new_xianshi=document.createElement("div");
+							new_xianshi.className = "mui-slider-handle";
+							new_li.appendChild(new_xianshi);
+						// -----按钮
+//						$("label").css("padding", "11px 0px");
+//						$("label").css("text-align", "center");
+//						$("input").css("padding", "0 30px");
+//						$("input").css("text-align", "right");
+						//new_div.appendChild(new_form);
+					//	new_li.appendChild(new_div);
 
 					}// ---for循环
 
@@ -392,15 +412,15 @@ function List_Police_By_Page(pageIndex) {
 							.html(
 									'<li class="mui-table-view-cell mui-collapse new_li" style="text-align:center;color:red;font-size:20px;margin:10px 0;">无人员信息</li>');
 				}
-				console.log("police_vo.currPage:" + police_vo.currentPage);
-				console.log("police_vo.totalPage:" + police_vo.totalPage);
-				console.log("police_vo.countRecords:" + police_vo.allRow);
+				console.log("police_vo.currPage:" + police_vo.currPage);
+				console.log("police_vo.totalPages:" + police_vo.totalPages);
+				console.log("police_vo.countRecords:" + police_vo.countRecords);
 				// 翻页
 				str_page_row = '<li class="mui-disabled "><span onclick="flip(2)"> &laquo; </span>';// 上一页
 				str_page_row += '<span><select class="mui-select" id="select_page" style="padding:0 15px;margin-bottom:0px;">'
-				for (var pageCount = 1; pageCount <= police_vo.totalPage; pageCount++) {
+				for (var pageCount = 1; pageCount <= police_vo.totalPages; pageCount++) {
 					str_page_row += '<option';
-					if (pageCount == police_vo.currentPage) {
+					if (pageCount == police_vo.currPage) {
 						str_page_row += ' selected="selected" ';
 					}
 					str_page_row += '><a>' + pageCount + ' </a></option>';
@@ -423,24 +443,24 @@ function List_Police_By_Page(pageIndex) {
 	}
 
 	console.log("pageIndex:" + pageIndex);
-	formData.append("findPoliceByPageVO.currentPage", pageIndex);
-	formData.append("findPoliceByPageVO.police_name", input_PoliceSearchText);
-	console.log(open_url);
-	xhr.open("POST", open_url);
+	formData.append("infoVO.currPage", pageIndex);
+	//formData.append("findPoliceByPageVO.police_name", input_PoliceSearchText);
+	//console.log(open_url);
+	xhr.open("POST", "/ajdbxt/info/Info_listAll");
 	xhr.send(formData);
 
 }
 
 // -----------------------------
-// --------添加人员--------------
+// --------添加案件--------------
 
 function createPolice() {
 
-	// 警号
-	var input_police_serial_number = document
-			.getElementById("input_police_serial_number").value;
-	if (input_police_serial_number == "") {
-		mui.toast("警号不能为空！");
+	// 案件名称
+	var input_info_name = document
+			.getElementById("input_info_name").value;
+	if (input_info_name == "") {
+		mui.toast("案件名称不能为空！");
 		return false;
 	}
 	// 密码
@@ -649,25 +669,25 @@ function flip(flipPage) {
 	}
 		/* 上一页 */
 	case 2: {
-		if (police_vo.currentPage - 1 == 0) {
+		if (police_vo.currPage - 1 == 0) {
 			mui.toast("已经是第一页了");
 		} else {
-			List_Police_By_Page(police_vo.currentPage - 1);
+			List_Police_By_Page(police_vo.currPage - 1);
 		}
 		break;
 	}
 		/* 下一页 */
 	case 3: {
-		if (police_vo.currentPage == police_vo.totalPage) {
+		if (police_vo.currPage == police_vo.totalPages) {
 			mui.toast("已经是最后一页了");
 		} else {
-			List_Police_By_Page(police_vo.currentPage + 1);
+			List_Police_By_Page(police_vo.currPage + 1);
 		}
 		break;
 	}
 		/* 尾页 */
 	case 4: {
-		List_Police_By_Page(police_vo.totalPage);
+		List_Police_By_Page(police_vo.totalPages);
 
 		break;
 	}

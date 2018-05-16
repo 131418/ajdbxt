@@ -34,6 +34,21 @@ public class InfoAction extends ActionSupport {
 	public String page_CaseDetails() {
 		return "page_CaseDetails";
 	}
+	public String page_mobileCaseList(){
+		return "page_mobileCaseList";
+	}
+	public String page_mobile_caseOneDetails(){
+		return "page_mobile_caseOneDetails";
+	}
+	public String page_mobile_caseAdd(){
+		return "page_mobile_caseAdd";
+	}
+	public String page_mobile_caseProcess(){
+		return "page_mobile_caseProcess";
+	}
+	public String page_mobile_caseUpdate(){
+		return "page_mobile_caseUpdate";
+	}
 	public ajdbxt_info geInfo() {
 		return info;
 	}
