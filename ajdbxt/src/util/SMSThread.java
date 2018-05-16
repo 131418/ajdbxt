@@ -3,6 +3,7 @@ package util;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,6 +13,8 @@ import com.ajdbxt.domain.DO.ajdbxt_police;
 import com.ajdbxt.domain.DO.ajdbxt_process;
 import com.ajdbxt.domain.DTO.Process.ProcessDTO;
 import com.ajdbxt.service.Process.ProcessService;
+
+import sun.java2d.pipe.SpanShapeRenderer.Simple;
 
 public class SMSThread extends Thread implements Serializable{//为了使其序列化
 	private String tpl_id;
@@ -33,7 +36,7 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 	
 	public void run() {
 		try {
-			isWorking();//休息时间不干活谢谢
+			//isWorking();//休息时间不干活谢谢
 			switch (tpl_id) {
 			case MsgSend.SUBPOENA_A_SUSPECT_VOICE://传唤嫌疑人
 				if(caseFiled)
@@ -85,10 +88,13 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 		ajdbxt_process process =processDTO.getProcess();
 		int hour=caseFiled?8:12 ;
 		try {
-			Date date= DateFormat.getDateInstance().parse(processDTO.getInfo().getInfo_catch_time());
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH-mm");
+			Date date= sdf.parse(processDTO.getInfo().getInfo_catch_time());
 			hour=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)-date.getHours()>0?
 					caseFiled? 8-(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)-date.getHours()):
 						12-(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)-date.getHours()):0;
+						System.out.println(date.toGMTString());
+						System.out.println(hour);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}finally {
@@ -152,9 +158,9 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 				if(process.getProcess_lengthen_subpoena()==null||process.getProcess_lengthen_subpoena().isEmpty()) {
 					List<ajdbxt_police> policeList=processDTO.getPolice();
 					for(ajdbxt_police police:policeList) {
-						String name=police.getPolice_name();
+						String name=processDTO.getInfo().getInfo_name();
 						String num=police.getPolice_phone_number();
-						String [] params= {name,processDTO.getInfo().getInfo_name()};
+						String [] params= {name};
 						List<String> tel=new ArrayList<>();
 						tel.add(num);
 						MsgSend.doSendSimple(params, tel, MsgSend.CRIMINAL_SUBPOENA_A_SUSPECT_TIME_OUT);

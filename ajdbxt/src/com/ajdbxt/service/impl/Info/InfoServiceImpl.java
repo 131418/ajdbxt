@@ -340,11 +340,16 @@ public class InfoServiceImpl implements InfoService {
 			processDao.saveProcessByCaseId(caseInfo.getAjdbxt_info_id());
 		}
 		ApplicationContext applicationContext=(ApplicationContext) ServletActionContext.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-		boolean caseField=true;
-		if(caseInfo.getInfo_category().equals("刑事案件")) {
-			caseField=false;
+		boolean caseFiled=false;
+		if(caseInfo.getInfo_category().equals("行政案件")) {
+			caseFiled=true;
 		}
-		new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE, caseInfo.getAjdbxt_info_id(), caseField, applicationContext).start();
+		
+		Object o=ServletActionContext.getServletContext().getAttribute("threadMap");
+		HashMap<String,Object> ho= (HashMap)o;
+		SMSThread t=new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE,caseInfo.getAjdbxt_info_id(),caseFiled,applicationContext);
+		t.start();//人员变动带来的流程变动不好处理
+		ho.put(UUID.randomUUID().toString().toUpperCase(), t);
 		return JsonUtils.toJson(processDTO);
 	}
 
@@ -374,7 +379,6 @@ public class InfoServiceImpl implements InfoService {
 		}
 		processDTO.setPolice(policeList);
 		processDTO.setProcess(processDao.findProcessByCaseId(info_id).get(0));
-System.out.println(":::" + infoPoliceDao.findPoliceById(info.getInfo_department_legal_member()));
 		processDTO.setTeam_legal(infoPoliceDao.findPoliceById(info.getInfo_department_legal_member()));
 		processDTO.setCap(infoPoliceDao.findPoliceById(info.getInfo_department_captain()));
 		processDTO.setLeader(infoPoliceDao.findPoliceById(info.getInfo_bureau_leader()));
@@ -407,18 +411,6 @@ System.out.println(":::" + infoPoliceDao.findPoliceById(info.getInfo_department_
 		}
 		processDTO.setProcess(processDao.findProcessByCaseId(info.getAjdbxt_info_id()).get(0));
 		processDTO.setPolice(policeList);
-		ApplicationContext applicationContext=(ApplicationContext) ServletActionContext.getServletContext().getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
-		boolean caseFiled=false;
-		if(info.getInfo_category().equals("行政案件")) {
-			caseFiled=true;
-		}
-		
-		Object o=ServletActionContext.getServletContext().getAttribute("threadMap");
-		HashMap<String,Object> ho= (HashMap)o;
-		SMSThread t=new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE,info.getAjdbxt_info_id(),caseFiled,applicationContext);
-		t.start();//人员变动带来的流程变动不好处理
-		ho.put(UUID.randomUUID().toString().toUpperCase(), t);
-		
 		return JsonUtils.toJson(processDTO);
 	}
 	

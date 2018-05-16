@@ -202,7 +202,8 @@ public class MsgSend {
 		}
 		// 从输出流中获取读取到数据(服务端返回的)
 		String response = byteArrayOutputStream.toString();
-		System.out.println(response);
+		//-----------------------------------------------------------------------------------------------------------------------//
+		System.out.println("voice"+voiceMadel+response);
 		return response;
 	}
 	/**
@@ -282,7 +283,8 @@ public class MsgSend {
 		}
 		// 从输出流中获取读取到数据(服务端返回的)
 		String response = byteArrayOutputStream.toString();
-		System.out.println(response);
+		//-----------------------------------------------------------------------------------------------------------------------//
+		System.out.println("text:"+response);
 		return response;
 	}
 

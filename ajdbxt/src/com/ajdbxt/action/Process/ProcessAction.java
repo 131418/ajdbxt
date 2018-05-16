@@ -68,7 +68,6 @@ public class ProcessAction  extends ActionSupport{
 		this.processInfoService = processInfoService;
 	}
 	public String page_process(){
-		noLogin();
 		return "processpage";
 	}
 	/**
@@ -79,7 +78,6 @@ public class ProcessAction  extends ActionSupport{
 	 * @param ajdbxtProcess.process_question="false" 查未整改问题的
 	 */
 	public void getInfo() {
-		noLogin();
 		Object o =ActionContext.getContext().getSession().get("loginPolice");//得到该警察
 		policedptVO police=(policedptVO)o;
 		String police_id=police.getAjdbxt_police().getAjdbxt_police_id();
@@ -113,7 +111,6 @@ public class ProcessAction  extends ActionSupport{
 	 * @param ajdbxtProcess.process_question="false" 查未整改问题的
 	 */
 	public void countInfo() {
-		noLogin();
 		Object o =ActionContext.getContext().getSession().get("loginPolice");//得到该警察
 		policedptVO police=(policedptVO)o;
 		String police_id=police.getAjdbxt_police().getAjdbxt_police_id();
@@ -144,7 +141,6 @@ public class ProcessAction  extends ActionSupport{
 	 * 
 	 */
 	public void update() {
-		noLogin();
 		ajdbxt_process process=processService.getSingleProcessByCaseId(ajdbxtProcess.getProcess_case_id()).getProcess();
 		Class clazz=ajdbxtProcess.getClass();
 		Field [] f= clazz.getDeclaredFields();
@@ -218,7 +214,6 @@ public class ProcessAction  extends ActionSupport{
 	 * @return
 	 */
 	public void findSingle() {
-		noLogin();
 		String case_id=ajdbxtProcess.getProcess_case_id();
 		ajdbxt_process process=processService.getSingleProcessByCaseId(case_id).getProcess();
 		ActionContext.getContext().getSession().put("lookedProcess", process);
@@ -237,7 +232,6 @@ public class ProcessAction  extends ActionSupport{
 	}
 
 	public void findSome() {
-		noLogin();
 		String json="";
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 		try {
@@ -290,7 +284,6 @@ public class ProcessAction  extends ActionSupport{
 	 * @return
 	 */
 	public String page_list_CaseProcess() {
-		noLogin();
 		return "page_list_CaseProcess";
 	}
 	
@@ -300,17 +293,8 @@ public class ProcessAction  extends ActionSupport{
 	 * @return
 	 */
 	public String page_CaseProcessInfo() {
-		noLogin();
 		return "page_CaseProcessInfo";
 	}
-	private void noLogin() {
-		if(ActionContext.getContext().getSession().get("loginPolice")==null) {
-			try {
-				ServletActionContext.getResponse().sendRedirect("/ajdbxt/login.jsp");
-			} catch (IOException e) {
-				new RuntimeException(e);
-			}
-		}
-	}
+
 }
 

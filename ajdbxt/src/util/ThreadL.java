@@ -43,6 +43,7 @@ public class ThreadL implements ServletContextListener {
 				ho.remove(key);
 			}
 		}
+		System.out.println("contextDestroyed it is working");
 		try {
 			File file=new File("thread.txt");
 			if(!file.exists()) {
@@ -62,6 +63,7 @@ public class ThreadL implements ServletContextListener {
      */
     public void contextInitialized(ServletContextEvent arg0)  { //服务器启动读取
         try {
+        	System.out.println("contextInitialized it is working");
         	File file=new File("thread.txt");
 			if(file.exists()) {
 				ObjectInputStream in=new ObjectInputStream(new FileInputStream(file));
@@ -71,7 +73,6 @@ public class ThreadL implements ServletContextListener {
 				HashMap<String,SMSThread> ho=new HashMap();
 				arg0.getServletContext().setAttribute("threadMap", ho);
 			}
-			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

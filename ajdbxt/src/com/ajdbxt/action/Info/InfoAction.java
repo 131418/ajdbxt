@@ -89,7 +89,6 @@ public class InfoAction extends ActionSupport {
 	 */
 	public void save() {
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
-		noLogin();
 		String json="";
 			if(info.getInfo_assistant_police_one()==null||info.getInfo_assistant_police_one().isEmpty()) {
 				json=infoService.saveCase(info);
@@ -105,7 +104,6 @@ public class InfoAction extends ActionSupport {
 	//专门用来保存新案件
 	public void saveCase() {
 		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
-		noLogin();
 		String json="";
 		json=infoService.save(info);
 		try {
@@ -120,7 +118,6 @@ public class InfoAction extends ActionSupport {
 	 * @return
 	 */
 	public void listAll() {
-		noLogin();
 		try {
 			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 			ServletActionContext.getResponse().getWriter().print(infoService.getAllCase(infoVO));
@@ -130,20 +127,12 @@ public class InfoAction extends ActionSupport {
 	}
 	//得到法制员和局领导和部门的方法
 	public void lal() {
-		noLogin();
 		try {
 			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
 			ServletActionContext.getResponse().getWriter().print(infoService.getLegalsAndLeadersAndDepartment());
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}
-	}
-	/**
-	 * 录入案件信息
-	 * @return
-	 */
-	public void add() {
-		noLogin();
 	}
 	
 	/**
@@ -225,14 +214,6 @@ public class InfoAction extends ActionSupport {
 			new RuntimeException(e);
 		}
 	}
-	private void noLogin() {
-		if(ActionContext.getContext().getSession().get("loginPolice")==null) {
-			try {
-				ServletActionContext.getResponse().sendRedirect("/ajdbxt/login.jsp");
-			} catch (IOException e) {
-				new RuntimeException(e);
-			}
-		}
-	}
+	
 }
 
