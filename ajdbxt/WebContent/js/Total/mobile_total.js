@@ -182,11 +182,37 @@ function List_Total_User(e,pageIndex) {
 						new_form = document.createElement("form");
 						new_form.className = "mui-input-group mui-h5";
 						
+						// 办案单位
+						div_department = document.createElement("div");
+						div_department.className = "mui-input-row mui-h5";
+						label_department = document.createElement("label");
+						label_department.innerHTML = "办案单位";
+						label_department.style.padding = "11px 0px";
+						input_department = document.createElement("input");
+						input_department.className = "mui-input-clear  mui-h5";
+
+						input_department.value = total_vo.statisticPoliceCaseDto[num].department.department_name;
+						input_department.type = "text";
+						input_department.disabled = "disabled";
+						input_department.style.paddingLeft = "20px";
+						div_department.appendChild(label_department);
+						div_department.appendChild(input_department);
+						new_form.appendChild(div_department);
+
+						$("label").css("padding", "11px 0px");
+						$("label").css("width", "130px");
+						$("label").css("text-align", "center");
+						$("input").css("padding", "0 30px");
+						$("input").css("width", "170px");
+						$("input").css("text-align", "right");
+						new_div.appendChild(new_form);
+						new_li.appendChild(new_div);
+						
 						// 人员
 						div_policeNme = document.createElement("div");
 						div_policeNme.className = "mui-input-row";
 						label_policeNme = document.createElement("label");
-						label_policeNme.innerHTML = "人员";
+						label_policeNme.innerHTML = "姓名";
 						label_policeNme.style.padding = "11px 0px";
 						input_policeNme = document.createElement("input");
 						input_policeNme.className = "mui-input-clear  mui-h5";
@@ -198,6 +224,7 @@ function List_Total_User(e,pageIndex) {
 						div_policeNme.appendChild(label_policeNme);
 						div_policeNme.appendChild(input_policeNme);
 						new_form.appendChild(div_policeNme);
+						
 						
 						// 平均分
 						div_averageScore = document.createElement("div");
@@ -220,7 +247,7 @@ function List_Total_User(e,pageIndex) {
 						div_MainadminCase = document.createElement("div");
 						div_MainadminCase.className = "mui-input-row";
 						label_MainadminCase = document.createElement("label");
-						label_MainadminCase.innerHTML = "行政案件";
+						label_MainadminCase.innerHTML = "主办行政案件数";
 						label_MainadminCase.style.padding = "11px 0px";
 						input_MainadminCase = document.createElement("input");
 						input_MainadminCase.className = "mui-input-clear  mui-h5";
@@ -237,7 +264,7 @@ function List_Total_User(e,pageIndex) {
 						div_MaincriminalCase = document.createElement("div");
 						div_MaincriminalCase.className = "mui-input-row";
 						label_MaincriminalCase = document.createElement("label");
-						label_MaincriminalCase.innerHTML = "刑事案件";
+						label_MaincriminalCase.innerHTML = "主办刑事案件数";
 						label_MaincriminalCase.style.padding = "11px 0px";
 						input_MaincriminalCase = document.createElement("input");
 						input_MaincriminalCase.className = "mui-input-clear  mui-h5";
@@ -254,7 +281,7 @@ function List_Total_User(e,pageIndex) {
 						div_InsisadminCase = document.createElement("div");
 						div_InsisadminCase.className = "mui-input-row";
 						label_InsisadminCase = document.createElement("label");
-						label_InsisadminCase.innerHTML = "行政案件";
+						label_InsisadminCase.innerHTML = "协办行政案件数";
 						label_InsisadminCase.style.padding = "11px 0px";
 						input_InsisadminCase = document.createElement("input");
 						input_InsisadminCase.className = "mui-input-clear  mui-h5";
@@ -271,7 +298,7 @@ function List_Total_User(e,pageIndex) {
 						div_InsiscriminalCase = document.createElement("div");
 						div_InsiscriminalCase.className = "mui-input-row";
 						label_InsiscriminalCase = document.createElement("label");
-						label_InsiscriminalCase.innerHTML = "刑事案件";
+						label_InsiscriminalCase.innerHTML = "协办刑事案件数";
 						label_InsiscriminalCase.style.padding = "11px 0px";
 						input_InsiscriminalCase = document.createElement("input");
 						input_InsiscriminalCase.className = "mui-input-clear  mui-h5";
@@ -284,29 +311,7 @@ function List_Total_User(e,pageIndex) {
 						div_InsiscriminalCase.appendChild(input_InsiscriminalCase);
 						new_form.appendChild(div_InsiscriminalCase);
 						
-						// 办案单位
-						div_department = document.createElement("div");
-						div_department.className = "mui-input-row mui-h5";
-						label_department = document.createElement("label");
-						label_department.innerHTML = "办案单位";
-						label_department.style.padding = "11px 0px";
-						input_department = document.createElement("input");
-						input_department.className = "mui-input-clear  mui-h5";
-
-						input_department.value = total_vo.statisticPoliceCaseDto[num].department.department_name;
-						input_department.type = "text";
-						input_department.disabled = "disabled";
-						input_department.style.paddingLeft = "20px";
-						div_department.appendChild(label_department);
-						div_department.appendChild(input_department);
-						new_form.appendChild(div_department);
-
-						$("label").css("padding", "11px 0px");
-						$("label").css("text-align", "center");
-						$("input").css("padding", "0 30px");
-						$("input").css("text-align", "right");
-						new_div.appendChild(new_form);
-						new_li.appendChild(new_div);
+						
 					}
 				}
 					else {

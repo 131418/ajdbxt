@@ -145,6 +145,31 @@ function List_Total_Department(e,pageIndex) {
 						new_form = document.createElement("form");
 						new_form.className = "mui-input-group mui-h5";
 						
+						// 办案单位
+						div_department = document.createElement("div");
+						div_department.className = "mui-input-row mui-h5";
+						label_department = document.createElement("label");
+						label_department.innerHTML = "办案单位";
+						label_department.style.padding = "11px 0px";
+						input_department = document.createElement("input");
+						input_department.className = "mui-input-clear  mui-h5";
+
+						input_department.value = total_vo.statisticDepartmentCaseNumDTO[num].department.department_name;
+						input_department.type = "text";
+						input_department.disabled = "disabled";
+						input_department.style.paddingLeft = "20px";
+						div_department.appendChild(label_department);
+						div_department.appendChild(input_department);
+						new_form.appendChild(div_department);
+
+
+						$("label").css("padding", "11px 0px");
+						$("label").css("text-align", "center");
+						$("input").css("padding", "0 30px");
+						$("input").css("text-align", "right");
+						new_div.appendChild(new_form);
+						new_li.appendChild(new_div);
+						
 						// 平均分
 						div_averageScore = document.createElement("div");
 						div_averageScore.className = "mui-input-row";
@@ -213,30 +238,6 @@ function List_Total_Department(e,pageIndex) {
 						div_sumCase.appendChild(input_sumCase);
 						new_form.appendChild(div_sumCase);
 
-						// 办案单位
-						div_department = document.createElement("div");
-						div_department.className = "mui-input-row mui-h5";
-						label_department = document.createElement("label");
-						label_department.innerHTML = "办案单位";
-						label_department.style.padding = "11px 0px";
-						input_department = document.createElement("input");
-						input_department.className = "mui-input-clear  mui-h5";
-
-						input_department.value = total_vo.statisticDepartmentCaseNumDTO[num].department.department_name;
-						input_department.type = "text";
-						input_department.disabled = "disabled";
-						input_department.style.paddingLeft = "20px";
-						div_department.appendChild(label_department);
-						div_department.appendChild(input_department);
-						new_form.appendChild(div_department);
-
-
-						$("label").css("padding", "11px 0px");
-						$("label").css("text-align", "center");
-						$("input").css("padding", "0 30px");
-						$("input").css("text-align", "right");
-						new_div.appendChild(new_form);
-						new_li.appendChild(new_div);
 					}
 			}
 		}
