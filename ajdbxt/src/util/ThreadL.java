@@ -34,27 +34,40 @@ public class ThreadL implements ServletContextListener {
 	/**
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
-    public void contextDestroyed(ServletContextEvent arg0)  {//服务器关闭时保存
+    
+    public void contextDestroyed(ServletContextEvent arg0) {//服务器关闭时保存
+    	System.out.println("服务器销毁");
     	Object o=arg0.getServletContext().getAttribute("threadMap");
 		HashMap<String,Object> ho= (HashMap)o;
-		Set<String> keys=ho.keySet();
-		for(String key:keys) {//可能会有异常，因为理论上ho的更改会影响到keys
-			if(ho.get(key)==null) {
-				ho.remove(key);
+		System.out.println(ho);
+		if(ho.size()>0) {
+			Set<String> keys=ho.keySet();
+			ObjectOutputStream out=null;
+			for(String key:keys) {//可能会有异常，因为理论上ho的更改会影响到keys
+				if(ho.get(key)==null) {
+					ho.remove(key);
+				}
 			}
-		}
-		System.out.println("contextDestroyed it is working");
-		try {
-			File file=new File("thread.txt");
-			if(!file.exists()) {
-				file.createNewFile();
+			try {
+				File file=new File("thread.txt");
+				if(!file.exists()) {
+					file.createNewFile();
+				}
+				out=new ObjectOutputStream(new FileOutputStream(file));
+				out.writeObject(ho);
+				
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				if(out!=null) {
+					try {
+						out.close();
+					} catch (IOException e) {
+					}
+				}
 			}
-			ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream(file));
-			out.writeObject(ho);
-			out.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
     }
 
@@ -62,20 +75,32 @@ public class ThreadL implements ServletContextListener {
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0)  { //服务器启动读取
-        try {
-        	System.out.println("contextInitialized it is working");
-        	File file=new File("thread.txt");
-			if(file.exists()) {
-				ObjectInputStream in=new ObjectInputStream(new FileInputStream(file));
-				HashMap<String,Object> ho=(HashMap<String, Object>) in.readObject();
-				arg0.getServletContext().setAttribute("threadMap",ho);
-			}else {
-				HashMap<String,SMSThread> ho=new HashMap();
-				arg0.getServletContext().setAttribute("threadMap", ho);
+    	if(arg0.getServletContext().getAttribute("threadMap")==null){
+    		ObjectInputStream in=null;
+    		try {
+            	System.out.println("服务器启动");
+            	File file=new File("thread.txt");
+    			if(file.exists()) {
+    				in=new ObjectInputStream(new FileInputStream(file));
+    				HashMap<String,Object> ho=(HashMap<String, Object>) in.readObject();
+    				arg0.getServletContext().setAttribute("threadMap",ho);
+    			}else {
+    				HashMap<String,SMSThread> ho=new HashMap();
+    				arg0.getServletContext().setAttribute("threadMap", ho);
+    			}
+    		}catch (Exception e) {
+    			e.printStackTrace();
+    		}finally {
+				if(in!=null) {
+					try {
+						in.close();
+					} catch (IOException e) {
+						
+					}
+				}
 			}
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+    	}
+        
     }
 	
 }

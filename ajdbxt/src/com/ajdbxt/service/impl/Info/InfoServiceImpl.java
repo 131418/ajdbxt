@@ -288,7 +288,7 @@ public class InfoServiceImpl implements InfoService {
 		infoVO.setTotalPages(pages);
 		return JsonUtils.toJson(infoVO);
 	}
-
+	
 	@Override
 	public String save(ajdbxt_info caseInfo) {
 		ProcessDTO processDTO=new ProcessDTO();
@@ -348,8 +348,9 @@ public class InfoServiceImpl implements InfoService {
 		Object o=ServletActionContext.getServletContext().getAttribute("threadMap");
 		HashMap<String,Object> ho= (HashMap)o;
 		SMSThread t=new SMSThread(MsgSend.SUBPOENA_A_SUSPECT_VOICE,caseInfo.getAjdbxt_info_id(),caseFiled,applicationContext);
-		t.start();//人员变动带来的流程变动不好处理
-		ho.put(UUID.randomUUID().toString().toUpperCase(), t);
+		t.start();
+		System.out.println(ho);
+		ho.put(UUID.randomUUID().toString().toUpperCase(),t);
 		return JsonUtils.toJson(processDTO);
 	}
 

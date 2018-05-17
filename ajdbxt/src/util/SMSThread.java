@@ -20,7 +20,7 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 	private String tpl_id;
 	private String CASE_ID;
 	private boolean caseFiled;
-	private ApplicationContext applicationCotext; 
+	private ApplicationContext applicationCotext; //不能序列化
 	/**
 	 * @param tpl_id 模板id
 	 * @param CASE_ID 案件信息id
@@ -86,15 +86,15 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 	private void subpoenaASuspect() throws InterruptedException {
 		ProcessDTO processDTO=getProcessDTO();
 		ajdbxt_process process =processDTO.getProcess();
-		int hour=caseFiled?8:12 ;
+		long hour=caseFiled?8:12 ;
 		try {
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH-mm");
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			Date date= sdf.parse(processDTO.getInfo().getInfo_catch_time());
-			hour=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)-date.getHours()>0?
-					caseFiled? 8-(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)-date.getHours()):
-						12-(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)-date.getHours()):0;
-						System.out.println(date.toGMTString());
-						System.out.println(hour);
+			Date nowDate=new Date();
+			hour=nowDate.after(date)?
+					caseFiled? 8-(nowDate.getTime()-date.getTime())/(1000*60*60):
+						12-((nowDate.getTime()-date.getTime())/(1000*60*60)):0;
+						System.out.println("定时:"+hour);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}finally {
@@ -1504,9 +1504,9 @@ public class SMSThread extends Thread implements Serializable{//为了使其序�
 		}
 		waitTime(hour);
 	}
-	private void waitTime(int hour) throws InterruptedException {
+	private void waitTime(long hour) throws InterruptedException {
 		synchronized (this) {
-			this.wait(hour*1000);
+			this.wait(hour*60*60*1000);
 		}
 	}
 
