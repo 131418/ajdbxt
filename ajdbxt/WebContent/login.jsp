@@ -46,10 +46,16 @@
 				<div class="input_box"><label>帐户</label><input type="text" id="userNumber"/></div>
 				<div class="input_box"><label>密码</label><input type="password" id="password"/></div>
 				<div class="button_box">
-					<div>重置信息</div>
+					<div onclick="reset()">重置信息</div>
 					<div onclick="login()">确认登录</div>
 				</div>
 			</div>
 	</div>
 </body>
+<script type="text/javascript">
+	function reset(){
+		document.getElementById("userNumber").value="";
+		document.getElementById("password").value="";
+	}
+</script>
 </html>
