@@ -63,7 +63,6 @@
 					<div class="mui-input-row">
 						<label class=" mui-h5">单位</label> <select
 							id="input_police_department" style="font-size: 14px;">
-							<option>1</option>
 						</select>
 					</div>
 					<div class="mui-input-row">
